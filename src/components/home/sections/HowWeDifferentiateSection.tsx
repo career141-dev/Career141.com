@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { withBasePath } from '@/lib/assetPath'
 
 const HEADING_DARK = 'rgb(22,22,24)'
 const HEADING_GREEN = '#37A65E'
@@ -9,13 +10,13 @@ const DIAMOND_PATH =
   'M303.381 144.959L163.22 4.79817C158.159 -0.263179 149.953 -0.263179 144.892 4.79817L4.73038 144.959C-0.330977 150.021 -0.330972 158.227 4.73038 163.288L144.892 303.449C149.953 308.511 158.159 308.511 163.22 303.449L303.381 163.288C308.443 158.227 308.443 150.021 303.381 144.959Z'
 
 const CARDS = [
-  { id: 1, text: '100% Head\nHunting', back: '/figmaAssets/diff-card-1.png' },
-  { id: 2, text: 'Tailored\nApproach', back: '/figmaAssets/diff-card-2.png' },
-  { id: 3, text: 'Knowledge\nExperts', back: '/figmaAssets/diff-card-3.png' },
-  { id: 4, text: 'Business Acumen\nMindset', back: '/figmaAssets/diff-card-4.png' },
-  { id: 5, text: 'Sustainable\nRelationship', back: '/figmaAssets/diff-card-5.png' },
-  { id: 6, text: 'Execution\nExcellence', back: '/figmaAssets/diff-card-6.png' },
-  { id: 7, text: 'Technology\nAdaptation', back: '/figmaAssets/diff-card-7.png' },
+  { id: 1, text: '100% Head\nHunting', back: withBasePath('/figmaAssets/diff-card-1.png') },
+  { id: 2, text: 'Tailored\nApproach', back: withBasePath('/figmaAssets/diff-card-2.png') },
+  { id: 3, text: 'Knowledge\nExperts', back: withBasePath('/figmaAssets/diff-card-3.png') },
+  { id: 4, text: 'Business Acumen\nMindset', back: withBasePath('/figmaAssets/diff-card-4.png') },
+  { id: 5, text: 'Sustainable\nRelationship', back: withBasePath('/figmaAssets/diff-card-5.png') },
+  { id: 6, text: 'Execution\nExcellence', back: withBasePath('/figmaAssets/diff-card-6.png') },
+  { id: 7, text: 'Technology\nAdaptation', back: withBasePath('/figmaAssets/diff-card-7.png') },
 ]
 
 function DiamondFront({ text, uid, size }: { text: string; uid: string; size: number }) {
@@ -149,7 +150,7 @@ export function HowWeDifferentiateSection() {
     <section
       className="w-full relative"
       style={{
-        backgroundImage: 'url(/figmaAssets/how-we-differentiate-bg.png)',
+        backgroundImage: `url(${withBasePath('/figmaAssets/how-we-differentiate-bg.png')})`,
         backgroundSize: 'auto 100%',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'left center',

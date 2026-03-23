@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { withBasePath } from '@/lib/assetPath'
 
 const heroSlides = [
   { line1: "Sri Lanka's Global Executive", line2: 'Search & Recruitment', line3: 'Partner' },
@@ -12,10 +13,10 @@ const heroSlides = [
 ]
 
 const statsData = [
-  { numEnd: 30, numStart: 14, isRange: true, hasPercent: false, label: 'Days Turn Around Time', containerSrc: '/figmaAssets/container-4.svg' },
-  { numEnd: 85, numStart: 0, isRange: false, hasPercent: true, label: 'Word of Mouth Growth', containerSrc: '/figmaAssets/container-1.svg' },
-  { numEnd: 90, numStart: 0, isRange: false, hasPercent: true, label: 'Success in Placements', containerSrc: '/figmaAssets/container-2.svg' },
-  { numEnd: 85, numStart: 0, isRange: false, hasPercent: true, label: 'Repeat Business', containerSrc: '/figmaAssets/container.svg' },
+  { numEnd: 30, numStart: 14, isRange: true, hasPercent: false, label: 'Days Turn Around Time', containerSrc: withBasePath('/figmaAssets/container-4.svg') },
+  { numEnd: 85, numStart: 0, isRange: false, hasPercent: true, label: 'Word of Mouth Growth', containerSrc: withBasePath('/figmaAssets/container-1.svg') },
+  { numEnd: 90, numStart: 0, isRange: false, hasPercent: true, label: 'Success in Placements', containerSrc: withBasePath('/figmaAssets/container-2.svg') },
+  { numEnd: 85, numStart: 0, isRange: false, hasPercent: true, label: 'Repeat Business', containerSrc: withBasePath('/figmaAssets/container.svg') },
 ]
 
 const SLIDE_DURATION = 6000
@@ -153,7 +154,7 @@ export function ExecutiveSearchStatsSection() {
               minHeight: '100%',
             }}
           />
-          <img className="absolute inset-0 w-full h-full object-cover" alt="Hero background" src="/figmaAssets/container-3.svg" style={{ zIndex: -1 }} />
+          <img className="absolute inset-0 w-full h-full object-cover" alt="Hero background" src={withBasePath('/figmaAssets/container-3.svg')} style={{ zIndex: -1 }} />
         </div>
 
         <div
@@ -181,7 +182,7 @@ export function ExecutiveSearchStatsSection() {
       </div>
 
       <div className="relative w-full overflow-hidden">
-        <img className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none" alt="Decorative tubes" src="/figmaAssets/tubes-home-executive-svg-fill.svg" />
+        <img className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none" alt="Decorative tubes" src={withBasePath('/figmaAssets/tubes-home-executive-svg-fill.svg')} />
 
         <div className="relative z-10 grid grid-cols-2 lg:flex lg:flex-row w-full items-start justify-center gap-6 lg:gap-5 pt-10 lg:pt-[66px] pb-10 lg:pb-[107px] px-6 sm:px-12 lg:px-[91px]">
           {statsData.map((stat, index) => (
@@ -216,7 +217,7 @@ export function ExecutiveSearchStatsSection() {
               <div className="flex flex-wrap items-center gap-4 lg:gap-5 w-full">
                 <div
                   className="w-[120px] h-[67px] lg:w-[146px] lg:h-[81.54px] bg-cover bg-center flex-shrink-0"
-                  style={{ backgroundImage: 'url(/figmaAssets/signature-of-the-current-managing-director.png)' }}
+                  style={{ backgroundImage: `url(${withBasePath('/figmaAssets/signature-of-the-current-managing-director.png')})` }}
                 />
                 <a
                   href="https://career141.com/our-journey/"
@@ -236,7 +237,7 @@ export function ExecutiveSearchStatsSection() {
           <div className="flex flex-col items-center w-full lg:flex-1 mt-4 lg:mt-0">
             <div
               className="w-full max-w-full lg:max-w-[593px] h-[280px] sm:h-[380px] lg:h-[537px] bg-cover bg-center"
-              style={{ backgroundImage: 'url(/figmaAssets/image-for-executive-search.png)' }}
+              style={{ backgroundImage: `url(${withBasePath('/figmaAssets/image-for-executive-search.png')})` }}
             />
           </div>
         </div>

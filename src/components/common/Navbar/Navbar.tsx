@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react'
 import { ChevronDownIcon } from 'lucide-react'
 import { EXECUTIVE_SEARCH_CATEGORIES, NAV_ITEMS, SOCIAL_LINKS } from './navbar.data'
+import { withBasePath } from '@/lib/assetPath'
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -22,7 +23,10 @@ export function Navbar() {
     <>
       <header className="absolute top-0 left-0 right-0 z-30 flex w-full items-stretch justify-between border-b border-[#ffffff2e] bg-[linear-gradient(180deg,rgba(0,0,0,0.21)_40%,rgba(0,0,0,0)_100%)]">
         <div className="flex items-center justify-center h-[70px] lg:h-[89.34px] px-4 lg:px-[30.41px] border-r border-[#ffffff2e] shrink-0">
-          <div className="w-[140px] h-[46px] lg:w-[200px] lg:h-[65.34px] bg-[url(/figmaAssets/career141-logo-with-20-year-anniversary-mark.png)] bg-cover bg-center" />
+          <div
+            className="w-[140px] h-[46px] lg:w-[200px] lg:h-[65.34px] bg-cover bg-center"
+            style={{ backgroundImage: `url(${withBasePath('/figmaAssets/career141-logo-with-20-year-anniversary-mark.png')})` }}
+          />
         </div>
 
         <nav className="hidden lg:flex items-center flex-1 px-[17.8px]">
