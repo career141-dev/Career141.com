@@ -2,103 +2,38 @@
 
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import { withBasePath } from '@/lib/assetPath'
 
 export function CommitmentSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-50px' })
 
   return (
-    <section ref={ref} className="py-16 bg-white">
+    <section ref={ref} className="-mt-4 sm:-mt-6 md:-mt-8 lg:-mt-12 pt-[calc(1.5rem+20px)] sm:pt-[calc(2rem+30px)] md:pt-[calc(3rem+40px)] lg:pt-[calc(4rem+50px)] bg-white px-4 sm:px-6 lg:px-8 mb-8 lg:mb-12">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
-        className="max-w-6xl mx-auto px-6"
+        className="max-w-6xl mx-auto"
       >
-        {/* Two column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left side - Heading and Description */}
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0A2540]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-start lg:items-center">
+          <div className="w-full order-2 lg:order-1">
+            <h2 className="[font-family:'Quicksand',Helvetica] text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal text-[#11593F]">
               Our commitment is simple:
-              <b><br />We listen, understand and prioritize</b>
+              <b className="font-bold"><br />We listen, understand and prioritize</b>
             </h2>
 
-            <p className="mt-6 text-base text-[#2C3E4E] leading-relaxed" style={{ fontWeight: 400 }}>
-              Career141 is a premier executive search and manpower recruitment firm based in Sri Lanka, with operational branches in Singapore, Dubai, and Bangladesh. We specialize in headhunting and placing C-level leaders, senior managers, and mid-level executives across Asia, the Middle East, Africa, Europe, and Australia. Whether you are seeking transformational CEOs, agile country heads, or high-impact functional leaders, our proven executive search methodology connects you with top-tier talent who can drive business growth and innovation in dynamic markets.
+            <p className="[font-family:'General Sans',Helvetica] mt-3 sm:mt-4 md:mt-6 text-xs sm:text-sm md:text-base lg:text-lg text-[#2C3E4E] leading-relaxed" style={{ fontWeight: 400 }}>
+              In the fast-paced world of recruitment, we get it – your needs are urgent, and the clock is ticking louder than ever. At Career141, we thrive on the challenge of meeting your demands with a sense of urgency that matches your "we wanted it filled like yesterday" mindset.
             </p>
           </div>
 
-          {/* Right side - Specialty Block with transform */}
-          <motion.div
-            initial={{ opacity: 0, y: '-27%' }}
-            animate={isInView ? { opacity: 1, y: '-27%' } : {}}
-            transition={{ duration: 0.6 }}
-            className="relative rounded-[28px] rounded-tr-3xl rounded-bl-3xl lg:mt-24 overflow-hidden"
-            style={{ transform: 'translateY(-27%)' }}
-          >
-            {/* SVG Background */}
-            <div className="absolute inset-0 w-full h-full" data-svg-wrapper>
-              <svg 
-                width="100%" 
-                height="100%" 
-                viewBox="0 0 840 413" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-full h-full"
-                preserveAspectRatio="none"
-              >
-                <path 
-                  fillRule="evenodd" 
-                  clipRule="evenodd" 
-                  d="M0 36.0004C0 16.1181 16.1178 0.000385266 36 0.000374656L719.743 9.78751e-06C731.266 3.63853e-06 742.093 5.51592 748.866 14.8376L833.123 130.789C837.593 136.94 840 144.348 840 151.951V377C840 396.882 823.882 413 804 413L99.591 413C88.1168 413 77.3299 407.53 70.5493 398.274L6.95835 311.464C2.4373 305.293 0 297.841 0 290.19V36.0004Z" 
-                  fill="url(#paint0_linear)"
-                />
-                <defs>
-                  <linearGradient id="paint0_linear" x1="420" y1="0" x2="420" y2="413" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#07B174" />
-                    <stop offset="1" stopColor="#109162" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-
-            {/* Content with offset stroke SVG */}
-            <div className="relative z-10 p-8 md:p-10 flex items-center justify-center min-h-[200px]">
-              {/* SVG Stroke - inset 39px top/bottom, 34px left/right */}
-              <div 
-                className="absolute inset-0 pointer-events-none" 
-                data-svg-wrapper
-                style={{ 
-                  top: '39px', 
-                  left: '34px', 
-                  right: '34px', 
-                  bottom: '39px' 
-                }}
-              >
-                <svg 
-                  width="100%" 
-                  height="100%" 
-                  viewBox="0 0 840 413" 
-                  fill="none" 
-                  xmlns="http://www.w3.org/2000/svg"
-                  preserveAspectRatio="none"
-                >
-                  <path 
-                    fillRule="evenodd" 
-                    clipRule="evenodd" 
-                    d="M0 36.0004C0 16.1181 16.1178 0.000385266 36 0.000374656L719.743 9.78751e-06C731.266 3.63853e-06 742.093 5.51592 748.866 14.8376L833.123 130.789C837.593 136.94 840 144.348 840 151.951V377C840 396.882 823.882 413 804 413L99.591 413C88.1168 413 77.3299 407.53 70.5493 398.274L6.95835 311.464C2.4373 305.293 0 297.841 0 290.19V36.0004Z" 
-                    stroke="#3D3D3D" 
-                    strokeWidth="3"
-                  />
-                </svg>
-              </div>
-
-              <p className="text-lg md:text-xl font-medium text-white text-center">
-                We specialize in turning the recruitment clock back, delivering <b>top-notch talent</b> with <b>appreciable lead times</b> without compromising on quality
-              </p>
-            </div>
-          </motion.div>
+          <div className="relative w-full flex justify-center lg:justify-start mt-8 sm:mt-12 lg:mt-[-180px] order-1 lg:order-2">
+            <img src={withBasePath('/images/signature.svg')} alt="Signature" className="w-[200px] sm:w-[300px] md:w-[400px] lg:w-[600px] xl:w-[800px] h-auto" style={{ marginTop: '-50px', maxWidth: '100%' }} />
+            <p className="[font-family:'Quicksand',Helvetica] absolute z-10 text-xs sm:text-sm md:text-base lg:text-xl font-medium text-white text-center w-full px-4 sm:px-6 md:px-8" style={{ top: '20%', left: '50%', transform: 'translate(-50%, 0)', marginTop: '-50px' }}>
+              We specialize in turning the recruitment clock back, delivering <b>top-notch talent</b> with <b>appreciable lead times</b> without compromising on quality
+            </p>
+          </div>
         </div>
       </motion.div>
     </section>

@@ -26,7 +26,7 @@ export const EXECUTIVE_SEARCH_CATEGORIES = [
 ]
 
 export const NAV_ITEMS = [
-  { label: 'EXECUTIVE SEARCH', hasDropdown: true, href: undefined, hasExecDrop: true },
+  { label: 'EXECUTIVE SEARCH', hasDropdown: true, href: '/executive-search', hasExecDrop: true },
   { label: 'OUR JOURNEY', hasDropdown: false, href: 'https://career141.com/our-journey/', hasExecDrop: false },
   { label: 'OUR CULTURE', hasDropdown: true, href: 'https://career141.com/our-culture/', hasExecDrop: false },
   { label: 'PREMIUM JOBS', hasDropdown: false, href: undefined, hasExecDrop: false },
