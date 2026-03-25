@@ -48,15 +48,15 @@ export function ProcessFlowSection() {
 
                 {/* Connector to Right */}
                 {index < row1.length - 1 && (
-                  <div className="hidden md:block absolute top-[113px] left-[calc(0%+45px)] right-[calc(-100%+80px)] z-0">
-                    <svg className="w-full h-8 overflow-visible">
-                      <defs>
-                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                          <polygon points="0 0, 10 3.5, 0 7" fill="#11593F" />
-                        </marker>
-                      </defs>
-                      <line x1="0" y1="16" x2="100%" y2="16" stroke="#11593F" strokeWidth="2" strokeDasharray="6 4" markerEnd="url(#arrowhead)" />
-                    </svg>
+                  <div className="hidden md:block absolute top-[111px] left-[80px] right-[-40%] z-0">
+                    <img src="/images/line.svg" alt="" className="w-[200px] h-auto" />
+                  </div>
+                )}
+
+                {/* Connector to Next Row (5 -> 6) */}
+                {step.id === 5 && (
+                  <div className="hidden md:block absolute top-[180px] left-[38px] rotate-90 origin-top-left z-0">
+                    <img src="/images/line.svg" alt="" className="w-[1000px] h-auto" style={{ width: '600px' }} />
                   </div>
                 )}
 
@@ -68,20 +68,6 @@ export function ProcessFlowSection() {
                 </div>
               </div>
             ))}
-
-            {/* Straight Downward connector from 5 to 6 at the far right edge */}
-            <div className="hidden md:block absolute -bottom-36 right-[24px]">
-                <svg className="w-8 h-32 overflow-visible">
-                   <path 
-                     d="M 16 0 L 16 120" 
-                     stroke="#11593F" 
-                     strokeWidth="2" 
-                     strokeDasharray="6 4" 
-                     fill="none" 
-                     markerEnd="url(#arrowhead)"
-                   />
-                </svg>
-            </div>
           </div>
 
           {/* Title between the rows */}
@@ -93,7 +79,7 @@ export function ProcessFlowSection() {
           </div>
 
           {/* Row 2: 6 -> 10 (Right to Left) */}
-          <div className="flex flex-col md:flex-row-reverse items-start justify-between relative gap-12 md:gap-4 mt-8 md:mt-0">
+          <div className="flex flex-col md:flex-row-reverse items-start justify-between relative gap-12 md:gap-4 mt-4 md:-mt-8">
             {row2.map((step, index) => (
               <div key={step.id} className="flex-1 flex flex-col items-center md:items-start group relative w-full md:w-auto">
                 {/* Circle with Number */}
@@ -114,14 +100,12 @@ export function ProcessFlowSection() {
                   </p>
                 </div>
 
-                {/* Connector to Left (Pointing to higher numbers) */}
+                {/* Connector to Left (mirrored from Row 1) */}
                 {index < row2.length - 1 && (
-                  <div className="hidden md:block absolute top-[21px] right-[calc(0%+45px)] left-[calc(-100%+80px)] z-0">
-                    <svg className="w-full h-8 overflow-visible">
-                      <line x1="100%" y1="0" x2="0" y2="0" stroke="#11593F" strokeWidth="2" strokeDasharray="6 4" markerEnd="url(#arrowhead)" />
-                    </svg>
+                  <div className="hidden md:block absolute top-[22px] left-[-205px] z-0 rotate-180">
+                    <img src="/images/line.svg" alt="" className="w-[200px] h-auto" />
                   </div>
-                )} 
+                )}
 
                 {/* Mobile Connector Down */}
                 {step.id < 10 && (

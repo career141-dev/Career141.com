@@ -30,7 +30,7 @@ export function CommitmentSection() {
 
           <div className="relative w-full flex justify-center lg:justify-start mt-8 sm:mt-12 lg:mt-[-180px] order-1 lg:order-2">
             <img src={withBasePath('/images/signature.svg')} alt="Signature" className="w-[200px] sm:w-[300px] md:w-[400px] lg:w-[600px] xl:w-[800px] h-auto" style={{ marginTop: '-50px', maxWidth: '100%' }} />
-            <p className="[font-family:'Quicksand',Helvetica] absolute z-10 text-xs sm:text-sm md:text-base lg:text-xl font-medium text-white text-center w-full px-4 sm:px-6 md:px-8" style={{ top: '20%', left: '50%', transform: 'translate(-50%, 0)', marginTop: '-50px' }}>
+            <p className="[font-family:'Quicksand',Helvetica] absolute z-10 text-xs sm:text-sm md:text-base lg:text-xl font-medium text-white text-center w-full px-4 sm:px-6 md:px-8" style={{ top: '25%', left: '50%', transform: 'translate(-50%, 0)', marginTop: '-30px' }}>
               We specialize in turning the recruitment clock back, delivering <b>top-notch talent</b> with <b>appreciable lead times</b> without compromising on quality
             </p>
           </div>
