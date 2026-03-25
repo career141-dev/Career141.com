@@ -1,4 +1,12 @@
-import { CompanyOverviewSection, ExecutiveSearchStatsSection, HowWeDifferentiateSection, MainNavigationSection } from '@/components/home/sections'
+import {
+  CompanyOverviewSection,
+  ExecutiveSearchSpecializationsSection,
+  ExecutiveSearchStatsSection,
+  HowWeDifferentiateSection,
+  IndustriesSection,
+  MainNavigationSection,
+  TalentAccessSection,
+} from '@/components/home/sections'
 
 export function LandingPage() {
   return (
@@ -9,6 +17,9 @@ export function LandingPage() {
       </div>
       <CompanyOverviewSection />
       <HowWeDifferentiateSection />
+      <IndustriesSection />
+      <ExecutiveSearchSpecializationsSection />
+      <TalentAccessSection />
     </main>
   )
 }

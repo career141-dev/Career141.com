@@ -1,0 +1,1 @@
+export { CompanyFooter } from './CompanyFooter'

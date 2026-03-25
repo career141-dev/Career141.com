@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { type JSX, useEffect, useRef, useState } from 'react'
 
 const INDUSTRIES = [
   { label: 'APPAREL', bg: 'https://career141.com/wp-content/uploads/2024/04/Apparel-scaled.webp' },
