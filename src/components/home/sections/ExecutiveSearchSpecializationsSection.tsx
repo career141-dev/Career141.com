@@ -15,12 +15,12 @@ const SPECIALIZATIONS = [
   },
   {
     title: 'Finance & Auditing',
-    img: 'https://images.unsplash.com/photo-1454165833767-027ffea9e773?auto=format&fit=crop&w=800&q=80',
+    img: 'https://images.unsplash.com/photo-1554224155-16974a4ea21d?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/finance-auditing/',
   },
   {
     title: 'Constructions & Civil Engineering',
-    img: 'https://images.unsplash.com/photo-1503387762-592dea58f230?auto=format&fit=crop&w=800&q=80',
+    img: 'https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/constructions-civil-engineering/',
   },
   {
@@ -30,12 +30,12 @@ const SPECIALIZATIONS = [
   },
   {
     title: 'Data Analytics & Research',
-    img: 'https://images.unsplash.com/photo-1551288049-bbda48642153?auto=format&fit=crop&w=800&q=80',
+    img: 'https://images.unsplash.com/photo-1518186239751-6467fd605161?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/data-analytics-research/',
   },
   {
     title: 'Environment Health & Safety',
-    img: 'https://images.unsplash.com/photo-1532187863486-abf51ad9f69d?auto=format&fit=crop&w=800&q=80',
+    img: 'https://images.unsplash.com/photo-1473644680489-7607730623a8?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/ehs-environment-health-and-safety/',
   },
   {

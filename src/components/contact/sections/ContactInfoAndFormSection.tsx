@@ -232,86 +232,213 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full">
-      <FloatingInput label="Name" {...register('name')} dark={dark} />
-      <FloatingInput label="Designation" {...register('designation')} dark={dark} />
-      <FloatingInput label="Email" type="email" {...register('email')} dark={dark} />
-      <FloatingInput label="Company Name" {...register('companyName')} dark={dark} />
+    <form onSubmit={handleSubmit(onSubmit)} className={dark ? styles.FormWpformsForm_10038_88_11967 : 'flex flex-col gap-4 w-full'}>
+      {dark ? (
+        <div className={styles.DivWpformsFieldContainer_88_11968}>
+          {/* Row 1: Name & Designation */}
+          <div className={styles.DivWpformsLayoutRow_88_11969}>
+            <div className={styles.DivWpformsLayoutColumn_88_11970}>
+              <div className={styles.InputWpforms_10038Field_2_88_11971}>
+                <input
+                  {...register('name')}
+                  placeholder="Name"
+                  className="w-full bg-transparent border-none text-white text-[15.8px] font-['Inter'] outline-none placeholder:text-white/50"
+                />
+              </div>
+            </div>
+            <div className={styles.DivWpformsLayoutColumn_88_11974}>
+              <div className={styles.InputWpforms_10038Field_3_88_11975}>
+                <input
+                  {...register('designation')}
+                  placeholder="Designation"
+                  className="w-full bg-transparent border-none text-white text-[15.4px] font-['Inter'] outline-none placeholder:text-white/50"
+                />
+              </div>
+            </div>
+          </div>
 
-      <div className="relative pb-1">
-        <div className={`flex items-center border-b ${dark ? 'border-white/20' : 'border-[#ccc]'} py-2.5`}>
-          <span className={`text-[13px] mr-1 font-['Inter',Helvetica] ${dark ? 'text-white/50' : 'text-[#555]'}`}>+94</span>
-          <input
-            type="tel"
-            {...register('phone')}
-            placeholder="Phone Number"
-            className={`flex-1 bg-transparent text-[14px] font-['Inter',Helvetica] outline-none placeholder:opacity-50 ${
-              dark ? 'text-white placeholder:text-white' : 'text-[#333] placeholder:text-[#555]'
-            }`}
-          />
+          {/* Row 2: Email & Company Name */}
+          <div className={styles.DivWpformsLayoutRow_88_11978}>
+            <div className={styles.DivWpformsLayoutColumn_88_11979}>
+              <div className={styles.InputWpforms_10038Field_5_88_11980}>
+                <input
+                  type="email"
+                  {...register('email')}
+                  placeholder="Email"
+                  className="w-full bg-transparent border-none text-white text-[15.6px] font-['Inter'] outline-none placeholder:text-white/50"
+                />
+              </div>
+            </div>
+            <div className={styles.DivWpformsLayoutColumn_88_11983}>
+              <div className={styles.InputWpforms_10038Field_6_88_11984}>
+                <input
+                  {...register('companyName')}
+                  placeholder="Company Name"
+                  className="w-full bg-transparent border-none text-white text-[15.6px] font-['Inter'] outline-none placeholder:text-white/50"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Row 3: Phone & Country */}
+          <div className={styles.DivWpformsLayoutRow_88_11987}>
+            <div className={styles.DivWpformsLayoutColumn_88_11988}>
+              <div className={styles.DivIti_88_11989}>
+                <div className={styles.InputWpforms_10038Field_8_88_11990}>
+                  <input
+                    type="tel"
+                    {...register('phone')}
+                    placeholder="Phone Number"
+                    className="w-full bg-transparent border-none text-white text-[15.4px] font-['Inter'] outline-none placeholder:text-white/50"
+                  />
+                </div>
+                <div className={styles.DivItiFlagContainer_88_11993}>
+                  <div className={styles.SelectedCountry_88_11994}>
+                    <div className={styles.DivItiFlag_88_11995} />
+                    <div className={styles.DivItiArrowMargin_88_11996}>
+                      <div className={styles.DivItiArrow_88_11997} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={styles.DivWpformsLayoutColumn_88_11998}>
+              <div className={styles.InputWpforms_10038Field_9_88_11999}>
+                <select
+                  {...register('country')}
+                  className="w-full bg-transparent border-none text-white/50 text-[15.6px] font-['Inter'] outline-none [&>option]:text-black"
+                >
+                  <option value="" disabled>Country</option>
+                  {countries.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Message */}
+          <div className={styles.TextareaWpforms_10038Field_10_88_12002}>
+            <textarea
+              {...register('message')}
+              placeholder="Message"
+              rows={1}
+              className="w-full bg-transparent border-none text-white text-[15.5px] font-['Inter'] outline-none placeholder:text-white/50 resize-none"
+            />
+          </div>
         </div>
-      </div>
+      ) : (
+        <>
+          <FloatingInput label="Name" {...register('name')} dark={dark} />
+          <FloatingInput label="Designation" {...register('designation')} dark={dark} />
+          <FloatingInput label="Email" type="email" {...register('email')} dark={dark} />
+          <FloatingInput label="Company Name" {...register('companyName')} dark={dark} />
 
-      <FloatingSelect label="Country" options={countries} {...register('country')} dark={dark} />
-      <FloatingTextarea label="Message" {...register('message')} dark={dark} />
-
-      <div className="flex items-center gap-3 bg-[#f9f9f9] rounded-[3px] border border-[#d3d3d3] p-3 shadow-sm">
-        <button
-          type="button"
-          onClick={() => setCaptchaChecked(!captchaChecked)}
-          className={`w-6 h-6 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
-            captchaChecked ? 'bg-[#6abf4b] border-[#6abf4b]' : 'bg-white border-[#aaa] hover:border-[#6abf4b]'
-          }`}
-        >
-          {captchaChecked && (
-            <svg viewBox="0 0 12 10" className="w-3 h-3" aria-hidden="true">
-              <polyline
-                points="1.5 6 4.5 9 10.5 1"
-                fill="none"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+          <div className="relative pb-1">
+            <div className={`flex items-center border-b ${dark ? 'border-white/20' : 'border-[#ccc]'} py-2.5`}>
+              <span className={`text-[13px] mr-1 font-['Inter',Helvetica] ${dark ? 'text-white/50' : 'text-[#555]'}`}>+94</span>
+              <input
+                type="tel"
+                {...register('phone')}
+                placeholder="Phone Number"
+                className={`flex-1 bg-transparent text-[14px] font-['Inter',Helvetica] outline-none placeholder:opacity-50 ${
+                  dark ? 'text-white placeholder:text-white' : 'text-[#333] placeholder:text-[#555]'
+                }`}
               />
-            </svg>
+            </div>
+          </div>
+
+          <FloatingSelect label="Country" options={countries} {...register('country')} dark={dark} />
+          <FloatingTextarea label="Message" {...register('message')} dark={dark} />
+        </>
+      )}
+
+      <div className={dark ? styles.WpformsFieldContainer_88_12005 : 'flex flex-col gap-4'}>
+        <div className={dark ? styles.Div_88_12006 : 'flex flex-col gap-3 bg-[#f9f9f9] rounded-[3px] border border-[#d3d3d3] p-3 shadow-sm'}>
+          {dark ? (
+            <div className={styles.Iframe_88_12007}>
+              <div className={styles.Body_88_12008}>
+                <div className={styles.DivRcAnchorContainer_88_12009}>
+                  <div className={styles.DivRcAnchorContainerShadow_88_12010} />
+                  <div className={styles.DivRcAnchorContent_88_12011}>
+                    <div className={styles.DivRcAnchorCenterContainer_88_12012}>
+                      <div className={styles.DivRcAnchorCenterItem_88_12013}>
+                        <button 
+                          type="button" 
+                          onClick={() => setCaptchaChecked(!captchaChecked)}
+                          className={styles.SpanRecaptchaAnchor_88_12014}
+                        >
+                          {captchaChecked ? (
+                            <div className={styles.DivRecaptchaCheckboxCheckmark_88_12018} />
+                          ) : (
+                            <div className={styles.DivRecaptchaCheckboxBorder_88_12019} />
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    <div className={styles.DivRcAnchorCenterContainer_88_12020}>
+                      <div className={styles.LabelRecaptchaAnchorLabel_88_12021}>
+                        <span className={styles.IMNotARobo_88_12022}>I&apos;m not a robot</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.DivRcAnchorNormalFooter_88_12023}>
+                    <div className={styles.DivRcAnchorLogoPortrait_88_12024}>
+                      <div className={styles.DivRcAnchorLogoImg_88_12025} />
+                      <div className={styles.DivRcAnchorLogoText_88_12026}>
+                        <span className={styles.ReCaptcha_88_12027}>reCAPTCHA</span>
+                      </div>
+                    </div>
+                    <div className={styles.DivRcAnchorPt_88_12028}>
+                      <div className={styles.A_88_12029}><span className={styles.Privacy_88_12030}>Privacy</span></div>
+                      <span className={styles.generated__88_12031}> - </span>
+                      <div className={styles.A_88_12032}><span className={styles.Terms_88_12033}>Terms</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setCaptchaChecked(!captchaChecked)}
+                  className={`w-6 h-6 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
+                    captchaChecked ? 'bg-[#6abf4b] border-[#6abf4b]' : 'bg-white border-[#aaa] hover:border-[#6abf4b]'
+                  }`}
+                >
+                  {captchaChecked && (
+                    <svg viewBox="0 0 12 10" className="w-3 h-3" aria-hidden="true">
+                      <polyline points="1.5 6 4.5 9 10.5 1" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
+                </button>
+                <span className="font-['Inter',Helvetica] text-black text-sm flex-1">I&apos;m not a robot</span>
+                <div className="flex flex-col items-center gap-1">
+                  <Image className="w-7 h-7" alt="reCAPTCHA" src={withBasePath('/figmaAssets/div-rc-anchor-logo-img.png')} width={28} height={28} />
+                  <span className="text-[#555] text-[8px] font-['Inter',Helvetica]">reCAPTCHA</span>
+                </div>
+              </div>
+            </>
           )}
-        </button>
-        <span className="font-['Inter',Helvetica] text-black text-sm flex-1">I&apos;m not a robot</span>
-        <div className="flex flex-col items-center gap-1">
-          <Image
-            className="w-7 h-7"
-            alt="reCAPTCHA"
-            src={withBasePath('/figmaAssets/div-rc-anchor-logo-img.png')}
-            width={28}
-            height={28}
-          />
-          <span className="text-[#555] text-[8px] font-['Inter',Helvetica]">reCAPTCHA</span>
         </div>
       </div>
 
-      <div>
+      <div className={dark ? styles.DivWpformsSubmitContainer_88_12034 : 'mt-2'}>
         <button
           type="submit"
           disabled={!captchaChecked || submitting}
-          className={`flex items-center gap-2 px-7 py-3 rounded-full font-['Inter',Helvetica] font-medium text-[13px] tracking-wider transition-all duration-300 ${
+          className={dark ? styles.ButtonWpformsSubmit_10038_88_12035 : `flex items-center gap-2 px-7 py-3 rounded-full font-['Inter',Helvetica] font-medium text-[13px] tracking-wider transition-all duration-300 ${
             captchaChecked && !submitting
-              ? dark
-                ? 'bg-white text-[#111] hover:bg-[#6abf4b] hover:text-white cursor-pointer'
-                : 'bg-[#111] text-white hover:bg-[#6abf4b] cursor-pointer'
+              ? 'bg-[#111] text-white hover:bg-[#6abf4b] cursor-pointer'
               : 'bg-[#ccc] text-white cursor-not-allowed'
           }`}
         >
           {submitting ? (
-            <>
-              <div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-              Sending...
-            </>
+            <div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
           ) : (
-            <>
-              CONNECT
-              <ChevronRightIcon className="w-3.5 h-3.5" />
-            </>
+            <span className={dark ? styles.Connect_88_12036 : ''}>{dark ? 'CONNECT' : 'CONNECT'}</span>
           )}
+          {!dark && <ChevronRightIcon className="w-3.5 h-3.5" />}
         </button>
       </div>
     </form>
@@ -559,7 +686,11 @@ export function ContactInfoAndFormSection() {
                 </div>
               </div>
             </div>
-            <ContactForm dark />
+            <div className={styles.DivElementorElement_88_11965}>
+              <div className={styles.DivElementorWidgetContainer_88_11966}>
+                <ContactForm dark />
+              </div>
+            </div>
           </div>
         </div>
 
