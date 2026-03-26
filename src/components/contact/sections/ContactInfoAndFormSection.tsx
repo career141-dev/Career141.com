@@ -559,13 +559,7 @@ export function ContactInfoAndFormSection() {
                 </div>
               </div>
             </div>
-            <div className="bg-[#11593f] rounded-2xl shadow-2xl p-8 border border-white/15">
-              <div className="flex items-baseline gap-3 mb-6">
-                <span className="font-['Quicksand',Helvetica] font-bold text-[#6abf4b] text-[36px] leading-none">Hello!</span>
-                <span className="font-['Inter',Helvetica] font-medium text-white text-[16px]">We love to hear from you!</span>
-              </div>
-              <ContactForm dark />
-            </div>
+            <ContactForm dark />
           </div>
         </div>
 
