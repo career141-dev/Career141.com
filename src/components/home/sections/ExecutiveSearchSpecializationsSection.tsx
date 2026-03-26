@@ -1,6 +1,7 @@
 'use client'
 
-import { type JSX, useEffect, useRef } from 'react'
+import { type JSX, useEffect, useRef, useState } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 
 function prefersReducedMotion(): boolean {
   return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -195,53 +196,48 @@ function SpecializationCard({
 }
 
 export function ExecutiveSearchSpecializationsSection(): JSX.Element {
-  const headingRef = useRef<HTMLHeadingElement>(null)
-  const dividerRef = useRef<HTMLDivElement>(null)
-  const subtextRef = useRef<HTMLParagraphElement>(null)
-  const buttonRef = useRef<HTMLAnchorElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
   const leftRef = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    const els = [headingRef.current, dividerRef.current, subtextRef.current, buttonRef.current]
-
-    if (prefersReducedMotion()) {
-      els.forEach((el) => {
-        if (el) {
-          el.style.opacity = '1'
-          el.style.transform = 'translateY(0)'
-        }
-      })
-      return
-    }
-
-    const panel = leftRef.current
-    if (!panel) return
-
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          els.forEach((el, i) => {
-            if (!el) return
-            setTimeout(() => {
-              el.style.opacity = '1'
-              el.style.transform = 'translateY(0)'
-            }, i * 150)
-          })
-          obs.unobserve(panel)
-        }
-      },
-      { threshold: 0.15 }
-    )
-
-    obs.observe(panel)
-    return () => obs.disconnect()
+    const check = () => setIsMobile(window.innerWidth < 1024)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
   }, [])
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end end'],
+  })
+
+  // Desktop Scroll-Linked Logic:
+  // 1. Initially appear at top (0px)
+  // 2. Clear downward track but stop much earlier (by 30% of scroll)
+  // 3. Complete fade-out by middle of the section (50% scroll)
+  // 4. Stays locked and hidden for the remainder
+  // Desktop Scroll-Linked Logic:
+  // 1. Start at top
+  // 2. Stop downward motion very early (at only 12vh down) by 15% scroll
+  // 3. NO FADE-OUT (Stay visible 100%)
+  // 4. Stays locked in position for the remainder of the section
+  // PHASE 1 (0% → 35%):  Text tracks downward from top of panel to visual center (~26vh)
+  // PHASE 2 (35% → 100%): Text locks at center — stays visible while cards continue scrolling
+  const yMotion = useTransform(
+    scrollYProgress,
+    [0,     0.35,   1.0],
+    ['0px', '18vh', '18vh']
+  )
+  const opacityMotion = useTransform(scrollYProgress, [0, 1], [1, 1])
 
   return (
     <section
+      ref={sectionRef}
       className="exec-spec-section"
       style={{
         width: '100%',
+        position: 'relative',
         background: 'radial-gradient(ellipse at 20% 50%, #ccdde4 0%, #dce8ed 60%)',
         fontFamily: "'Plus Jakarta Sans', sans-serif",
       }}
@@ -250,7 +246,7 @@ export function ExecutiveSearchSpecializationsSection(): JSX.Element {
         className="exec-spec-inner"
         style={{
           display: 'grid',
-          gridTemplateColumns: '520px 1fr',
+          gridTemplateColumns: isMobile ? '1fr' : '520px 1fr',
           alignItems: 'start',
           minHeight: '100vh',
         }}
@@ -259,95 +255,84 @@ export function ExecutiveSearchSpecializationsSection(): JSX.Element {
           ref={leftRef}
           className="exec-spec-left"
           style={{
-            position: 'sticky',
+            position: isMobile ? 'static' : 'sticky',
             top: 0,
-            height: '100vh',
+            height: isMobile ? 'auto' : '100vh',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
-            padding: '60px 48px 60px 72px',
+            justifyContent: 'flex-start',
+            padding: isMobile ? '48px 24px 32px' : '60px 48px 60px 72px',
+            overflow: 'hidden',
           }}
         >
-          <h2
-            ref={headingRef}
-            style={{
-              fontFamily: "'Plus Jakarta Sans', sans-serif",
-              fontSize: 'clamp(22px, 2.4vw, 32px)',
-              lineHeight: 1.18,
-              margin: '0 0 20px 0',
-              opacity: 0,
-              transform: 'translateY(20px)',
-              transition: 'opacity 0.5s ease, transform 0.5s ease',
-            }}
-          >
-            <span style={{ fontWeight: 300, color: '#1a2e2b', display: 'block' }}>We are knowledge</span>
-            <span style={{ fontWeight: 300, color: '#1a2e2b', display: 'block' }}>experts in</span>
-            <span style={{ fontWeight: 800, color: '#2E7D6B', display: 'block' }}>Skill Sets &amp;</span>
-            <span style={{ fontWeight: 800, color: '#2E7D6B', display: 'block' }}>Specialization</span>
-          </h2>
+          <motion.div style={{ y: isMobile ? 0 : yMotion, opacity: opacityMotion }} className="exec-spec-motion-container">
+            <h2
+              style={{
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontSize: 'clamp(22px, 2.4vw, 32px)',
+                lineHeight: 1.18,
+                margin: '0 0 20px 0',
+                color: '#1a2e2b',
+              }}
+            >
+              <span style={{ fontWeight: 300, display: 'block' }}>We are knowledge</span>
+              <span style={{ fontWeight: 300, display: 'block' }}>experts in</span>
+              <span style={{ fontWeight: 800, color: '#2E7D6B', display: 'block' }}>Skill Sets &amp;</span>
+              <span style={{ fontWeight: 800, color: '#2E7D6B', display: 'block' }}>Specialization</span>
+            </h2>
 
-          <div
-            ref={dividerRef}
-            style={{
-              width: 81,
-              height: 6,
-              backgroundColor: '#C8622A',
-              borderRadius: 3,
-              marginBottom: 24,
-              opacity: 0,
-              transform: 'translateY(20px)',
-              transition: 'opacity 0.5s ease, transform 0.5s ease',
-            }}
-          />
+            <div
+              style={{
+                width: 81,
+                height: 6,
+                backgroundColor: '#C8622A',
+                borderRadius: 3,
+                marginBottom: 24,
+              }}
+            />
 
-          <p
-            ref={subtextRef}
-            style={{
-              fontFamily: "'Plus Jakarta Sans', sans-serif",
-              fontWeight: 400,
-              fontSize: 16,
-              lineHeight: 1.7,
-              color: '#5a6e6b',
-              maxWidth: 280,
-              margin: '0 0 44px 0',
-              opacity: 0,
-              transform: 'translateY(20px)',
-              transition: 'opacity 0.5s ease, transform 0.5s ease',
-            }}
-          >
-            For over two decades, we&apos;ve been more than an executive search firm. We connect top talent with industry-leading companies.
-          </p>
-
-          <a
-            ref={buttonRef}
-            href="https://career141.com/executive-search/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="exec-search-btn"
-            style={{
-              display: 'inline-flex',
-              alignSelf: 'flex-start',
-              alignItems: 'center',
-              padding: '12px 28px',
-              border: '2px solid #11593f',
-              borderRadius: 999,
-              fontFamily: "'Plus Jakarta Sans', sans-serif",
-              fontWeight: 700,
-              fontSize: 13,
-              letterSpacing: '0.1em',
-              color: '#11593f',
-              textDecoration: 'none',
-              textTransform: 'uppercase',
-              position: 'relative',
-              overflow: 'hidden',
-              opacity: 0,
-              transform: 'translateY(20px)',
-              transition: 'opacity 0.5s ease, transform 0.5s ease, color 0.3s ease',
-            }}
-          >
-            <span className="exec-search-btn-bg" />
-            <span style={{ position: 'relative', zIndex: 1 }}>Executive Search</span>
-          </a>
+            <p
+              style={{
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontWeight: 400,
+                fontSize: 16,
+                lineHeight: 1.7,
+                color: '#5a6e6b',
+                maxWidth: 280,
+                margin: '0 0 44px 0',
+              }}
+            >
+              For over two decades, we&apos;ve been more than an executive search firm. We connect top talent with industry-leading companies.
+            </p>
+            <a
+              href="https://career141.com/executive-search/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="exec-search-btn"
+              style={{
+                display: 'inline-flex',
+                alignSelf: 'flex-start',
+                alignItems: 'center',
+                padding: '12px 28px',
+                border: '2px solid #11593f',
+                borderRadius: 999,
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontWeight: 700,
+                fontSize: 13,
+                letterSpacing: '0.1em',
+                color: '#11593f',
+                textDecoration: 'none',
+                textTransform: 'uppercase',
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'color 0.3s ease',
+                marginTop: 0, // Reduced from 44
+              }}
+            >
+              <span className="exec-search-btn-bg" />
+              <span style={{ position: 'relative', zIndex: 1 }}>Executive Search</span>
+            </a>
+          </motion.div>
         </div>
 
         <div
@@ -412,16 +397,6 @@ export function ExecutiveSearchSpecializationsSection(): JSX.Element {
         }
 
         @media (max-width: 1024px) {
-          .exec-spec-inner {
-            grid-template-columns: 440px 1fr !important;
-          }
-
-          .exec-spec-left {
-            padding: 48px 32px 48px 48px !important;
-          }
-        }
-
-        @media (max-width: 768px) {
           .exec-spec-inner {
             grid-template-columns: 1fr !important;
             min-height: unset !important;

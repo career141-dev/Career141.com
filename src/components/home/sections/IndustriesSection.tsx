@@ -27,57 +27,77 @@ function PillButton({ label, idx, onClick, fontSize }: { label: string; idx: num
       onClick={onClick}
       style={{
         position: 'relative',
-        width: '100%',
-        height: '100%',
+        width: 204,
+        height: 90.7,
         background: 'transparent',
         border: 'none',
         cursor: 'pointer',
         padding: 0,
-        transition: 'transform 0.25s ease',
+        transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
         willChange: 'transform',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
       }}
-      onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-6px)')}
-      onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
+      onMouseEnter={(e) => {
+        if (window.innerWidth >= 1024) onClick()
+        e.currentTarget.style.transform = 'scale(1.05) translateY(-4px)'
+      }}
+      onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1) translateY(0)')}
       aria-label={label}
     >
-      <svg
-        width="100%"
-        height="100%"
-        viewBox="0 0 255 79"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style={{ position: 'absolute', inset: 0, display: 'block' }}
-      >
-        <defs>
-          <linearGradient id={gradId} x1="127.5" y1="0" x2="127.5" y2="79" gradientUnits="userSpaceOnUse">
-            <stop offset="0.465" stopColor="#01C5C4" />
-            <stop offset="1" stopColor="#01C5C4" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <rect x="1" y="1" width="253" height="77" rx="38.5" stroke={`url(#${gradId})`} strokeWidth="2" fill="transparent" />
-      </svg>
+      <div style={{ position: 'relative', width: 204, height: 63.2 }}>
+        <svg
+          width="204"
+          height="64"
+          viewBox="0 0 204 64"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ position: 'absolute', inset: 0, display: 'block' }}
+        >
+          <defs>
+            <linearGradient id={gradId} x1="102" y1="0.000781232" x2="102" y2="63.2008" gradientUnits="userSpaceOnUse">
+              <stop offset="0.465" stopColor="#01C5C4" />
+              <stop offset="1" stopOpacity="0" />
+            </linearGradient>
+            <clipPath id={`clip-${idx}`}>
+              <rect width="204" height="63.2" fill="white" />
+            </clipPath>
+          </defs>
+          <g clipPath={`url(#clip-${idx})`}>
+            <path
+              d="M172.4 0.800781H31.6C14.5897 0.800781 0.800049 14.5904 0.800049 31.6008C0.800049 48.6111 14.5897 62.4008 31.6 62.4008H172.4C189.41 62.4008 203.2 48.6111 203.2 31.6008C203.2 14.5904 189.41 0.800781 172.4 0.800781Z"
+              stroke={`url(#${gradId})`}
+              strokeWidth="1.6"
+              style={{ vectorEffect: 'non-scaling-stroke' }}
+            />
+          </g>
+        </svg>
 
-      <span
-        style={{
-          position: 'absolute',
-          inset: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          fontFamily: "'Quicksand', Helvetica, sans-serif",
-          fontWeight: 500,
-          fontSize,
-          color: '#FFFFFF',
-          textTransform: 'uppercase',
-          letterSpacing: '1.1px',
-          lineHeight: 1.25,
-          padding: '0 12%',
-          pointerEvents: 'none',
-        }}
-      >
-        {label}
-      </span>
+        <span
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+            fontFamily: "'Quicksand', Helvetica, sans-serif",
+            fontWeight: 500,
+            fontSize: fontSize || '12.8px',
+            color: '#FFFFFF',
+            textTransform: 'uppercase',
+            letterSpacing: '1.1px',
+            lineHeight: '15.36px',
+            padding: '0 10px',
+            pointerEvents: 'none',
+          }}
+        >
+          {label}
+        </span>
+      </div>
     </button>
   )
 }
@@ -92,7 +112,7 @@ export function IndustriesSection(): JSX.Element {
     if (prevTimer.current) clearTimeout(prevTimer.current)
     setPrev(active)
     setActive(idx)
-    prevTimer.current = setTimeout(() => setPrev(null), 800)
+    prevTimer.current = setTimeout(() => setPrev(null), 850)
   }
 
   useEffect(() => {
@@ -115,6 +135,7 @@ export function IndustriesSection(): JSX.Element {
             backgroundImage: `url(${INDUSTRIES[prev].bg})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
+            animation: 'industriesBgFadeOut 0.8s ease-in-out forwards',
           }}
         />
       )}
@@ -128,7 +149,7 @@ export function IndustriesSection(): JSX.Element {
           backgroundImage: `url(${INDUSTRIES[active].bg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          animation: 'industriesBgFadeIn 0.75s ease forwards',
+          animation: 'industriesBgPopIn 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
         }}
       />
 
@@ -149,6 +170,7 @@ export function IndustriesSection(): JSX.Element {
 
         <div style={{ height: 'clamp(80px, 16.4vh, 160px)' }} />
 
+
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 15 }}>
           {rows.map((row, rowIdx) => (
             <div key={rowIdx} style={{ display: 'flex', gap: 15 }}>
@@ -167,17 +189,17 @@ export function IndustriesSection(): JSX.Element {
 
       <div className="ind-scroll-container lg:hidden" style={{ position: 'relative', zIndex: 10, width: '100%', height: '100%' }}>
         <div style={{ padding: '26px 45px 40px' }}>
-          <div style={{ lineHeight: 1.3 }}>
-            <span style={{ fontFamily: "'Quicksand', Helvetica, sans-serif", fontSize: 20, fontWeight: 700, color: '#BFEF00', letterSpacing: '0.3px' }}>INDUSTRIES</span>
-            <span style={{ fontFamily: "'Quicksand', Helvetica, sans-serif", fontSize: 20, fontWeight: 400, color: '#FFFFFF' }}> we work on</span>
+          <div style={{ lineHeight: 1.3, textAlign: 'center' }}>
+            <span style={{ fontFamily: "'Quicksand', Helvetica, sans-serif", fontSize: 24, fontWeight: 700, color: '#BFEF00', letterSpacing: '0.3px' }}>INDUSTRIES</span>
+            <span style={{ fontFamily: "'Quicksand', Helvetica, sans-serif", fontSize: 24, fontWeight: 400, color: '#FFFFFF' }}> we work on</span>
           </div>
 
-          <div style={{ height: 68 }} />
+          <div style={{ height: 60 }} />
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 14, rowGap: 15 }}>
             {INDUSTRIES.map((industry, idx) => (
               <div key={idx} style={{ aspectRatio: '143 / 83' }}>
-                <PillButton label={industry.label} idx={idx} onClick={() => handleClick(idx)} fontSize="clamp(8px, 2.5vw, 11px)" />
+                <PillButton label={industry.label} idx={idx} onClick={() => handleClick(idx)} fontSize="clamp(10px, 3.2vw, 13px)" />
               </div>
             ))}
           </div>

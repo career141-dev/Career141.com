@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { CheckCircle2Icon, ChevronRightIcon, InstagramIcon, LinkedinIcon, MailIcon, MapPinIcon, PhoneIcon } from 'lucide-react'
 import { withBasePath } from '@/lib/assetPath'
+import styles from './ContactInfoAndFormSection.module.css'
+
 
 type FormData = {
   name: string
@@ -322,7 +324,7 @@ export function ContactInfoAndFormSection() {
       <section
         id="contact"
         className="md:hidden flex flex-col w-full relative min-h-screen"
-        style={{ background: `url(${withBasePath('/figmaAssets/div-elementor-element.png')}) center center / cover no-repeat` }}
+        style={{ background: `url(${withBasePath('/figmaAssets/div.elementor-element.png')}) center center / cover no-repeat` }}
       >
         <div className="absolute inset-0 bg-[#0f3424]/80" />
 
@@ -367,73 +369,317 @@ export function ContactInfoAndFormSection() {
 
       <section
         id="contact-desktop"
-        className="hidden md:flex items-center justify-center py-[140px] px-[60px] relative w-full min-h-screen"
-        style={{ background: `url(${withBasePath('/figmaAssets/div-elementor-element.png')}) 50% 50% / cover no-repeat` }}
+        className="hidden md:flex items-center justify-center py-[80px] px-[60px] relative w-full min-h-[80vh]"
+        style={{ background: `url(${withBasePath('/figmaAssets/div.elementor-element.png')}) 50% 50% / cover no-repeat` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-black/30 to-black/50" />
-
-        <div className="flex items-stretch justify-center gap-0 relative w-full max-w-[1100px] mx-auto">
-          <div className="flex-1 max-w-[480px]">
-            <div className="flex flex-col items-start gap-6 p-10 bg-white/95 backdrop-blur-sm rounded-l-[28px] h-full shadow-2xl">
-              <div className="flex flex-col items-start w-full">
-                <h2 className="font-['Quicksand',Helvetica] font-bold text-[38px] leading-[1.2]">
-                  <span className="text-[#161618]">Find </span>
-                  <span className="text-[#37a65e]">
-                    your future
-                    <br />
-                    talent
-                  </span>
-                  <span className="text-[#161618]"> with us </span>
-                  <span className="text-[#37a65e]">today</span>
-                </h2>
-              </div>
-              <p className="font-['Inter',Helvetica] text-[#252525] text-[15px] leading-6">
-                Every interaction your customers have with your company&apos;s digital properties either brings you closer or farther away from your business goals.
-              </p>
-              <div className="flex flex-col items-start gap-4 w-full">
-                {contactPhones.map((item) => (
-                  <a
-                    key={item.phone}
-                    href={`tel:${item.phone.replace(/\s/g, '')}`}
-                    className="flex items-center gap-4 w-full group hover:bg-[#f0fdf4] rounded-xl p-2 -mx-2 transition-colors"
-                  >
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#37a65e]/10 text-[11px] font-bold text-[#37a65e] shrink-0">
-                      {item.code}
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="font-['Inter',Helvetica] text-black text-[11px]">{item.country}</span>
-                      <span className="font-['Quicksand',Helvetica] font-semibold text-[#383838] text-[17px] group-hover:text-[#37a65e] transition-colors">
-                        {item.phone}
-                      </span>
-                    </div>
-                  </a>
-                ))}
-              </div>
-              <a
-                href="mailto:hello@career141.com"
-                className="flex items-center gap-4 w-full group hover:bg-[#f0fdf4] rounded-xl p-2 -mx-2 transition-colors"
-              >
-                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#37a65e]/10 shrink-0">
-                  <MailIcon className="w-5 h-5 text-[#37a65e]" />
+        <div className={styles.DivElementorElement_88_11864}>
+          <div className={styles.DivElementorElementMargin_88_11865}>
+            <div className={styles.DivElementorElement_88_11866}>
+              <div className={styles.DivElementorElement_88_11867}>
+                <div className={styles.DivElementorWidgetContainer_88_11868}>
+                  <div className={styles.H1ElementorHeadingTitle_88_11869}>
+                    <span className={styles.FindYourFutureTalentWithUsToday_88_11870}>
+                      Find your future talent
+                      <br />
+                      with us today
+                    </span>
+                  </div>
                 </div>
-                <span className="font-['Quicksand',Helvetica] font-semibold text-[#383838] text-[17px] group-hover:text-[#37a65e] transition-colors">
-                  hello@career141.com
-                </span>
-              </a>
+              </div>
+              <div className={styles.DivElementorElement_88_11871}>
+                <div className={styles.DivElementorWidgetContainer_88_11872}>
+                  <div className={styles.P_88_11873}>
+                    <span className={styles.EveryInteractionYourCustomersHaveWithYourCompanySDigitalPropertiesEitherBringsYouCloserOrFartherAwayFromYourBusinessGoals_88_11874}>
+                      Every interaction your customers have with your company&apos;s digital
+                      <br />
+                      properties either brings you closer or farther away from your
+                      <br />
+                      business goals.
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.DivElementorElement_88_11875}>
+                <div className={styles.DivElementorElement_88_11876}>
+                  <div className={styles.DivElementorElement_88_11877}>
+                    <div className={styles.DivElementorWidgetContainer_88_11878}>
+                      <div className={styles.DivElementorIconWrapper_88_11879}>
+                        <div className={styles.DivElementorIcon_88_11880}>
+                          <div className={styles.Frame_88_11881}>
+                            <PhoneIcon className="w-5 h-5 text-[#37a65e]" />
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.DivElementorElement_88_11883}>
+                    <div className={styles.DivElementorElement_88_11884}>
+                      <div className={styles.DivElementorWidgetContainer_88_11885}>
+                        <span className={styles.SriLanka_88_11886}>Sri Lanka</span>
+                      </div>
+                    </div>
+                    <div className={styles.DivElementorElement_88_11887}>
+                      <div className={styles.DivElementorWidgetContainer_88_11888}>
+                        <div className={styles.A_88_11889}>
+                          <span className={styles._75_359_5495_88_11890}>+94 75 359 5495</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.DivElementorElement_88_11891}>
+                  <div className={styles.DivElementorElement_88_11892}>
+                    <div className={styles.DivElementorWidgetContainer_88_11893}>
+                      <div className={styles.DivElementorIconWrapper_88_11894}>
+                        <div className={styles.DivElementorIcon_88_11895}>
+                          <div className={styles.Frame_88_11896}>
+                            <PhoneIcon className="w-5 h-5 text-[#37a65e]" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.DivElementorElement_88_11898}>
+                    <div className={styles.DivElementorElement_88_11899}>
+                      <div className={styles.DivElementorWidgetContainer_88_11900}>
+                        <span className={styles.Dubai_88_11901}>Dubai</span>
+                      </div>
+                    </div>
+                    <div className={styles.DivElementorElement_88_11902}>
+                      <div className={styles.DivElementorWidgetContainer_88_11903}>
+                        <div className={styles.A_88_11904}>
+                          <span className={styles._56_530_2484_88_11905}>+971 56 530 2484</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.DivElementorElement_88_11906}>
+                  <div className={styles.DivElementorElement_88_11907}>
+                    <div className={styles.DivElementorWidgetContainer_88_11908}>
+                      <div className={styles.DivElementorIconWrapper_88_11909}>
+                        <div className={styles.DivElementorIcon_88_11910}>
+                          <div className={styles.Frame_88_11911}>
+                            <PhoneIcon className="w-5 h-5 text-[#37a65e]" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.DivElementorElement_88_11913}>
+                    <div className={styles.DivElementorElement_88_11914}>
+                      <div className={styles.DivElementorWidgetContainer_88_11915}>
+                        <span className={styles.Singapore_88_11916}>Singapore</span>
+                      </div>
+                    </div>
+                    <div className={styles.DivElementorElement_88_11917}>
+                      <div className={styles.DivElementorWidgetContainer_88_11918}>
+                        <div className={styles.A_88_11919}>
+                          <span className={styles._89_022_082_88_11920}>+65 89 022 082</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.DivElementorElementMargin_88_11921}>
+                <div className={styles.DivElementorElement_88_11922}>
+                  <div className={styles.DivElementorElement_88_11923}>
+                    <div className={styles.DivElementorWidgetContainer_88_11924}>
+                      <div className={styles.DivElementorIconWrapper_88_11925}>
+                        <div className={styles.DivElementorIcon_88_11926}>
+                          <div className={styles.Frame_88_11927}>
+                            <MailIcon className="w-5 h-5 text-[#37a65e]" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.DivElementorElement_88_11929}>
+                    <div className={styles.DivElementorWidgetContainer_88_11930}>
+                      <div className={styles.A_88_11931}>
+                        <span className={styles.HelloCareer141Com_88_11932}>hello@career141.com</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.DivElementorElementMargin_88_11933}>
+                <div className={styles.DivElementorElement_88_11934}>
+                  <div className={styles.DivElementorElement_88_11935}>
+                    <div className={styles.DivElementorWidgetContainer_88_11936}>
+                      <div className={styles.DivElementorIconWrapper_88_11937}>
+                        <div className={styles.AElementorIcon_88_11938}>
+                          <div className={styles.Frame_88_11939}>
+                            <LinkedinIcon className="w-4 h-4 text-[#37a65e]" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.DivElementorElement_88_11942}>
+                    <div className={styles.DivElementorWidgetContainer_88_11943}>
+                      <div className={styles.DivElementorIconWrapper_88_11944}>
+                        <div className={styles.AElementorIcon_88_11945}>
+                          <div className={styles.Frame_88_11946}>
+                            <InstagramIcon className="w-4 h-4 text-[#37a65e]" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.DivElementorElement_88_11949}>
+                    <div className={styles.DivElementorWidgetContainer_88_11950}>
+                      <div className={styles.DivElementorIconWrapper_88_11951}>
+                        <div className={styles.AElementorIcon_88_11952}>
+                          <div className={styles.Frame_88_11953}>
+                            <MailIcon className="w-4 h-4 text-[#37a65e]" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-
-          <div
-            className="flex-1 max-w-[520px] flex flex-col pt-10 pb-8 px-10 rounded-r-[28px] shadow-2xl"
-            style={{ background: 'linear-gradient(213deg, rgba(203,252,6,1) 0%, rgba(17,89,63,1) 56%)' }}
-          >
-            <div className="flex items-baseline gap-4 mb-6">
-              <span className="font-['Quicksand',Helvetica] font-bold text-[#cbfc06] text-[36px] leading-none">Hello!</span>
-              <span className="font-['Inter',Helvetica] font-medium text-white text-[16px]">We love to hear from you!</span>
+          <div className={styles.DivElementorElement_88_11956}>
+            <div className={styles.DivElementorElementMargin_88_11957}>
+              <div className={styles.DivElementorElement_88_11958}>
+                <div className={styles.DivElementorElement_88_11959}>
+                  <div className={styles.DivElementorWidgetContainer_88_11960}>
+                    <span className={styles.Hello_88_11961}>Hello!</span>
+                  </div>
+                </div>
+                <div className={styles.DivElementorElement_88_11962}>
+                  <div className={styles.DivElementorWidgetContainer_88_11963}>
+                    <span className={styles.WeLoveToHearFromYou_88_11964}>We love to hear from you!</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <ContactForm dark />
+            <div className={styles.DivElementorElement_88_11965}>
+              <div className={styles.DivElementorWidgetContainer_88_11966}>
+                <form className={styles.FormWpformsForm_10038_88_11967}>
+                  <div className={styles.DivWpformsFieldContainer_88_11968}>
+                    <div className={styles.DivWpformsLayoutRow_88_11969}>
+                      <div className={styles.DivWpformsLayoutColumn_88_11970}>
+                        <div className={styles.InputWpforms_10038Field_2_88_11971}>
+                          <div className={styles.DivPlaceholder_88_11972}>
+                            <span className={styles.Name_88_11973}>Name</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={styles.DivWpformsLayoutColumn_88_11974}>
+                        <div className={styles.InputWpforms_10038Field_3_88_11975}>
+                          <div className={styles.DivPlaceholder_88_11976}>
+                            <span className={styles.Designation_88_11977}>Designation</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={styles.DivWpformsLayoutRow_88_11978}>
+                      <div className={styles.DivWpformsLayoutColumn_88_11979}>
+                        <div className={styles.InputWpforms_10038Field_5_88_11980}>
+                          <div className={styles.DivPlaceholder_88_11981}>
+                            <span className={styles.Email_88_11982}>Email</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={styles.DivWpformsLayoutColumn_88_11983}>
+                        <div className={styles.InputWpforms_10038Field_6_88_11984}>
+                          <div className={styles.DivPlaceholder_88_11985}>
+                            <span className={styles.CompanyName_88_11986}>Company Name</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={styles.DivWpformsLayoutRow_88_11987}>
+                      <div className={styles.DivWpformsLayoutColumn_88_11988}>
+                        <div className={styles.DivIti_88_11989}>
+                          <div className={styles.InputWpforms_10038Field_8_88_11990}>
+                            <div className={styles.DivPlaceholder_88_11991}>
+                              <span className={styles.PhoneNumber_88_11992}>Phone Number</span>
+                            </div>
+                          </div>
+                          <div className={styles.DivItiFlagContainer_88_11993}>
+                            <div className={styles.SelectedCountry_88_11994}>
+                              <div className={styles.DivItiFlag_88_11995} />
+                              <div className={styles.DivItiArrowMargin_88_11996}>
+                                <div className={styles.DivItiArrow_88_11997} />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={styles.DivWpformsLayoutColumn_88_11998}>
+                        <div className={styles.InputWpforms_10038Field_9_88_11999}>
+                          <div className={styles.DivPlaceholder_88_12000}>
+                            <span className={styles.Country_88_12001}>Country</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={styles.TextareaWpforms_10038Field_10_88_12002}>
+                      <div className={styles.DivPlaceholder_88_12003}>
+                        <span className={styles.Message_88_12004}>Message</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.WpformsFieldContainer_88_12005}>
+                    <div className={styles.Div_88_12006}>
+                      <div className={styles.Iframe_88_12007}>
+                        <div className={styles.Body_88_12008}>
+                          <div className={styles.DivRcAnchorContainer_88_12009}>
+                            <div className={styles.DivRcAnchorContainerShadow_88_12010} />
+                            <div className={styles.DivRcAnchorContent_88_12011}>
+                              <div className={styles.DivRcAnchorCenterContainer_88_12012}>
+                                <div className={styles.DivRcAnchorCenterItem_88_12013}>
+                                  <div className={styles.SpanRecaptchaAnchor_88_12014}>
+                                    <div className={styles.DivRecaptchaCheckboxBorder_88_12019} />
+                                  </div>
+                                </div>
+                              </div>
+                              <div className={styles.DivRcAnchorCenterContainer_88_12020}>
+                                <div className={styles.LabelRecaptchaAnchorLabel_88_12021}>
+                                  <span className={styles.IMNotARobo_88_12022}>I'm not a robot</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className={styles.DivRcAnchorNormalFooter_88_12023}>
+                              <div className={styles.DivRcAnchorLogoPortrait_88_12024}>
+                                <div className={styles.DivRcAnchorLogoImg_88_12025} />
+                                <div className={styles.DivRcAnchorLogoText_88_12026}>
+                                  <span className={styles.ReCaptcha_88_12027}>reCAPTCHA</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className={styles.DivRcAnchorPt_88_12028}>
+                              <div className={styles.A_88_12029}>
+                                <span className={styles.Privacy_88_12030}>Privacy</span>
+                              </div>
+                              <span className={styles.generated__88_12031}> - </span>
+                              <div className={styles.A_88_12032}>
+                                <span className={styles.Terms_88_12033}>Terms</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.DivWpformsSubmitContainer_88_12034}>
+                    <button type="submit" className={styles.ButtonWpformsSubmit_10038_88_12035}>
+                      <span className={styles.Connect_88_12036}>Connect</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
+
       </section>
 
       <section className="md:hidden flex flex-col w-full px-5 py-10 bg-white">
@@ -479,9 +725,9 @@ export function ContactInfoAndFormSection() {
         </div>
       </section>
 
-      <section className="hidden md:flex flex-col items-center gap-5 py-[120px] px-[80px] relative w-full bg-[#f6f8f6]">
+      <section className="hidden md:flex flex-col items-center gap-5 py-[80px] px-[80px] relative w-full bg-white">
         <Image
-          className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none opacity-60"
+          className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none opacity-80"
           alt="World map"
           src={withBasePath('/figmaAssets/--before.png')}
           fill

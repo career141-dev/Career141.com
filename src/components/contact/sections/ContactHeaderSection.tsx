@@ -30,11 +30,11 @@ const resourcesItems: LinkItem[] = [
 
 const navItems = [
   { label: 'EXECUTIVE SEARCH', hasDropdown: true, href: '', items: executiveSearchItems },
-  { label: 'OUR JOURNEY', hasDropdown: false, href: 'https://career141.com/our-journey/', items: [] },
+  { label: 'OUR JOURNEY', hasDropdown: false, href: '/our-journey', items: [] },
   { label: 'OUR CULTURE', hasDropdown: true, href: '', items: ourCultureItems },
   { label: 'PREMIUM JOBS', hasDropdown: false, href: 'https://career141.com/premium-jobs/', items: [] },
   { label: 'RESOURCES', hasDropdown: true, href: '', items: resourcesItems },
-  { label: 'CONTACT', hasDropdown: false, href: '/contact', highlight: true, items: [] },
+  { label: 'CONTACT', hasDropdown: false, href: '/contact-us', highlight: true, items: [] },
 ]
 
 function DropdownMenu({ items, isOpen }: { items: LinkItem[]; isOpen: boolean }) {

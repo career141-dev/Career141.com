@@ -296,7 +296,7 @@ export function HowWeDifferentiateSection() {
         'lg:[background-size:100%_100%]',
       ].join(' ')}
     >
-      <div className="hidden lg:block" style={{ maxWidth: 1521, margin: '0 auto', padding: '40px' }}>
+      <div className="hidden lg:block" style={{ maxWidth: 1521, margin: '0 auto', padding: '10px 40px 40px' }}>
         <div
           style={{
             display: 'flex',

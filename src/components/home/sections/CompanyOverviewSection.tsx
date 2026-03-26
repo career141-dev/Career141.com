@@ -2,7 +2,7 @@ import { withBasePath } from '@/lib/assetPath'
 
 export function CompanyOverviewSection() {
   return (
-    <section className="w-full bg-white pt-8 lg:pt-16 pb-0 lg:pb-32 overflow-visible">
+    <section className="w-full bg-white pt-8 lg:pt-16 pb-0 lg:pb-16 overflow-visible">
       <div className="flex flex-col lg:hidden">
         <div className="px-[21px] pt-[10px]">
           <div

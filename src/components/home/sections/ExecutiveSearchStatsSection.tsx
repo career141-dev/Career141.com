@@ -248,9 +248,7 @@ export function ExecutiveSearchStatsSection() {
                   style={{ backgroundImage: `url(${withBasePath('/figmaAssets/signature-of-the-current-managing-director.png')})` }}
                 />
                 <a
-                  href="https://career141.com/our-journey/"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                  href="/our-journey"
                   className="inline-flex items-center justify-center py-[11px] px-[22px] rounded-[100px] border border-solid border-[#37a65e] [font-family:'Quicksand',Helvetica] font-semibold text-[#37a65e] text-[11.2px] text-center tracking-[0.50px] leading-[13.4px] whitespace-nowrap hover:bg-[#37a65e] hover:text-white transition-colors duration-200"
                 >
                   OUR JOURNEY
