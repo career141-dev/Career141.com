@@ -1,19 +1,23 @@
+import { withBasePath } from '@/lib/assetPath'
+
 export function CompanyOverviewSection() {
   return (
-    <section className="w-full bg-white pt-12 lg:pt-16 pb-16 lg:pb-32 overflow-visible">
-      <div className="flex flex-col lg:hidden px-5 sm:px-8 gap-0">
-        <div
-          className="w-full h-[240px] sm:h-[300px] bg-cover bg-center"
-          style={{ backgroundImage: 'url(/figmaAssets/image-of-career141-office--our-culture.png)' }}
-        />
+    <section className="w-full bg-white pt-8 lg:pt-16 pb-0 lg:pb-16 overflow-visible">
+      <div className="flex flex-col lg:hidden">
+        <div className="px-[21px] pt-[10px]">
+          <div
+            className="w-full h-[196px] bg-cover bg-center"
+            style={{ backgroundImage: `url(${withBasePath('/figmaAssets/image-of-career141-office--our-culture.png')})` }}
+          />
+        </div>
 
-        <div className="w-full bg-[#006763] px-6 py-8">
-          <div className="[font-family:'Quicksand',Helvetica] font-normal text-[28px] leading-[1.2] mb-5">
+        <div className="mx-[12px] -mt-10 bg-[#006763] px-6 pt-10 pb-10 relative z-10">
+          <div className="[font-family:'Quicksand',Helvetica] font-normal text-[30px] leading-[1.2] mb-5">
             <span className="text-white">Our people make the </span>
             <span className="font-bold text-[#cbfc06]">difference</span>
           </div>
-          <div className="border-l-[1.6px] border-[#cbfc06] pl-4 mb-5">
-            <p className="[font-family:'Inter',Helvetica] font-light text-white text-[14px] leading-[1.6] m-0">
+          <div className="border-l-[1.6px] border-[#cbfc06] pl-4 mb-6">
+            <p className="[font-family:'Inter',Helvetica] font-light text-white text-[14px] leading-[1.7] m-0">
               We pride ourselves on cultivating a dynamic and inclusive environment that encourages collaboration, innovation, and excellence
               while recognizing and rewarding the exceptional efforts of our own team.
             </p>
@@ -33,14 +37,14 @@ export function CompanyOverviewSection() {
         <div className="flex-shrink-0 flex items-start">
           <div
             className="w-[686px] h-[406px] bg-cover bg-center"
-            style={{ backgroundImage: 'url(/figmaAssets/image-of-career141-office--our-culture.png)' }}
+            style={{ backgroundImage: `url(${withBasePath('/figmaAssets/image-of-career141-office--our-culture.png')})` }}
           />
         </div>
 
         <div className="flex items-end justify-center relative flex-shrink-0 -ml-[50px] mt-[80px]">
           <div
             className="relative w-[683px] h-[399px] bg-cover bg-[100%_100%]"
-            style={{ backgroundImage: 'url(/figmaAssets/home-culture-green-box-1-svg-fill.svg)' }}
+            style={{ backgroundImage: `url(${withBasePath('/figmaAssets/home-culture-green-box-1-svg-fill.svg')})` }}
           >
             <div className="flex flex-col items-start justify-center absolute top-20 left-[81px] w-[calc(100%-162px)]">
               <div className="[font-family:'Quicksand',Helvetica] font-normal text-transparent text-[38.4px] tracking-[0] leading-[46px]">

@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { withBasePath } from '@/lib/assetPath'
 
 const HEADING_DARK = 'rgb(22,22,24)'
 const HEADING_GREEN = '#37A65E'
@@ -9,13 +10,13 @@ const DIAMOND_PATH =
   'M303.381 144.959L163.22 4.79817C158.159 -0.263179 149.953 -0.263179 144.892 4.79817L4.73038 144.959C-0.330977 150.021 -0.330972 158.227 4.73038 163.288L144.892 303.449C149.953 308.511 158.159 308.511 163.22 303.449L303.381 163.288C308.443 158.227 308.443 150.021 303.381 144.959Z'
 
 const CARDS = [
-  { id: 1, text: '100% Head\nHunting', back: '/figmaAssets/diff-card-1.png' },
-  { id: 2, text: 'Tailored\nApproach', back: '/figmaAssets/diff-card-2.png' },
-  { id: 3, text: 'Knowledge\nExperts', back: '/figmaAssets/diff-card-3.png' },
-  { id: 4, text: 'Business Acumen\nMindset', back: '/figmaAssets/diff-card-4.png' },
-  { id: 5, text: 'Sustainable\nRelationship', back: '/figmaAssets/diff-card-5.png' },
-  { id: 6, text: 'Execution\nExcellence', back: '/figmaAssets/diff-card-6.png' },
-  { id: 7, text: 'Technology\nAdaptation', back: '/figmaAssets/diff-card-7.png' },
+  { id: 1, text: '100% Head\nHunting', back: withBasePath('/figmaAssets/diff-card-1.png') },
+  { id: 2, text: 'Tailored\nApproach', back: withBasePath('/figmaAssets/diff-card-2.png') },
+  { id: 3, text: 'Knowledge\nExperts', back: withBasePath('/figmaAssets/diff-card-3.png') },
+  { id: 4, text: 'Business Acumen\nMindset', back: withBasePath('/figmaAssets/diff-card-4.png') },
+  { id: 5, text: 'Sustainable\nRelationship', back: withBasePath('/figmaAssets/diff-card-5.png') },
+  { id: 6, text: 'Execution\nExcellence', back: withBasePath('/figmaAssets/diff-card-6.png') },
+  { id: 7, text: 'Technology\nAdaptation', back: withBasePath('/figmaAssets/diff-card-7.png') },
 ]
 
 function DiamondFront({ text, uid, size }: { text: string; uid: string; size: number }) {
@@ -64,11 +65,10 @@ interface FlipCardProps {
 
 function FlipCard({ card, size }: FlipCardProps) {
   const [flipped, setFlipped] = useState(false)
-  const cardH = size
 
   return (
     <div
-      style={{ width: size, height: cardH, perspective: 1000, cursor: 'pointer', flexShrink: 0 }}
+      style={{ width: size, height: size, perspective: 1000, cursor: 'pointer', flexShrink: 0 }}
       onMouseEnter={() => setFlipped(true)}
       onMouseLeave={() => setFlipped(false)}
       onClick={() => setFlipped((f) => !f)}
@@ -141,22 +141,162 @@ function CardCol({ card, size }: { card: (typeof CARDS)[0]; size: number }) {
   )
 }
 
+function MobileCarousel() {
+  const [index, setIndex] = useState(0)
+  const [direction, setDirection] = useState<1 | -1>(1)
+  const [animating, setAnimating] = useState(false)
+  const touchStartX = useRef<number | null>(null)
+  const total = CARDS.length
+  const carouselW = 343
+  const carouselH = 281
+  const cardSize = 256
+
+  const navigate = (dir: 1 | -1) => {
+    if (animating) return
+    setDirection(dir)
+    setAnimating(true)
+    setTimeout(() => {
+      setIndex((i) => (i + dir + total) % total)
+      setAnimating(false)
+    }, 300)
+  }
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return
+    const delta = touchStartX.current - e.changedTouches[0].clientX
+    if (Math.abs(delta) > 40) navigate(delta > 0 ? 1 : -1)
+    touchStartX.current = null
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div
+        style={{
+          width: carouselW,
+          height: carouselH,
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: `translate(-50%, -50%) translateX(${animating ? direction * -100 : 0}%)`,
+            transition: animating ? 'transform 0.3s ease' : 'none',
+          }}
+        >
+          <FlipCard card={CARDS[index]} size={cardSize} />
+        </div>
+
+        <button
+          onClick={() => navigate(-1)}
+          aria-label="Previous card"
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: 112,
+            width: 25,
+            height: 26,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'rgba(0,103,99,0.12)',
+            border: '1px solid rgba(0,103,99,0.3)',
+            borderRadius: 4,
+            cursor: 'pointer',
+            zIndex: 10,
+          }}
+        >
+          <svg width="8" height="13" viewBox="0 0 8 13" fill="none">
+            <path d="M7 1L1 6.5L7 12" stroke="#006763" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        <button
+          onClick={() => navigate(1)}
+          aria-label="Next card"
+          style={{
+            position: 'absolute',
+            right: 0,
+            top: 112,
+            width: 25,
+            height: 26,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'rgba(0,103,99,0.12)',
+            border: '1px solid rgba(0,103,99,0.3)',
+            borderRadius: 4,
+            cursor: 'pointer',
+            zIndex: 10,
+          }}
+        >
+          <svg width="8" height="13" viewBox="0 0 8 13" fill="none">
+            <path d="M1 1L7 6.5L1 12" stroke="#006763" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 2,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+          }}
+        >
+          {CARDS.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                if (animating) return
+                setDirection(i > index ? 1 : -1)
+                setIndex(i)
+              }}
+              aria-label={`Go to card ${i + 1}`}
+              style={{
+                width: i === index ? 18 : 6,
+                height: 6,
+                borderRadius: 3,
+                background: i === index ? '#006763' : 'rgba(0,103,99,0.3)',
+                border: 'none',
+                padding: 0,
+                cursor: 'pointer',
+                transition: 'width 0.3s ease, background 0.3s ease',
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function HowWeDifferentiateSection() {
   const row1 = CARDS.slice(0, 3)
   const row2 = CARDS.slice(3)
 
   return (
     <section
-      className="w-full relative"
-      style={{
-        backgroundImage: 'url(/figmaAssets/how-we-differentiate-bg.png)',
-        backgroundSize: 'auto 100%',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'left center',
-        backgroundColor: '#ffffff',
-      }}
+      className={[
+        'w-full relative bg-white bg-no-repeat',
+        `[background-image:url(${withBasePath('/figmaAssets/how-we-differentiate-bg.png')})]`,
+        '[background-position:left_center]',
+        '[background-size:55%_auto]',
+        'lg:[background-size:100%_100%]',
+      ].join(' ')}
     >
-      <div className="hidden lg:block" style={{ maxWidth: 1521, margin: '0 auto', padding: '40px' }}>
+      <div className="hidden lg:block" style={{ maxWidth: 1521, margin: '0 auto', padding: '10px 40px 40px' }}>
         <div
           style={{
             display: 'flex',
@@ -183,7 +323,7 @@ export function HowWeDifferentiateSection() {
                 fontFamily: "'Quicksand', Helvetica, sans-serif",
                 fontWeight: 700,
                 fontSize: 38.4,
-                lineHeight: 1.0,
+                lineHeight: 1,
                 margin: 0,
                 color: HEADING_DARK,
               }}
@@ -244,31 +384,26 @@ export function HowWeDifferentiateSection() {
         </div>
       </div>
 
-      <div className="md:hidden py-8 px-4">
-        <h2
-          style={{
-            fontFamily: "'Quicksand', Helvetica, sans-serif",
-            fontWeight: 700,
-            fontSize: 26,
-            lineHeight: 1.1,
-            margin: 0,
-            marginBottom: 12,
-            color: HEADING_DARK,
-          }}
-        >
-          How We
-          <br />
-          <span style={{ color: HEADING_GREEN }}>Differentiate</span>
-        </h2>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 4 }}>
-          {row1.map((card) => (
-            <FlipCard key={card.id} card={card} size={108} />
-          ))}
+      <div className="md:hidden" style={{ minHeight: 472, paddingTop: 32, paddingBottom: 32 }}>
+        <div style={{ paddingLeft: 23, paddingRight: 23, marginBottom: 24 }}>
+          <h2
+            style={{
+              fontFamily: "'Quicksand', Helvetica, sans-serif",
+              fontWeight: 700,
+              fontSize: 32,
+              lineHeight: 1.1,
+              margin: 0,
+              color: HEADING_DARK,
+            }}
+          >
+            How We
+            <br />
+            <span style={{ color: HEADING_GREEN }}>Differentiate</span>
+          </h2>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 4, marginTop: -12 }}>
-          {row2.map((card) => (
-            <FlipCard key={card.id} card={card} size={88} />
-          ))}
+
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <MobileCarousel />
         </div>
       </div>
     </section>

@@ -1,44 +1,66 @@
-# GitHub Pages Hosting Setup for deve Branch
+# GitHub Pages Setup (GitHub Actions)
 
-## Configuration Complete
+This repository deploys to GitHub Pages using the workflow in `.github/workflows/nextjs.yml`.
 
-This project is configured for GitHub Pages hosting on the `deve` branch.
+## Current Deployment Behavior
 
-### Branch Structure:
-- `homepage` → Feature branch for homepage work
-- `deve` → Development/staging branch (→ **GitHub Pages hosting branch**)
-- `main` → Production branch
+- Deploy trigger branch: `deve`
+- Build type: Next.js static export (`output: 'export'`)
+- Publish target: GitHub Pages environment (`github-pages`)
 
-### To Configure GitHub Pages:
+## Required GitHub Pages Settings
 
-1. **Go to GitHub Repository Settings:**
-   - Navigate to: `https://github.com/career141-dev/Career141.com/settings/pages`
+1. Open repository settings: `https://github.com/career141-dev/Career141.com/settings/pages`
+2. Set **Source** to: **GitHub Actions**
 
-2. **Set Pages Source:**
-   - **Source:** Deploy from a branch
-   - **Branch:** `deve` (or `main` for production deployment)
-   - **Folder:** `/ (root)`
+Do not use **Deploy from a branch** for this project.
 
-3. **Your site will be available at:**
-   - `https://career141-dev.github.io/Career141.com/` (if using deve branch)
-   - *OR update to custom domain if configured*
+## URL
 
-### Deployment Workflow:
+- Pages URL: `https://career141-dev.github.io/Career141.com/`
 
+## Why Images Can Break on Pages
+
+GitHub Pages project sites are hosted under a subpath (`/Career141.com`), not domain root.
+So URLs like `/figmaAssets/file.png` resolve to `https://career141-dev.github.io/figmaAssets/file.png` and return 404.
+
+## Image Path Rule for This Repo
+
+Always use the helper in `src/lib/assetPath.ts` for assets in `public/`:
+
+```ts
+import { withBasePath } from '@/lib/assetPath'
+
+const imageSrc = withBasePath('/figmaAssets/example.png')
 ```
-Feature Work (homepage branch)
-        ↓
-    Merge → deve (staging)
-        ↓
-    Merge → main (production)
+
+For CSS background images:
+
+```ts
+style={{ backgroundImage: `url(${withBasePath('/figmaAssets/example.png')})` }}
 ```
 
-GitHub Pages will auto-update when you push to the selected branch.
+Avoid hardcoded root paths such as `/figmaAssets/...` in components.
 
-### GitHub Actions (Optional - for automated builds):
+## Next.js Config Notes
 
-Create `.github/workflows/deploy.yml` to automate builds on push.
+`next.config.ts` now includes:
 
----
+- `output: 'export'`
+- `images.unoptimized: true`
+- branch-aware `basePath` for GitHub Pages project URLs
+- `NEXT_PUBLIC_BASE_PATH` env injection for client asset URLs
 
-**Setup Complete!** 🚀
+## Deployment Flow
+
+```text
+feature branch -> deve -> GitHub Actions build/deploy -> GitHub Pages
+```
+
+## Quick Verification
+
+After pushing to `deve`:
+
+1. Confirm the latest Actions run succeeded.
+2. Open the Pages URL and hard-refresh.
+3. In browser devtools network tab, verify image requests include `/Career141.com/`.

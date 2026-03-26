@@ -1,13 +1,20 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import Link from 'next/link'
 import { ChevronDownIcon } from 'lucide-react'
 import { EXECUTIVE_SEARCH_CATEGORIES, NAV_ITEMS, SOCIAL_LINKS } from './navbar.data'
+import { withBasePath } from '@/lib/assetPath'
 
-export function Navbar() {
+type NavbarProps = {
+  variant?: 'overlay' | 'solid'
+}
+
+export function Navbar({ variant = 'overlay' }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [execDropOpen, setExecDropOpen] = useState(false)
   const execDropTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const isSolid = variant === 'solid'
 
   const handleExecEnter = () => {
     if (execDropTimeout.current) clearTimeout(execDropTimeout.current)
@@ -20,9 +27,18 @@ export function Navbar() {
 
   return (
     <>
-      <header className="absolute top-0 left-0 right-0 z-30 flex w-full items-stretch justify-between border-b border-[#ffffff2e] bg-[linear-gradient(180deg,rgba(0,0,0,0.21)_40%,rgba(0,0,0,0)_100%)]">
-        <div className="flex items-center justify-center h-[70px] lg:h-[89.34px] px-4 lg:px-[30.41px] border-r border-[#ffffff2e] shrink-0">
-          <div className="w-[140px] h-[46px] lg:w-[200px] lg:h-[65.34px] bg-[url(/figmaAssets/career141-logo-with-20-year-anniversary-mark.png)] bg-cover bg-center" />
+      <header
+        className={`top-0 left-0 right-0 z-30 flex w-full items-stretch justify-between border-b border-[#ffffff2e] ${
+          isSolid
+            ? 'fixed bg-[#0d1f15]'
+            : 'absolute bg-[linear-gradient(180deg,rgba(0,0,0,0.21)_40%,rgba(0,0,0,0)_100%)]'
+        }`}
+      >
+        <div className="flex items-center justify-center h-[56px] lg:h-[89.34px] px-4 lg:px-[30.41px] border-r border-[#ffffff2e] shrink-0">
+          <div
+            className="w-[138px] h-[45px] lg:w-[200px] lg:h-[65.34px] bg-cover bg-center"
+            style={{ backgroundImage: `url(${withBasePath('/figmaAssets/career141-logo-with-20-year-anniversary-mark.png')})` }}
+          />
         </div>
 
         <nav className="hidden lg:flex items-center flex-1 px-[17.8px]">
@@ -35,14 +51,23 @@ export function Navbar() {
                 onMouseLeave={item.hasExecDrop ? handleExecLeave : undefined}
               >
                 {item.href ? (
-                  <a
-                    className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[12.8px] tracking-[0] leading-[19.2px] whitespace-nowrap hover:text-[#cbfc06] transition-colors duration-200"
-                    href={item.href}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    {item.label}
-                  </a>
+                  item.href.startsWith('/') ? (
+                    <Link
+                      className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[12.8px] tracking-[0] leading-[19.2px] whitespace-nowrap hover:text-[#cbfc06] transition-colors duration-200"
+                      href={item.href}
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <a
+                      className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[12.8px] tracking-[0] leading-[19.2px] whitespace-nowrap hover:text-[#cbfc06] transition-colors duration-200"
+                      href={item.href}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      {item.label}
+                    </a>
+                  )
                 ) : (
                   <span
                     className={`[font-family:'Quicksand',Helvetica] font-medium text-[12.8px] tracking-[0] leading-[19.2px] whitespace-nowrap transition-colors duration-200 ${
@@ -137,20 +162,30 @@ export function Navbar() {
       )}
 
       {menuOpen && (
-        <div className="fixed inset-0 z-40 bg-[#000313]/95 flex flex-col pt-[70px] lg:hidden overflow-y-auto">
+        <div className="fixed inset-0 z-40 bg-[#000313]/95 flex flex-col pt-[56px] lg:hidden overflow-y-auto">
           <div className="flex flex-col divide-y divide-[#ffffff20]">
             {NAV_ITEMS.map((item, index) => (
               <div key={index} className="flex items-center justify-between px-6 py-4">
                 {item.href ? (
-                  <a
-                    href={item.href}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    onClick={() => setMenuOpen(false)}
-                    className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]"
-                  >
-                    {item.label}
-                  </a>
+                  item.href.startsWith('/') ? (
+                    <Link
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]"
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={item.href}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      onClick={() => setMenuOpen(false)}
+                      className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]"
+                    >
+                      {item.label}
+                    </a>
+                  )
                 ) : (
                   <span className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]">
                     {item.label}

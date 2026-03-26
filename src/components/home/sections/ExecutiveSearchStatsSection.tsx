@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { withBasePath } from '@/lib/assetPath'
 
 const heroSlides = [
   { line1: "Sri Lanka's Global Executive", line2: 'Search & Recruitment', line3: 'Partner' },
@@ -12,10 +13,10 @@ const heroSlides = [
 ]
 
 const statsData = [
-  { numEnd: 30, numStart: 14, isRange: true, hasPercent: false, label: 'Days Turn Around Time', containerSrc: '/figmaAssets/container-4.svg' },
-  { numEnd: 85, numStart: 0, isRange: false, hasPercent: true, label: 'Word of Mouth Growth', containerSrc: '/figmaAssets/container-1.svg' },
-  { numEnd: 90, numStart: 0, isRange: false, hasPercent: true, label: 'Success in Placements', containerSrc: '/figmaAssets/container-2.svg' },
-  { numEnd: 85, numStart: 0, isRange: false, hasPercent: true, label: 'Repeat Business', containerSrc: '/figmaAssets/container.svg' },
+  { numEnd: 30, numStart: 14, isRange: true, hasPercent: false, label: 'Days Turn Around Time', containerSrc: withBasePath('/figmaAssets/container-4.svg') },
+  { numEnd: 85, numStart: 0, isRange: false, hasPercent: true, label: 'Word of Mouth Growth', containerSrc: withBasePath('/figmaAssets/container-1.svg') },
+  { numEnd: 90, numStart: 0, isRange: false, hasPercent: true, label: 'Success in Placements', containerSrc: withBasePath('/figmaAssets/container-2.svg') },
+  { numEnd: 85, numStart: 0, isRange: false, hasPercent: true, label: 'Repeat Business', containerSrc: withBasePath('/figmaAssets/container.svg') },
 ]
 
 const SLIDE_DURATION = 6000
@@ -63,11 +64,11 @@ function CountUp({
 
   return (
     <div ref={ref} className="flex items-end justify-center">
-      <span className="[font-family:'Quicksand',Helvetica] font-bold text-[#4c4c4c] text-[36px] sm:text-[44px] lg:text-[51.2px] text-center tracking-[0] leading-[1] lg:leading-[51.2px] whitespace-nowrap">
+      <span className="[font-family:'Quicksand',Helvetica] font-bold text-[#4c4c4c] text-[32px] sm:text-[40px] lg:text-[51.2px] text-center tracking-[0] leading-[1] lg:leading-[51.2px] whitespace-nowrap">
         {isRange ? `${start} - ${count}` : count}
       </span>
       {hasPercent && (
-        <span className="[font-family:'Quicksand',Helvetica] font-bold text-[#4c4c4c] text-[36px] sm:text-[44px] lg:text-[51.2px] tracking-[0] leading-[1] lg:leading-[51.2px] whitespace-nowrap">
+        <span className="[font-family:'Quicksand',Helvetica] font-bold text-[#4c4c4c] text-[32px] sm:text-[40px] lg:text-[51.2px] tracking-[0] leading-[1] lg:leading-[51.2px] whitespace-nowrap">
           %
         </span>
       )}
@@ -81,6 +82,11 @@ export function ExecutiveSearchStatsSection() {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const dragStartX = useRef<number | null>(null)
   const isDragging = useRef(false)
+
+  const goTo = useCallback((index: number) => {
+    setCurrentSlide(index)
+    setSlideKey((k) => k + 1)
+  }, [])
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => {
@@ -134,7 +140,7 @@ export function ExecutiveSearchStatsSection() {
 
   return (
     <section className="flex flex-col w-full items-start">
-      <div className="relative flex flex-col min-h-[500px] lg:min-h-[738px] items-start justify-center py-[140px] px-6 sm:px-12 lg:py-[251px] lg:px-[76px] w-full overflow-hidden">
+      <div className="relative flex flex-col min-h-[724px] lg:min-h-[738px] items-start justify-center py-[140px] px-6 sm:px-12 lg:py-[251px] lg:px-[76px] w-full overflow-hidden">
         <div className="absolute inset-0 bg-[#000313] opacity-[0.50] z-10" />
 
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -153,7 +159,7 @@ export function ExecutiveSearchStatsSection() {
               minHeight: '100%',
             }}
           />
-          <img className="absolute inset-0 w-full h-full object-cover" alt="Hero background" src="/figmaAssets/container-3.svg" style={{ zIndex: -1 }} />
+          <img className="absolute inset-0 w-full h-full object-cover" alt="Hero background" src={withBasePath('/figmaAssets/container-3.svg')} style={{ zIndex: -1 }} />
         </div>
 
         <div
@@ -178,17 +184,40 @@ export function ExecutiveSearchStatsSection() {
             {slide.line3}
           </h1>
         </div>
+
+        <div className="lg:hidden relative z-20 flex items-center gap-[6px] mt-6">
+          {heroSlides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                goTo(i)
+                resetInterval()
+              }}
+              aria-label={`Slide ${i + 1}`}
+              className="transition-all duration-300"
+              style={{
+                width: i === currentSlide ? 18 : 6,
+                height: 6,
+                borderRadius: 3,
+                background: i === currentSlide ? '#cbfc06' : 'rgba(255,255,255,0.4)',
+                border: 'none',
+                padding: 0,
+                cursor: 'pointer',
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       <div className="relative w-full overflow-hidden">
-        <img className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none" alt="Decorative tubes" src="/figmaAssets/tubes-home-executive-svg-fill.svg" />
+        <img className="absolute top-0 left-0 w-full h-full object-contain lg:object-cover pointer-events-none" alt="Decorative tubes" src={withBasePath('/figmaAssets/tubes-home-executive-svg-fill.svg')} />
 
-        <div className="relative z-10 grid grid-cols-2 lg:flex lg:flex-row w-full items-start justify-center gap-6 lg:gap-5 pt-10 lg:pt-[66px] pb-10 lg:pb-[107px] px-6 sm:px-12 lg:px-[91px]">
+        <div className="relative z-10 grid grid-cols-2 lg:flex lg:flex-row w-full items-start justify-center gap-x-10 gap-y-10 lg:gap-5 pt-8 lg:pt-[66px] pb-8 lg:pb-[107px] px-6 sm:px-12 lg:px-[91px]">
           {statsData.map((stat, index) => (
             <div key={index} className="flex flex-col items-center justify-center lg:flex-1">
               <CountUp end={stat.numEnd} start={stat.numStart} isRange={stat.isRange} hasPercent={stat.hasPercent} />
               <img className="w-[60px] lg:w-[82px] h-5 lg:h-6 mt-2" alt="Underline" src={stat.containerSrc} />
-              <p className="mt-2 [font-family:'Inter',Helvetica] font-medium text-[#4c4c4c] text-[12px] lg:text-[15px] text-center tracking-[0] leading-[1.3] lg:leading-[19.2px]">
+              <p className="mt-2 [font-family:'Inter',Helvetica] font-medium text-[#4c4c4c] text-[14px] lg:text-[15px] text-center tracking-[0] leading-[1.3] lg:leading-[19.2px]">
                 {stat.label}
               </p>
             </div>
@@ -197,7 +226,7 @@ export function ExecutiveSearchStatsSection() {
 
         <div className="relative z-10 flex flex-col lg:flex-row w-full items-start gap-8 px-6 sm:px-12 lg:px-[91px] pb-10 lg:pb-[90px]">
           <div className="flex flex-col items-start gap-6 lg:gap-[30px] w-full lg:w-[51%]">
-            <h2 className="[font-family:'Quicksand',Helvetica] font-normal text-transparent text-[28px] sm:text-[32px] lg:text-[38.4px] tracking-[0] leading-[1.2] lg:leading-[46px]">
+            <h2 className="[font-family:'Quicksand',Helvetica] font-normal text-transparent text-[24px] sm:text-[30px] lg:text-[38.4px] tracking-[0] leading-[1.25] lg:leading-[46px]">
               <span className="text-black">
                 Elevating Success &amp;<br />Unleashing Excellence with<br />
               </span>
@@ -216,12 +245,10 @@ export function ExecutiveSearchStatsSection() {
               <div className="flex flex-wrap items-center gap-4 lg:gap-5 w-full">
                 <div
                   className="w-[120px] h-[67px] lg:w-[146px] lg:h-[81.54px] bg-cover bg-center flex-shrink-0"
-                  style={{ backgroundImage: 'url(/figmaAssets/signature-of-the-current-managing-director.png)' }}
+                  style={{ backgroundImage: `url(${withBasePath('/figmaAssets/signature-of-the-current-managing-director.png')})` }}
                 />
                 <a
-                  href="https://career141.com/our-journey/"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                  href="/our-journey"
                   className="inline-flex items-center justify-center py-[11px] px-[22px] rounded-[100px] border border-solid border-[#37a65e] [font-family:'Quicksand',Helvetica] font-semibold text-[#37a65e] text-[11.2px] text-center tracking-[0.50px] leading-[13.4px] whitespace-nowrap hover:bg-[#37a65e] hover:text-white transition-colors duration-200"
                 >
                   OUR JOURNEY
@@ -233,10 +260,10 @@ export function ExecutiveSearchStatsSection() {
             </div>
           </div>
 
-          <div className="flex flex-col items-center w-full lg:flex-1 mt-4 lg:mt-0">
+          <div className="flex flex-col items-center w-full lg:flex-1">
             <div
-              className="w-full max-w-full lg:max-w-[593px] h-[280px] sm:h-[380px] lg:h-[537px] bg-cover bg-center"
-              style={{ backgroundImage: 'url(/figmaAssets/image-for-executive-search.png)' }}
+              className="w-full max-w-full lg:max-w-[593px] h-[311px] sm:h-[380px] lg:h-[537px] bg-cover bg-center"
+              style={{ backgroundImage: `url(${withBasePath('/figmaAssets/image-for-executive-search.png')})` }}
             />
           </div>
         </div>

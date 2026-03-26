@@ -31,7 +31,7 @@ export const NAV_ITEMS = [
   { label: 'OUR CULTURE', hasDropdown: true, href: 'https://career141.com/our-culture/', hasExecDrop: false },
   { label: 'PREMIUM JOBS', hasDropdown: false, href: undefined, hasExecDrop: false },
   { label: 'RESOURCES', hasDropdown: true, href: undefined, hasExecDrop: false },
-  { label: 'CONTACT', hasDropdown: false, href: 'https://career141.com/contact-us/', hasExecDrop: false },
+  { label: 'CONTACT', hasDropdown: false, href: '/contact', hasExecDrop: false },
 ]
 
 export const SOCIAL_LINKS = [
