@@ -10,77 +10,77 @@ function prefersReducedMotion(): boolean {
 const SPECIALIZATIONS = [
   {
     title: 'Apparel Merchandising & Marketing',
-    img: 'https://www.figma.com/api/mcp/asset/db441dec-1bd6-49e5-88e5-984082742c87',
+    img: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/apparel-merchandising-and-marketing/',
   },
   {
     title: 'Finance & Auditing',
-    img: 'https://www.figma.com/api/mcp/asset/5a21970c-d783-47e5-9f83-dbb3c5d1f069',
+    img: 'https://images.unsplash.com/photo-1454165833767-027ffea9e773?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/finance-auditing/',
   },
   {
     title: 'Constructions & Civil Engineering',
-    img: 'https://www.figma.com/api/mcp/asset/63cc3f20-ce29-4006-a3e6-ddbbb0737845',
+    img: 'https://images.unsplash.com/photo-1503387762-592dea58f230?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/constructions-civil-engineering/',
   },
   {
     title: 'Continuous Improvement',
-    img: 'https://www.figma.com/api/mcp/asset/ed2ef480-acfa-45bc-a9f9-093d36749d9e',
+    img: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/continuous-improvement/',
   },
   {
     title: 'Data Analytics & Research',
-    img: 'https://www.figma.com/api/mcp/asset/dfcb16a3-ea42-45c8-9714-95d37cc3109d',
+    img: 'https://images.unsplash.com/photo-1551288049-bbda48642153?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/data-analytics-research/',
   },
   {
     title: 'Environment Health & Safety',
-    img: 'https://www.figma.com/api/mcp/asset/1c879eb9-c391-46c9-a6c4-0e851a72a3cf',
+    img: 'https://images.unsplash.com/photo-1532187863486-abf51ad9f69d?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/ehs-environment-health-and-safety/',
   },
   {
     title: 'IT Software & Infrastructure',
-    img: 'https://www.figma.com/api/mcp/asset/e91f81a1-65fc-4f19-879f-e14ef46883bf',
+    img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/it-software-infrastructure/',
   },
   {
     title: 'Legal & Secretarial',
-    img: 'https://www.figma.com/api/mcp/asset/c21b712e-2515-48a0-9c84-8511736e22c2',
+    img: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/legal-secretarial/',
   },
   {
     title: 'Maintenance Engineering',
-    img: 'https://www.figma.com/api/mcp/asset/1c8f390f-dc80-4085-8cc9-0976bdf2ed6c',
+    img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/maintenance-engineering/',
   },
   {
     title: 'Mechanical Engineering & Production',
-    img: 'https://www.figma.com/api/mcp/asset/c151e83d-916d-4eef-b49e-d85f35f2a2c8',
+    img: 'https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/mechanical-engineering-production/',
   },
   {
     title: 'Supply Chain Management',
-    img: 'https://www.figma.com/api/mcp/asset/9db79313-27f2-47a8-86f5-ddab9fc1b632',
+    img: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/supply-chain-management/',
   },
   {
     title: 'Fashion Designing & Development',
-    img: 'https://www.figma.com/api/mcp/asset/0114eb5e-34fa-4d4b-ab24-cb0df881ffbc',
+    img: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/fashion-designing-development/',
   },
   {
     title: 'Digital Marketing',
-    img: 'https://www.figma.com/api/mcp/asset/a57c7484-a6b6-4642-9548-db101d57871a',
+    img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/digital-marketing-2/',
   },
   {
     title: 'Digital Transformation',
-    img: 'https://www.figma.com/api/mcp/asset/e88730eb-3ce3-4d21-8a63-b913fc5b4bc6',
+    img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/digital-transformation/',
   },
   {
     title: 'Marketing, Consumer Insight & Customer Experience',
-    img: 'https://www.figma.com/api/mcp/asset/83681f61-2d8e-48ce-b035-8da3a3207fdb',
+    img: 'https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&w=800&q=80',
     href: 'https://career141.com/marketing-consumer-insight-customer-experience/',
   },
 ]

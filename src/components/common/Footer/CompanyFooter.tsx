@@ -19,8 +19,8 @@ const mainLinks = [
   { label: 'Executive Talent', href: 'https://career141.com/executive-search/' },
   { label: 'Premium Jobs', href: 'https://career141.com/premium-jobs/' },
   { label: 'Our Culture', href: 'https://career141.com/our-culture/' },
-  { label: 'Our Journey', href: 'https://career141.com/our-journey/' },
-  { label: 'Contact Us', href: '/contact' },
+  { label: 'Our Journey', href: '/our-journey' },
+  { label: 'Contact Us', href: '/contact-us' },
 ]
 
 const serviceLinks = [
