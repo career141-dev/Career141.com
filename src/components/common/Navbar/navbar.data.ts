@@ -27,11 +27,11 @@ export const EXECUTIVE_SEARCH_CATEGORIES = [
 
 export const NAV_ITEMS = [
   { label: 'EXECUTIVE SEARCH', hasDropdown: true, href: undefined, hasExecDrop: true },
-  { label: 'OUR JOURNEY', hasDropdown: false, href: 'https://career141.com/our-journey/', hasExecDrop: false },
+  { label: 'OUR JOURNEY', hasDropdown: false, href: '/our-journey', hasExecDrop: false },
   { label: 'OUR CULTURE', hasDropdown: true, href: 'https://career141.com/our-culture/', hasExecDrop: false },
-  { label: 'PREMIUM JOBS', hasDropdown: false, href: undefined, hasExecDrop: false },
+  { label: 'PREMIUM JOBS', hasDropdown: false, href: '/premium-jobs', hasExecDrop: false },
   { label: 'RESOURCES', hasDropdown: true, href: undefined, hasExecDrop: false },
-  { label: 'CONTACT', hasDropdown: false, href: '/contact', hasExecDrop: false },
+  { label: 'CONTACT', hasDropdown: false, href: '/contact-us', hasExecDrop: false },
 ]
 
 export const SOCIAL_LINKS = [
