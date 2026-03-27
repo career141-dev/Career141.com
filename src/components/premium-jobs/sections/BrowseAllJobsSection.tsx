@@ -167,14 +167,8 @@ export function BrowseAllJobsSection({
             </div>
 
             {/* Main Content (Job Cards) */}
-            <div className={styles.DivElementorWidgetContainer_11_2450} style={{ width: 'auto', flex: 1 }}>
-              <div className={styles.DivElementorLoopContainer_11_2451} style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(3, 260px)',
-                gap: '30px',
-                width: '100%',
-                justifyContent: 'start'
-              }}>
+            <div className={styles.DivElementorWidgetContainer_11_2450}>
+              <div className={styles.DivElementorLoopContainer_11_2451}>
                 {jobCards.map((job, index) => (
                   <JobCard key={index} job={job} />
                 ))}

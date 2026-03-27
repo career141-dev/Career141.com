@@ -1,7 +1,9 @@
 import { Navbar } from '@/components/common'
 import { CompanyFooter } from '@/components/common'
 import { QuoteHighlightSection } from './sections/QuoteHighlightSection'
+import { FoundersViewSection } from './sections/FoundersViewSection'
 import { HeroSection } from './sections/HeroSection'
+import { FoundersTextElement } from './sections/FoundersTextElement'
 import { VisionMissionSection } from './sections/VisionMissionSection'
 import { WhoWeAreSection } from './sections/WhoWeAreSection'
 import { OurMilestoneSection } from './sections/OurMilestoneSection'
@@ -15,7 +17,9 @@ export function OurJourneyPage() {
       <div className="w-full h-[60px] md:h-[89px]" />
 
       <QuoteHighlightSection />
+      <FoundersViewSection />
       <HeroSection />
+      <FoundersTextElement />
       <VisionMissionSection />
       <WhoWeAreSection />
       <OurMilestoneSection />

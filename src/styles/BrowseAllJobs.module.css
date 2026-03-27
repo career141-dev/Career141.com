@@ -37,6 +37,13 @@
   padding: 29.61px 20px 91.24px;
   display: flex;
 }
+
+@media (max-width: 768px) {
+  .DivElementorElement_11_2202 {
+    gap: 30px;
+    padding: 20px 10px 40px;
+  }
+}
 .DivElementorElement_11_2203 {
   flex-direction: column;
   justify-content: center;
@@ -66,6 +73,13 @@
   line-height: 35.2px;
   display: inline-block;
 }
+
+@media (max-width: 768px) {
+  .BrowseAllJobs_11_2206 {
+    font-size: 24px;
+    line-height: 28px;
+  }
+}
 .DivElementorElement_11_2207 {
   flex-direction: column;
   align-items: center;
@@ -77,15 +91,52 @@
   justify-content: center;
   gap: 20px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   min-height: 800px;
   display: flex;
+}
+
+@media (max-width: 768px) {
+  .DivEConInner_11_2208 {
+    flex-direction: column;
+    align-items: center;
+    min-height: auto;
+  }
 }
 .DivElementorWidgetContainer_11_2209 {
   flex-direction: column;
   align-items: flex-start;
   width: 280px;
   display: flex;
+}
+
+@media (max-width: 768px) {
+  .DivElementorWidgetContainer_11_2209 {
+    width: 100%;
+  }
+}
+
+.DivElementorLoopContainer_11_2451 {
+  display: grid;
+  grid-template-columns: repeat(3, 290px);
+  gap: 30px;
+  width: 100%;
+  justify-content: start;
+}
+
+@media (max-width: 1024px) {
+  .DivElementorLoopContainer_11_2451 {
+    grid-template-columns: repeat(2, 290px);
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .DivElementorLoopContainer_11_2451 {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 20px;
+  }
 }
 .DivWpcFiltersWidgetWrapper_11_2210 {
   flex-direction: column;
@@ -1813,13 +1864,24 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 30px;
-  width: 840px;
+  width: 100%;
+  flex: 1;
   display: flex;
 }
-.DivElementorLoopContainer_11_2451 {
-  width: 100%;
-  height: 1672.4px;
+
+@media (max-width: 1024px) {
+  .DivElementorWidgetContainer_11_2450 {
+    width: 650px;
+  }
 }
+
+@media (max-width: 768px) {
+  .DivElementorWidgetContainer_11_2450 {
+    width: 100%;
+    align-items: center;
+  }
+}
+/* Removed duplicate DivElementorLoopContainer_11_2451 */
 .AElementorElement_11_2452 {
   width: 260px;
   height: 395.6px;

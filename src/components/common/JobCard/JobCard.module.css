@@ -15,7 +15,8 @@
 }
 
 .AElementorElement {
-  width: 290px;
+  width: 100%;
+  max-width: 290px;
   height: 340px;
   position: relative;
   overflow: hidden;
@@ -25,7 +26,8 @@
 .JobCardPostSvgFill {
   flex-direction: column;
   align-items: flex-end;
-  width: 290px;
+  width: 100%;
+  max-width: 290px;
   height: 340px;
   display: flex;
   overflow: hidden;
