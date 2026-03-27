@@ -7,7 +7,7 @@ import { ChevronDownIcon } from 'lucide-react'
 import { EXECUTIVE_SEARCH_CATEGORIES, NAV_ITEMS, SOCIAL_LINKS } from './navbar.data'
 import { withBasePath } from '@/lib/assetPath'
 
-export function Navbar() {
+export function Navbar({ bgColor }: { bgColor?: string }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [execDropOpen, setExecDropOpen] = useState(false)
   const execDropTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -24,7 +24,7 @@ export function Navbar() {
 
   return (
     <>
-      <header className="absolute top-0 left-0 right-0 z-30 flex w-full items-stretch justify-between border-b border-[#ffffff2e] bg-[linear-gradient(180deg,rgba(0,0,0,0.21)_40%,rgba(0,0,0,0)_100%)]">
+      <header className="absolute top-0 left-0 right-0 z-30 flex w-full items-stretch justify-between border-b border-[#ffffff2e]" style={bgColor ? { backgroundColor: bgColor } : { background: 'linear-gradient(180deg,rgba(0,0,0,0.21)_40%,rgba(0,0,0,0)_100%)' }}>
         <Link href="/" className="flex items-center justify-center h-[70px] lg:h-[89.34px] px-4 lg:px-[30.41px] border-r border-[#ffffff2e] shrink-0">
           <div
             className="w-[140px] h-[46px] lg:w-[200px] lg:h-[65.34px] bg-cover bg-center"
