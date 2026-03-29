@@ -4,13 +4,15 @@ import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ChevronDownIcon } from 'lucide-react'
-import { EXECUTIVE_SEARCH_CATEGORIES, NAV_ITEMS, SOCIAL_LINKS } from './navbar.data'
+import { EXECUTIVE_SEARCH_CATEGORIES, NAV_ITEMS, SOCIAL_LINKS, CULTURE_DROPDOWN_ITEMS } from './navbar.data'
 import { withBasePath } from '@/lib/assetPath'
 
 export function Navbar({ bgColor }: { bgColor?: string }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [execDropOpen, setExecDropOpen] = useState(false)
+  const [cultureDropOpen, setCultureDropOpen] = useState(false)
   const execDropTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const cultureDropTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
   const pathname = usePathname()
 
   const handleExecEnter = () => {
@@ -20,6 +22,15 @@ export function Navbar({ bgColor }: { bgColor?: string }) {
 
   const handleExecLeave = () => {
     execDropTimeout.current = setTimeout(() => setExecDropOpen(false), 150)
+  }
+
+  const handleCultureEnter = () => {
+    if (cultureDropTimeout.current) clearTimeout(cultureDropTimeout.current)
+    setCultureDropOpen(true)
+  }
+
+  const handleCultureLeave = () => {
+    cultureDropTimeout.current = setTimeout(() => setCultureDropOpen(false), 150)
   }
 
   return (
@@ -37,13 +48,14 @@ export function Navbar({ bgColor }: { bgColor?: string }) {
             {NAV_ITEMS.map((item, index) => {
               const isActive = item.href === pathname || (item.hasExecDrop && pathname.startsWith('/executive-search'))
               const isLocal = item.href?.startsWith('/') && !item.href?.startsWith('//')
+              const hasCultureDrop = item.dropdownItems && item.dropdownItems.length > 0
               
               return (
                 <div
                   key={index}
                   className="relative inline-flex items-center px-3 py-[31px] cursor-pointer group"
-                  onMouseEnter={item.hasExecDrop ? handleExecEnter : undefined}
-                  onMouseLeave={item.hasExecDrop ? handleExecLeave : undefined}
+                  onMouseEnter={item.hasExecDrop ? handleExecEnter : item.hasDropdown && !item.hasExecDrop ? handleCultureEnter : undefined}
+                  onMouseLeave={item.hasExecDrop ? handleExecLeave : item.hasDropdown && !item.hasExecDrop ? handleCultureLeave : undefined}
                 >
                   {item.href ? (
                     isLocal ? (
@@ -77,10 +89,26 @@ export function Navbar({ bgColor }: { bgColor?: string }) {
                   {item.hasDropdown && (
                     <ChevronDownIcon
                       className={`ml-[5px] shrink-0 transition-all duration-200 ${
-                        item.hasExecDrop && execDropOpen ? 'text-[#cbfc06] rotate-180' : 'text-white group-hover:text-[#cbfc06]'
+                        (item.hasExecDrop && execDropOpen) || (item.dropdownItems && cultureDropOpen) ? 'text-[#cbfc06] rotate-180' : 'text-white group-hover:text-[#cbfc06]'
                       }`}
                       style={{ width: '10.24px', height: '10.24px' }}
                     />
+                  )}
+                  
+                  {item.dropdownItems && cultureDropOpen && (
+                    <div className="absolute top-full left-0 z-[32] bg-white shadow-xl animate-dropdown-fade border-t-2 border-[#006763]">
+                      <div className="px-6 py-3">
+                        {CULTURE_DROPDOWN_ITEMS.map((menuItem, idx) => (
+                          <Link
+                            key={idx}
+                            href={menuItem.href}
+                            className="[font-family:'Quicksand',Helvetica] font-normal text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] transition-colors duration-200 cursor-pointer whitespace-nowrap block"
+                          >
+                            {menuItem.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
                   )}
                 </div>
               )
@@ -131,31 +159,31 @@ export function Navbar({ bgColor }: { bgColor?: string }) {
       </header>
 
       {execDropOpen && (
-        <div
-          className="hidden lg:block fixed left-0 right-0 z-[32] bg-white shadow-2xl animate-dropdown-fade border-t-2 border-[#006763]"
-          style={{ top: '93px' }}
-          onMouseEnter={handleExecEnter}
-          onMouseLeave={handleExecLeave}
-        >
-          <div className="max-w-[1200px] mx-auto px-12 py-10">
-            <div className="grid grid-cols-3 gap-x-16 gap-y-1">
-              {EXECUTIVE_SEARCH_CATEGORIES.map((col, colIdx) => (
-                <div key={colIdx} className="flex flex-col gap-y-4">
-                  {col.map((item, itemIdx) => (
-                    <Link
-                      key={itemIdx}
-                      href="/executive-search"
-                      className="[font-family:'Quicksand',Helvetica] font-normal text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] transition-colors duration-200 cursor-pointer"
-                    >
-                      {item}
-                    </Link>
-                  ))}
-                </div>
-              ))}
+          <div
+            className="hidden lg:block fixed left-0 right-0 z-[32] bg-white shadow-2xl animate-dropdown-fade border-t-2 border-[#006763]"
+            style={{ top: '93px' }}
+            onMouseEnter={handleExecEnter}
+            onMouseLeave={handleExecLeave}
+          >
+            <div className="max-w-[1200px] mx-auto px-12 py-10">
+              <div className="grid grid-cols-3 gap-x-16 gap-y-1">
+                {EXECUTIVE_SEARCH_CATEGORIES.map((col, colIdx) => (
+                  <div key={colIdx} className="flex flex-col gap-y-4">
+                    {col.map((item, itemIdx) => (
+                      <Link
+                        key={itemIdx}
+                        href="/executive-search"
+                        className="[font-family:'Quicksand',Helvetica] font-normal text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] transition-colors duration-200 cursor-pointer"
+                      >
+                        {item}
+                      </Link>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
       {menuOpen && (
         <div className="fixed inset-0 z-40 bg-[#000313]/95 flex flex-col pt-[70px] lg:hidden overflow-y-auto">
