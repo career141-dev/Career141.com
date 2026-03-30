@@ -610,13 +610,13 @@
 }
 .FormWpformsForm_10038_88_11967 {
   width: 100%;
-  height: 416px;
+  height: 460px;
 }
 .DivWpformsFieldContainer_88_11968 {
   flex-direction: column;
   align-items: center;
   width: 459.68px;
-  padding-bottom: 15.8px;
+  padding-bottom: 25.8px;
   display: flex;
 }
 .DivWpformsLayoutRow_88_11969 {
@@ -1196,4 +1196,81 @@
   font-weight: 500;
   line-height: 14px;
   display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .DivElementorElement_88_11864 {
+    flex-direction: column;
+    padding: 20px;
+  }
+  .DivElementorElementMargin_88_11865 {
+    width: 100% !important;
+  }
+  .DivElementorElement_88_11866 {
+    width: 100% !important;
+    padding: 20px !important;
+    border-radius: 12px;
+  }
+  .DivElementorElement_88_11956 {
+    width: 100% !important;
+    padding: 24px !important;
+    border-radius: 12px;
+    margin-top: 20px;
+  }
+  .DivWpformsFieldContainer_88_11968 {
+    width: 100% !important;
+  }
+  .DivWpformsLayoutRow_88_11969,
+  .DivWpformsLayoutRow_88_11978,
+  .DivWpformsLayoutRow_88_11987 {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  .DivWpformsLayoutColumn_88_11970,
+  .DivWpformsLayoutColumn_88_11974,
+  .DivWpformsLayoutColumn_88_11979,
+  .DivWpformsLayoutColumn_88_11983,
+  .DivWpformsLayoutColumn_88_11988,
+  .DivWpformsLayoutColumn_88_11998 {
+    padding: 10px 0 !important;
+    width: 100% !important;
+  }
+  .InputWpforms_10038Field_2_88_11971,
+  .InputWpforms_10038Field_3_88_11975,
+  .InputWpforms_10038Field_5_88_11980,
+  .InputWpforms_10038Field_6_88_11984,
+  .InputWpforms_10038Field_8_88_11990,
+  .InputWpforms_10038Field_9_88_11999 {
+    width: 100% !important;
+  }
+  .TextareaWpforms_10038Field_10_88_12002 {
+    width: 100% !important;
+  }
+  .DivWpformsSubmitContainer_88_12034 {
+    width: 100% !important;
+    align-items: center !important;
+    margin-top: 20px;
+  }
+  .FormWpformsForm_10038_88_11967 {
+    height: auto !important;
+  }
+  .FindYourFutureTalentWithUsToday_88_11870 {
+    font-size: 28px !important;
+    line-height: normal !important;
+  }
+  .EveryInteractionYourCustomersHaveWithYourCompanySDigitalPropertiesEitherBringsYouCloserOrFartherAwayFromYourBusinessGoals_88_11874 {
+    font-size: 14px !important;
+  }
+  /* reCAPTCHA mobile adjustments */
+  .Iframe_88_12007 {
+    width: 100% !important;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .Div_88_12006 {
+    padding: 10px !important;
+    width: 100% !important;
+    max-width: 300px;
+    margin: 0 auto;
+  }
 }

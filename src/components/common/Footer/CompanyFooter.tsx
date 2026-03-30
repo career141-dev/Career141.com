@@ -16,16 +16,16 @@ function XTwitterIcon({ size = 18, style }: { size?: number; style?: CSSProperti
 
 const mainLinks = [
   { label: 'Home', href: '/' },
-  { label: 'Executive Talent', href: 'https://career141.com/executive-search/' },
-  { label: 'Premium Jobs', href: 'https://career141.com/premium-jobs/' },
-  { label: 'Our Culture', href: 'https://career141.com/our-culture/' },
+  { label: 'Executive Talent', href: '/executive-search' },
+  { label: 'Premium Jobs', href: '/premium-jobs' },
+  { label: 'Our Culture', href: '/our-culture' },
   { label: 'Our Journey', href: '/our-journey' },
   { label: 'Contact Us', href: '/contact-us' },
 ]
 
 const serviceLinks = [
-  { label: 'Jobs & Vacancies', href: 'https://career141.com/premium-jobs/' },
-  { label: 'Join Us', href: 'https://career141.com/our-culture/' },
+  { label: 'Jobs & Vacancies', href: '/premium-jobs' },
+  { label: 'Join Us', href: '/our-culture' },
 ]
 
 const contactInfo = [
@@ -196,8 +196,6 @@ export function CompanyFooter() {
                     <a
                       key={item.label}
                       href={item.href}
-                      target={item.href.startsWith('mailto') ? '_blank' : undefined}
-                      rel={item.href.startsWith('mailto') ? 'noopener noreferrer' : undefined}
                       className="font-['Inter',Helvetica] font-medium text-[#444] text-[13px] leading-[1.4] hover:text-[#37a65e] transition-colors"
                     >
                       {item.label}

@@ -487,7 +487,7 @@ export function ContactInfoAndFormSection() {
           <div className="mx-4 mb-8 bg-[#11593f] rounded-2xl shadow-2xl p-6 border border-white/15">
             <div className="flex items-baseline gap-3 mb-5">
               <span className="font-['Quicksand',Helvetica] font-bold text-[#6abf4b] text-[30px] leading-none">Hello!</span>
-              <span className="font-['Inter',Helvetica] font-medium text-white text-[14px]">We love to hear from you!</span>
+              <span className="font-['Inter',Helvetica] font-medium text-white text-[14px]">We would love to hear from you!</span>
             </div>
             <ContactForm dark />
           </div>
@@ -681,7 +681,7 @@ export function ContactInfoAndFormSection() {
                 </div>
                 <div className={styles.DivElementorElement_88_11962}>
                   <div className={styles.DivElementorWidgetContainer_88_11963}>
-                    <span className={styles.WeLoveToHearFromYou_88_11964}>We love to hear from you!</span>
+                    <span className={styles.WeLoveToHearFromYou_88_11964}>We would love to hear from you!</span>
                   </div>
                 </div>
               </div>

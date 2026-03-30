@@ -1,9 +1,8 @@
 'use client'
 
-import React, { useState } from 'react';
-import styles from '@/styles/BrowseAllJobs.module.css';
-import { ChevronDownIcon, SearchIcon } from 'lucide-react'
-import { JobCard, type Job } from '@/components/common/JobCard';
+import React from 'react'
+import styles from '@/styles/BrowseAllJobs.module.css'
+import { JobCard, type Job } from '@/components/common/JobCard'
 
 interface SidebarItem {
   label: string;
@@ -25,7 +24,7 @@ const SidebarFilterLink = ({ item }: { item: SidebarItem }) => (
     <div className={styles.Label_11_2228}>
       <div className={styles.SpanWpcFilterLabelWrapper_11_2229}>
         <div className={styles.A_11_2230}>
-          <a href={item.href} className={styles.Hospitality_11_2231} target="_blank" rel="noopener noreferrer">
+          <a href={item.href} className={styles.FilterTermLink} target="_blank" rel="noopener noreferrer">
             {item.label}
           </a>
         </div>
@@ -37,7 +36,7 @@ const SidebarFilterLink = ({ item }: { item: SidebarItem }) => (
       </div>
     </div>
   </div>
-);
+)
 
 export function BrowseAllJobsSection({
   jobCards,
@@ -45,8 +44,6 @@ export function BrowseAllJobsSection({
   sidebarLocations,
   sidebarCurrencies,
 }: BrowseAllJobsSectionProps) {
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
-
   return (
     <section className="flex flex-col items-start w-full bg-white overflow-hidden">
       <div className={styles.DivElementorElement_11_2202}>
@@ -61,9 +58,9 @@ export function BrowseAllJobsSection({
         {/* Desktop Layout */}
         <div className={styles.DivElementorElement_11_2207}>
           <div className={styles.DivEConInner_11_2208}>
-            {/* Sidebar */}
-            <div className={styles.DivElementorWidgetContainer_11_2209}>
-              <div className={styles.DivWpcFiltersWidgetWrapper_11_2210}>
+            {/* Sidebar — WP Job Manager style: bordered panel + term chips */}
+            <div className={`${styles.DivElementorWidgetContainer_11_2209} ${styles.FilterSidebarSurface}`}>
+              <div className={`${styles.DivWpcFiltersWidgetWrapper_11_2210} ${styles.FilterSidebarInner}`}>
                 {/* Search */}
                 <div className={styles.DivWpcFiltersSection_11_2211}>
                   <div className={styles.DivWidgetTitle_11_2212}>
@@ -105,10 +102,10 @@ export function BrowseAllJobsSection({
                     <span className={styles.Industry_11_2225}>Industry</span>
                   </div>
                   <div className={styles.UlWpcFiltersUlList_11_2226} style={{ overflowY: 'auto', height: 'auto', maxHeight: '550px' }}>
-                    <div className="flex flex-col gap-2">
-                        {sidebarIndustries.map((item, idx) => (
-                        <SidebarFilterLink key={idx} item={item} />
-                        ))}
+                    <div className={styles.FilterTermsList}>
+                      {sidebarIndustries.map((item, idx) => (
+                        <SidebarFilterLink key={`ind-${item.label}-${idx}`} item={item} />
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -119,10 +116,10 @@ export function BrowseAllJobsSection({
                     <span className={styles.Location_11_2314}>Location</span>
                   </div>
                   <div className={styles.UlWpcFiltersUlList_11_2315} style={{ overflowY: 'auto', height: 'auto', maxHeight: '550px' }}>
-                    <div className="flex flex-col gap-2">
-                        {sidebarLocations.map((item, idx) => (
-                        <SidebarFilterLink key={idx} item={item} />
-                        ))}
+                    <div className={styles.FilterTermsList}>
+                      {sidebarLocations.map((item, idx) => (
+                        <SidebarFilterLink key={`loc-${item.label}-${idx}`} item={item} />
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -133,10 +130,10 @@ export function BrowseAllJobsSection({
                     <span className={styles.Currency_11_2406}>Currency</span>
                   </div>
                   <div className={styles.UlWpcFiltersUlList_11_2407}>
-                    <div className="flex flex-col gap-2">
-                        {sidebarCurrencies.map((item, idx) => (
-                        <SidebarFilterLink key={idx} item={item} />
-                        ))}
+                    <div className={styles.FilterTermsList}>
+                      {sidebarCurrencies.map((item, idx) => (
+                        <SidebarFilterLink key={`cur-${item.label}-${idx}`} item={item} />
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -151,14 +148,31 @@ export function BrowseAllJobsSection({
                       <div className={styles.DivWpcFiltersRangeColumnMargin_11_2429}>
                         <div className={styles.DivWpcFiltersRangeColumn_11_2430}>
                           <div className={styles.InputWpcFiltersRangeMin_11_2431}>
-                            <input type="text" placeholder="0" className="w-full bg-transparent border-none outline-none" style={{ textAlign: 'center' }} />
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              placeholder="0"
+                              aria-label="Minimum salary"
+                              className="w-full min-h-[24px] bg-transparent border-none outline-none text-[#161618] text-[15px] leading-6 font-inherit text-center"
+                            />
                           </div>
                         </div>
                       </div>
                       <div className={styles.DivWpcFiltersRangeColumn_11_2438}>
                         <div className={styles.InputWpcFiltersRangeMax_11_2439}>
-                           <input type="text" placeholder="1200000" className="w-full bg-transparent border-none outline-none" style={{ textAlign: 'center' }} />
+                          <input
+                            type="text"
+                            inputMode="numeric"
+                            placeholder="1200000"
+                            aria-label="Maximum salary"
+                            className="w-full min-h-[24px] bg-transparent border-none outline-none text-[#161618] text-[15px] leading-6 font-inherit text-center"
+                          />
                         </div>
+                      </div>
+                    </div>
+                    <div className={styles.FilterSalarySliderRow} aria-hidden>
+                      <div className={styles.FilterSalaryTrack}>
+                        <div className={styles.FilterSalaryTrackFill} />
                       </div>
                     </div>
                   </div>

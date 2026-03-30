@@ -2,13 +2,18 @@ import { withBasePath } from '@/lib/assetPath'
 
 export function HeroSection() {
   return (
-    <section
-      className="relative flex flex-col w-full items-center gap-5 overflow-hidden"
-      style={{ background: `url(${withBasePath('/figmaAssets/div-elementor-element.png')}) center center / cover no-repeat` }}
-    >
-      {/* Top section moved to FoundersViewSection */}
+    <section className="relative flex flex-col w-full items-center gap-5 z-10">
+      {/* Background that overlaps the previous section */}
+      <div
+        className="absolute w-full h-[calc(100%+400px)] -top-[200px] left-0 pointer-events-none z-[-1]"
+        style={{
+          background: `url(${withBasePath('/figmaAssets/div-elementor-element.png')}) center center / cover no-repeat`,
+          maskImage: 'linear-gradient(to bottom, transparent 0%, black 100px)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 100px)'
+        }}
+      />
 
-      <div className="flex flex-col items-center gap-5 pt-8 md:pt-14 lg:pt-[80px] pb-4 lg:pb-[15.2px] px-6 md:px-10 lg:px-[106.45px] w-full">
+      <div className="flex flex-col items-center gap-5 pt-8 md:pt-14 lg:pt-[80px] pb-4 lg:pb-[15.2px] px-6 md:px-10 lg:px-[106.45px] w-full relative z-10">
         <div className="relative w-full max-w-[1229px] pb-[14.4px]">
           <div className="text-center">
             <p className="leading-[1.7] md:leading-[1.6] lg:leading-[56.3px]">

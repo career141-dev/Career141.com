@@ -32,7 +32,7 @@
   display: flex;
   position: relative;
   z-index: 5;
-  margin-top: 700px; /* Increased to fully clear the large SVG background */
+  margin-top: 350px; /* Reduced to pull the section content higher */
 }
 
 .TextBox {

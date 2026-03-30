@@ -17,8 +17,15 @@ export function OurJourneyPage() {
       <div className="w-full h-[60px] md:h-[89px]" />
 
       <QuoteHighlightSection />
-      <FoundersViewSection />
-      <HeroSection />
+      
+      <div className="relative z-[999] w-full">
+        <FoundersViewSection />
+      </div>
+
+      <div className="relative z-[0] w-full">
+        <HeroSection />
+      </div>
+
       <FoundersTextElement />
       <VisionMissionSection />
       <WhoWeAreSection />
