@@ -1,23 +1,11 @@
-'use client'
-
-import { useState } from 'react'
-import clsx from 'clsx'
-import { withBasePath } from '@/lib/assetPath'
+import clsx from "clsx";
+import { withBasePath } from "@/lib/assetPath";
 
 const imgDivElementorElement = withBasePath("/figmaAssets/testimonial/032702031c80235a48f8edff72693cef0a9031ec.png");
 const imgDivElementorElement1 = withBasePath("/figmaAssets/testimonial/f5fc7d0a8ab3374cd43c8bfed2b6b9ba03f8d49d.png");
 const imgDivRcAnchorLogoImg = withBasePath("/figmaAssets/testimonial/4736508c795667dcea21f8d864233031223b7832.png");
 
-interface FormData {
-  firstName: string
-  lastName: string
-  email: string
-  phone: string
-  subject: string
-  message: string
-}
-
-function InputField({ label, placeholder, isRequired = false, type = "text", value, onChange }: { label: string; placeholder: string; isRequired?: boolean; type?: string; value: string; onChange: (v: string) => void }) {
+function InputField({ label, placeholder, isRequired = false, type = "text", placeholderSize = "15.1px" }: { label: string; placeholder: string; isRequired?: boolean; type?: string; placeholderSize?: string }) {
   return (
     <div className="flex flex-col gap-3 w-full">
       <label className="font-['Quicksand',sans-serif] font-normal text-white text-[16px]">
@@ -27,9 +15,10 @@ function InputField({ label, placeholder, isRequired = false, type = "text", val
         <input 
             type={type}
             placeholder={placeholder}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className="bg-transparent border-none outline-none text-white w-full placeholder:text-white/50 font-['Inter',sans-serif] font-normal text-[15.1px]"
+            className={clsx(
+                "bg-transparent border-none outline-none text-white w-full placeholder:text-white/50 font-['Inter',sans-serif] font-normal",
+                placeholderSize === "15.1px" ? "text-[15.1px]" : "text-[13.4px]"
+            )} 
         />
       </div>
     </div>
@@ -49,32 +38,10 @@ function ContactMethod({ country, phones }: { country: string; phones: string[] 
     );
 }
 
-export function MeetingSchedulerSubsection() {
-  const [form, setForm] = useState<FormData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
-  })
-  const [submitting, setSubmitting] = useState(false)
-
-  const update = (field: keyof FormData) => (v: string) => setForm(f => ({ ...f, [field]: v }))
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitting(true)
-    setTimeout(() => {
-        setSubmitting(false)
-        alert("Message sent! (Mockuo)")
-    }, 1000)
-  }
-
+export default function DivElementorElement() {
   return (
-    /* Refined UI Implementation - Replaces old section with solid dark green and white glass effect */
-    <section className="relative w-full py-[80px] lg:py-[120px] px-4 sm:px-8 md:px-12 lg:px-20 overflow-hidden bg-[#0d1f15]">
-      {/* Background Section Overlay */}
+    <div className="relative w-full py-[120px] px-4 sm:px-8 md:px-12 lg:px-20 overflow-hidden bg-[#0d1f15]">
+      {/* Restored Background Section Overlay */}
       <div className="absolute inset-0 z-0">
           <img alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-60" src={imgDivElementorElement} />
       </div>
@@ -86,7 +53,7 @@ export function MeetingSchedulerSubsection() {
               
               {/* Left Column: Info */}
               <div className="relative z-10 flex-1 p-8 md:p-12 lg:p-16 flex flex-col justify-center gap-12">
-                  <h2 className="font-['Quicksand',sans-serif] font-bold text-[#CBFC06] text-[32px] md:text-[41.6px] leading-tight">
+                  <h2 className="font-['Quicksand',sans-serif] font-bold text-[#cbfc06] text-[41.6px] leading-[49.92px]">
                     Schedule a talent acquisition meeting
                   </h2>
                   
@@ -100,18 +67,18 @@ export function MeetingSchedulerSubsection() {
 
               {/* Right Column: Form */}
               <div className="relative z-10 flex-1 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-8 w-full">
+                  <form className="flex flex-col gap-8 w-full">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                          <InputField label="First Name" placeholder="First name with initials" isRequired value={form.firstName} onChange={update('firstName')} />
-                          <InputField label="Last Name" placeholder="Last Name" isRequired value={form.lastName} onChange={update('lastName')} />
+                          <InputField label="First Name" placeholder="First name with initials" isRequired />
+                          <InputField label="Last Name" placeholder="Last Name" isRequired />
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                          <InputField label="Email" placeholder="example@email.com" isRequired type="email" value={form.email} onChange={update('email')} />
-                          <InputField label="Your Phone" placeholder="+94 1234 12345" type="tel" value={form.phone} onChange={update('phone')} />
+                          <InputField label="Email" placeholder="example@email.com" isRequired type="email" />
+                          <InputField label="Your Phone" placeholder="+94 1234 12345" type="tel" placeholderSize="13.4px" />
                       </div>
 
-                      <InputField label="Subject" placeholder="I want help with recruitment" value={form.subject} onChange={update('subject')} />
+                      <InputField label="Subject" placeholder="I want help with recruitment" />
                       
                       <div className="flex flex-col gap-3 w-full">
                         <label className="font-['Quicksand',sans-serif] font-normal text-white text-[16px]">Message</label>
@@ -119,15 +86,13 @@ export function MeetingSchedulerSubsection() {
                            <textarea 
                              placeholder="Tell us how we can help you today"
                              rows={1}
-                             value={form.message}
-                             onChange={(e) => update('message')(e.target.value)}
                              className="bg-transparent border-none outline-none text-white w-full placeholder:text-white/50 font-['Inter',sans-serif] font-normal text-[14.8px] resize-none"
                            />
                         </div>
                       </div>
 
                       {/* ReCAPTCHA UI */}
-                      <div className="bg-white rounded-[3px] p-4 flex items-center justify-between w-full sm:w-[302px] h-[75px] shadow-sm self-start">
+                      <div className="bg-white rounded-[3px] p-4 flex items-center justify-between w-[302px] h-[75px] shadow-sm">
                           <div className="flex items-center gap-3">
                               <div className="w-[28px] h-[28px] border-[2px] border-[#d3d3d3] bg-white rounded-[2px] cursor-pointer"></div>
                               <span className="text-black text-[14px] font-['Roboto',sans-serif] font-normal">I'm not a robot</span>
@@ -143,17 +108,13 @@ export function MeetingSchedulerSubsection() {
                           </div>
                       </div>
 
-                      <button 
-                        type="submit"
-                        disabled={submitting}
-                        className="bg-white text-black font-['Quicksand',sans-serif] font-bold py-3 rounded-full hover:bg-gray-100 transition-colors text-[16px] w-full"
-                      >
-                        {submitting ? 'Sending...' : 'Submit'}
+                      <button className="bg-white text-black font-['Quicksand',sans-serif] font-bold py-3 rounded-full hover:bg-gray-100 transition-colors text-[16px] w-full">
+                        Submit
                       </button>
                   </form>
               </div>
           </div>
       </div>
-    </section>
-  )
+    </div>
+  );
 }

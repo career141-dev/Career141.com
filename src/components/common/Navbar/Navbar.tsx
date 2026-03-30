@@ -102,16 +102,31 @@ export function Navbar({ variant = 'overlay' }: NavbarProps) {
                     className="hidden lg:block absolute top-[100%] left-1/2 -translate-x-1/2 z-[32] bg-white shadow-xl animate-dropdown-fade border-t-2 border-[#006763] w-auto whitespace-nowrap min-w-[200px]"
                   >
                     <div className="flex flex-col py-3 px-0">
-                      {RESOURCES_CATEGORIES.flat().map((resItem, resIdx) => (
-                        <a
-                          key={resIdx}
-                          href="#"
-                          rel="noopener noreferrer"
-                          className="px-6 py-2 [font-family:'Quicksand',Helvetica] font-medium text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] hover:bg-gray-50 transition-colors duration-200 block"
-                        >
-                          {resItem}
-                        </a>
-                      ))}
+                      {RESOURCES_CATEGORIES.flat().map((resItem, resIdx) => {
+                        const href = typeof resItem === 'string' ? '#' : resItem.href
+                        const label = typeof resItem === 'string' ? resItem : resItem.label
+                        const isInternal = href.startsWith('/')
+                        const className = "px-6 py-2 [font-family:'Quicksand',Helvetica] font-medium text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] hover:bg-gray-50 transition-colors duration-200 block"
+
+                        if (isInternal) {
+                          return (
+                            <Link key={resIdx} href={href} className={className}>
+                              {label}
+                            </Link>
+                          )
+                        }
+                        return (
+                          <a
+                            key={resIdx}
+                            href={href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={className}
+                          >
+                            {label}
+                          </a>
+                        )
+                      })}
                     </div>
                   </div>
                 )}
@@ -249,16 +264,32 @@ export function Navbar({ variant = 'overlay' }: NavbarProps) {
                 Resources
               </p>
               <div className="flex flex-col gap-2">
-                {RESOURCES_CATEGORIES.flat().map((item, i) => (
-                  <a
-                    key={i}
-                    href="#"
-                    onClick={() => setMenuOpen(false)}
-                    className="[font-family:'Quicksand',Helvetica] text-white/80 text-[13px] leading-[1.5] hover:text-[#cbfc06]"
-                  >
-                    {item}
-                  </a>
-                ))}
+                {RESOURCES_CATEGORIES.flat().map((item, i) => {
+                  const href = typeof item === 'string' ? '#' : item.href
+                  const label = typeof item === 'string' ? item : item.label
+                  const isInternal = href.startsWith('/')
+                  const className = "[font-family:'Quicksand',Helvetica] text-white/80 text-[13px] leading-[1.5] hover:text-[#cbfc06]"
+
+                  if (isInternal) {
+                    return (
+                      <Link key={i} href={href} onClick={() => setMenuOpen(false)} className={className}>
+                        {label}
+                      </Link>
+                    )
+                  }
+                  return (
+                    <a
+                      key={i}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setMenuOpen(false)}
+                      className={className}
+                    >
+                      {label}
+                    </a>
+                  )
+                })}
               </div>
             </div>
 

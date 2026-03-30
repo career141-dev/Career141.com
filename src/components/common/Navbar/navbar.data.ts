@@ -27,9 +27,9 @@ export const EXECUTIVE_SEARCH_CATEGORIES = [
 
 export const RESOURCES_CATEGORIES = [
   [
-    'Case Study',
-    'Testimonial',
-    'Blog',
+    { label: 'Case Study', href: 'https://career141.com/case-studies/' },
+    { label: 'Blog', href: 'https://career141.com/blog/' },
+    { label: 'Testimonial', href: '/testimonial' },
   ]
 ]
 
