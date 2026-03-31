@@ -31,9 +31,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${quicksand.variable} ${openSans.variable} ${poppins.variable} ${inter.variable} font-sans antialiased`}>
-        {children}
+        <div style={{ overflowX: 'clip', position: 'relative' }}>
+          {children}
+        </div>
       </body>
     </html>
   )

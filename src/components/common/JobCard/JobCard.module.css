@@ -1,0 +1,186 @@
+:root {
+  --career-141-com-white: #ffffff;
+  --career-141-com-woodsmoke: #161618;
+  --career-141-com-hibiscus: #cc3366;
+  --career-141-com-electric-lime: #cbfc06;
+  --career-141-com-alto: #e0e0e0;
+  --color-white-solid: #ffffff;
+  --color-black-solid: #000000;
+  --color-grey-9: #161618;
+  --color-yellow-51: #cbfc06;
+  --color-spring-green-39: #369271;
+  --color-rose-50: #cc3366;
+  --font-family-Font-2: 'Quicksand', sans-serif;
+  --font-family-Font-5: 'Font Awesome 5 Free', sans-serif;
+}
+
+.AElementorElement {
+  width: 285px;
+  height: 395.6px;
+  position: relative;
+  margin: 0 auto;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.CardInner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.AElementorElement:hover .CardInner {
+  transform: translateY(-15px) scale(1.05);
+  filter: drop-shadow(0 25px 40px rgba(0, 0, 0, 0.35));
+  z-index: 50;
+}
+
+.JobCardPostSvgFill {
+  flex-direction: column;
+  align-items: flex-end;
+  width: 285px;
+  height: 395.6px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.JobCardPostSvg {
+  flex-direction: column;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 358.895px;
+  height: 395.6px;
+  padding: 0 0.765px 0.378px 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.MainContentWrapper {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 245px;
+  display: flex;
+  position: absolute;
+  top: 30px;
+  left: 20px;
+  z-index: 2;
+}
+
+.DivEConInner {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  display: flex;
+}
+
+.CategoryWrapper {
+  align-items: flex-end;
+  width: 204.6px;
+  display: flex;
+}
+
+.Category {
+  color: var(--career-141-com-white, #fff);
+  font-family: var(--font-family-Font-2, Quicksand);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.2px;
+  display: inline-block;
+}
+
+.TitleSection {
+  border-bottom: 0.8px solid var(--color-spring-green-39, #369271);
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 11.68px;
+  display: flex;
+}
+
+.Title {
+  color: var(--career-141-com-electric-lime, #cbfc06);
+  font-family: var(--font-family-Font-2, Quicksand);
+  font-size: 19.2px;
+  font-weight: 600;
+  line-height: 23px;
+  display: inline-block;
+  width: 100%;
+}
+
+.DetailRow {
+  border-bottom: 0.8px solid var(--color-spring-green-39, #369271);
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  display: flex;
+  padding: 4.2px 0 10px;
+}
+
+.DetailText {
+  color: var(--career-141-com-white, #fff);
+  font-family: var(--font-family-Font-2, Quicksand);
+  font-size: 12.8px;
+  font-weight: 400;
+  line-height: 15.36px;
+  display: inline-block;
+}
+
+.CardFooter {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 245px;
+  display: flex;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 2;
+}
+
+.FooterInner {
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  display: flex;
+}
+
+.DateText {
+  color: var(--career-141-com-white, #fff);
+  font-family: var(--font-family-Font-2, Quicksand);
+  font-size: 11.2px;
+  font-weight: 400;
+  line-height: 13.44px;
+  display: inline-block;
+}
+
+.ActionButtonWrapper {
+  border: 1px solid var(--color-white-solid, #fff);
+  box-sizing: border-box;
+  border-radius: 100px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 14.2px 12.8px 6.8px;
+  display: flex;
+}
+
+.IconWrapper {
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 6.4px;
+  display: flex;
+}
+
+.Symbol {
+  color: var(--career-141-com-electric-lime, #cbfc06);
+  text-align: center;
+}

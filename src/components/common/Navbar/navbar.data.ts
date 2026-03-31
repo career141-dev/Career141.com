@@ -35,12 +35,20 @@ export const RESOURCES_DROPDOWN_ITEMS = [
   { label: 'Testimonials', href: '/testimonials' },
 ]
 
+export const RESOURCES_CATEGORIES = [
+  [
+    { label: 'Case Study', href: 'https://career141.com/case-studies/' },
+    { label: 'Blog', href: 'https://career141.com/blog/' },
+    { label: 'Testimonial', href: '/testimonial' },
+  ]
+]
+
 export const NAV_ITEMS = [
   { label: 'EXECUTIVE SEARCH', hasDropdown: true, href: '/executive-search', hasExecDrop: true },
   { label: 'OUR JOURNEY', hasDropdown: false, href: 'https://career141.com/our-journey/', hasExecDrop: false },
   { label: 'OUR CULTURE', hasDropdown: true, href: '/our-culture', hasExecDrop: false, dropdownItems: CULTURE_DROPDOWN_ITEMS },
   { label: 'PREMIUM JOBS', hasDropdown: false, href: undefined, hasExecDrop: false },
-  { label: 'RESOURCES', hasDropdown: true, href: undefined, hasExecDrop: false, dropdownItems: RESOURCES_DROPDOWN_ITEMS },
+  { label: 'RESOURCES', hasDropdown: true, href: undefined, hasExecDrop: false, dropdownItems: RESOURCES_DROPDOWN_ITEMS, hasResourceDrop: true },
   { label: 'CONTACT', hasDropdown: false, href: 'https://career141.com/contact-us/', hasExecDrop: false },
 ]
 

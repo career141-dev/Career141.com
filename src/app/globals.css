@@ -1,9 +1,87 @@
-@import "tailwindcss";
-@config "../../tailwind.config.ts";
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Inter:wght@300;400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
+@import 'tailwindcss';
+@config '../../tailwind.config.ts';
+
+@layer components {
+  .all-\[unset\] {
+    all: unset;
+  }
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --career-14-1comalto: rgba(224, 224, 224, 1);
+  --career-14-1comblack: rgba(0, 0, 0, 1);
+  --career-14-1comeden: rgba(17, 89, 63, 1);
+  --career-14-1comgallery: rgba(237, 237, 237, 1);
+  --career-14-1comhibiscus: rgba(204, 51, 102, 1);
+  --career-14-1comwhite: rgba(255, 255, 255, 1);
+  --career-14-1comwoodsmoke: rgba(22, 22, 24, 1);
+  --career141-com-font-awesome-5-brands-regular-font-family: 'Font Awesome 5 Brands', Helvetica;
+  --career141-com-font-awesome-5-brands-regular-font-size: 11px;
+  --career141-com-font-awesome-5-brands-regular-font-style: normal;
+  --career141-com-font-awesome-5-brands-regular-font-weight: 400;
+  --career141-com-font-awesome-5-brands-regular-letter-spacing: 0px;
+  --career141-com-font-awesome-5-brands-regular-line-height: 11px;
+  --career141-com-font-awesome-5-free-solid-font-family: 'Font Awesome 5 Free', Helvetica;
+  --career141-com-font-awesome-5-free-solid-font-size: 12.800000190734863px;
+  --career141-com-font-awesome-5-free-solid-font-style: normal;
+  --career141-com-font-awesome-5-free-solid-font-weight: 400;
+  --career141-com-font-awesome-5-free-solid-letter-spacing: 0px;
+  --career141-com-font-awesome-5-free-solid-line-height: 12.800000190734863px;
+  --career141-com-quicksand-bold-font-family: 'Quicksand', Helvetica;
+  --career141-com-quicksand-bold-font-size: 11.199999809265137px;
+  --career141-com-quicksand-bold-font-style: normal;
+  --career141-com-quicksand-bold-font-weight: 700;
+  --career141-com-quicksand-bold-letter-spacing: 0px;
+  --career141-com-quicksand-bold-line-height: 11.199999809265137px;
+  --career141-com-quicksand-medium-upper-font-family: 'Quicksand', Helvetica;
+  --career141-com-quicksand-medium-upper-font-size: 12.800000190734863px;
+  --career141-com-quicksand-medium-upper-font-style: normal;
+  --career141-com-quicksand-medium-upper-font-weight: 500;
+  --career141-com-quicksand-medium-upper-letter-spacing: 0px;
+  --career141-com-quicksand-medium-upper-line-height: 19.200000762939453px;
+  --career141-com-quicksand-regular-font-family: 'Quicksand', Helvetica;
+  --career141-com-quicksand-regular-font-size: 11.199999809265137px;
+  --career141-com-quicksand-regular-font-style: normal;
+  --career141-com-quicksand-regular-font-weight: 400;
+  --career141-com-quicksand-regular-letter-spacing: 0px;
+  --career141-com-quicksand-regular-line-height: 13.4399995803833px;
+  --career141-com-quicksand-semibold-font-family: 'Quicksand', Helvetica;
+  --career141-com-quicksand-semibold-font-size: 19.200000762939453px;
+  --career141-com-quicksand-semibold-font-style: normal;
+  --career141-com-quicksand-semibold-font-weight: 600;
+  --career141-com-quicksand-semibold-letter-spacing: 0px;
+  --career141-com-quicksand-semibold-line-height: 23px;
+  --career141comblack-0: rgba(0, 0, 0, 0);
+  --career141comblack-russian: rgba(0, 3, 19, 1);
+  --career141comblue-stone: rgba(0, 103, 99, 1);
+  --career141combottle-green: rgba(12, 66, 46, 1);
+  --career141comcape-cod: rgba(68, 68, 68, 1);
+  --career141comelectric-lime: rgba(203, 252, 6, 1);
+  --career141commountain-meadow: rgba(37, 211, 102, 1);
+  --career141comsea-green: rgba(54, 146, 113, 1);
+  --career141comwhite-18: rgba(255, 255, 255, 0.18);
+  --animate-spin: spin 1s linear infinite;
+  --background: 0 0% 100%;
+  --foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 47.4% 11.2%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --card: transparent;
+  --card-foreground: 222.2 47.4% 11.2%;
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 210 40% 98%;
+  --ring: 215 20.2% 65.1%;
+  --radius: 0.5rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -47,4 +125,86 @@ body {
 
 .animate-fade-in {
   animation: fadeIn 0.7s ease-out forwards;
+}
+
+.animate-dropdown-fade {
+  animation: dropdown-fade 0.2s ease forwards;
+}
+
+@keyframes industriesBgFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes industriesBgPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes industriesBgFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.ind-scroll-container {
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.ind-scroll-container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+@layer base {
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+    --accent: 216 34% 17%;
+    --accent-foreground: 210 40% 98%;
+    --popover: 224 71% 4%;
+    --popover-foreground: 215 20.2% 65.1%;
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+    --card: transparent;
+    --card-foreground: 213 31% 91%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 1.2%;
+    --secondary: 222.2 47.4% 11.2%;
+    --secondary-foreground: 210 40% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 216 34% 17%;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html, body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', Helvetica, sans-serif;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+    margin: 0;
+    width: 100%;
+  }
 }

@@ -1,0 +1,166 @@
+@import "https://fonts.googleapis.com/css?family=Inter:0,500&display=swap";
+
+/* Desktop Styles */
+.VisionSectionContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+  padding-bottom: 50px;
+}
+
+.TitleBackgroundWrapper {
+  width: 100%;
+  max-width: 1429.56px;
+  margin: 0 auto;
+  position: absolute;
+  top: -380px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.VisionContentRow {
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  display: flex;
+  position: relative;
+  z-index: 5;
+  margin-top: 350px; /* Reduced to pull the section content higher */
+}
+
+.TextBox {
+  background: url('/figmaAssets/bg-mission.webp') center center/cover no-repeat;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1064.91px;
+  padding: 85px 85px;
+  display: flex;
+  position: relative;
+}
+
+.TextBox::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 0;
+}
+
+.InnerContent {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 830.85px;
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+
+.VisionText {
+  color: #444;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32.64px;
+}
+
+.ImageWrapper {
+  align-items: center;
+  display: flex;
+  margin-left: -91px;
+  z-index: 10;
+}
+
+.QuoteImage {
+  aspect-ratio: 129/98;
+  background: url('/figmaAssets/group-2280.webp') center center/cover no-repeat;
+  width: 507.6px;
+  height: 385.64px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* MOBILE DESIGN OVERRIDES (From User) */
+@media (max-width: 768px) {
+  .VisionSectionContainer {
+    padding-bottom: 20px !important; /* Slight buffer */
+    margin-top: 140px !important; /* Added margin to show background heading */
+  }
+
+  .VisionContentRow {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    margin-top: 0 !important;
+    gap: 20px !important;
+  }
+
+  /* Vision Block Container */
+  .DivElementorElement_115_9567 {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 19.995px;
+    width: 100%;
+    display: flex;
+  }
+
+  /* SVG Title Wrapper */
+  .DivElementorIconWrapper_115_9570 {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0 0 6.4px 80px; /* Adjusted from 371px to fit mobile */
+    display: flex;
+  }
+
+  .Frame_115_9572 {
+    width: 100%;
+    max-width: 762px;
+    height: auto;
+    overflow: hidden;
+    transform: scale(0.6); /* Scaled down as requested */
+    transform-origin: left center;
+  }
+
+  /* Text Area */
+  .TextBox {
+    background: #d3d3d3 url('/figmaAssets/bg-vision.webp') 0 0/357.772% 161.934% no-repeat !important;
+    padding: 21.23px 14.512px 21.76px 36.3px !important;
+    width: 100% !important;
+    max-width: 390.4px !important;
+    min-height: 180.32px !important;
+    border-radius: 0 !important;
+  }
+
+  .VisionText {
+    font-size: 14.4px !important;
+    line-height: 24.48px !important;
+    font-weight: 400 !important;
+  }
+
+  /* Image Area */
+  .ImageWrapper {
+    margin-left: 0 !important;
+    padding: 0 0 3.6ms !important;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .QuoteImage {
+    width: 100px !important; /* Smaller image as requested */
+    height: 75.97px !important;
+    background: #d3d3d3 url('/figmaAssets/group-2280.webp') 0 -0.003px/100% 100.007% no-repeat !important;
+    border-radius: 0 !important;
+    aspect-ratio: 100/75.97 !important;
+    margin-right: 27px;
+  }
+}

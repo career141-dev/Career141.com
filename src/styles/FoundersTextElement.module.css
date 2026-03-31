@@ -1,0 +1,333 @@
+@import "https://fonts.googleapis.com/css?family=Inter:0,400;0,700&display=swap";
+@import "https://fonts.googleapis.com/css?family=Quicksand:0,700;0,400&display=swap";
+
+.DivElementorElement_115_10489 {
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 30.01px;
+  width: 100%;
+  padding: 350px 20px 0 0;
+  display: flex;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.DivElementorElement_115_10490 {
+  background: none;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-start;
+  width: 719.75px;
+  display: flex;
+  animation: slideInRight 0.8s ease-out forwards;
+}
+
+.DivElementorElement_115_10491 {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  padding-bottom: 14.4px;
+  display: flex;
+}
+
+.DivElementorWidgetContainer_115_10492,
+.P_115_10493 {
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  display: flex;
+}
+
+.OverTheLastTwoDecadesCareer141SriLankaHasBuiltATrustedReputationAsASriLankanGlobalRecruitmentAndExecutiveSearchFirmServingClientsAcross_25CountriesIncludingSriLankaSingaporeUnitedArabEmiratesQatarKuwaitBahrainEgyptOmanIndiaBangladeshIndonesiaMalaysiaVietnamCambodiaThailandHongKongKenyaGhanaEthiopiaTanzaniaBotswanaZambiaUgandaRwandaFijiUnitedStatesUnitedKingdomAustraliaAndPapuaNewGuine_115_10494 {
+  color: #252525;
+  font-family: Inter;
+  font-size: 14.8px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 27.2px;
+  display: inline-block;
+}
+
+.DivElementorElement_115_10495 {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  display: flex;
+}
+
+.DivElementorWidgetContainer_115_10496 {
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  display: flex;
+}
+
+.ABdtShowHideTitle_115_10497 {
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+.Before_115_10498 {
+  background: linear-gradient(#fff0 0%, #fff 100%);
+  width: 719.75px;
+  height: 100px;
+  position: absolute;
+  top: -100px;
+  display: none;
+}
+
+.ReadMore_115_10499 {
+  color: #37a65e;
+  font-family: Quicksand;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  display: inline-block;
+}
+
+.DivElementorElement_115_10500 {
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-start;
+  gap: 29.99px;
+  width: 618.98px;
+  display: flex;
+  animation: slideInRight 0.8s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.DivElementorElement_115_10501 {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  display: flex;
+}
+
+.DivElementorElement_115_10502 {
+  align-items: flex-start;
+  gap: 19.99px;
+  width: 100%;
+  display: flex;
+}
+
+.DivElementorElement_115_10503 {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 618.98px;
+  display: flex;
+}
+
+.DivElementorWidgetContainer_115_10504 {
+  flex-direction: column;
+  align-items: flex-start;
+  display: flex;
+}
+
+.MAAzeemusham_115_10505 {
+  color: #11593f;
+  font-family: Quicksand;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px;
+  display: inline-block;
+}
+
+.DivElementorElementAlignStretch_115_10506 {
+  align-items: flex-start;
+  display: flex;
+}
+
+.DivElementorElement_115_10507 {
+  align-items: flex-start;
+  gap: 20px;
+  width: 111.41px;
+  display: flex;
+}
+
+.DivElementorElement_115_10508 {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 111.41px;
+  display: flex;
+}
+
+.DivElementorWidgetContainer_115_10509 {
+  flex-direction: column;
+  align-items: flex-start;
+  display: flex;
+}
+
+.A_115_10510 {
+  align-items: center;
+  height: 27.41px;
+  padding-right: 18.29px;
+  display: flex;
+}
+
+.EmailWebp_115_10511 {
+  aspect-ratio: 1;
+  background: #d3d3d3 url('/figmaAssets/icon-email.png') 0 0/100% 100% no-repeat;
+  width: 27.41px;
+  height: 27.41px;
+  overflow: hidden;
+}
+
+.DivElementorElement_115_10513 {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 111.41px;
+  display: flex;
+}
+
+.DivElementorWidgetContainer_115_10514 {
+  flex-direction: column;
+  align-items: flex-start;
+  display: flex;
+}
+
+.A_115_10515 {
+  align-items: center;
+  height: 27.43px;
+  padding-right: 18.28px;
+  display: flex;
+}
+
+.LinkedinWebp_115_10516 {
+  aspect-ratio: 1;
+  background: #d3d3d3 url('/figmaAssets/icon-linkedin.png') 0 0/100% 100% no-repeat;
+  width: 27.43px;
+  height: 27.43px;
+  overflow: hidden;
+}
+
+.DivElementorElement_115_10518 {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 235.2px;
+  max-width: 618.98px;
+  display: flex;
+}
+
+.DivElementorWidgetContainer_115_10519,
+.PElementorHeadingTitle_115_10520 {
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  display: flex;
+}
+
+.ManagingDirector_115_10521 {
+  color: #444;
+  font-family: Quicksand;
+  font-size: 19.2px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19.2px;
+  display: inline-block;
+}
+
+.DivElementorElement_115_10522 {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 420.9px;
+  max-width: 618.98px;
+  display: flex;
+}
+
+.DivElementorWidgetContainer_115_10523 {
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  display: flex;
+}
+
+.YearsLogoWebp_115_10524 {
+  aspect-ratio: 274/135;
+  background: url('/figmaAssets/20-years-logo.webp.png') 0 0.002px/100% 99.998% no-repeat;
+  width: 100%;
+  height: 207.38px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .DivElementorElement_115_10522 {
+    width: 100%;
+    max-width: 400px; /* Make it very small */
+  }
+  .YearsLogoWebp_115_10524 {
+    height: auto;     /* Maintain aspect ratio */
+  }
+}
+
+@media (max-width: 1024px) {
+  .DivElementorElement_115_10489 {
+    flex-direction: column;
+    width: 100%;
+    padding: 91px 20px 0 20px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .DivElementorElement_115_10490,
+  .Before_115_10498 {
+    width: 100%;
+    align-items: center;
+  }
+
+  .DivElementorElement_115_10491,
+  .DivElementorWidgetContainer_115_10492,
+  .P_115_10493,
+  .DivElementorElement_115_10495,
+  .DivElementorWidgetContainer_115_10496,
+  .ABdtShowHideTitle_115_10497 {
+    align-items: center;
+  }
+
+  .DivElementorElement_115_10500 {
+    width: 100%;
+    align-items: center;
+  }
+
+  .DivElementorElement_115_10501,
+  .DivElementorElement_115_10502,
+  .DivElementorElement_115_10503,
+  .DivElementorWidgetContainer_115_10504,
+  .DivElementorElementAlignStretch_115_10506,
+  .DivElementorElement_115_10507,
+  .DivElementorElement_115_10508,
+  .DivElementorWidgetContainer_115_10509,
+  .DivElementorElement_115_10513,
+  .DivElementorWidgetContainer_115_10514,
+  .DivElementorElement_115_10518,
+  .DivElementorWidgetContainer_115_10519 {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .DivElementorElement_115_10522,
+  .DivElementorWidgetContainer_115_10523 {
+    align-items: center;
+  }
+}
