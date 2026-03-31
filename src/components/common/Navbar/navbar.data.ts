@@ -25,6 +25,16 @@ export const EXECUTIVE_SEARCH_CATEGORIES = [
   ],
 ]
 
+export const CULTURE_DROPDOWN_ITEMS = [
+  { label: 'Events', href: '/events' },
+]
+
+export const RESOURCES_DROPDOWN_ITEMS = [
+  { label: 'Blogs', href: '/blogs' },
+  { label: 'Case Studies', href: '/case-studies' },
+  { label: 'Testimonials', href: '/testimonials' },
+]
+
 export const RESOURCES_CATEGORIES = [
   [
     { label: 'Case Study', href: 'https://career141.com/case-studies/' },
@@ -34,12 +44,12 @@ export const RESOURCES_CATEGORIES = [
 ]
 
 export const NAV_ITEMS = [
-  { label: 'EXECUTIVE SEARCH', hasDropdown: true, href: undefined, hasExecDrop: true, hasResourceDrop: false },
-  { label: 'OUR JOURNEY', hasDropdown: false, href: '/our-journey', hasExecDrop: false, hasResourceDrop: false },
-  { label: 'OUR CULTURE', hasDropdown: true, href: 'https://career141.com/our-culture/', hasExecDrop: false, hasResourceDrop: false },
-  { label: 'PREMIUM JOBS', hasDropdown: false, href: '/premium-jobs', hasExecDrop: false, hasResourceDrop: false },
-  { label: 'RESOURCES', hasDropdown: true, href: undefined, hasExecDrop: false, hasResourceDrop: true },
-  { label: 'CONTACT', hasDropdown: false, href: '/contact-us', hasExecDrop: false, hasResourceDrop: false },
+  { label: 'EXECUTIVE SEARCH', hasDropdown: true, href: '/executive-search', hasExecDrop: true },
+  { label: 'OUR JOURNEY', hasDropdown: false, href: 'https://career141.com/our-journey/', hasExecDrop: false },
+  { label: 'OUR CULTURE', hasDropdown: true, href: '/our-culture', hasExecDrop: false, dropdownItems: CULTURE_DROPDOWN_ITEMS },
+  { label: 'PREMIUM JOBS', hasDropdown: false, href: undefined, hasExecDrop: false },
+  { label: 'RESOURCES', hasDropdown: true, href: undefined, hasExecDrop: false, dropdownItems: RESOURCES_DROPDOWN_ITEMS, hasResourceDrop: true },
+  { label: 'CONTACT', hasDropdown: false, href: 'https://career141.com/contact-us/', hasExecDrop: false },
 ]
 
 export const SOCIAL_LINKS = [
