@@ -1,6 +1,8 @@
 'use client'
 
 import { Navbar } from '@/components/common/Navbar'
+import { CompanyFooter } from '@/components/common'
+import { MeetingSchedulerSubsection } from '@/components/home/sections/MeetingSchedulerSubsection'
 import { withBasePath } from '@/lib/assetPath'
 
 export default function CaseStudiesPage() {
@@ -56,6 +58,10 @@ export default function CaseStudiesPage() {
 
         </div>
       </section>
+
+      <MeetingSchedulerSubsection />
+
+      <CompanyFooter />
     </main>
   )
 }

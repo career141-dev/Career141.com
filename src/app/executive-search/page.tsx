@@ -1,11 +1,13 @@
 'use client'
 
 import { Navbar } from '@/components/common/Navbar'
+import { CompanyFooter } from '@/components/common'
 import { HeroSection } from '@/components/executive-search/HeroSection'
 import { CommitmentSection } from '@/components/executive-search/CommitmentSection'
 import { ImageSlideshow } from '@/components/executive-search/ImageSlideshow'
 import { ProcessFlowSection } from '@/components/executive-search/ProcessFlowSection'
 import { ExecutiveFooter } from '@/components/executive-search/ExecutiveFooter'
+import { MeetingSchedulerSubsection } from '@/components/home/sections/MeetingSchedulerSubsection'
 import { withBasePath } from '@/lib/assetPath'
 import { useEffect, useRef, useState } from 'react'
 
@@ -81,7 +83,8 @@ export default function ExecutiveSearchPage() {
     ['Aqua-Dynamics-Official-Logo-1.webp', 'Artboard 10@2x 1.png', 'Artboard 17@2x 1.png', 'Artboard 33@2x 1.png', 'Artboard 41@2x 1.png'],
   ]
 
-  const displayedRows = showAllLogos ? logoRows : logoRows.slice(0, 2)
+  const initialRows = logoRows.slice(0, 2)
+  const displayedRows = showAllLogos ? logoRows : initialRows
 
   return (
     <main className="min-h-screen bg-white m-0 p-0">
@@ -152,18 +155,18 @@ export default function ExecutiveSearchPage() {
         Skill Specializations
       </h2>
 
-      <div className="max-w-[1440px] mx-auto w-full">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 w-full gap-0">
           {[
-            { title: 'Consumer Insight & Experience', img: '/images/Skills/Consumer Insight & Experience .png' },
+            { title: 'Consumer Insight & Experience', img: '/images/Skills/Consumer Insight & Experience.png' },
             { title: 'Fashion Design', img: '/images/Skills/fashion design.png' },
             { title: 'HR, L&D, Compensation & Benefit', img: '/images/Skills/HR, L&D, Compensation & Benefit.png' },
             { title: 'IT Software & Infrastructure Solutions', img: '/images/Skills/IT Software & Infrastructure Solutions.png' },
             { title: 'Digital Marketing & Mar-tech', img: '/images/Skills/Digital Marketing & Mar-tech.png' },
             { title: 'Fabric Technology & Quality', img: '/images/Skills/Fabric Technology & Quality.png' },
-            { title: 'Merchandising & Marketing', img: '/images/Skills/Merchandising & Marketing .png' },
+            { title: 'Merchandising & Marketing', img: '/images/Skills/Merchandising & Marketing.png' },
             { title: 'Supply chain & Logistics', img: '/images/Skills/Supply chain & Logistics.png' },
-            { title: 'Artificial Intelligence', img: '/images/Skills/Artificial Intelligence .png' },
+            { title: 'Artificial Intelligence', img: '/images/Skills/Artificial Intelligence.png' },
             { title: 'Continuous Improvement', img: '/images/Skills/Continuous Improvement.png' },
             { title: 'Legal & Secretarial', img: '/images/Skills/Legal & Secretarial.png' },
             { title: 'Mechanical & Automation', img: '/images/Skills/Mechanical & Automation.png' },
@@ -232,48 +235,77 @@ export default function ExecutiveSearchPage() {
         Who we work with
       </h2>
 
-      <div className="max-w-[1440px] mx-auto w-full px-4">
-        {displayedRows.map((row, rowIndex) => (
-          <div key={rowIndex} className="flex justify-between md:justify-around items-center mb-8">
-            {row.map((logo, logoIndex) => (
-              <div 
-                key={logoIndex} 
-                className="flex-1 flex items-center justify-center px-2"
-              >
-                <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full bg-white flex items-center justify-center p-2 sm:p-3 md:p-4 shadow-md">
-                  <img 
-                    src={`/images/logos/${logo}`} 
-                    alt="" 
-                    className="w-full h-full object-contain" 
-                  />
+      {/* Desktop: grid with show more, Mobile: horizontal scroll 2 rows */}
+      <div className="w-full px-4 sm:px-6 lg:px-8">
+        {/* Mobile horizontal scroll view */}
+        <div className="md:hidden overflow-x-auto pb-4 snap-x snap-mandatory">
+          {logoRows.map((row, rowIndex) => (
+            <div 
+              key={`mobile-row-${rowIndex}`} 
+              className="flex justify-center items-center gap-3 min-w-[100%] snap-center mb-4"
+            >
+              {row.map((logo, logoIndex) => (
+                <div 
+                  key={`mobile-logo-${logoIndex}`} 
+                  className="flex-shrink-0"
+                >
+                  <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-white flex items-center justify-center p-2 shadow-md">
+                    <img 
+                      src={`/images/logos/${logo}`} 
+                      alt="" 
+                      className="w-full h-full object-contain" 
+                    />
+                  </div>
                 </div>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop grid view */}
+        <div className="hidden md:grid grid-cols-5 gap-6 lg:gap-8">
+          {displayedRows.flat().map((logo, index) => (
+            <div 
+              key={`desktop-logo-${index}`} 
+              className="flex items-center justify-center"
+            >
+              <div className="w-32 h-32 lg:w-44 lg:h-44 rounded-full bg-white flex items-center justify-center p-4 lg:p-5 shadow-md">
+                <img 
+                  src={`/images/logos/${logo}`} 
+                  alt="" 
+                  className="w-full h-full object-contain" 
+                />
               </div>
-            ))}
-          </div>
-        ))}
+            </div>
+          ))}
+        </div>
         
-        {showAllLogos ? (
-          <div className="flex justify-center mt-4">
+        {/* Show more button - desktop only */}
+        <div className="hidden md:flex justify-center mt-8">
+          {showAllLogos ? (
             <button 
               onClick={() => setShowAllLogos(false)}
               className="[font-family:'Quicksand',Helvetica] px-6 py-3 bg-[#11593F] text-white rounded-full font-semibold hover:bg-[#0d4a32] transition-colors"
             >
               Show less
             </button>
-          </div>
-        ) : (
-          <div className="flex justify-center mt-4">
+          ) : (
             <button 
               onClick={() => setShowAllLogos(true)}
               className="[font-family:'Quicksand',Helvetica] px-6 py-3 bg-[#11593F] text-white rounded-full font-semibold hover:bg-[#0d4a32] transition-colors"
             >
               Show more
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
-      <ExecutiveFooter />
+      <div className="pt-10 lg:pt-20">
+        <MeetingSchedulerSubsection />
+      </div>
+
+      
+      <CompanyFooter />
     </main>
   )
 }

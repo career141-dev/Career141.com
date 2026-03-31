@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { Navbar } from '@/components/common/Navbar'
+import { CompanyFooter } from '@/components/common'
+import { MeetingSchedulerSubsection } from '@/components/home/sections/MeetingSchedulerSubsection'
 import { withBasePath } from '@/lib/assetPath'
 import eventsData from '@/data/events.json'
 import { EventCarousel } from './EventCarousel'
@@ -70,6 +72,12 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
       </section>
 
       <EventCarousel events={eventsData.events} currentSlug={slug} />
+      
+      <div className="pt-10">
+        <MeetingSchedulerSubsection />
+      </div>
+      
+      <CompanyFooter />
     </main>
   )
 }

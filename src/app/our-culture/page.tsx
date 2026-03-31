@@ -1,9 +1,11 @@
 'use client'
 
 import { Navbar } from '@/components/common/Navbar'
+import { CompanyFooter } from '@/components/common'
+import { MeetingSchedulerSubsection } from '@/components/home/sections/MeetingSchedulerSubsection'
 import { withBasePath } from '@/lib/assetPath'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const boxDescriptions = [
   "We celebrate individuality and encourage you to thrive as your authentic self. Your unique perspectives and talents are valued and appreciated here.",
@@ -38,6 +40,11 @@ const employeeStories = [
 export default function OurCulturePage() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
   const [currentSlide, setCurrentSlide] = useState(0)
+  const schedulerRef = useRef<HTMLDivElement>(null)
+
+  const scrollToScheduler = () => {
+    schedulerRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % employeeStories.length)
@@ -62,30 +69,38 @@ export default function OurCulturePage() {
     <main className="min-h-screen bg-white m-0 p-0">
       <Navbar bgColor="#0F221B" />
       <section className="relative w-full bg-white pb-5 overflow-hidden">
-        <div className="relative w-full pt-4">
+        <div className="relative w-full pt-16 md:pt-4">
           <img
             src={withBasePath('/images/Culture/Group 3584.png')}
             alt="Our Culture Hero"
-            className="w-full h-auto object-cover md:object-fill"
+            className="hidden md:block w-full h-auto object-cover md:object-fill"
           />
+          <div className="block md:hidden overflow-hidden relative">
+            <img
+              src={withBasePath('/images/Culture/Group 3584.png')}
+              alt="Our Culture Hero"
+              className="w-full h-auto"
+              style={{ minWidth: '200vw' }}
+            />
+          </div>
           <img
             src={withBasePath('/images/Culture/Vector 335.svg')}
             alt=""
-            className="hidden md:block absolute top-[70px] right-0 z-10 w-full h-auto md:w-2/4"
+            className="hidden md:block absolute top-[70px] right-0 z-10 w-2/4 h-auto"
           />
-          <div className="md:absolute md:top-4 md:right-0 md:z-20 md:w-2/4 md:flex md:flex-col md:gap-4 md:p-8 block px-4 py-4">
+          <div className="md:absolute md:top-30 md:right-20 md:z-20 md:w-[40%] md:flex md:flex-col md:gap-4 md:p-6 block px-4 py-4">
             <div className="md:flex md:flex-col md:items-start md:justify-center md:gap-1 md:mt-22 md:ml-20 mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <img
                   src={withBasePath('/images/Culture/g1.svg')}
                   alt=""
-                  className="w-6 md:w-10 h-6 md:h-10"
+                  className="w-5 md:w-10 h-5 md:h-10"
                 />
-                <span className="[font-family:'Quicksand',Sans-serif] text-[#11593f] text-sm md:text-[27px]">
+                <span className="[font-family:'Quicksand',Sans-serif] text-[#11593f] text-xs md:text-[27px]">
                   Our Culture
                 </span>
               </div>
-              <span className="[font-family:'Nordeco',Sans-serif] text-[#000000] text-base md:text-[2.8em] font-normal leading-[1.2em]">
+              <span className="[font-family:'Nordeco',Sans-serif] text-[#000000] text-sm md:text-[2.8em] font-normal leading-[1.2em]">
                 Growth, Performance <br className="hidden md:block" />And Collaboration
               </span>
             </div>
@@ -93,7 +108,7 @@ export default function OurCulturePage() {
               <p className="[font-family:'Quicksand',Sans-serif] text-[#000000] text-xs md:text-sm md:max-w-[300px] text-left md:text-right mb-3">
                 Welcome to Career141, where we pride ourselves on cultivating a dynamic and inclusive environment.
               </p>
-              <button className="bg-[#11593f] text-white [font-family:'Quicksand',Sans-serif] text-xs md:text-sm px-4 md:px-6 py-1.5 md:py-2 rounded-full whitespace-nowrap w-fit">
+              <button onClick={scrollToScheduler} className="bg-[#11593f] text-white [font-family:'Quicksand',Sans-serif] text-xs md:text-lg px-4 md:px-10 py-2 md:py-4 rounded-full whitespace-nowrap w-fit font-semibold hover:bg-[#0d4a32] transition-colors">
                 Join Us
               </button>
             </div>
@@ -278,9 +293,9 @@ export default function OurCulturePage() {
               <p className="[font-family:'Quicksand',Sans-serif] text-gray-600 text-sm md:text-base mb-6">
                 With us you'll have the opportunity to work with industry leaders, embrace cutting-edge technologies, and develop expertise across diverse fields. We offer you the unique opportunity to collaborate with some of the world's leading MNCs and conglomerates. Joining our team means working alongside top industry professionals and contributing to impactful projects that shape the future of global business. Join us and let's shape the future together.
               </p>
-              <button className="bg-[#37A65E] text-white [font-family:'Quicksand',Sans-serif] px-8 py-3 rounded-full font-semibold hover:bg-[#2d8a4d] transition-colors">
+              <Link href="/premium-jobs" className="bg-[#37A65E] text-white [font-family:'Quicksand',Sans-serif] px-8 py-3 rounded-full font-semibold hover:bg-[#2d8a4d] transition-colors inline-block">
                 View all job opportunities
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -325,6 +340,12 @@ export default function OurCulturePage() {
           </div>
         </div>
       </section>
+
+      <div ref={schedulerRef}>
+        <MeetingSchedulerSubsection />
+      </div>
+
+      <CompanyFooter />
     </main>
   )
 }

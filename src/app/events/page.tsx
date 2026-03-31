@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Navbar } from '@/components/common/Navbar'
+import { CompanyFooter } from '@/components/common'
+import { MeetingSchedulerSubsection } from '@/components/home/sections/MeetingSchedulerSubsection'
 import { withBasePath } from '@/lib/assetPath'
 import eventsData from '@/data/events.json'
 import { HeroCarousel } from './HeroCarousel'
@@ -92,6 +94,10 @@ export default function EventsPage() {
           </div>
         </div>
       </section>
+
+      <MeetingSchedulerSubsection />
+
+      <CompanyFooter />
     </main>
   )
 }
