@@ -55,7 +55,7 @@ const homeJobCards: Job[] = [
 export function BackgroundWrapperSubsection() {
   return (
     <section
-      className="relative self-stretch w-full bg-[100%_100%] overflow-hidden"
+      className="relative self-stretch w-full bg-[100%_100%] overflow-hidden bg-white"
       style={{ backgroundImage: `url(${withBasePath('/figmaAssets/blue-horizontal-tube-1-svg-fill.svg')})` }}
     >
       <div className="lg:hidden flex flex-col items-start px-[23px] pt-[47px] pb-5 gap-5">

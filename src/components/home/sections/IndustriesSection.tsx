@@ -186,7 +186,7 @@ export function IndustriesSection(): JSX.Element {
   const rows = [INDUSTRIES.slice(0, 5), INDUSTRIES.slice(5, 10), INDUSTRIES.slice(10, 14)]
 
   return (
-    <section style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
+    <section style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden', backgroundColor: 'white' }}>
       {prev !== null && (
         <div
           key={`prev-${prev}`}
