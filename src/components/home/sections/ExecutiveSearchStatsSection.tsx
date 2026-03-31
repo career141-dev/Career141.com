@@ -209,7 +209,7 @@ export function ExecutiveSearchStatsSection() {
         </div>
       </div>
 
-      <div className="relative w-full overflow-hidden bg-white">
+      <div className="relative w-full overflow-hidden bg-white" style={{ backgroundColor: 'white' }}>
         <img className="absolute top-0 left-0 w-full h-full object-contain lg:object-cover pointer-events-none" alt="Decorative tubes" src={withBasePath('/figmaAssets/tubes-home-executive-svg-fill.svg')} />
 
         <div className="relative z-10 grid grid-cols-2 lg:flex lg:flex-row w-full items-start justify-center gap-x-10 gap-y-10 lg:gap-5 pt-8 lg:pt-[66px] pb-8 lg:pb-[107px] px-6 sm:px-12 lg:px-[91px]">

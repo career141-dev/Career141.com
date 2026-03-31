@@ -133,7 +133,7 @@ export function BackgroundSubsection() {
   return (
     <section
       className="relative self-stretch w-full bg-[100%_100%] min-h-[510px] lg:h-[783.29px] bg-white"
-      style={{ backgroundImage: `url(${withBasePath('/figmaAssets/blue-horizontal-tube-1-svg-fill-1.svg')})` }}
+      style={{ backgroundImage: `url(${withBasePath('/figmaAssets/blue-horizontal-tube-1-svg-fill-1.svg')})`, backgroundColor: 'white' }}
     >
       <div className="lg:hidden flex flex-col pt-[55px] pb-8 gap-6">
         <div className="mx-[23px] border-l-[1.6px] border-solid border-[#fe8d2b] pl-5">

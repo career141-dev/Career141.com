@@ -460,7 +460,7 @@ export function HowWeDifferentiateSection() {
   const row2 = CARDS.slice(3)
 
   return (
-    <section className="w-full relative bg-white overflow-hidden">
+    <section className="w-full relative bg-white overflow-hidden" style={{ backgroundColor: 'white' }}>
       <div
         className="hidden lg:block"
         style={{
