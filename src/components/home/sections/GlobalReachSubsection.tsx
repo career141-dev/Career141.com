@@ -35,9 +35,9 @@ const PIN_POSITIONS = [
 
 function MapPin() {
   return (
-    <span className="relative inline-flex items-center justify-center w-[14px] h-[14px] rounded-full bg-[#11593F] border-2 border-white/80 shadow-[0_0_0_2px_rgba(17,89,63,0.25)]">
-      <span className="absolute w-[7px] h-[1.6px] bg-[#CBFC06] rounded-full" />
-      <span className="absolute h-[7px] w-[1.6px] bg-[#CBFC06] rounded-full" />
+    <span className="relative inline-flex items-center justify-center w-[14px] h-[14px] rounded-full bg-[#006763] shadow-sm">
+      <span className="absolute w-[8px] h-[1.6px] bg-[#CBFC06] rounded-full" />
+      <span className="absolute h-[8px] w-[1.6px] bg-[#CBFC06] rounded-full" />
     </span>
   )
 }
