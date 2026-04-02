@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { withBasePath } from '@/lib/assetPath'
 import { BrowseAllJobsSection } from './BrowseAllJobsSection'
+import { premiumJobCards } from '../premiumJobsData'
 
 type WhatsAppChannel = {
   industry: string
@@ -145,21 +146,6 @@ const sidebarLocations = [
 const sidebarCurrencies = [
   { label: 'LKR', count: '(186)', href: '/premium-jobs' },
   { label: 'USD', count: '(40)', href: '/premium-jobs' },
-]
-
-const jobCards = [
-  { industry: 'Other', title: 'Head of Operations - Modern Trade (Supermarket Chain)', currency: 'LKR', salaryMin: '', salaryMax: '-', location: 'Sri Lanka', type: 'Other', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Other', title: 'Senior Sales Manager', currency: 'LKR', salaryMin: '1,000,000', salaryMax: '1,200,000', location: 'Saudi Arabia', type: 'Other', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Other', title: 'EXECUTIVE - RESEARCH & BUSINESS DEVELOPMENT', currency: 'LKR', salaryMin: '55,000', salaryMax: '65,000', location: 'Sri Lanka', type: 'Other', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Power & Energy', title: 'Accountant', currency: 'LKR', salaryMin: '200,000', salaryMax: '250,000', location: 'Sri Lanka', type: 'Power & Energy', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Automative', title: 'General Manager - Sales (4 Wheeler Cars & SUV)', currency: 'LKR', salaryMin: '1,200,000', salaryMax: '', location: 'Sri Lanka', type: 'Automative', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Automative', title: 'General Manager - Sales', currency: 'LKR', salaryMin: '1,200,000', salaryMax: '', location: 'Sri Lanka', type: 'Automative', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Apparel', title: 'Chief Operating Officer', currency: 'USD', salaryMin: '10,000', salaryMax: '', location: 'Sri Lanka', type: 'Apparel', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Other', title: 'Procurement Manager', currency: 'LKR', salaryMin: '400,000', salaryMax: '550,000', location: 'Sri Lanka', type: 'Other', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Information Technology', title: 'Manager / Senior Manager Digital Marketing', currency: 'LKR', salaryMin: '450,000', salaryMax: '550,000', location: 'Sri Lanka', type: 'Information Technology', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Apparel', title: 'Manager - Quality Assurance', currency: 'LKR', salaryMin: '320,000', salaryMax: '420,000', location: 'Sri Lanka', type: 'Apparel', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Apparel', title: 'Cutting Manager', currency: 'LKR', salaryMin: '320,000', salaryMax: '420,000', location: 'Sri Lanka', type: 'Apparel', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Apparel', title: 'Cluster Manager - Human Resources', currency: 'LKR', salaryMin: '650,000', salaryMax: '800,000', location: 'Sri Lanka', type: 'Apparel', workType: 'On-Site', date: 'February 27, 2026' },
 ]
 
 const FilterTag = ({ label, href, active }: { label: string; href: string; active?: boolean }) => (
@@ -436,7 +422,7 @@ export function PremiumJobsSection() {
       </section>
 
       <BrowseAllJobsSection 
-        jobCards={jobCards}
+        jobCards={premiumJobCards}
         sidebarIndustries={sidebarIndustries}
         sidebarLocations={sidebarLocations}
         sidebarCurrencies={sidebarCurrencies}

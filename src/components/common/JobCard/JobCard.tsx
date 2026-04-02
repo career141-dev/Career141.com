@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { ArrowRightIcon } from 'lucide-react';
 import styles from './JobCard.module.css';
 
@@ -12,11 +13,13 @@ export interface Job {
   type: string;
   workType: string;
   date: string;
+  slug?: string;
 }
 
 interface JobCardProps {
   job: Job;
   index?: number;
+  applyHref?: string;
 }
 
 function formatSalaryLine(job: Job): string {
@@ -29,7 +32,9 @@ function formatSalaryLine(job: Job): string {
   return `${currency} ${max}`
 }
 
-export const JobCard: React.FC<JobCardProps> = ({ job, index }) => {
+export const JobCard: React.FC<JobCardProps> = ({ job, index, applyHref }) => {
+  const resolvedApplyHref = applyHref ?? (job.slug ? `/premium-jobs/${job.slug}` : undefined)
+
   return (
     <div className={styles.AElementorElement} data-testid={index !== undefined ? `card-job-${index}` : undefined}>
       <div className={styles.CardInner}>
@@ -74,11 +79,19 @@ export const JobCard: React.FC<JobCardProps> = ({ job, index }) => {
         <div className={styles.CardFooter}>
           <div className={styles.FooterInner}>
             <div className={styles.DateText}>{job.date}</div>
-            <div className={styles.ActionButtonWrapper}>
-              <div className={styles.IconWrapper}>
-                <ArrowRightIcon size={18} className={styles.Symbol} />
+            {resolvedApplyHref ? (
+              <Link href={resolvedApplyHref} className={styles.ActionButtonWrapper} aria-label={`Apply for ${job.title}`}>
+                <div className={styles.IconWrapper}>
+                  <ArrowRightIcon size={18} className={styles.Symbol} />
+                </div>
+              </Link>
+            ) : (
+              <div className={styles.ActionButtonWrapper}>
+                <div className={styles.IconWrapper}>
+                  <ArrowRightIcon size={18} className={styles.Symbol} />
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

@@ -184,7 +184,7 @@ export function BrowseAllJobsSection({
             <div className={styles.DivElementorWidgetContainer_11_2450}>
               <div className={styles.DivElementorLoopContainer_11_2451}>
                 {jobCards.map((job, index) => (
-                  <JobCard key={index} job={job} />
+                  <JobCard key={index} job={job} applyHref={`/premium-jobs/${job.slug}`} />
                 ))}
               </div>
             </div>

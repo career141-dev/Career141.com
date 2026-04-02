@@ -10,10 +10,12 @@ import { withBasePath } from '@/lib/assetPath'
 type NavbarProps = {
   bgColor?: string
   variant?: 'overlay' | 'solid'
+  sticky?: boolean
 }
 
-export function Navbar({ bgColor, variant = 'overlay' }: NavbarProps) {
+export function Navbar({ bgColor, variant = 'overlay', sticky = false }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [mobileDropdown, setMobileDropdown] = useState<string | null>(null)
   const [execDropOpen, setExecDropOpen] = useState(false)
   const [cultureDropOpen, setCultureDropOpen] = useState(false)
   const [resourcesDropOpen, setResourcesDropOpen] = useState(false)
@@ -22,6 +24,7 @@ export function Navbar({ bgColor, variant = 'overlay' }: NavbarProps) {
   const resourcesDropTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
   const pathname = usePathname()
   const isSolid = variant === 'solid'
+  const headerPositionClass = sticky ? 'fixed' : 'absolute'
 
   const handleExecEnter = () => {
     if (execDropTimeout.current) clearTimeout(execDropTimeout.current)
@@ -55,7 +58,7 @@ export function Navbar({ bgColor, variant = 'overlay' }: NavbarProps) {
       <header
         className={`top-0 left-0 right-0 z-50 flex w-full items-stretch justify-between border-b border-[#ffffff2e] ${
           isSolid || bgColor
-            ? 'fixed bg-[#0d1f15]'
+            ? `${headerPositionClass} bg-[#0d1f15]`
             : bgColor
             ? 'absolute'
             : 'absolute bg-[linear-gradient(180deg,rgba(0,0,0,0.21)_40%,rgba(0,0,0,0)_100%)]'
@@ -231,11 +234,41 @@ export function Navbar({ bgColor, variant = 'overlay' }: NavbarProps) {
           <div className="flex flex-col divide-y divide-[#ffffff20]">
             {NAV_ITEMS.map((item, index) => {
               const isLocal = item.href?.startsWith('/') && !item.href?.startsWith('//')
+              const isOpen = mobileDropdown === item.label
+              const hasMobileDropdown = Boolean(item.hasDropdown)
+
+              const mobileSubmenu = item.label === 'EXECUTIVE SEARCH'
+                ? EXECUTIVE_SEARCH_CATEGORIES.flat().map((subItem) => ({ label: subItem, href: '/executive-search' }))
+                : item.label === 'OUR CULTURE'
+                ? CULTURE_DROPDOWN_ITEMS
+                : item.label === 'RESOURCES'
+                ? RESOURCES_DROPDOWN_ITEMS
+                : []
               
               return (
-                <div key={index} className="flex items-center justify-between px-6 py-4">
-                  {item.href ? (
-                    isLocal ? (
+                <div key={index} className="px-6 py-4">
+                  <div className="flex items-center justify-between gap-4">
+                    {item.href && !hasMobileDropdown ? (
+                      isLocal ? (
+                        <Link
+                          href={item.href}
+                          onClick={() => setMenuOpen(false)}
+                          className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]"
+                        >
+                          {item.label}
+                        </Link>
+                      ) : (
+                        <a
+                          href={item.href}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                          onClick={() => setMenuOpen(false)}
+                          className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]"
+                        >
+                          {item.label}
+                        </a>
+                      )
+                    ) : item.href && hasMobileDropdown ? (
                       <Link
                         href={item.href}
                         onClick={() => setMenuOpen(false)}
@@ -244,77 +277,40 @@ export function Navbar({ bgColor, variant = 'overlay' }: NavbarProps) {
                         {item.label}
                       </Link>
                     ) : (
-                      <a
-                        href={item.href}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        onClick={() => setMenuOpen(false)}
-                        className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]"
-                      >
+                      <span className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]">
                         {item.label}
-                      </a>
-                    )
-                  ) : (
-                    <span className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]">
-                      {item.label}
-                    </span>
+                      </span>
+                    )}
+
+                    {item.hasDropdown && (
+                      <button
+                        type="button"
+                        aria-label={`Toggle ${item.label} submenu`}
+                        onClick={() => setMobileDropdown(isOpen ? null : item.label)}
+                        className="flex items-center justify-center w-8 h-8 -mr-1 text-white"
+                      >
+                        <ChevronDownIcon className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} style={{ width: '14px', height: '14px' }} />
+                      </button>
+                    )}
+                  </div>
+
+                  {hasMobileDropdown && isOpen && mobileSubmenu.length > 0 && (
+                    <div className="mt-3 ml-3 border-l border-[#ffffff20] pl-4 flex flex-col gap-2">
+                      {mobileSubmenu.map((subItem, subIndex) => (
+                        <Link
+                          key={subIndex}
+                          href={subItem.href}
+                          onClick={() => setMenuOpen(false)}
+                          className="[font-family:'Quicksand',Helvetica] text-white/80 text-[13px] leading-[1.5] hover:text-[#cbfc06]"
+                        >
+                          {subItem.label}
+                        </Link>
+                      ))}
+                    </div>
                   )}
-                  {item.hasDropdown && <ChevronDownIcon className="text-white" style={{ width: '14px', height: '14px' }} />}
                 </div>
               )
             })}
-
-            <div className="px-6 py-4 bg-[#001a1a]">
-              <p className="[font-family:'Quicksand',Helvetica] text-[#cbfc06] text-[11px] font-semibold tracking-[1px] mb-3 uppercase">
-                Executive Search Areas
-              </p>
-              <div className="flex flex-col gap-2">
-                {EXECUTIVE_SEARCH_CATEGORIES.flat().map((item, i) => (
-                  <Link
-                    key={i}
-                    href="/executive-search"
-                    onClick={() => setMenuOpen(false)}
-                    className="[font-family:'Quicksand',Helvetica] text-white/80 text-[13px] leading-[1.5] hover:text-[#cbfc06]"
-                  >
-                    {item}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <div className="px-6 py-4 bg-[#001414] border-t border-[#ffffff10]">
-              <p className="[font-family:'Quicksand',Helvetica] text-[#cbfc06] text-[11px] font-semibold tracking-[1px] mb-3 uppercase">
-                Resources
-              </p>
-              <div className="flex flex-col gap-2">
-                {RESOURCES_CATEGORIES.flat().map((item, i) => {
-                  const href = typeof item === 'string' ? '#' : item.href
-                  const label = typeof item === 'string' ? item : item.label
-                  const isInternal = href.startsWith('/')
-                  const className = "[font-family:'Quicksand',Helvetica] text-white/80 text-[13px] leading-[1.5] hover:text-[#cbfc06]"
-
-                  if (isInternal) {
-                    return (
-                      <Link key={i} href={href} onClick={() => setMenuOpen(false)} className={className}>
-                        {label}
-                      </Link>
-                    )
-                  }
-                  return (
-                    <a
-                      key={i}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setMenuOpen(false)}
-                      className={className}
-                    >
-                      {label}
-                    </a>
-                  )
-                })}
-              </div>
-            </div>
 
             <div className="px-6 py-5 flex items-center gap-5">
               {SOCIAL_LINKS.map((social, index) => {
