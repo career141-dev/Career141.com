@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { withBasePath } from '@/lib/assetPath'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const HEADING_DARK = 'rgb(22,22,24)'
 const HEADING_GREEN = '#37A65E'
@@ -19,41 +20,18 @@ const CARDS = [
   { id: 7, text: 'Technology\nAdaptation', back: withBasePath('/figmaAssets/diff-card-7.png') },
 ]
 
-function DiamondFront({ text, uid, size }: { text: string; uid: string; size: number }) {
-  const fontSize = Math.max(11, Math.round(15 * (size / 308)))
-
+function DiamondFront({ uid, size }: { text: string; uid: string; size: number }) {
   return (
     <div style={{ position: 'relative', width: size, height: size }}>
       <svg width={size} height={size} viewBox="0 0 308 309" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
         <defs>
-          <linearGradient id={`grad-${uid}`} x1="84.8287" y1="64.8611" x2="239.617" y2="219.65" gradientUnits="userSpaceOnUse">
+          <linearGradient id={`grad-${uid}`} x1="89.2163" y1="69.1913" x2="243.924" y2="223.899" gradientUnits="userSpaceOnUse">
             <stop stopColor="#FE8D2B" />
             <stop offset="1" stopColor="#109162" />
           </linearGradient>
         </defs>
-        <path d={DIAMOND_PATH} fill="#F8F8F8" stroke={`url(#grad-${uid})`} strokeWidth="1.52396" />
+        <path d={DIAMOND_PATH} fill="#FFFFFF" stroke={`url(#grad-${uid})`} strokeWidth="1.52396" />
       </svg>
-
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          fontFamily: "'Quicksand', Helvetica, sans-serif",
-          fontWeight: 600,
-          fontSize,
-          lineHeight: 1.35,
-          color: '#161618',
-          padding: '0 22%',
-          pointerEvents: 'none',
-          whiteSpace: 'pre-line',
-        }}
-      >
-        {text}
-      </div>
     </div>
   )
 }
@@ -65,6 +43,7 @@ interface FlipCardProps {
 
 function FlipCard({ card, size }: FlipCardProps) {
   const [flipped, setFlipped] = useState(false)
+  const lines = card.text.split('\n')
 
   return (
     <div
@@ -91,6 +70,7 @@ function FlipCard({ card, size }: FlipCardProps) {
             transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
           }}
         >
+          {/* Front Side */}
           <div
             style={{
               position: 'absolute',
@@ -100,11 +80,32 @@ function FlipCard({ card, size }: FlipCardProps) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              transformStyle: 'preserve-3d',
+              zIndex: flipped ? 1 : 2
             }}
           >
             <DiamondFront text={card.text} uid={`f${card.id}`} size={size} />
+            <motion.div
+              animate={{ 
+                translateZ: flipped ? 120 : 0,
+                opacity: flipped ? 0 : 1,
+                scale: flipped ? 1.2 : 1
+              }}
+              className="absolute inset-0 flex items-center justify-center text-center px-[22%]"
+              style={{
+                fontFamily: "'Quicksand', sans-serif",
+                fontWeight: 600,
+                fontSize: Math.max(11, Math.round(15 * (size / 308))),
+                color: '#161618',
+                pointerEvents: 'none',
+                zIndex: 10
+              }}
+            >
+              {card.text}
+            </motion.div>
           </div>
 
+          {/* Back Side */}
           <div
             style={{
               position: 'absolute',
@@ -115,9 +116,41 @@ function FlipCard({ card, size }: FlipCardProps) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              transformStyle: 'preserve-3d',
+              overflow: 'visible',
+              zIndex: flipped ? 2 : 1
             }}
           >
-            <img src={card.back} alt={card.text.replace('\n', ' ')} style={{ width: size, height: size, objectFit: 'contain', display: 'block' }} draggable={false} />
+            <div className="relative w-full h-full flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
+              <img 
+                src={card.back} 
+                alt={card.text.replace('\n', ' ')} 
+                style={{ width: size, height: size, objectFit: 'contain', display: 'block' }} 
+                draggable={false} 
+              />
+              
+              <motion.div
+                initial={false}
+                animate={{ 
+                  translateZ: flipped ? 60 : -20,
+                  opacity: flipped ? 1 : 0,
+                  scale: flipped ? 1 : 0.8
+                }}
+                className="absolute inset-0 flex flex-col items-center justify-center p-4 pointer-events-none"
+                style={{ 
+                  zIndex: 20,
+                  fontFamily: "'Quicksand', sans-serif",
+                  transformStyle: 'preserve-3d'
+                }}
+              >
+                <span className="text-white text-[16px] lg:text-[18px] font-bold uppercase tracking-wider mb-1 line-clamp-1">
+                  {lines[0]}
+                </span>
+                <span className="text-white text-[14px] lg:text-[16px] font-medium leading-tight text-center">
+                  {lines[1] || ""}
+                </span>
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
@@ -141,6 +174,147 @@ function CardCol({ card, size }: { card: (typeof CARDS)[0]; size: number }) {
   )
 }
 
+function MobileDiamondCard({ card }: { card: (typeof CARDS)[0] }) {
+  const [flipped, setFlipped] = useState(false)
+  const gradId = `mobile-grad-${card.id}`
+  const fixedWidth = 200
+  const fixedHeight = 200
+  const lines = card.text.split('\n')
+
+  return (
+    <div
+      style={{
+        width: fixedWidth,
+        height: fixedHeight,
+        perspective: 1000,
+        cursor: 'pointer',
+        flexShrink: 0,
+      }}
+      onClick={() => setFlipped(!flipped)}
+    >
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'relative',
+          transformStyle: 'preserve-3d',
+          transition: 'transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1)',
+          transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+        }}
+      >
+        {/* Front Side */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transformStyle: 'preserve-3d',
+            zIndex: flipped ? 1 : 2
+          }}
+        >
+          <div style={{ position: 'relative', width: fixedWidth, height: fixedHeight, transformStyle: 'preserve-3d' }}>
+            <svg
+              width={fixedWidth}
+              height={fixedHeight}
+              viewBox="0 0 308 309"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ display: 'block', position: 'absolute', inset: 0 }}
+            >
+              <defs>
+                <linearGradient id={gradId} x1="89.2163" y1="69.1913" x2="243.924" y2="223.899" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#FE8D2B" />
+                  <stop offset="1" stopColor="#109162" />
+                </linearGradient>
+              </defs>
+              <path d={DIAMOND_PATH} fill="#FFFFFF" stroke={`url(#${gradId})`} strokeWidth="1.524" />
+            </svg>
+
+            <motion.div
+              animate={{ 
+                translateZ: flipped ? 80 : 0,
+                opacity: flipped ? 0 : 1,
+                scale: flipped ? 1.1 : 1
+              }}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center',
+                fontFamily: "'Quicksand', Helvetica, sans-serif",
+                fontWeight: 600,
+                fontSize: 13,
+                lineHeight: 1.35,
+                color: '#161618',
+                padding: '0 22%',
+                pointerEvents: 'none',
+                whiteSpace: 'pre-line',
+                zIndex: 10
+              }}
+            >
+              {card.text}
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Back Side */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+            transform: 'rotateY(180deg)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transformStyle: 'preserve-3d',
+            overflow: 'visible',
+            zIndex: flipped ? 2 : 1
+          }}
+        >
+          <div className="relative w-full h-full flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
+            <img
+              src={card.back}
+              alt={card.text.replace('\n', ' ')}
+              style={{ width: fixedWidth, height: fixedHeight, objectFit: 'contain', display: 'block' }}
+              draggable={false}
+            />
+            
+            <motion.div
+              initial={false}
+              animate={{ 
+                translateZ: flipped ? 40 : -10,
+                opacity: flipped ? 1 : 0,
+                scale: flipped ? 1 : 0.9
+              }}
+              className="absolute inset-0 flex flex-col items-center justify-center p-4 pointer-events-none"
+              style={{ 
+                zIndex: 20,
+                fontFamily: "'Quicksand', sans-serif",
+                transformStyle: 'preserve-3d'
+              }}
+            >
+              <span className="text-white text-[14px] font-bold uppercase tracking-wider mb-1 line-clamp-1">
+                {lines[0]}
+              </span>
+              <span className="text-white text-[12px] font-medium leading-tight text-center">
+                {lines[1] || ""}
+              </span>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function MobileCarousel() {
   const [index, setIndex] = useState(0)
   const [direction, setDirection] = useState<1 | -1>(1)
@@ -149,7 +323,6 @@ function MobileCarousel() {
   const total = CARDS.length
   const carouselW = 343
   const carouselH = 281
-  const cardSize = 256
 
   const navigate = (dir: 1 | -1) => {
     if (animating) return
@@ -193,7 +366,7 @@ function MobileCarousel() {
             transition: animating ? 'transform 0.3s ease' : 'none',
           }}
         >
-          <FlipCard card={CARDS[index]} size={cardSize} />
+          <MobileDiamondCard card={CARDS[index]} />
         </div>
 
         <button
@@ -287,15 +460,44 @@ export function HowWeDifferentiateSection() {
   const row2 = CARDS.slice(3)
 
   return (
-    <section
-      className={[
-        'w-full relative bg-white bg-no-repeat',
-        `[background-image:url(${withBasePath('/figmaAssets/how-we-differentiate-bg.png')})]`,
-        '[background-position:left_center]',
-        '[background-size:55%_auto]',
-        'lg:[background-size:100%_100%]',
-      ].join(' ')}
-    >
+    <section className="w-full relative bg-white overflow-hidden" style={{ backgroundColor: 'white' }}>
+      <div
+        className="hidden lg:block"
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: '80%',
+          height: '100%',
+          zIndex: 0,
+        }}
+      >
+        <img
+          src={withBasePath('/figmaAssets/How_WE.png')}
+          alt=""
+          style={{ width: '100%', height: 'auto', display: 'block' }}
+        />
+      </div>
+
+      <div
+        className="md:hidden"
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 0,
+        }}
+      >
+        <img
+          src={withBasePath('/figmaAssets/How_WE.png')}
+          alt=""
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
+      </div>
+
+      <div className="relative z-10">
       <div className="hidden lg:block" style={{ maxWidth: 1521, margin: '0 auto', padding: '10px 40px 40px' }}>
         <div
           style={{
@@ -405,6 +607,7 @@ export function HowWeDifferentiateSection() {
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <MobileCarousel />
         </div>
+      </div>
       </div>
     </section>
   )

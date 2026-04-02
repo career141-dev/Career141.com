@@ -37,9 +37,9 @@ export const RESOURCES_DROPDOWN_ITEMS = [
 
 export const RESOURCES_CATEGORIES = [
   [
-    { label: 'Case Study', href: 'https://career141.com/case-studies/' },
-    { label: 'Blog', href: 'https://career141.com/blog/' },
-    { label: 'Testimonial', href: '/testimonial' },
+    { label: 'Case Study', href: '/case-studies' },
+    { label: 'Blog', href: '/blogs' },
+    { label: 'Testimonial', href: '/testimonials' },
   ]
 ]
 

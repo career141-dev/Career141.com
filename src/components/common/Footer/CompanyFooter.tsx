@@ -84,14 +84,14 @@ export function CompanyFooter() {
   return (
     <>
       {/* Mobile Footer */}
-      <footer className="md:hidden flex flex-col w-full bg-[#0d0d0d]">
+      <footer className="md:hidden flex flex-col w-full bg-white border-t border-[#ededed]">
         <div className="px-5 pt-10 pb-6 flex flex-col gap-8">
           <div>
             <div
               className="w-[160px] h-[62px] bg-contain bg-no-repeat bg-left"
-              style={{ backgroundImage: `url(${withBasePath('/figmaAssets/career141-logo-with-20-year-anniversary-mark.png')})` }}
+              style={{ backgroundImage: `url(${withBasePath('/figmaAssets/artboard-3-2048x790-png.png')})` }}
             />
-            <p className="font-['Quicksand',sans-serif] text-white/40 text-[12.8px] leading-[20.48px] mt-4">
+            <p className="font-['Quicksand',sans-serif] text-[#444444] text-[12.8px] leading-[20.48px] mt-4">
               Executive Search remains our primary focus. In a world where CVs and resumes are available everywhere on the web, we add value and insight.
             </p>
           </div>
@@ -99,23 +99,23 @@ export function CompanyFooter() {
           <div className="grid grid-cols-2 gap-6">
             <div className="flex flex-col gap-4">
               {mainLinks.map((link) => (
-                <FooterLink key={link.label} href={link.href} label={link.label} dark />
+                <FooterLink key={link.label} href={link.href} label={link.label} />
               ))}
             </div>
 
             <div className="flex flex-col gap-4">
               {serviceLinks.map((link) => (
-                <FooterLink key={link.label} href={link.href} label={link.label} dark />
+                <FooterLink key={link.label} href={link.href} label={link.label} />
               ))}
               <div className="flex flex-col gap-3 mt-2">
-                <span className="font-['Quicksand',sans-serif] font-bold text-white text-[14.1px]">Get Directions</span>
+                <span className="font-['Quicksand',sans-serif] font-bold text-[#161618] text-[14.1px]">Get Directions</span>
                 {directions.map((direction) => (
                   <a
                     key={direction.label}
                     href={direction.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-[#6abf4b] text-[13.3px] font-['Inter',sans-serif] font-medium hover:text-white transition-colors underline"
+                    className="flex items-center gap-2 text-[#11593f] text-[13.3px] font-['Inter',sans-serif] font-medium hover:text-[#37a65e] transition-colors underline"
                   >
                     <MapPinIcon className="w-3 h-3" />
                     {direction.label}
@@ -125,7 +125,7 @@ export function CompanyFooter() {
             </div>
           </div>
 
-          <div className="w-full h-px bg-white/10" />
+          <div className="w-full h-px bg-[#ededed]" />
 
           <div className="flex items-center justify-center gap-3">
             {socialLinks.map((social) => {
@@ -137,15 +137,15 @@ export function CompanyFooter() {
                   rel="noopener noreferrer"
                   target="_blank"
                   aria-label={social.label}
-                  className="flex w-9 h-9 items-center justify-center rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-200"
+                  className="flex w-9 h-9 items-center justify-center rounded-lg bg-[#f4f4f4] hover:bg-[#ededed] transition-all duration-200"
                 >
-                  <Icon size={16} className="text-white" />
+                  <Icon size={16} className="text-[#0c422e]" />
                 </a>
               )
             })}
           </div>
 
-          <p className="font-['Quicksand',sans-serif] font-bold text-white/30 text-[11.2px] text-center">
+          <p className="font-['Quicksand',sans-serif] font-bold text-[#161618]/30 text-[11.2px] text-center">
             © 2024 Career141. A Positive Impact Company
           </p>
         </div>
