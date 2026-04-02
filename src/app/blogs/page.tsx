@@ -39,8 +39,13 @@ export default function BlogsPage() {
   return (
     <main className="min-h-screen bg-white m-0 p-0">
       <Navbar bgColor="#0F221B" />
-      <section className="w-full py-12 md:py-16 lg:py-24 bg-white min-h-[80vh] flex items-center justify-center">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 px-4">
+      <section className="w-full py-12 md:py-16 lg:py-24 bg-white min-h-[80vh] flex items-center justify-center relative">
+        <img
+          src={withBasePath('/images/blogs/Rectangle 1083.png')}
+          alt=""
+          className="absolute left-1/2 -translate-x-1/2 top-[360px] md:top-[380px] w-[90%] md:w-[80%] h-auto object-contain z-0"
+        />
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 px-4 relative z-10">
             <div className="text-left hidden md:block mt-25" style={{ fontFamily: '"Quicksand", Sans-serif', fontSize: '2em', fontWeight: 700, color: '#626262' }}>
               Featured
             </div>

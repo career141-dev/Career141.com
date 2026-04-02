@@ -17,9 +17,11 @@ export function Navbar({ bgColor, variant = 'overlay' }: NavbarProps) {
   const [execDropOpen, setExecDropOpen] = useState(false)
   const [cultureDropOpen, setCultureDropOpen] = useState(false)
   const [resourcesDropOpen, setResourcesDropOpen] = useState(false)
+  const [connectDropOpen, setConnectDropOpen] = useState(false)
   const execDropTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
   const cultureDropTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
   const resourcesDropTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const connectDropTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
   const pathname = usePathname()
   const isSolid = variant === 'solid'
 
@@ -48,6 +50,15 @@ export function Navbar({ bgColor, variant = 'overlay' }: NavbarProps) {
 
   const handleResourcesLeave = () => {
     resourcesDropTimeout.current = setTimeout(() => setResourcesDropOpen(false), 150)
+  }
+
+  const handleConnectEnter = () => {
+    if (connectDropTimeout.current) clearTimeout(connectDropTimeout.current)
+    setConnectDropOpen(true)
+  }
+
+  const handleConnectLeave = () => {
+    connectDropTimeout.current = setTimeout(() => setConnectDropOpen(false), 150)
   }
 
   return (
@@ -177,11 +188,36 @@ export function Navbar({ bgColor, variant = 'overlay' }: NavbarProps) {
           </div>
         </div>
 
-        <div className="hidden lg:flex items-center justify-center pl-[23.74px] pr-3 shrink-0">
-          <Link href="/contact-us" className="inline-flex items-center [font-family:'Quicksand',Helvetica] font-medium text-white text-[12.8px] tracking-[0] leading-[19.2px] whitespace-nowrap hover:text-[#cbfc06] transition-colors duration-200">
+        <div 
+          className="hidden lg:flex items-center justify-center pl-[23.74px] pr-3 shrink-0 relative"
+          onMouseEnter={handleConnectEnter}
+          onMouseLeave={handleConnectLeave}
+        >
+          <div className="inline-flex items-center [font-family:'Quicksand',Helvetica] font-medium text-white text-[12.8px] tracking-[0] leading-[19.2px] whitespace-nowrap hover:text-[#cbfc06] transition-colors duration-200 cursor-pointer">
             LET&apos;S CONNECT
-            <ChevronDownIcon className="ml-[5px] text-white shrink-0" style={{ width: '10.24px', height: '10.24px' }} />
-          </Link>
+            <ChevronDownIcon className={`ml-[5px] shrink-0 transition-all duration-200 ${connectDropOpen ? 'text-[#cbfc06] rotate-180' : 'text-white'}`} style={{ width: '10.24px', height: '10.24px' }} />
+          </div>
+          
+          {connectDropOpen && (
+            <div className="absolute top-full right-0 z-[32] bg-white shadow-xl animate-dropdown-fade border-t-2 border-[#006763] min-w-[180px]">
+              <div className="px-6 py-3 flex flex-col gap-3">
+                <a
+                  href="mailto:hello@career141.com"
+                  className="[font-family:'Quicksand',Helvetica] font-normal text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] transition-colors duration-200 cursor-pointer whitespace-nowrap flex items-center gap-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                  Email
+                </a>
+                <a
+                  href="tel:+94753595495"
+                  className="[font-family:'Quicksand',Helvetica] font-normal text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] transition-colors duration-200 cursor-pointer whitespace-nowrap flex items-center gap-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  Call
+                </a>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="lg:hidden flex items-center justify-center px-5 ml-auto">

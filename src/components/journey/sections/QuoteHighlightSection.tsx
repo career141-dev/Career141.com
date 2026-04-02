@@ -3,7 +3,7 @@ import { withBasePath } from '@/lib/assetPath'
 export function QuoteHighlightSection() {
   return (
     <section
-      className="relative flex flex-col w-full min-h-[420px] md:min-h-[560px] lg:min-h-[657px] items-start justify-center py-20 md:py-32 lg:py-[218px] overflow-hidden"
+      className="relative flex flex-col w-full min-h-[420px] md:min-h-[560px] lg:min-h-[657px] items-start justify-center py-20 md:py-32 lg:py-[218px] overflow-hidden z-20"
       style={{
         background: `url(${withBasePath('/figmaAssets/div-elementor-element-1.png')}) center center / cover no-repeat`,
       }}

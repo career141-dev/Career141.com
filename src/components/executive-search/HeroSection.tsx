@@ -30,12 +30,12 @@ export function HeroSection() {
             <img 
               src={withBasePath('/images/Vector 20.svg')} 
               alt="" 
-              className="absolute left-0 bottom-0 h-[160px] sm:h-[200px] lg:h-[280px] w-auto sm:w-full lg:w-[450px] z-0" 
+              className="absolute left-0 -bottom-4 sm:-bottom-24 lg:-bottom-30 h-[120px] sm:h-[280px] lg:h-[370px] w-auto sm:w-full lg:w-[570px] z-0" 
               style={{ filter: 'drop-shadow(0 0 12px rgba(203, 252, 6, 0.8))' }} 
             />
             
             {/* Layer 2 & 3: Text & Button - Top */}
-            <div className="relative z-10 flex flex-col items-center sm:items-start pt-16 sm:pt-20 lg:pt-4 sm:pl-4 lg:pl-8">
+            <div className="relative z-10 flex flex-col items-center sm:items-start pt-8 sm:pt-10 lg:pt-2 sm:pl-4 lg:pl-8">
               <nav className="text-gray-300 mb-2 text-xs sm:text-sm">
                 <Link href="/" className="hover:text-white transition-colors">Career141</Link>
                 <span> &gt; </span>
