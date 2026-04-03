@@ -7,6 +7,11 @@ import { ChevronDownIcon } from 'lucide-react'
 import { EXECUTIVE_SEARCH_CATEGORIES, NAV_ITEMS, SOCIAL_LINKS, CULTURE_DROPDOWN_ITEMS, RESOURCES_DROPDOWN_ITEMS, RESOURCES_CATEGORIES } from './navbar.data'
 import { withBasePath } from '@/lib/assetPath'
 
+const APPAREL_EXECUTIVE_LABEL = 'Apparel Merchandising & Marketing'
+const APPAREL_EXECUTIVE_HREF = '/apparel-merchandising-marketing'
+
+
+
 type NavbarProps = {
   bgColor?: string
   variant?: 'overlay' | 'solid'
@@ -216,7 +221,7 @@ export function Navbar({ bgColor, variant = 'overlay', sticky = false }: NavbarP
                     {col.map((item, itemIdx) => (
                       <Link
                         key={itemIdx}
-                        href="/executive-search"
+                        href={item === APPAREL_EXECUTIVE_LABEL ? APPAREL_EXECUTIVE_HREF : '/executive-search'}
                         className="[font-family:'Quicksand',Helvetica] font-normal text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] transition-colors duration-200 cursor-pointer"
                       >
                         {item}
@@ -238,7 +243,10 @@ export function Navbar({ bgColor, variant = 'overlay', sticky = false }: NavbarP
               const hasMobileDropdown = Boolean(item.hasDropdown)
 
               const mobileSubmenu = item.label === 'EXECUTIVE SEARCH'
-                ? EXECUTIVE_SEARCH_CATEGORIES.flat().map((subItem) => ({ label: subItem, href: '/executive-search' }))
+                ? EXECUTIVE_SEARCH_CATEGORIES.flat().map((subItem) => ({
+                    label: subItem,
+                    href: subItem === APPAREL_EXECUTIVE_LABEL ? APPAREL_EXECUTIVE_HREF : '/executive-search',
+                  }))
                 : item.label === 'OUR CULTURE'
                 ? CULTURE_DROPDOWN_ITEMS
                 : item.label === 'RESOURCES'

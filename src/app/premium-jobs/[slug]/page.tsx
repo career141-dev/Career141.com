@@ -9,5 +9,6 @@ export function generateStaticParams() {
 
 export default async function PremiumJobApplyRoutePage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params
+
   return <PremiumJobApplyPage slug={resolvedParams.slug} />
 }
