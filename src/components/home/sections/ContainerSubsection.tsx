@@ -68,7 +68,7 @@ const TESTIMONIALS = [
     name: 'Prasad Kavindra',
     company: 'Timex',
     title: 'CEO',
-    avatar: withBasePath('/figmaAssets/testimonial/4070bd9e51852d03cfa7140318625c0573388c17.png'),
+    avatar: withBasePath('/figmaAssets/testimonial/c1fd7aa368850e590565f2a79763c912bd4bb1c7.png'), // I changed this to a different image in that folder so it doesn't match Ushan
   },
 ]
 
@@ -112,13 +112,12 @@ export function ContainerSubsection() {
     }, 5000)
   }, [paginate])
 
-  // Auto-play disabled - enable when needed
-  // useEffect(() => {
-  //   startTimer()
-  //   return () => {
-  //     if (timerRef.current) clearInterval(timerRef.current)
-  //   }
-  // }, [startTimer])
+  useEffect(() => {
+    startTimer()
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current)
+    }
+  }, [startTimer])
 
   const onManualNav = (dir: number) => {
     paginate(dir)
@@ -129,16 +128,17 @@ export function ContainerSubsection() {
     <section className="flex flex-col w-full items-start justify-center">
       <div className="flex flex-col items-start w-full">
         <div
-          className="flex flex-col items-start gap-5 w-full bg-cover bg-[50%_50%] px-[23px] py-[39px] md:px-16 md:py-14 lg:px-[136.86px] lg:pt-[60.83px] lg:pb-[91.24px] overflow-hidden min-h-[850px]"
-          style={{ backgroundImage: `url(${withBasePath('/figmaAssets/background1.png')})` }}
+          className="flex flex-col items-start gap-5 w-full bg-cover bg-center bg-no-repeat px-[23px] py-[39px] md:px-16 md:py-14 lg:px-[100px] lg:pt-[60.83px] lg:pb-[91.24px] overflow-hidden min-h-[850px]"
+          style={{ 
+            backgroundImage: `url(${withBasePath('/figmaAssets/background1.png')})`,
+            backgroundSize: 'auto 100%'
+          }}
         >
           <div
             className="lg:hidden w-full flex items-center mb-[14px]"
             style={{
               height: 85,
-              backgroundImage: `url(${withBasePath('/figmaAssets/testimonials-blue-line.png')})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
+              backgroundColor: '#fe8d2b', // Use the theme's orange as a fallback or remove BG
               borderRadius: 2,
             }}
           >
@@ -176,9 +176,9 @@ export function ContainerSubsection() {
           </div>
 
           <div className="flex flex-col lg:flex-row items-start justify-between w-full gap-4 lg:gap-4 mt-[7px] lg:mt-0">
-            <div className="flex flex-col flex-1 justify-center w-full min-w-0 lg:pr-100 lg:ml-8">
+            <div className="flex flex-col flex-1 justify-center w-full min-w-0 lg:ml-8">
               <div className="flex flex-col w-full items-end">
-                <AnimatePresence initial={false} custom={direction} mode="wait">
+                <AnimatePresence initial={false} custom={direction}>
                   <motion.div
                     key={page}
                     custom={direction}
@@ -195,14 +195,14 @@ export function ContainerSubsection() {
                   >
                     <div className="flex flex-col items-start gap-10 w-full pr-0 lg:pr-[52.38px] py-4 lg:py-[17.45px]">
                       <div className="flex flex-col items-start gap-[2.8px] w-full" style={{ alignItems: 'flex-start' }}>
-                        <p 
+                        <p
                           className="[font-family:'Inter',Helvetica] font-medium text-white tracking-[0] w-full text-[13px] lg:text-[14.9px]"
                           style={{ lineHeight: '24px' }}
                         >
                           {isExpanded ? testimonial.quote : testimonial.quote.length > 150 ? testimonial.quote.substring(0, 150) + '...' : testimonial.quote}
                         </p>
                         {testimonial.quote.length > 150 && (
-                          <span 
+                          <span
                             onClick={() => setIsExpanded(!isExpanded)}
                             className="[font-family:'Inter',Helvetica] text-[#fe8d2b] text-[11.8px] tracking-[0] cursor-pointer hover:underline"
                             style={{ lineHeight: '19.2px', fontStyle: 'italic', fontWeight: 900 }}
@@ -213,30 +213,30 @@ export function ContainerSubsection() {
                       </div>
 
                       <div className="flex items-center gap-[29.34px] w-full">
-                        <div 
+                        <div
                           className="flex-shrink-0 rounded-full bg-white/20 bg-cover bg-center overflow-hidden"
                           style={{ width: 80, height: 80, maxWidth: 80 }}
                         >
-                          <img 
-                            src={testimonial.avatar} 
+                          <img
+                            src={testimonial.avatar}
                             alt={testimonial.name}
                             className="w-full h-full object-cover"
                           />
                         </div>
                         <div className="flex flex-col gap-[8.4px] lg:gap-[10px]">
-                          <span 
+                          <span
                             className="[font-family:'Quicksand',Helvetica] tracking-[0]"
                             style={{ fontSize: 24, fontWeight: 700, lineHeight: '24px', color: '#fe8d2b' }}
                           >
                             {testimonial.name}
                           </span>
-                          <span 
+                          <span
                             className="[font-family:'Quicksand',Helvetica] font-normal text-white tracking-[0]"
                             style={{ fontSize: 16, lineHeight: '16px' }}
                           >
                             {testimonial.company}
                           </span>
-                          <span 
+                          <span
                             className="[font-family:'Quicksand',Helvetica] font-normal text-white tracking-[0]"
                             style={{ fontSize: 16, lineHeight: '16px' }}
                           >
@@ -281,7 +281,7 @@ export function ContainerSubsection() {
                 onClick={() => onManualNav(-1)}
                 type="button"
               >
-              <ChevronLeft className="text-[#fe8d2b] group-hover:text-white w-[18px] h-[18.4px] transition-colors" />
+                <ChevronLeft className="text-[#fe8d2b] group-hover:text-white w-[18px] h-[18.4px] transition-colors" />
               </button>
               <button
                 className="w-[49px] h-[49px] rounded-full border border-solid border-white flex items-center justify-center hover:bg-[#fe8d2b] hover:border-[#fe8d2b] transition-colors group"
@@ -290,7 +290,7 @@ export function ContainerSubsection() {
                 onClick={() => onManualNav(1)}
                 type="button"
               >
-              <ChevronRight className="text-[#fe8d2b] group-hover:text-white w-[18px] h-[18.4px] transition-colors" />
+                <ChevronRight className="text-[#fe8d2b] group-hover:text-white w-[18px] h-[18.4px] transition-colors" />
               </button>
             </div>
           </div>

@@ -12,6 +12,7 @@ const imgGroup30891Webp = withBasePath("/figmaAssets/testimonial/79fa2bcfdbd09f9
 const imgGroup30892Webp = withBasePath("/figmaAssets/testimonial/38a839e79cb0d600ece329ffb9d7ee69ff2c3dac.png");
 const imgGroup2668Webp = withBasePath("/figmaAssets/testimonial/8bb56835335e113d27a06ab4b8290ba98569a188.png");
 const imgGroup3086Webp = withBasePath("/figmaAssets/testimonial/fa39a059ab2c168ecee0e2002acd8ef8192c1732.png");
+const imgGroupTimexWebp = withBasePath("/figmaAssets/testimonial/c1fd7aa368850e590565f2a79763c912bd4bb1c7.png");
 
 function Frame() {
   return (
@@ -56,7 +57,7 @@ function ClientCard({ company, name, title, content, image }: { company: string;
 
     return (
         <div className="bg-white relative rounded-[40px] w-full border border-black border-solid p-6 pt-12 shadow-sm transition-all duration-500">
-            <div className="absolute -top-10 left-6 right-8 flex items-end justify-between">
+            <div className="absolute -top-10 left-6 right-8 flex items-center justify-between">
                 <div className="flex flex-col h-[56.4px] items-start relative shrink-0 pb-[6.4px]">
                     <Frame />
                 </div>
@@ -106,7 +107,7 @@ export default function DivElementorElement({ currentPage = 1, onPageChange }: {
   return (
     <div className="bg-white content-stretch flex flex-col items-start relative w-full overflow-x-hidden">
       {/* Header Intro with White Background */}
-      <div className="relative shrink-0 w-full bg-white pt-[140px] pb-16">
+      <div className="relative shrink-0 w-full bg-white pt-[100px] pb-10">
         <div className="content-stretch flex flex-col gap-6 items-center px-4 max-w-7xl mx-auto">
           <div className="font-['Quicksand',sans-serif] font-semibold text-[#37a65e] text-[22.4px] text-center uppercase tracking-widest">
             Testimonials
@@ -127,7 +128,7 @@ export default function DivElementorElement({ currentPage = 1, onPageChange }: {
           </div>
         </div>
 
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-24 w-full mb-16 px-4 max-w-7xl mx-auto">
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 w-full mb-16 px-4 max-w-7xl mx-auto">
                 <ClientCard 
                     company="Brandix"
                     name="Ushan De Silva"
@@ -181,8 +182,8 @@ export default function DivElementorElement({ currentPage = 1, onPageChange }: {
                     company="Timex"
                     name="Prasad Kavindra"
                     title="CEO"
-                    image={imgGroup3085Webp}
-                    content="“Azeem has been working with me through out my professional journey in many projects with partnering to attract apparel industry top talent . His dedication and commitment , selecting the right resources within the timelines is excellent. I wish him and the team the best."
+                    image={imgGroupTimexWebp}
+                    content="Azeem has been working with me throughout my professional journey in many projects with partnering to attract apparel industry top talent. His dedication and commitment, selecting the right resources within the timelines is excellent. I wish him and the team the best."
                 />
         </div>
 
