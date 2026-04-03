@@ -9,6 +9,7 @@ import { WhoWeAreSection } from './sections/WhoWeAreSection'
 import { OurMilestoneSection } from './sections/OurMilestoneSection'
 import { OurPledgeSection } from './sections/OurPledgeSection'
 import { CoreValuesSection } from './sections/CoreValuesSection'
+import { MeetingSchedulerSubsection } from '../home'
 
 export function OurJourneyPage() {
   return (
@@ -32,7 +33,7 @@ export function OurJourneyPage() {
       <OurMilestoneSection />
       <OurPledgeSection />
       <CoreValuesSection />
-
+      <MeetingSchedulerSubsection />
       <CompanyFooter />
 
       <a

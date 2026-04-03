@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Navbar } from '@/components/common/Navbar'
+import { CompanyFooter } from '@/components/common'
+import { MeetingSchedulerSubsection } from '@/components/home/sections/MeetingSchedulerSubsection'
 import { withBasePath } from '@/lib/assetPath'
 import eventsData from '@/data/events.json'
 import { HeroCarousel } from './HeroCarousel'
@@ -66,24 +68,17 @@ export default function EventsPage() {
                   className="w-full h-full object-cover rounded-2xl"
                 />
                 <div 
-                  className="absolute inset-0 rounded-2xl transition-all duration-500 ease-in-out"
+                  className="absolute top-0 left-0 bottom-0 w-[60%] md:w-[50%] rounded-l-2xl flex flex-col items-start justify-center pl-8 md:pl-16 transition-colors duration-300"
                   style={{ 
-                    background: 'linear-gradient(90deg, rgba(17,89,63,0.74) 0%, rgba(17,89,63,0) 60%)',
-                    opacity: hoveredGallery === index ? 1 : 0,
-                    transform: hoveredGallery === index ? 'translateX(0)' : 'translateX(-100%)'
-                  }}
-                ></div>
-                <div 
-                  className="absolute inset-0 rounded-2xl flex flex-col items-start justify-center pl-8 md:pl-16 transition-all duration-500 ease-in-out"
-                  style={{ 
-                    opacity: hoveredGallery === index ? 1 : 0,
-                    transform: hoveredGallery === index ? 'translateX(0)' : 'translateX(-50px)'
+                    background: hoveredGallery === index 
+                      ? 'linear-gradient(180deg, rgba(55,166,94,0.9) 0%, rgba(55,166,94,0.4) 100%)'
+                      : 'linear-gradient(180deg, rgba(17,89,63,0.9) 0%, rgba(17,89,63,0.4) 100%)'
                   }}
                 >
-                  <p className="[font-family:'Quicksand',Sans-serif] text-white text-xl md:text-2xl font-bold text-left px-4 mb-2">
+                  <p className="[font-family:'Quicksand',Sans-serif] text-white text-xl md:text-2xl font-bold text-left mb-2">
                     {item.name}
                   </p>
-                  <Link href={`/events/${item.slug}`} className="[font-family:'Quicksand',Sans-serif] text-white text-sm ml-4 border border-white px-4 py-2 rounded-full hover:bg-white hover:text-[#006763] transition-colors inline-block">
+                  <Link href={`/events/${item.slug}`} className="[font-family:'Quicksand',Sans-serif] text-white text-sm border border-white px-4 py-2 rounded-full hover:bg-white hover:text-[#006763] transition-colors inline-block">
                     View Event
                   </Link>
                 </div>
@@ -92,6 +87,10 @@ export default function EventsPage() {
           </div>
         </div>
       </section>
+
+      <MeetingSchedulerSubsection />
+
+      <CompanyFooter />
     </main>
   )
 }

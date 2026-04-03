@@ -32,7 +32,7 @@ export const CULTURE_DROPDOWN_ITEMS = [
 export const RESOURCES_DROPDOWN_ITEMS = [
   { label: 'Blogs', href: '/blogs' },
   { label: 'Case Studies', href: '/case-studies' },
-  { label: 'Testimonials', href: '/testimonials' },
+  { label: 'Testimonials', href: '/testimonial' },
 ]
 
 export const RESOURCES_CATEGORIES = [

@@ -1,9 +1,12 @@
 'use client'
 
 import { Navbar } from '@/components/common/Navbar'
+import { CompanyFooter } from '@/components/common'
+import { MeetingSchedulerSubsection } from '@/components/home/sections/MeetingSchedulerSubsection'
+import { InfiniteCarousel } from '@/components/culture/InfiniteCarousel'
 import { withBasePath } from '@/lib/assetPath'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const boxDescriptions = [
   "We celebrate individuality and encourage you to thrive as your authentic self. Your unique perspectives and talents are valued and appreciated here.",
@@ -37,22 +40,19 @@ const employeeStories = [
 
 export default function OurCulturePage() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
-  const [currentSlide, setCurrentSlide] = useState(0)
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % employeeStories.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + employeeStories.length) % employeeStories.length)
-  }
+  const [isMobile, setIsMobile] = useState(false)
+  const schedulerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % employeeStories.length)
-    }, 5000)
-    return () => clearInterval(interval)
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
   }, [])
+
+  const scrollToScheduler = () => {
+    schedulerRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   const handleToggle = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index)
@@ -62,39 +62,47 @@ export default function OurCulturePage() {
     <main className="min-h-screen bg-white m-0 p-0">
       <Navbar bgColor="#0F221B" />
       <section className="relative w-full bg-white pb-5 overflow-hidden">
-        <div className="relative w-full pt-4">
+        <div className="relative w-full pt-16 md:pt-4">
           <img
             src={withBasePath('/images/Culture/Group 3584.png')}
             alt="Our Culture Hero"
-            className="w-full h-auto object-cover md:object-fill"
+            className="hidden md:block w-full h-auto object-cover md:object-fill"
           />
+          <div className="block md:hidden overflow-hidden relative">
+            <img
+              src={withBasePath('/images/Culture/Group 3584.png')}
+              alt="Our Culture Hero"
+              className="w-full h-auto"
+              style={{ minWidth: '200vw' }}
+            />
+          </div>
           <img
             src={withBasePath('/images/Culture/Vector 335.svg')}
             alt=""
-            className="hidden md:block absolute top-[70px] right-0 z-10 w-full h-auto md:w-2/4"
+            className="hidden md:block absolute top-[70px] right-0 z-10 w-2/4 h-auto"
           />
-          <div className="md:absolute md:top-4 md:right-0 md:z-20 md:w-2/4 md:flex md:flex-col md:gap-4 md:p-8 block px-4 py-4">
-            <div className="md:flex md:flex-col md:items-start md:justify-center md:gap-1 md:mt-22 md:ml-20 mb-4">
+          <div className="md:absolute md:top-30 md:right-20 md:z-20 md:w-[40%] md:flex md:flex-col md:gap-4 md:p-6 block px-4 py-4">
+            <div className="md:flex md:flex-col md:items-start md:justify-center md:gap-1 md:mt-22 md:ml-36 mb-0">
               <div className="flex items-center gap-2 mb-2">
                 <img
                   src={withBasePath('/images/Culture/g1.svg')}
                   alt=""
-                  className="w-6 md:w-10 h-6 md:h-10"
+                  className="w-5 md:w-10 h-5 md:h-10"
                 />
-                <span className="[font-family:'Quicksand',Sans-serif] text-[#11593f] text-sm md:text-[27px]">
+                <span className="[font-family:'Quicksand',Sans-serif] text-[#11593f] text-xs md:text-[27px]">
                   Our Culture
                 </span>
               </div>
-              <span className="[font-family:'Nordeco',Sans-serif] text-[#000000] text-base md:text-[2.8em] font-normal leading-[1.2em]">
+              <span style={{ fontFamily: "'Nordeco', Sans-serif" }} className="text-[#000000] text-sm md:text-[2.8em] font-normal leading-[1.2em] mb-0 block">
                 Growth, Performance <br className="hidden md:block" />And Collaboration
               </span>
             </div>
             <div className="md:flex md:flex-col md:items-end md:gap-2 md:mt-2">
-              <p className="[font-family:'Quicksand',Sans-serif] text-[#000000] text-xs md:text-sm md:max-w-[300px] text-left md:text-right mb-3">
+              <p className="[font-family:'Quicksand',Sans-serif] text-[#000000] text-sm md:text-base md:max-w-[300px] text-left md:text-right mb-3 mt-4">
                 Welcome to Career141, where we pride ourselves on cultivating a dynamic and inclusive environment.
               </p>
-              <button className="bg-[#11593f] text-white [font-family:'Quicksand',Sans-serif] text-xs md:text-sm px-4 md:px-6 py-1.5 md:py-2 rounded-full whitespace-nowrap w-fit">
-                Join Us
+              <button onClick={scrollToScheduler} className="bg-gradient-to-r from-[#37A65E] to-[#11593F] text-white [font-family:'Quicksand',Sans-serif] text-[0.9em] font-medium px-10 py-1.5 rounded-[10px] whitespace-nowrap w-fit border-none hover:opacity-90 transition-opacity">
+                Join Our Team
               </button>
             </div>
           </div>
@@ -117,23 +125,24 @@ export default function OurCulturePage() {
               'Be Recognized',
               'Growth with us'
             ].map((title, index) => (
-                <div 
-                  key={index}
-                  className={`rounded-xl p-4 flex flex-col ${expandedIndex === index ? 'bg-gradient-to-r from-[#07B174] to-[#01C5C4]' : 'bg-gradient-to-r from-[#E2FEFE] to-[#E3F9EB]'}`}
-                >
-                  <div className="flex items-center justify-between">
-                    <h3 className={`[font-family:'Quicksand',Sans-serif] text-left text-base md:text-lg font-bold ${expandedIndex === index ? 'text-white' : 'text-black'}`}>
-                      {title}
-                    </h3>
-                    <button 
-                      onClick={() => handleToggle(index)}
-                      className={`w-8 h-8 rounded-full flex items-center justify-center text-xl font-bold ${expandedIndex === index ? 'bg-white text-[#07B174]' : 'bg-[#006763] text-white'}`}
-                    >
-                      {expandedIndex === index ? '−' : '+'}
-                    </button>
+                <div key={index} className="mb-4">
+                  <div 
+                    className={`rounded-xl p-4 flex flex-col transition-colors ${expandedIndex === index ? 'bg-gradient-to-r from-[#07B174] to-[#01C5C4]' : 'bg-gradient-to-r from-[#E2FEFE] to-[#E3F9EB]'}`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className={`[font-family:'Quicksand',Sans-serif] text-left text-base md:text-lg font-bold ${expandedIndex === index ? 'text-white' : 'text-black'}`}>
+                        {title}
+                      </h3>
+                      <button 
+                        onClick={() => handleToggle(index)}
+                        className={`text-2xl font-bold ${expandedIndex === index ? 'text-white' : 'text-[#006763]'}`}
+                      >
+                        {expandedIndex === index ? '−' : '+'}
+                      </button>
+                    </div>
                   </div>
                   {expandedIndex === index && (
-                    <p className="[font-family:'Quicksand',Sans-serif] text-white text-sm mt-3 text-left">
+                    <p className="[font-family:'Quicksand',Sans-serif] text-gray-700 text-sm mt-2 text-left px-2">
                       {boxDescriptions[index]}
                     </p>
                   )}
@@ -149,72 +158,17 @@ export default function OurCulturePage() {
         </div>
       </section>
 
-      <section className="w-full py-16 md:py-24 relative">
+      <section className="w-full py-16 md:py-32 relative">
         <div className="absolute inset-0 z-0">
           <img 
-            src={withBasePath('/images/Culture/beautiful-city.png')} 
+            src={withBasePath('/images/Culture/team-background.webp')} 
             alt="" 
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
         <div className="relative z-10 max-w-[1200px] mx-auto px-4">
-          <h2 className="[font-family:'Nordeco',Sans-serif] text-white text-2xl md:text-4xl text-center mb-12">
-            Stories from our team
-          </h2>
-          
-          <div className="relative">
-            <div className="overflow-hidden">
-              <div 
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-              >
-                {employeeStories.map((story, index) => (
-                  <div key={index} className="w-full flex-shrink-0 px-4">
-                    <div className="bg-white rounded-2xl p-8 max-w-2xl mx-auto">
-                      <h3 className="[font-family:'Quicksand',Sans-serif] text-[#006763] text-xl md:text-2xl font-bold text-center mb-4">
-                        {story.title}
-                      </h3>
-                      <p className="[font-family:'Quicksand',Sans-serif] text-gray-600 text-center text-sm md:text-base mb-6">
-                        {story.story}
-                      </p>
-                      <div className="text-center">
-                        <p className="[font-family:'Quicksand',Sans-serif] text-black font-bold">
-                          {story.name}
-                        </p>
-                        <p className="[font-family:'Quicksand',Sans-serif] text-gray-500 text-sm">
-                          {story.designation}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <button 
-              onClick={prevSlide}
-              className={`absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white text-2xl ${currentSlide === 0 ? 'opacity-30 cursor-not-allowed' : ''}`}
-            >
-              ‹
-            </button>
-            <button 
-              onClick={nextSlide}
-              className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white text-2xl"
-            >
-              ›
-            </button>
-          </div>
-          
-          <div className="flex justify-center gap-2 mt-6">
-            {employeeStories.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all ${currentSlide === index ? 'bg-white w-8' : 'bg-white/50'}`}
-              />
-            ))}
-          </div>
+          <InfiniteCarousel isMobile={isMobile} />
         </div>
       </section>
 
@@ -261,48 +215,81 @@ export default function OurCulturePage() {
         </div>
       </section>
 
-      <section className="w-full py-16 md:py-24 bg-white">
-        <div className="max-w-[1400px] mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div className="order-2 lg:order-1">
+      <section className="w-full py-16 md:py-24 relative">
+        <div className="w-full relative">
+          <img 
+            src={withBasePath('/images/Culture/big tube.png')} 
+            alt="Work with us" 
+            className="hidden md:block w-full h-auto"
+          />
+          <div className="block md:hidden w-full px-4 py-8">
+            <h2 className="mb-4 text-xl font-bold" style={{ fontFamily: "'Quicksand', Sans-serif", fontWeight: 700, lineHeight: '1.2em', color: '#11593F' }}>
+              Work with us and make a <b>difference</b>
+            </h2>
+            <img 
+              src={withBasePath('/images/Culture/people.png')} 
+              alt="Work with us" 
+              className="w-full h-auto mb-4"
+            />
+            <p className="[font-family:'Quicksand',Sans-serif] text-gray-600 text-sm mb-4">
+              With us you'll have the opportunity to work with industry leaders, embrace cutting-edge technologies, and develop expertise across diverse fields. We offer you the unique opportunity to collaborate with some of the world's leading MNCs and conglomerates. Joining our team means working alongside top industry professionals and contributing to impactful projects that shape the future of global business. Join us and let's shape the future together.
+            </p>
+            <Link href="/premium-jobs" className="bg-[#37A65E] text-white [font-family:'Quicksand',Sans-serif] px-8 py-3 rounded-full font-semibold hover:bg-[#2d8a4d] transition-colors inline-block">
+              View all job opportunities
+            </Link>
+          </div>
+          <div className="absolute inset-0 hidden md:flex flex-col md:flex-row items-center p-8 md:p-16 lg:p-24">
+            <div className="md:w-1/2 md:pr-8 order-2 md:order-1 w-full flex justify-center mb-4 md:mb-0">
               <img 
-                src={withBasePath('/images/Culture/Frame-2442-1024x437.webp')} 
+                src={withBasePath('/images/Culture/people.png')} 
                 alt="Work with us" 
-                className="w-full h-auto"
+                className="w-full max-w-[500px] h-auto"
               />
             </div>
-            <div className="order-1 lg:order-2">
-              <h2 className="[font-family:'Quicksand',Sans-serif] text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-6">
-                Work with us and make a difference
+            <div className="md:w-1/2 md:pl-8 order-1 md:order-2 w-full">
+              <h2 className="mb-4 text-xl md:text-2xl lg:text-[2.4em]" style={{ fontFamily: "'Quicksand', Sans-serif", fontWeight: 400, lineHeight: '1.2em', color: '#11593F' }}>
+                Work with us and make a <b>difference</b>
               </h2>
-              <p className="[font-family:'Quicksand',Sans-serif] text-gray-600 text-sm md:text-base mb-6">
+              <p className="[font-family:'Quicksand',Sans-serif] text-gray-600 text-sm md:text-base mb-4">
                 With us you'll have the opportunity to work with industry leaders, embrace cutting-edge technologies, and develop expertise across diverse fields. We offer you the unique opportunity to collaborate with some of the world's leading MNCs and conglomerates. Joining our team means working alongside top industry professionals and contributing to impactful projects that shape the future of global business. Join us and let's shape the future together.
               </p>
-              <button className="bg-[#37A65E] text-white [font-family:'Quicksand',Sans-serif] px-8 py-3 rounded-full font-semibold hover:bg-[#2d8a4d] transition-colors">
+              <Link href="/premium-jobs" className="bg-[#37A65E] text-white [font-family:'Quicksand',Sans-serif] px-8 py-3 rounded-full font-semibold hover:bg-[#2d8a4d] transition-colors inline-block">
                 View all job opportunities
-              </button>
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="w-full py-8 md:py-24 bg-white">
+      <section className="w-full py-8 md:py-24 relative">
         <div className="w-full relative">
           <img 
-            src={withBasePath('/images/Culture/big tube.svg')} 
+            src={withBasePath('/images/Culture/Group 3587.png')} 
             alt="Career pathways" 
-            className="w-full h-auto"
+            className="hidden md:block w-full h-auto"
           />
-          <div className="absolute top-[-30%] left-0 w-full h-full flex flex-col md:flex-row items-end p-4 md:p-16 pb-8 md:pb-24">
-            <div className="md:w-1/2 md:pr-4 ml-20 md:ml-100">
-              <h2 className="[font-family:'Quicksand',Sans-serif] text-base md:text-2xl lg:text-3xl font-bold text-black mb-1 md:mb-2">
-                We offer <span style={{ color: '#01C5C4' }}>clear<br className="hidden md:block" />career pathways</span> <br className="hidden md:block" /> to ensure fair and <br className="hidden md:block" /> equal opportunities <br className="hidden md:block" />for <span style={{ color: '#01C5C4' }}>our people</span>
+          <div className="block md:hidden p-6">
+            <h2 className="[font-family:'Quicksand',Sans-serif] font-normal text-black mb-3 text-xl">
+              We offer <span style={{ color: '#01C5C4' }}><b>clear</b> <b>career pathways</b></span> to ensure fair and equal opportunities for <span style={{ color: '#01C5C4' }}><b>our people</b></span>
+            </h2>
+            <p className="[font-family:'Quicksand',Sans-serif] text-gray-700 text-xs mb-2">
+              Our dedication to equitable growth ensures that everyone has the support and resources needed to reach their full potential. Join us, and embark on a rewarding career path where your growth and success are our top priorities.
+            </p>
+            <p className="[font-family:'Quicksand',Sans-serif] text-gray-700 text-xs">
+              At Career141, we are committed to providing clear career development pathways that ensure fair and equal opportunities for all our team members. We believe in fostering an environment where every individual can thrive, grow, and achieve their professional aspirations. Through structured mentorship programs, continuous learning initiatives, and transparent advancement criteria, we empower our employees to take charge of their career journeys.
+            </p>
+          </div>
+          <div className="absolute inset-0 hidden md:flex flex-col md:flex-row items-center justify-center p-4 md:p-16">
+            <div className="md:w-1/2 md:pr-8 flex flex-col items-center md:items-center justify-center">
+              <h2 className="[font-family:'Quicksand',Sans-serif] font-normal text-black mb-1 md:mb-2" style={{ fontSize: '38px' }}>
+                We offer <span style={{ color: '#01C5C4' }}><b>clear</b><br className="hidden md:block" /><b>career pathways</b></span> <br className="hidden md:block" /> to ensure fair and <br className="hidden md:block" /> equal opportunities <br className="hidden md:block" />for <span style={{ color: '#01C5C4' }}><b>our people</b></span>
               </h2>
             </div>
-            <div className="md:w-1/2 md:pl-4">
+            <div className="md:w-1/2 md:pl-8 flex flex-col justify-center mt-4 md:mt-0">
               <p className="[font-family:'Quicksand',Sans-serif] text-gray-700 text-xs md:text-base mb-1 md:mb-2">
                 Our dedication to equitable growth ensures that everyone has the support and resources needed to reach their full potential. Join us, and embark on a rewarding career path where your growth and success are our top priorities.
               </p>
+              <br></br>
               <p className="[font-family:'Quicksand',Sans-serif] text-gray-700 text-xs md:text-base">
                 At Career141, we are committed to providing clear career development pathways that ensure fair and equal opportunities for all our team members. We believe in fostering an environment where every individual can thrive, grow, and achieve their professional aspirations. Through structured mentorship programs, continuous learning initiatives, and transparent advancement criteria, we empower our employees to take charge of their career journeys.
               </p>
@@ -325,6 +312,12 @@ export default function OurCulturePage() {
           </div>
         </div>
       </section>
+
+      <div ref={schedulerRef}>
+        <MeetingSchedulerSubsection />
+      </div>
+
+      <CompanyFooter />
     </main>
   )
 }

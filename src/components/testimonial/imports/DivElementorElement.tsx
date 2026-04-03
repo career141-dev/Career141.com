@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useState } from "react";
 import { withBasePath } from "@/lib/assetPath";
 import svgPaths from "./svg-f3qlllqr03";
 
@@ -50,8 +51,11 @@ function PaginationButton({ text, isActive = false, onClick }: { text: string; i
 }
 
 function ClientCard({ company, name, title, content, image }: { company: string; name: string; title: string; content: string; image: string }) {
+    const [isExpanded, setIsExpanded] = useState(false)
+    const shortContent = content.length > 180 ? content.substring(0, 180) + '...' : content
+
     return (
-        <div className="bg-white min-h-[440px] relative rounded-[40px] w-full border border-black border-solid p-6 pt-12 shadow-sm transition-transform hover:-translate-y-1 duration-300">
+        <div className="bg-white relative rounded-[40px] w-full border border-black border-solid p-6 pt-12 shadow-sm transition-all duration-500">
             <div className="absolute -top-10 left-6 right-8 flex items-end justify-between">
                 <div className="flex flex-col h-[56.4px] items-start relative shrink-0 pb-[6.4px]">
                     <Frame />
@@ -75,17 +79,24 @@ function ClientCard({ company, name, title, content, image }: { company: string;
             </div>
 
             <div className="flex flex-col gap-4">
-                <div className="min-h-[144px]">
+                <div className={`transition-all duration-500 overflow-hidden ${isExpanded ? 'min-h-[144px]' : 'min-h-[100px]'}`}>
                     <div className="font-['Quicksand',sans-serif] font-semibold text-[#626262] text-[16px] leading-[24px]">
-                        {content}
+                        {isExpanded ? content : shortContent}
                     </div>
                 </div>
-                <div className="flex flex-col items-start gap-4">
-                     <div className="w-1/3 h-[34px] py-[15px] relative">
-                        <div aria-hidden="true" className="absolute border-[#01c5c4] border-solid border-t-4 inset-0 pointer-events-none" />
-                     </div>
-                     <p className="font-['Quicksand',sans-serif] font-semibold text-[#37a65e] text-[16px] leading-[24px] cursor-pointer">Read More</p>
-                </div>
+                {content.length > 180 && (
+                    <div className="flex flex-col items-start gap-4">
+                         <div className="w-1/3 h-[34px] py-[15px] relative">
+                            <div aria-hidden="true" className="absolute border-[#01c5c4] border-solid border-t-4 inset-0 pointer-events-none" />
+                         </div>
+                         <p 
+                            onClick={() => setIsExpanded(!isExpanded)}
+                            className="font-['Quicksand',sans-serif] font-semibold text-[#37a65e] text-[16px] leading-[24px] cursor-pointer hover:text-[#11593f] transition-colors"
+                        >
+                            {isExpanded ? 'Read Less' : 'Read More'}
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
     );

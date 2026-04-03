@@ -22,8 +22,31 @@ export function ProcessFlowSection() {
 
   return (
     <section className="bg-white py-24 px-4 md:px-12 lg:px-16 overflow-hidden">
+      {/* Mobile Title */}
+      <div className="md:hidden text-center mb-8">
+        <h2 className="[font-family:'Quicksand',Helvetica] text-2xl sm:text-3xl font-bold uppercase tracking-wide">
+          <span className="text-black">How it </span>
+          <span className="text-[#11593F]">Work</span>
+        </h2>
+      </div>
+
       <div className="max-w-[1440px] mx-auto">
-        <div className="flex flex-col gap-48">
+        {/* Mobile: Bullet point list */}
+        <div className="md:hidden flex flex-col gap-4">
+          {steps.map((step) => (
+            <div key={step.id} className="flex items-start gap-3">
+              <div className="w-7 h-7 rounded-full bg-[#11593F] flex items-center justify-center text-white font-bold text-sm shrink-0">
+                {step.id}
+              </div>
+              <p className="[font-family:'Quicksand',Helvetica] text-xs sm:text-[13px] font-semibold text-[#11593F] leading-snug pt-0.5">
+                {step.text}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop: Original layout */}
+        <div className="hidden md:flex flex-col gap-48">
           {/* Row 1: 1 -> 5 */}
           <div className="flex flex-col md:flex-row items-center justify-between relative gap-12 md:gap-4">
             {row1.map((step, index) => (
@@ -64,7 +87,7 @@ export function ProcessFlowSection() {
                 <div className="md:hidden mt-4">
                    <svg className="h-8 w-4 text-[#11593F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
+                   </svg>
                 </div>
               </div>
             ))}
@@ -112,7 +135,7 @@ export function ProcessFlowSection() {
                   <div className="md:hidden mt-4">
                      <svg className="h-8 w-4 text-[#11593F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
+                     </svg>
                   </div>
                 )}
               </div>

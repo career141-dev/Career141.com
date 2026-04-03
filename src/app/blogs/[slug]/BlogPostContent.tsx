@@ -1,6 +1,7 @@
 'use client'
 
 import { Navbar } from '@/components/common/Navbar'
+import { CompanyFooter } from '@/components/common'
 import { withBasePath } from '@/lib/assetPath'
 import { LinkedinIcon, FacebookIcon, Twitter } from 'lucide-react'
 
@@ -148,6 +149,7 @@ export function BlogPostContent({ blog }: { blog: Blog }) {
           )}
         </div>
       </section>
+      <CompanyFooter />
     </main>
   )
 }

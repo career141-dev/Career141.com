@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useState } from "react";
 import { withBasePath } from "@/lib/assetPath";
 import svgPaths from "./svg-i22xuewop2";
 
@@ -21,15 +22,18 @@ function Frame() {
   );
 }
 
-function EmployeeCard({ name, title, content }: { name: string; title: string; content: React.ReactNode }) {
+function EmployeeCard({ name, title, content }: { name: string; title: string; content: string }) {
+    const [isExpanded, setIsExpanded] = useState(false)
+    const shortContent = content.length > 180 ? content.substring(0, 180) + '...' : content
+
     return (
-        <div className="bg-white min-h-[420px] relative rounded-[40px] w-full border border-[#e4e4e4] border-solid p-8 shadow-sm transition-transform hover:-translate-y-1 duration-300 flex flex-col">
+        <div className="bg-white relative rounded-[40px] w-full border border-[#e4e4e4] border-solid p-8 shadow-sm transition-all duration-500 flex flex-col">
             <div className="mb-6">
                 <Frame />
             </div>
-            <div className="flex-grow">
+            <div className="flex-grow transition-all duration-500 overflow-hidden">
                 <div className="font-['Quicksand',sans-serif] font-semibold text-[#626262] text-[16px] leading-[24px]">
-                    {content}
+                    {isExpanded ? content : shortContent}
                 </div>
             </div>
             <div className="mt-6 pt-4 border-t border-[#01c5c4] border-t-4 w-1/3 mb-4"></div>
@@ -38,7 +42,12 @@ function EmployeeCard({ name, title, content }: { name: string; title: string; c
                     <div className="font-['Quicksand',sans-serif] font-bold text-[#5c5c5c] text-[19.2px] mb-1 leading-tight">{name}</div>
                     <div className="font-['Quicksand',sans-serif] font-semibold text-[#808080] text-[12.8px] leading-tight">{title}</div>
                 </div>
-                <div className="font-['Quicksand',sans-serif] font-semibold text-[#37a65e] text-[16px] cursor-pointer">Read More</div>
+                <div 
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    className="font-['Quicksand',sans-serif] font-semibold text-[#37a65e] text-[16px] cursor-pointer hover:text-[#11593f] transition-colors"
+                >
+                    {isExpanded ? 'Read Less' : 'Read More'}
+                </div>
             </div>
         </div>
     );
