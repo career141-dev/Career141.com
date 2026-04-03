@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { Controller, useForm } from 'react-hook-form'
-import { CheckCircle2Icon, ChevronRightIcon, InstagramIcon, LinkedinIcon, MailIcon, MapPinIcon, PhoneIcon } from 'lucide-react'
+import { CheckCircle2Icon, ChevronRightIcon, InstagramIcon, LinkedinIcon, Loader2, MailIcon, MapPinIcon, PhoneIcon } from 'lucide-react'
 import PhoneInput from 'react-phone-input-2'
 import { withBasePath } from '@/lib/assetPath'
 import styles from './ContactInfoAndFormSection.module.css'
@@ -65,11 +65,13 @@ function FloatingInput({
   label,
   type = 'text',
   dark = false,
+  error,
   ...inputProps
 }: {
   label: string
   type?: string
   dark?: boolean
+  error?: { message?: string }
   [key: string]: unknown
 }) {
   const [focused, setFocused] = useState(false)
@@ -85,9 +87,9 @@ function FloatingInput({
           setHasValue(Boolean(event.target.value))
         }}
         onChange={(event) => setHasValue(Boolean(event.target.value))}
-        className={`w-full bg-transparent border-b px-0 py-2.5 text-[14px] font-['Inter',Helvetica] outline-none transition-all placeholder-transparent ${
+        className={`w-full bg-transparent border-b px-0 py-2.5 text-[14px] font-['Inter',Helvetica] outline-none transition-all placeholder:text-transparent ${
           dark ? 'border-white/20 text-white' : 'border-[#ccc] text-[#333]'
-        }`}
+        } ${error ? 'border-red-400' : ''}`}
         placeholder={label}
         autoComplete="off"
         {...inputProps}
@@ -100,8 +102,11 @@ function FloatingInput({
         {label}
       </label>
       <div
-        className={`absolute bottom-1 left-0 h-[2px] bg-[#6abf4b] transition-all duration-300 ${focused ? 'w-full' : 'w-0'}`}
+        className={`absolute bottom-1 left-0 h-[2px] transition-all duration-300 ${
+          error ? 'bg-red-400' : (focused ? 'bg-[#3b82f6]' : 'bg-[#6abf4b]')
+        } ${focused || error ? 'w-full' : 'w-0'}`}
       />
+      {error && <span className="text-red-400 text-xs absolute -bottom-4">{error.message}</span>}
     </div>
   )
 }
@@ -109,10 +114,12 @@ function FloatingInput({
 function FloatingTextarea({
   label,
   dark = false,
+  error,
   ...textareaProps
 }: {
   label: string
   dark?: boolean
+  error?: { message?: string }
   [key: string]: unknown
 }) {
   const [focused, setFocused] = useState(false)
@@ -128,9 +135,9 @@ function FloatingTextarea({
           setHasValue(Boolean(event.target.value))
         }}
         onChange={(event) => setHasValue(Boolean(event.target.value))}
-        className={`w-full bg-transparent border-b px-0 py-2.5 text-[14px] font-['Inter',Helvetica] outline-none resize-none transition-all placeholder-transparent ${
+        className={`w-full bg-transparent border-b px-0 py-2.5 text-[14px] font-['Inter',Helvetica] outline-none resize-none transition-all placeholder:text-transparent ${
           dark ? 'border-white/20 text-white' : 'border-[#ccc] text-[#333]'
-        }`}
+        } ${error ? 'border-red-400' : ''}`}
         placeholder={label}
         {...textareaProps}
       />
@@ -142,8 +149,11 @@ function FloatingTextarea({
         {label}
       </label>
       <div
-        className={`absolute bottom-1 left-0 h-[2px] bg-[#6abf4b] transition-all duration-300 ${focused ? 'w-full' : 'w-0'}`}
+        className={`absolute bottom-1 left-0 h-[2px] transition-all duration-300 ${
+          error ? 'bg-red-400' : (focused ? 'bg-[#3b82f6]' : 'bg-[#6abf4b]')
+        } ${focused || error ? 'w-full' : 'w-0'}`}
       />
+      {error && <span className="text-red-400 text-xs absolute -bottom-4">{error.message}</span>}
     </div>
   )
 }
@@ -204,7 +214,7 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [captchaChecked, setCaptchaChecked] = useState(false)
-  const { register, control, handleSubmit, reset } = useForm<FormData>({
+  const { register, control, handleSubmit, reset, setError, formState: { errors } } = useForm<FormData>({
     defaultValues: {
       phone: '',
       country: '',
@@ -215,12 +225,37 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
     if (!captchaChecked) return
 
     setSubmitting(true)
-    await new Promise((resolve) => setTimeout(resolve, 1200))
-    console.log('Form submitted:', data)
-    setSubmitting(false)
-    setSubmitted(true)
-    reset()
-    setTimeout(() => setSubmitted(false), 4000)
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        if (response.status === 400 && (errorData.details || errorData.error === 'Validation failed')) {
+          if (errorData.details) {
+            errorData.details.forEach((detail: any) => {
+              const field = detail.path[0] as keyof FormData
+              if (field) {
+                setError(field, { type: 'manual', message: detail.message })
+              }
+            })
+          }
+          return
+        }
+        throw new Error(errorData.error || 'Failed to send')
+      }
+
+      setSubmitted(true)
+      reset()
+      setTimeout(() => setSubmitted(false), 4000)
+    } catch (error: any) {
+      alert(error.message || 'Failed to send message. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (submitted) {
@@ -246,10 +281,11 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
             <div className={styles.DivWpformsLayoutColumn_88_11970}>
               <div className={styles.InputWpforms_10038Field_2_88_11971}>
                 <input
-                  {...register('name')}
+                  {...register('name', { required: 'Name is required', minLength: { value: 2, message: 'Name must be at least 2 characters' } })}
                   placeholder="Name"
-                  className="w-full bg-transparent border-none text-white text-[15.8px] font-['Inter'] outline-none placeholder:text-white/50"
+                  className="w-full bg-transparent border-none text-white text-[15.8px] font-['Inter'] outline-none placeholder:text-white/50 focus:border-blue-400 transition-colors"
                 />
+                {errors.name && <span className="text-red-400 text-xs block mt-1">{errors.name.message}</span>}
               </div>
             </div>
             <div className={styles.DivWpformsLayoutColumn_88_11974}>
@@ -259,6 +295,7 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
                   placeholder="Designation"
                   className="w-full bg-transparent border-none text-white text-[15.4px] font-['Inter'] outline-none placeholder:text-white/50"
                 />
+                {errors.designation && <span className="text-red-400 text-xs block mt-1">{errors.designation.message}</span>}
               </div>
             </div>
           </div>
@@ -269,10 +306,11 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
               <div className={styles.InputWpforms_10038Field_5_88_11980}>
                 <input
                   type="email"
-                  {...register('email')}
+                  {...register('email', { required: 'Email is required', pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Please enter a valid email' } })}
                   placeholder="Email"
-                  className="w-full bg-transparent border-none text-white text-[15.6px] font-['Inter'] outline-none placeholder:text-white/50"
+                  className="w-full bg-transparent border-none text-white text-[15.6px] font-['Inter'] outline-none placeholder:text-white/50 focus:border-blue-400 transition-colors"
                 />
+                {errors.email && <span className="text-red-400 text-xs block mt-1">{errors.email.message}</span>}
               </div>
             </div>
             <div className={styles.DivWpformsLayoutColumn_88_11983}>
@@ -282,6 +320,7 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
                   placeholder="Company Name"
                   className="w-full bg-transparent border-none text-white text-[15.6px] font-['Inter'] outline-none placeholder:text-white/50"
                 />
+                {errors.companyName && <span className="text-red-400 text-xs block mt-1">{errors.companyName.message}</span>}
               </div>
             </div>
           </div>
@@ -315,6 +354,7 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
                     />
                   )}
                 />
+                {errors.phone && <span className="text-red-400 text-xs block mt-1">{errors.phone.message}</span>}
               </div>
             </div>
             <div className={styles.DivWpformsLayoutColumn_88_11998}>
@@ -326,6 +366,7 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
                   <option value="" disabled>Country</option>
                   {countries.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
+                {errors.country && <span className="text-red-400 text-xs block mt-1">{errors.country.message}</span>}
               </div>
             </div>
           </div>
@@ -333,18 +374,19 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
           {/* Message */}
           <div className={styles.TextareaWpforms_10038Field_10_88_12002}>
             <textarea
-              {...register('message')}
+              {...register('message', { required: 'Message is required', minLength: { value: 10, message: 'Message must be at least 10 characters' } })}
               placeholder="Message"
               rows={2}
-              className="w-full bg-transparent border-none text-white text-[15.5px] font-['Inter'] outline-none placeholder:text-white/50 resize-none"
+              className="w-full bg-transparent border-none text-white text-[15.5px] font-['Inter'] outline-none placeholder:text-white/50 resize-none focus:border-blue-400 transition-colors"
             />
+            {errors.message && <span className="text-red-400 text-xs block mt-1">{errors.message.message}</span>}
           </div>
         </div>
       ) : (
         <>
-          <FloatingInput label="Name" {...register('name')} dark={dark} />
+          <FloatingInput label="Name" {...register('name', { required: 'Name is required', minLength: { value: 2, message: 'Name must be at least 2 characters' } })} error={errors.name} dark={dark} />
           <FloatingInput label="Designation" {...register('designation')} dark={dark} />
-          <FloatingInput label="Email" type="email" {...register('email')} dark={dark} />
+          <FloatingInput label="Email" type="email" {...register('email', { required: 'Email is required', pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Please enter a valid email' } })} error={errors.email} dark={dark} />
           <FloatingInput label="Company Name" {...register('companyName')} dark={dark} />
 
           <div className="relative pb-1">
@@ -376,7 +418,7 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
           </div>
 
           <FloatingSelect label="Country" options={countries} {...register('country')} dark={dark} />
-          <FloatingTextarea label="Message" {...register('message')} dark={dark} />
+          <FloatingTextarea label="Message" {...register('message', { required: 'Message is required', minLength: { value: 10, message: 'Message must be at least 10 characters' } })} error={errors.message} dark={dark} />
         </>
       )}
 
@@ -393,10 +435,10 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
                         <button 
                           type="button" 
                           onClick={() => setCaptchaChecked(!captchaChecked)}
-                          className={styles.SpanRecaptchaAnchor_88_12014}
+                          className={`${styles.SpanRecaptchaAnchor_88_12014} flex items-center justify-center border border-[#d3d3d3] rounded bg-white hover:border-[#6abf4b] transition-colors`}
                         >
                           {captchaChecked ? (
-                            <div className={styles.DivRecaptchaCheckboxCheckmark_88_12018} />
+                            <CheckCircle2Icon className="w-5 h-5 text-[#6abf4b]" />
                           ) : (
                             <div className={styles.DivRecaptchaCheckboxBorder_88_12019} />
                           )}

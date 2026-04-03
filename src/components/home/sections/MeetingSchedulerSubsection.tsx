@@ -17,21 +17,68 @@ interface FormData {
   message: string
 }
 
-function InputField({ label, placeholder, isRequired = false, type = "text", value, onChange }: { label: string; placeholder: string; isRequired?: boolean; type?: string; value: string; onChange: (v: string) => void }) {
+interface FormErrors {
+  firstName?: string
+  lastName?: string
+  email?: string
+  phone?: string
+  subject?: string
+  message?: string
+}
+
+function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
+function InputField({ 
+  label, 
+  placeholder, 
+  isRequired = false, 
+  type = "text", 
+  value, 
+  onChange,
+  error,
+  onBlur 
+}: { 
+  label: string
+  placeholder: string
+  isRequired?: boolean
+  type?: string
+  value: string
+  onChange: (v: string) => void
+  error?: string
+  onBlur?: () => void
+}) {
+  const [focused, setFocused] = useState(false)
+  
   return (
-    <div className="flex flex-col gap-3 w-full">
+    <div className="flex flex-col gap-1 w-full">
       <label className="font-['Quicksand',sans-serif] font-normal text-white text-[16px]">
-        {label} {isRequired && "*"}
+        {label} {isRequired && <span className="text-red-400">*</span>}
       </label>
-      <div className="relative w-full border-b border-white pb-2 pt-2">
+      <div 
+        className="relative w-full border-b pb-2 pt-2 transition-all"
+        style={{ 
+          borderColor: error ? '#ef4444' : (focused ? '#CBFC06' : 'rgba(255,255,255,0.3)'),
+        }}
+      >
         <input 
             type={type}
-            placeholder={placeholder}
+            placeholder={focused ? '' : placeholder}
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className="bg-transparent border-none outline-none text-white w-full placeholder:text-white/50 font-['Inter',sans-serif] font-normal text-[15.1px]"
+            onBlur={() => {
+              setFocused(false)
+              onBlur?.()
+            }}
+            onFocus={() => setFocused(true)}
+            className="bg-transparent border-none outline-none text-white w-full placeholder:text-white/30 font-['Inter',sans-serif] font-normal text-[15.1px]"
         />
       </div>
+      {error && (
+        <span className="text-red-400 text-xs font-['Inter',sans-serif] mt-1">{error}</span>
+      )}
     </div>
   );
 }
@@ -58,33 +105,178 @@ export function MeetingSchedulerSubsection() {
     subject: '',
     message: '',
   })
+  const [errors, setErrors] = useState<FormErrors>({})
+  const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [submitting, setSubmitting] = useState(false)
+  const [captchaChecked, setCaptchaChecked] = useState(false)
 
-  const update = (field: keyof FormData) => (v: string) => setForm(f => ({ ...f, [field]: v }))
+  const update = (field: keyof FormData) => (v: string) => {
+    let finalValue = v
+    if (field === 'phone') {
+      // Only allow digits, spaces, and basic phone symbols (+ - ( ) .)
+      finalValue = v.replace(/[^\d+()\-\s.]/g, '')
+    }
+    setForm(f => ({ ...f, [field]: finalValue }))
+    if (touched[field]) {
+      validateField(field, finalValue)
+    }
+  }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleBlur = (field: keyof FormData) => () => {
+    setTouched(t => ({ ...t, [field]: true }))
+    validateField(field, form[field])
+  }
+
+  const validateField = (field: keyof FormData, value: string) => {
+    let error: string | undefined
+
+    switch (field) {
+      case 'firstName':
+        if (!value.trim()) error = 'First name is required'
+        else if (value.trim().length < 2) error = 'First name must be at least 2 characters'
+        break
+      case 'lastName':
+        if (!value.trim()) error = 'Last name is required'
+        else if (value.trim().length < 2) error = 'Last name must be at least 2 characters'
+        break
+      case 'email':
+        if (!value.trim()) error = 'Email is required'
+        else if (!validateEmail(value)) error = 'Please enter a valid email address'
+        break
+      case 'phone':
+        if (!value.trim()) error = 'Phone number is required'
+        else if (value.trim().length < 5) error = 'Please enter a valid phone number'
+        break
+      case 'subject':
+        if (!value.trim()) error = 'Subject is required'
+        else if (value.trim().length < 3) error = 'Subject must be at least 3 characters'
+        break
+      case 'message':
+        if (!value.trim()) error = 'Message is required'
+        else if (value.trim().length < 10) error = 'Message must be at least 10 characters'
+        break
+    }
+
+    setErrors(e => ({ ...e, [field]: error }))
+  }
+
+  const validateAll = (): boolean => {
+    const newErrors: FormErrors = {}
+
+    if (!form.firstName.trim()) newErrors.firstName = 'First name is required'
+    else if (form.firstName.trim().length < 2) newErrors.firstName = 'First name must be at least 2 characters'
+
+    if (!form.lastName.trim()) newErrors.lastName = 'Last name is required'
+    else if (form.lastName.trim().length < 2) newErrors.lastName = 'Last name must be at least 2 characters'
+
+    if (!form.email.trim()) newErrors.email = 'Email is required'
+    else if (!validateEmail(form.email)) newErrors.email = 'Please enter a valid email address'
+
+    if (!form.phone.trim()) newErrors.phone = 'Phone number is required'
+    else if (form.phone.trim().length < 5) newErrors.phone = 'Please enter a valid phone number'
+
+    if (!form.subject.trim()) newErrors.subject = 'Subject is required'
+    else if (form.subject.trim().length < 3) newErrors.subject = 'Subject must be at least 3 characters'
+
+    if (!form.message.trim()) newErrors.message = 'Message is required'
+    else if (form.message.trim().length < 10) newErrors.message = 'Message must be at least 10 characters'
+
+    setErrors(newErrors)
+    setTouched({
+      firstName: true,
+      lastName: true,
+      email: true,
+      phone: true,
+      subject: true,
+      message: true,
+    })
+
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!validateAll()) {
+      return
+    }
+
+    if (!captchaChecked) {
+      alert('Please check the "I\'m not a robot" box')
+      return
+    }
+    
     setSubmitting(true)
-    setTimeout(() => {
-        setSubmitting(false)
-        alert("Message sent! (Mockuo)")
-    }, 1000)
+    
+    try {
+      const payload = {
+        firstName: form.firstName,
+        lastName: form.lastName,
+        email: form.email,
+        phone: form.phone,
+        subject: form.subject,
+        message: `Subject: ${form.subject}\n\n${form.message}`,
+      }
+      
+      const response = await fetch('/api/meeting', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+
+      if (!response.ok) {
+        let errorData: any = {}
+        try {
+          errorData = await response.json()
+        } catch (e) {}
+        
+        if (response.status === 400) {
+          if (errorData?.details) {
+            const newValidationErrors: FormErrors = { ...errors }
+            errorData.details.forEach((detail: any) => {
+              const field = detail.path[0] as keyof FormErrors
+              if (field) {
+                newValidationErrors[field] = detail.message
+              }
+            })
+            setErrors(newValidationErrors)
+          }
+          return
+        }
+        
+        throw new Error(errorData?.error || 'Failed to send')
+      }
+
+      const successData = await response.json()
+
+      alert('Message sent! We will contact you shortly.')
+      setForm({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
+      })
+      setTouched({})
+      setErrors({})
+    } catch (error: any) {
+      alert(error.message || 'Failed to send message. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
-    /* Refined UI Implementation - Replaces old section with solid dark green and white glass effect */
     <section className="relative w-full py-[80px] lg:py-[120px] px-4 sm:px-8 md:px-12 lg:px-20 overflow-hidden bg-[#0d1f15]">
-      {/* Background Section Overlay */}
       <div className="absolute inset-0 z-0">
           <img alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-60" src={imgDivElementorElement} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto rounded-[18px] overflow-hidden border border-white/20 shadow-2xl bg-white/10 backdrop-blur-md">
-          {/* Form Container */}
           <div className="relative w-full min-h-[700px] flex flex-col lg:flex-row">
               <img alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-60" src={imgDivElementorElement1} />
               
-              {/* Left Column: Info */}
               <div className="relative z-10 flex-1 p-8 md:p-12 lg:p-16 flex flex-col justify-center gap-12">
                   <h2 className="font-['Quicksand',sans-serif] font-bold text-[#CBFC06] text-[32px] md:text-[41.6px] leading-tight">
                     Schedule a talent acquisition meeting
@@ -98,39 +290,93 @@ export function MeetingSchedulerSubsection() {
                   </div>
               </div>
 
-              {/* Right Column: Form */}
               <div className="relative z-10 flex-1 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
                   <form onSubmit={handleSubmit} className="flex flex-col gap-8 w-full">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                          <InputField label="First Name" placeholder="First name with initials" isRequired value={form.firstName} onChange={update('firstName')} />
-                          <InputField label="Last Name" placeholder="Last Name" isRequired value={form.lastName} onChange={update('lastName')} />
+                          <InputField 
+                            label="First Name" 
+                            placeholder="First name with initials" 
+                            isRequired 
+                            value={form.firstName} 
+                            onChange={update('firstName')}
+                            onBlur={handleBlur('firstName')}
+                            error={errors.firstName} 
+                          />
+                          <InputField 
+                            label="Last Name" 
+                            placeholder="Last Name" 
+                            isRequired 
+                            value={form.lastName} 
+                            onChange={update('lastName')}
+                            onBlur={handleBlur('lastName')}
+                            error={errors.lastName} 
+                          />
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                          <InputField label="Email" placeholder="example@email.com" isRequired type="email" value={form.email} onChange={update('email')} />
-                          <InputField label="Your Phone" placeholder="+94 1234 12345" type="tel" value={form.phone} onChange={update('phone')} />
+                          <InputField 
+                            label="Email" 
+                            placeholder="example@email.com" 
+                            isRequired 
+                            type="email" 
+                            value={form.email} 
+                            onChange={update('email')}
+                            onBlur={handleBlur('email')}
+                            error={errors.email} 
+                          />
+                          <InputField 
+                            label="Your Phone" 
+                            placeholder="+94 1234 12345" 
+                            type="tel" 
+                            value={form.phone} 
+                            onChange={update('phone')}
+                            onBlur={handleBlur('phone')}
+                            error={errors.phone} 
+                          />
                       </div>
 
-                      <InputField label="Subject" placeholder="I want help with recruitment" value={form.subject} onChange={update('subject')} />
+                      <InputField 
+                        label="Subject" 
+                        placeholder="I want help with recruitment" 
+                        value={form.subject} 
+                        onChange={update('subject')}
+                        onBlur={handleBlur('subject')}
+                        error={errors.subject} 
+                      />
                       
-                      <div className="flex flex-col gap-3 w-full">
+                      <div className="flex flex-col gap-1 w-full">
                         <label className="font-['Quicksand',sans-serif] font-normal text-white text-[16px]">Message</label>
-                        <div className="relative w-full border-b border-white pb-2 mt-2">
+                        <div 
+                          className="relative w-full border-b pb-2 mt-2 transition-all"
+                          style={{ 
+                            borderColor: errors.message ? '#ef4444' : 'rgba(255,255,255,0.3)',
+                            boxShadow: errors.message ? '0 0 0 2px rgba(239,68,68,0.2)' : 'none'
+                          }}
+                        >
                            <textarea 
                              placeholder="Tell us how we can help you today"
-                             rows={1}
+                             rows={3}
                              value={form.message}
                              onChange={(e) => update('message')(e.target.value)}
+                             onBlur={handleBlur('message')}
                              className="bg-transparent border-none outline-none text-white w-full placeholder:text-white/50 font-['Inter',sans-serif] font-normal text-[14.8px] resize-none"
                            />
                         </div>
+                        {errors.message && (
+                          <span className="text-red-400 text-xs font-['Inter',sans-serif]">{errors.message}</span>
+                        )}
                       </div>
 
-                      {/* ReCAPTCHA UI */}
                       <div className="bg-white rounded-[3px] p-4 flex items-center justify-between w-full sm:w-[302px] h-[75px] shadow-sm self-start">
                           <div className="flex items-center gap-3">
-                              <div className="w-[28px] h-[28px] border-[2px] border-[#d3d3d3] bg-white rounded-[2px] cursor-pointer"></div>
-                              <span className="text-black text-[14px] font-['Roboto',sans-serif] font-normal">I'm not a robot</span>
+                              <button 
+                                type="button"
+                                onClick={() => setCaptchaChecked(!captchaChecked)}
+                                className="w-[28px] h-[28px] border-[2px] border-[#d3d3d3] bg-white rounded-[2px] flex items-center justify-center transition-colors hover:border-[#6abf4b]"
+                              >
+                                {captchaChecked && <div className="w-4 h-4 bg-[#6abf4b] rounded-[1px]" />}
+                              </button>
+                               <span className="text-black text-[14px] font-['Roboto',sans-serif] font-normal">I'm not a robot</span>
                           </div>
                           <div className="flex flex-col items-center gap-1">
                               <img src={imgDivRcAnchorLogoImg} className="w-[32px] h-[32px]" alt="reCAPTCHA" />
@@ -146,7 +392,7 @@ export function MeetingSchedulerSubsection() {
                       <button 
                         type="submit"
                         disabled={submitting}
-                        className="bg-white text-black font-['Quicksand',sans-serif] font-bold py-3 rounded-full hover:bg-gray-100 transition-colors text-[16px] w-full"
+                        className="bg-white text-black font-['Quicksand',sans-serif] font-bold py-3 rounded-full hover:bg-gray-100 transition-colors text-[16px] w-full disabled:opacity-50"
                       >
                         {submitting ? 'Sending...' : 'Submit'}
                       </button>
