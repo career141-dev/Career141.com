@@ -46,11 +46,11 @@ export function CoreValuesSection() {
           </div>
         </div>
 
-        <div className="relative flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8">
+        <div className="relative flex-1 flex items-center justify-center pt-20 md:pt-24 pb-4 md:pb-6 px-4 md:px-6 lg:px-8 -mt-20">
           <img
             src={withBasePath('/figmaAssets/corevalues-diagram.svg')}
             alt="Core Values: Quality and Commitment, Integrity and Ethics, Confidentiality and Trust, Agility and Innovation"
-            className="w-full h-auto max-w-[794px]"
+            className="w-full h-auto max-w-[900px]"
             data-testid="img-core-values-diagram"
           />
         </div>

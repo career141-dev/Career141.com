@@ -5,7 +5,7 @@ import { MissionTitleElement } from './MissionTitleElement'
 
 export function WhoWeAreSection() {
   return (
-    <section className="relative w-full overflow-hidden bg-white" style={{ minHeight: 'auto' }}>
+    <section className="relative w-full overflow-hidden bg-white -mt-30" style={{ minHeight: 'auto' }}>
       <div className="relative w-full overflow-visible">
         <MissionTitleElement />
       </div>

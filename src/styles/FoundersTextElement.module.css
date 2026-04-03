@@ -2,11 +2,12 @@
 @import "https://fonts.googleapis.com/css?family=Quicksand:0,700;0,400&display=swap";
 
 .DivElementorElement_115_10489 {
+  background: transparent;
   align-items: flex-start;
   justify-content: flex-end;
   gap: 30.01px;
   width: 100%;
-  padding: 350px 20px 0 0;
+  padding: 150px 20px 0 0;
   display: flex;
 }
 
@@ -101,6 +102,7 @@
 }
 
 .DivElementorElement_115_10500 {
+  background: transparent;
   flex-direction: column;
   flex-shrink: 0;
   align-items: flex-start;
@@ -285,7 +287,7 @@
   .DivElementorElement_115_10489 {
     flex-direction: column;
     width: 100%;
-    padding: 91px 20px 0 20px;
+    padding: 80px 20px 0 20px;
     align-items: center;
     text-align: center;
   }

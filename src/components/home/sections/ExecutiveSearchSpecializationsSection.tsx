@@ -2,6 +2,7 @@
 
 import { type JSX, useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
+import { withBasePath } from '@/lib/assetPath'
 
 function prefersReducedMotion(): boolean {
   return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -10,77 +11,77 @@ function prefersReducedMotion(): boolean {
 const SPECIALIZATIONS = [
   {
     title: 'Apparel Merchandising & Marketing',
-    img: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80',
+    img: withBasePath('/home/Subtract-1.webp'),
     href: 'https://career141.com/apparel-merchandising-and-marketing/',
   },
   {
     title: 'Finance & Auditing',
-    img: 'https://loremflickr.com/800/600/finance,office',
+    img: withBasePath('/home/Subtract-5.webp'),
     href: 'https://career141.com/finance-auditing/',
   },
   {
     title: 'Constructions & Civil Engineering',
-    img: 'https://loremflickr.com/800/600/construction,engineering',
+    img: withBasePath('/home/Subtract-15.webp'),
     href: 'https://career141.com/constructions-civil-engineering/',
   },
   {
     title: 'Continuous Improvement',
-    img: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80',
+    img: withBasePath('/home/Subtract-11.webp'),
     href: 'https://career141.com/continuous-improvement/',
   },
   {
     title: 'Data Analytics & Research',
-    img: 'https://loremflickr.com/800/600/data,analytics',
+    img: withBasePath('/home/Subtract-9.webp'),
     href: 'https://career141.com/data-analytics-research/',
   },
   {
     title: 'Environment Health & Safety',
-    img: 'https://loremflickr.com/800/600/safety,nature',
+    img: withBasePath('/home/Subtract-10.webp'),
     href: 'https://career141.com/ehs-environment-health-and-safety/',
   },
   {
     title: 'IT Software & Infrastructure',
-    img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
+    img: withBasePath('/home/Subtract-13.webp'),
     href: 'https://career141.com/it-software-infrastructure/',
   },
   {
     title: 'Legal & Secretarial',
-    img: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=800&q=80',
+    img: withBasePath('/home/Subtract-19.webp'),
     href: 'https://career141.com/legal-secretarial/',
   },
   {
     title: 'Maintenance Engineering',
-    img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80',
+    img: withBasePath('/home/Subtract-4.webp'),
     href: 'https://career141.com/maintenance-engineering/',
   },
   {
     title: 'Mechanical Engineering & Production',
-    img: 'https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=800&q=80',
+    img: withBasePath('/home/Subtract-3.webp'),
     href: 'https://career141.com/mechanical-engineering-production/',
   },
   {
     title: 'Supply Chain Management',
-    img: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80',
+    img: withBasePath('/home/Subtract-12.webp'),
     href: 'https://career141.com/supply-chain-management/',
   },
   {
     title: 'Fashion Designing & Development',
-    img: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80',
+    img: withBasePath('/home/Subtract-14.webp'),
     href: 'https://career141.com/fashion-designing-development/',
   },
   {
     title: 'Digital Marketing',
-    img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+    img: withBasePath('/home/Subtract-11.webp'),
     href: 'https://career141.com/digital-marketing-2/',
   },
   {
     title: 'Digital Transformation',
-    img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
+    img: withBasePath('/home/Subtract-18.webp'),
     href: 'https://career141.com/digital-transformation/',
   },
   {
     title: 'Marketing, Consumer Insight & Customer Experience',
-    img: 'https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&w=800&q=80',
+    img: withBasePath('/home/Subtract-2.webp'),
     href: 'https://career141.com/marketing-consumer-insight-customer-experience/',
   },
 ]
@@ -162,14 +163,14 @@ function SpecializationCard({
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
-      <div style={{ width: '100%', overflow: 'hidden', borderRadius: 12, marginBottom: 16 }}>
+      <div style={{ width: '100%', height: '100%', overflow: 'hidden', borderRadius: 12, marginBottom: 16 }}>
         <img
           ref={imgRef}
           src={img}
           alt={title}
           style={{
             width: '100%',
-            height: 210,
+            height: '100%',
             objectFit: 'cover',
             display: 'block',
             transition: 'transform 0.35s ease',
