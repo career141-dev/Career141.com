@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 const TESTIMONIALS = [
   {
     id: 1,
-    quote: 'One of my career objective was to join a MNC at some point of my career. However i never expected that it could be achieved in a time where all of us were trying to secure our current jobs due to the economic downturn caused by COVID19 outbreak.',
+    quote: 'One of my career objective was to join a MNC at some point of my career. However i never expected that it could be achieved in a time where all of us were trying to secure our current job s due to the economic downturn caused by COVID19 outbreak.',
     name: 'Ushan De Silva',
     company: 'Brandix',
     title: 'Group Head of Logistics',
@@ -24,7 +24,7 @@ const TESTIMONIALS = [
   },
   {
     id: 3,
-    quote: 'It has been a tremendous pleasure working with Azeem during the past few years. I had my very first connect with him in 2012 when he reached out to offer me a position in a MNC which I was able to succeed with his guidance.',
+    quote: 'It has been a tremendous pleasure working with Azeem during the past few years. I had my very first connect with him in 2012 when he reached out to offer me a position in a MNC which I was able to succeed with his guidance. Ever since then he has remained as my go to person.',
     name: 'Nayani Peiris',
     company: 'Unilever',
     title: 'Head of Employee Relations and Senior HR Business Partner',
@@ -32,7 +32,7 @@ const TESTIMONIALS = [
   },
   {
     id: 4,
-    quote: 'Working with Azeem and the Team in finding the right talent had been a pleasant and a smooth experience. Azeem had been very professional and have promptly adhered to given timelines.',
+    quote: 'Working with Azeem and the Team in finding the right talent had been a pleasant and a smooth experience. Azeem had been very professional and have promptly adhered to given timelines. Kept us informed the progress time to time enabling us to be updated.',
     name: 'Achala Silva',
     company: 'George Steuart',
     title: 'Director Group Human Resources & Administration',
@@ -40,7 +40,7 @@ const TESTIMONIALS = [
   },
   {
     id: 5,
-    quote: 'It has been an absolute pleasure to work with Azeem and his team. We were impressed by their professionalism, commitment, and interest they took to source a suitable candidate for us.',
+    quote: 'It has been an absolute pleasure to work with Azeem and his team. We were impressed by their professionalism, commitment, and interest they took to source a suitable candidate for us. We recently used their services to hire a Manager, they performed exceptionally.',
     name: 'Nishantha Navurunnage',
     company: 'Avery Dennison',
     title: 'Director Human Resources Asia Pacific',
@@ -48,7 +48,7 @@ const TESTIMONIALS = [
   },
   {
     id: 6,
-    quote: 'It is hard to put into words what Azeem Ansar (Career141) has done for me and the organisations for which I have served. Not only was I a candidate, but as an employer, I received exceptional service.',
+    quote: 'It is hard to put into words what Azeem Ansar (Career141) has done for me and the organisations for which I have served. Not only was I a candidate, but as an employer, I received exceptional service from Azeem, particularly in senior-level placements.',
     name: 'Kaushal Mendis',
     company: 'Daraz',
     title: 'Chief Human Resources Officer',
@@ -56,7 +56,7 @@ const TESTIMONIALS = [
   },
   {
     id: 7,
-    quote: 'As a visionary leader, I drive global holistic wellness by blending innovation with excellence, elevating Sri Lanka\'s Ayurvedic heritage to the world stage.',
+    quote: 'As a visionary leader, I drive global holistic wellness by blending innovation with excellence, elevating Sri Lanka\'s Ayurvedic heritage to the world stage. As a visionary leader, I drive global holistic wellness by blending innovation with excellence.',
     name: 'Ashan Ransilige',
     company: 'Link Natural',
     title: 'Chief Executive Officer',
@@ -64,31 +64,28 @@ const TESTIMONIALS = [
   },
   {
     id: 8,
-    quote: 'Azeem has been working with me throughout my professional journey in many projects with partnering to attract apparel industry top talent. His dedication and commitment, selecting the right resources within the timelines is excellent.',
+    quote: 'Azeem has been working with me throughout my professional journey in many projects with partnering to attract apparel industry top talent. His dedication and commitment, selecting the right resources within the timelines is excellent. I wish him and the team the best.',
     name: 'Prasad Kavindra',
     company: 'Timex',
     title: 'CEO',
-    avatar: withBasePath('/figmaAssets/testimonial/c1fd7aa368850e590565f2a79763c912bd4bb1c7.png'), // I changed this to a different image in that folder so it doesn't match Ushan
+    avatar: withBasePath('/figmaAssets/testimonial/c1fd7aa368850e590565f2a79763c912bd4bb1c7.png'),
   },
 ]
 
 const sliderVariants = {
   enter: (direction: number) => ({
     x: direction > 0 ? 300 : -300,
-    opacity: 0,
-    scale: 0.95
+    opacity: 0
   }),
   center: {
     zIndex: 1,
     x: 0,
-    opacity: 1,
-    scale: 1
+    opacity: 1
   },
   exit: (direction: number) => ({
     zIndex: 0,
     x: direction < 0 ? 300 : -300,
-    opacity: 0,
-    scale: 0.95
+    opacity: 0
   })
 }
 
@@ -125,20 +122,37 @@ export function ContainerSubsection() {
   }
 
   return (
-    <section className="flex flex-col w-full items-start justify-center">
+    <section
+      id="home-testimonial-section"
+      aria-label="Home Testimonial Section"
+      className="flex flex-col w-full items-start justify-center"
+    >
       <div className="flex flex-col items-start w-full">
         <div
-          className="flex flex-col items-start gap-5 w-full bg-cover bg-center bg-no-repeat px-[23px] py-[39px] md:px-16 md:py-14 lg:px-[100px] lg:pt-[60.83px] lg:pb-[91.24px] overflow-hidden min-h-[850px]"
-          style={{ 
-            backgroundImage: `url(${withBasePath('/figmaAssets/background1.png')})`,
-            backgroundSize: 'auto 100%'
-          }}
+          className="relative flex flex-col items-start gap-5 w-full px-[23px] py-[39px] md:px-16 md:py-14 lg:px-[100px] lg:pt-[60.83px] lg:pb-[91.24px] overflow-hidden min-h-[850px]"
         >
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 hidden lg:block bg-no-repeat"
+            style={{
+              backgroundImage: `url('${withBasePath('/figmaAssets/background1.png')}')`,
+              backgroundSize: '100% auto',
+              backgroundPosition: 'center top',
+            }}
+          />
+          <div aria-hidden="true" className="absolute inset-0 lg:hidden">
+            <img
+              src={withBasePath('/figmaAssets/Container (4).png')}
+              alt=""
+              className="h-full w-full object-cover"
+              style={{ objectPosition: 'center center' }}
+            />
+          </div>
+          <div className="relative z-10 flex flex-col items-start w-full">
           <div
             className="lg:hidden w-full flex items-center mb-[14px]"
             style={{
               height: 85,
-              backgroundColor: '#fe8d2b', // Use the theme's orange as a fallback or remove BG
               borderRadius: 2,
             }}
           >
@@ -146,9 +160,9 @@ export function ContainerSubsection() {
               className="[font-family:'Quicksand',Helvetica] font-normal text-white leading-[38px] text-[32px]"
               style={{ paddingLeft: 102 }}
             >
-              Hear from our
+              <span className="text-white">Hear from our</span>
               <br />
-              clients
+              <span className="font-bold text-[#fe8d2b]">clients</span>
             </h2>
           </div>
 
@@ -177,77 +191,73 @@ export function ContainerSubsection() {
 
           <div className="flex flex-col lg:flex-row items-start justify-between w-full gap-4 lg:gap-4 mt-[7px] lg:mt-0">
             <div className="flex flex-col flex-1 justify-center w-full min-w-0 lg:ml-8">
-              <div className="flex flex-col w-full items-end">
-                <AnimatePresence initial={false} custom={direction}>
-                  <motion.div
-                    key={page}
-                    custom={direction}
-                    variants={sliderVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{
-                      x: { type: 'spring', stiffness: 300, damping: 30 },
-                      opacity: { duration: 0.2 },
-                      scale: { duration: 0.3 }
-                    }}
-                    className="w-full"
-                  >
-                    <div className="flex flex-col items-start gap-10 w-full pr-0 lg:pr-[52.38px] py-4 lg:py-[17.45px]">
-                      <div className="flex flex-col items-start gap-[2.8px] w-full" style={{ alignItems: 'flex-start' }}>
-                        <p
-                          className="[font-family:'Inter',Helvetica] font-medium text-white tracking-[0] w-full text-[13px] lg:text-[14.9px]"
-                          style={{ lineHeight: '24px' }}
-                        >
-                          {isExpanded ? testimonial.quote : testimonial.quote.length > 150 ? testimonial.quote.substring(0, 150) + '...' : testimonial.quote}
-                        </p>
-                        {testimonial.quote.length > 150 && (
-                          <span
-                            onClick={() => setIsExpanded(!isExpanded)}
-                            className="[font-family:'Inter',Helvetica] text-[#fe8d2b] text-[11.8px] tracking-[0] cursor-pointer hover:underline"
-                            style={{ lineHeight: '19.2px', fontStyle: 'italic', fontWeight: 900 }}
-                          >
-                            {isExpanded ? 'Read Less' : 'Read More'}
-                          </span>
-                        )}
-                      </div>
+              <AnimatePresence initial={false} custom={direction} mode="wait">
+                <motion.div
+                  key={`testimonial-text-${page}`}
+                  custom={direction}
+                  variants={sliderVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{
+                    x: { type: 'spring', stiffness: 300, damping: 30 },
+                    opacity: { duration: 0.2 },
+                  }}
+                  className="flex flex-col items-start gap-10 w-full pr-0 lg:pr-[52.38px] py-4 lg:py-[17.45px]"
+                  style={{ minHeight: '280px' }}
+                >
+                  <div className="flex flex-col items-start gap-[2.8px] w-full" style={{ alignItems: 'flex-start' }}>
+                    <p
+                      className="[font-family:'Inter',Helvetica] font-medium text-white tracking-[0] w-full text-[13px] lg:text-[14.9px]"
+                      style={{ lineHeight: '24px' }}
+                    >
+                      {isExpanded ? testimonial.quote : testimonial.quote.length > 150 ? testimonial.quote.substring(0, 150) + '...' : testimonial.quote}
+                    </p>
+                    {testimonial.quote.length > 150 && (
+                      <span
+                        onClick={() => setIsExpanded(!isExpanded)}
+                        className="[font-family:'Inter',Helvetica] text-[#fe8d2b] text-[11.8px] tracking-[0] cursor-pointer hover:underline"
+                        style={{ lineHeight: '19.2px', fontStyle: 'italic', fontWeight: 900 }}
+                      >
+                        {isExpanded ? 'Read Less' : 'Read More'}
+                      </span>
+                    )}
+                  </div>
 
-                      <div className="flex items-center gap-[29.34px] w-full">
-                        <div
-                          className="flex-shrink-0 rounded-full bg-white/20 bg-cover bg-center overflow-hidden"
-                          style={{ width: 80, height: 80, maxWidth: 80 }}
-                        >
-                          <img
-                            src={testimonial.avatar}
-                            alt={testimonial.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div className="flex flex-col gap-[8.4px] lg:gap-[10px]">
-                          <span
-                            className="[font-family:'Quicksand',Helvetica] tracking-[0]"
-                            style={{ fontSize: 24, fontWeight: 700, lineHeight: '24px', color: '#fe8d2b' }}
-                          >
-                            {testimonial.name}
-                          </span>
-                          <span
-                            className="[font-family:'Quicksand',Helvetica] font-normal text-white tracking-[0]"
-                            style={{ fontSize: 16, lineHeight: '16px' }}
-                          >
-                            {testimonial.company}
-                          </span>
-                          <span
-                            className="[font-family:'Quicksand',Helvetica] font-normal text-white tracking-[0]"
-                            style={{ fontSize: 16, lineHeight: '16px' }}
-                          >
-                            {testimonial.title}
-                          </span>
-                        </div>
-                      </div>
+                  <div className="flex items-center gap-[29.34px] w-full">
+                    <div
+                      className="flex-shrink-0 rounded-full bg-white/20 bg-cover bg-center overflow-hidden"
+                      style={{ width: 80, height: 80, maxWidth: 80 }}
+                    >
+                      <img
+                        src={testimonial.avatar}
+                        alt={testimonial.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
+                    <div className="flex flex-col gap-[8.4px] lg:gap-[10px]">
+                      <span
+                        className="[font-family:'Quicksand',Helvetica] tracking-[0]"
+                        style={{ fontSize: 24, fontWeight: 700, lineHeight: '24px', color: '#fe8d2b' }}
+                      >
+                        {testimonial.name}
+                      </span>
+                      <span
+                        className="[font-family:'Quicksand',Helvetica] font-normal text-white tracking-[0]"
+                        style={{ fontSize: 16, lineHeight: '16px' }}
+                      >
+                        {testimonial.company}
+                      </span>
+                      <span
+                        className="[font-family:'Quicksand',Helvetica] font-normal text-white tracking-[0]"
+                        style={{ fontSize: 16, lineHeight: '16px' }}
+                      >
+                        {testimonial.title}
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
 
@@ -293,6 +303,7 @@ export function ContainerSubsection() {
                 <ChevronRight className="text-[#fe8d2b] group-hover:text-white w-[18px] h-[18.4px] transition-colors" />
               </button>
             </div>
+          </div>
           </div>
         </div>
       </div>
