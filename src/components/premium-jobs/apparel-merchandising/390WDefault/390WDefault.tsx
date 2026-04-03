@@ -157,7 +157,7 @@ function DivElementorElement() {
   return (
     <div className="absolute h-[780px] left-0 right-0 top-0" data-name="div.elementor-element">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute h-full left-0 max-w-none top-0 w-[299.63%]" src={imgDivElementorElement.src || imgDivElementorElement} />
+        <img alt="" className="absolute h-full left-0 max-w-none top-0 w-[299.63%]" src={imgDivElementorElement} />
       </div>
       <div className="absolute bg-[rgba(0,0,0,0.59)] h-[780px] left-0 opacity-50 top-0 w-[390.4px]" data-name="::before" />
       <DivElementorElement1 />
@@ -187,7 +187,7 @@ function DivElementorElement8() {
   return (
     <div className="flex-[1_0_0] min-h-[70.19999694824219px] min-w-px relative" data-name="div.elementor-element">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute h-full left-[50.15%] max-w-none top-0 w-[49.85%]" src={imgDivElementorElement1.src || imgDivElementorElement1} />
+        <img alt="" className="absolute h-full left-[50.15%] max-w-none top-0 w-[49.85%]" src={imgDivElementorElement1} />
       </div>
       <div className="flex flex-row items-center justify-end min-h-[inherit] size-full">
         <div className="content-center flex flex-wrap items-center justify-end min-h-[inherit] pr-[20.612px] py-[22.3px] relative w-full">
@@ -708,7 +708,7 @@ function DivElementorElement10() {
   return (
     <div className="relative rounded-[28px] shrink-0 w-full" data-name="div.elementor-element">
       <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[28px]">
-        <img alt="" className="absolute h-full left-[-347.93%] max-w-none top-0 w-[795.86%]" src={imgDivElementorElement2.src || imgDivElementorElement2} />
+        <img alt="" className="absolute h-full left-[-347.93%] max-w-none top-0 w-[795.86%]" src={imgDivElementorElement2} />
       </div>
       <div className="flex flex-row items-center size-full">
         <div className="content-center flex flex-wrap items-center px-[13.738px] py-[20.612px] relative w-full">
@@ -1603,7 +1603,7 @@ function Group2162768X507Webp() {
   return (
     <div className="h-[226.81px] max-w-[343.5799865722656px] relative shrink-0 w-[343.58px]" data-name="Group-2162-768x507.webp">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute left-0 max-w-none size-full top-0" src={imgGroup2162768X507Webp.src || imgGroup2162768X507Webp} />
+        <img alt="" className="absolute left-0 max-w-none size-full top-0" src={imgGroup2162768X507Webp} />
       </div>
     </div>
   );
@@ -1629,7 +1629,7 @@ function DivElementorElement29() {
   return (
     <div className="relative shrink-0 w-full" data-name="div.elementor-element">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute h-[56.29%] left-0 max-w-none top-[21.85%] w-full" src={imgDivElementorElement3.src || imgDivElementorElement3} />
+        <img alt="" className="absolute h-[56.29%] left-0 max-w-none top-[21.85%] w-full" src={imgDivElementorElement3} />
       </div>
       <div className="flex flex-col items-center size-full">
         <div className="content-stretch flex flex-col gap-[39.99px] items-center pb-[31.22px] pt-[31.225px] px-[23.413px] relative w-full">
@@ -2274,7 +2274,7 @@ function ApparelMerchandisingMarketing768X880Webp() {
   return (
     <div className="h-[447.33px] max-w-[390.3999938964844px] relative shrink-0 w-[390.4px]" data-name="Apparel-Merchandising-Marketing-768x880.webp">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute left-0 max-w-none size-full top-0" src={imgApparelMerchandisingMarketing768X880Webp.src || imgApparelMerchandisingMarketing768X880Webp} />
+        <img alt="" className="absolute left-0 max-w-none size-full top-0" src={imgApparelMerchandisingMarketing768X880Webp} />
       </div>
     </div>
   );
@@ -4127,7 +4127,7 @@ function DivElementorElement82() {
   return (
     <div className="absolute content-stretch flex flex-col gap-[10px] items-start left-0 pt-[39.037px] right-0 top-[2577.86px]" data-name="div.elementor-element">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute h-[40.08%] left-0 max-w-none top-[29.96%] w-full" src={imgDivElementorElement4.src || imgDivElementorElement4} />
+        <img alt="" className="absolute h-[40.08%] left-0 max-w-none top-[29.96%] w-full" src={imgDivElementorElement4} />
       </div>
       <DivElementorElement83 />
       <DivElementorElement84 />
@@ -4558,7 +4558,7 @@ function DecathlonSriLankaOfficialLogo1Webp() {
   return (
     <div className="h-[114.19px] max-w-[103.5999984741211px] relative shrink-0 w-[103.6px]" data-name="Decathlon-Sri-Lanka-Official-Logo-1.webp">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute left-0 max-w-none size-full top-0" src={imgDecathlonSriLankaOfficialLogo1Webp.src || imgDecathlonSriLankaOfficialLogo1Webp} />
+        <img alt="" className="absolute left-0 max-w-none size-full top-0" src={imgDecathlonSriLankaOfficialLogo1Webp} />
       </div>
     </div>
   );
@@ -4621,7 +4621,7 @@ function UnileverOfficialLogo1Webp() {
   return (
     <div className="h-[114.19px] max-w-[103.5999984741211px] relative shrink-0 w-[103.6px]" data-name="Unilever-Official-Logo-1.webp">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute left-0 max-w-none size-full top-0" src={imgUnileverOfficialLogo1Webp.src || imgUnileverOfficialLogo1Webp} />
+        <img alt="" className="absolute left-0 max-w-none size-full top-0" src={imgUnileverOfficialLogo1Webp} />
       </div>
     </div>
   );
@@ -4684,7 +4684,7 @@ function MasOfficialLogo1Webp() {
   return (
     <div className="h-[114.19px] max-w-[103.5999984741211px] relative shrink-0 w-[103.6px]" data-name="MAS-Official-Logo-1.webp">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute left-0 max-w-none size-full top-0" src={imgMasOfficialLogo1Webp.src || imgMasOfficialLogo1Webp} />
+        <img alt="" className="absolute left-0 max-w-none size-full top-0" src={imgMasOfficialLogo1Webp} />
       </div>
     </div>
   );
@@ -5970,7 +5970,7 @@ function DivElementorElement151() {
   return (
     <div className="content-stretch flex flex-col items-end justify-end relative rounded-bl-[20px] shrink-0 w-full" data-name="div.elementor-element">
       <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-bl-[20px]">
-        <img alt="" className="absolute h-[129.41%] left-0 max-w-none top-0 w-full" src={imgDivElementorElement6.src || imgDivElementorElement6} />
+        <img alt="" className="absolute h-[129.41%] left-0 max-w-none top-0 w-full" src={imgDivElementorElement6} />
       </div>
       <DivElementorElement152 />
     </div>
@@ -5993,7 +5993,7 @@ function DivElementorElement102() {
   return (
     <div className="absolute content-stretch flex flex-col gap-[20px] items-start left-0 overflow-clip py-[15.613px] right-0 top-[5977.85px]" data-name="div.elementor-element">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute h-[14.83%] left-[6%] max-w-none top-[42.58%] w-[94%]" src={imgDivElementorElement5.src || imgDivElementorElement5} />
+        <img alt="" className="absolute h-[14.83%] left-[6%] max-w-none top-[42.58%] w-[94%]" src={imgDivElementorElement5} />
       </div>
       <DivElementorElement103 />
       <DivElementorElement150 />
@@ -6016,7 +6016,7 @@ function Career141LogoWith20YearAnniversaryMark() {
   return (
     <div className="h-[45.13px] relative shrink-0 w-[138.14px]" data-name="Career141 logo with 20 year anniversary mark">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute left-0 max-w-none size-full top-0" src={imgCareer141LogoWith20YearAnniversaryMark.src || imgCareer141LogoWith20YearAnniversaryMark} />
+        <img alt="" className="absolute left-0 max-w-none size-full top-0" src={imgCareer141LogoWith20YearAnniversaryMark} />
       </div>
     </div>
   );
