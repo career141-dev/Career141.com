@@ -2,6 +2,7 @@ import {
   BackgroundSubsection,
   BackgroundWrapperSubsection,
   CompanyOverviewSection,
+  ContainerSubsection,
   ExecutiveSearchSpecializationsSection,
   ExecutiveSearchStatsSection,
   GlobalReachSubsection,
@@ -27,6 +28,7 @@ export function LandingPage() {
       <ExecutiveSearchSpecializationsSection />
       <TalentAccessSection />
       <BackgroundSubsection />
+      <ContainerSubsection />
       <BackgroundWrapperSubsection />
       <MobileGlobalReachSubsection />
       <GlobalReachSubsection />
