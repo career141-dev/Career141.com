@@ -3,6 +3,7 @@
 import { Navbar } from '@/components/common/Navbar'
 import { CompanyFooter } from '@/components/common'
 import { MeetingSchedulerSubsection } from '@/components/home/sections/MeetingSchedulerSubsection'
+import { InfiniteCarousel } from '@/components/culture/InfiniteCarousel'
 import { withBasePath } from '@/lib/assetPath'
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
@@ -39,12 +40,8 @@ const employeeStories = [
 
 export default function OurCulturePage() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
-  const [currentSlide, setCurrentSlide] = useState(1)
-  const [disableTransition, setDisableTransition] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const carouselImages = 5
   const schedulerRef = useRef<HTMLDivElement>(null)
-  const touchStartX = useRef(0)
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
@@ -53,55 +50,9 @@ export default function OurCulturePage() {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  const carouselItems = [
-    '/images/Culture/carousel/Frame-2633.webp',
-    '/images/Culture/carousel/Frame-2629.webp',
-    '/images/Culture/carousel/Frame-2630.webp',
-    '/images/Culture/carousel/Frame-2631.webp',
-    '/images/Culture/carousel/Frame-2632.webp',
-    '/images/Culture/carousel/Frame-2633.webp',
-    '/images/Culture/carousel/Frame-2629.webp',
-    '/images/Culture/carousel/Frame-2630.webp',
-  ]
-
   const scrollToScheduler = () => {
     schedulerRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
-
-  const nextSlide = () => {
-    if (disableTransition) return
-    setCurrentSlide((prev) => prev + 1)
-  }
-
-  const prevSlide = () => {
-    if (disableTransition) return
-    setCurrentSlide((prev) => prev - 1)
-  }
-
-  useEffect(() => {
-    if (disableTransition) return
-    if (currentSlide === 0) {
-      setDisableTransition(true)
-      setCurrentSlide(5)
-      setTimeout(() => setDisableTransition(false), 100)
-    } else if (currentSlide === 6) {
-      setDisableTransition(true)
-      setCurrentSlide(1)
-      setTimeout(() => setDisableTransition(false), 100)
-    } else if (currentSlide === 7) {
-      setDisableTransition(true)
-      setCurrentSlide(2)
-      setTimeout(() => setDisableTransition(false), 100)
-    }
-  }, [currentSlide])
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (disableTransition) return
-      setCurrentSlide((prev) => prev + 1)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [disableTransition])
 
   const handleToggle = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index)
@@ -217,85 +168,7 @@ export default function OurCulturePage() {
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
         <div className="relative z-10 max-w-[1200px] mx-auto px-4">
-          <div className="relative overflow-hidden">
-            <div 
-              className={`flex items-center justify-center ${disableTransition ? '' : 'transition-transform duration-500 ease-out'}`}
-              style={{ transform: `translateX(-${currentSlide * (isMobile ? 100 : 33.33)}%)` }}
-              onTouchStart={(e) => {
-                touchStartX.current = e.touches[0].clientX
-              }}
-              onTouchEnd={(e) => {
-                const diff = touchStartX.current - e.changedTouches[0].clientX
-                if (Math.abs(diff) > 50) {
-                  if (diff > 0) nextSlide()
-                  else prevSlide()
-                }
-              }}
-            >
-              {carouselItems.map((img, index) => {
-                const offset = index - currentSlide
-                let transform = 'scale(0.85) rotate(0deg)'
-                let zIndex = 0
-                let opacity = 1
-                
-                if (offset === 0) {
-                  transform = 'scale(1) rotate(0deg)'
-                  zIndex = 10
-                  opacity = 1
-                } else if (offset === -1) {
-                  transform = 'scale(0.85) rotate(0deg)'
-                  zIndex = 5
-                  opacity = 1
-                } else if (offset === 1) {
-                  transform = 'scale(0.85) rotate(0deg)'
-                  zIndex = 5
-                  opacity = 1
-                }
-
-                return (
-                  <div 
-                    key={index} 
-                    className={`flex-shrink-0 ${isMobile ? 'w-full' : 'w-1/3'} flex justify-center transition-all duration-500 ease-out`}
-                    style={{ transform, zIndex, opacity }}
-                  >
-                    <div className={`bg-white rounded-2xl p-3 shadow-lg ${isMobile ? 'w-[280px] h-[450px]' : 'w-[360px] md:w-[420px] h-[600px]'} flex items-center justify-center overflow-hidden`}>
-                      <img 
-                        src={withBasePath(img)} 
-                        alt={`Carousel ${index + 1}`} 
-                        className="max-w-full max-h-full object-contain rounded-xl"
-                      />
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-            
-            <button 
-              onClick={prevSlide}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white text-2xl z-20"
-            >
-              ‹
-            </button>
-            <button 
-              onClick={nextSlide}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white text-2xl z-20"
-            >
-              ›
-            </button>
-          </div>
-          
-          <div className="flex justify-center gap-2 mt-6">
-            {[0, 1, 2, 3, 4].map((_, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  if (disableTransition) return
-                  setCurrentSlide(index + 1)
-                }}
-                className={`w-3 h-3 rounded-full transition-all ${currentSlide === index + 1 ? 'bg-white w-8' : 'bg-white/50'}`}
-              />
-            ))}
-          </div>
+          <InfiniteCarousel isMobile={isMobile} />
         </div>
       </section>
 

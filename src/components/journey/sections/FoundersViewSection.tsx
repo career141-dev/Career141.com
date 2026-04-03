@@ -27,7 +27,7 @@ export function FoundersViewSection() {
                     <div className={styles.DivElementorWrapper_115_9539}>
                       <div className={styles.IframeWidget2_115_9540}>
                         <iframe
-                          src="https://www.youtube.com/embed/live_stream?channel=UCBFz6UrJC4Cp9RVaTBi4Kxw&autoplay=0"
+                          src="https://www.youtube.com/embed/t5jEi1dpXp8?autoplay=1"
                           title="Founder's View - Career141"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen

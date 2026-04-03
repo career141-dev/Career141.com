@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useState } from "react";
 import { withBasePath } from "@/lib/assetPath";
 import svgPaths from "./svg-np27avrfgc";
 
@@ -43,14 +44,17 @@ function Frame() {
 }
 
 function CandidateCard({ name, content }: { name: string; content: string }) {
+    const [isExpanded, setIsExpanded] = useState(false)
+    const shortContent = content.length > 150 ? content.substring(0, 150) + '...' : content
+
     return (
-        <div className="bg-white min-h-[340px] relative rounded-[40px] w-full border border-[#e4e4e4] border-solid p-8 shadow-sm transition-transform hover:-translate-y-1 duration-300 flex flex-col">
+        <div className="bg-white relative rounded-[40px] w-full border border-[#e4e4e4] border-solid p-8 shadow-sm transition-all duration-500 flex flex-col">
             <div className="mb-6">
                 <Frame />
             </div>
-            <div className="flex-grow">
+            <div className={`flex-grow transition-all duration-500 overflow-hidden`}>
                 <p className="font-['Quicksand',sans-serif] font-semibold text-[#626262] text-[16px] leading-[24px]">
-                    {content}
+                    {isExpanded ? content : shortContent}
                 </p>
             </div>
             <div className="mt-4">
@@ -59,7 +63,12 @@ function CandidateCard({ name, content }: { name: string; content: string }) {
                  </div>
                  <div className="flex justify-between items-center">
                     <p className="font-['Quicksand',sans-serif] font-semibold text-[#808080] text-[16px]">{name}</p>
-                    <p className="font-['Quicksand',sans-serif] font-semibold text-[#37a65e] text-[16px] leading-[24px] cursor-pointer">Read More</p>
+                    <p 
+                        onClick={() => setIsExpanded(!isExpanded)}
+                        className="font-['Quicksand',sans-serif] font-semibold text-[#37a65e] text-[16px] leading-[24px] cursor-pointer hover:text-[#11593f] transition-colors"
+                    >
+                        {isExpanded ? 'Read Less' : 'Read More'}
+                    </p>
                  </div>
             </div>
         </div>
