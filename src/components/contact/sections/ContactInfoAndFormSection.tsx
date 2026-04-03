@@ -599,91 +599,92 @@ export function ContactInfoAndFormSection() {
                   </div>
                 </div>
               </div>
-              <div className={styles.DivElementorElement_88_11875}>
-                <div className={styles.DivElementorElement_88_11876}>
-                  <div className={styles.DivElementorElement_88_11877}>
-                    <div className={styles.DivElementorWidgetContainer_88_11878}>
-                      <div className={styles.DivElementorIconWrapper_88_11879}>
-                        <div className={styles.DivElementorIcon_88_11880}>
-                          <div className={styles.Frame_88_11881}>
-                            <PhoneIcon className="w-5 h-5 text-[#37a65e]" />
+              <div className="flex flex-col gap-4 pl-4">
+                <div className={styles.DivElementorElement_88_11875} style={{ marginLeft: '-21px' }}>
+                  <div className={styles.DivElementorElement_88_11876}>
+                    <div className={styles.DivElementorElement_88_11877}>
+                      <div className={styles.DivElementorWidgetContainer_88_11878}>
+                        <div className={styles.DivElementorIconWrapper_88_11879}>
+                          <div className={styles.DivElementorIcon_88_11880}>
+                            <div className={styles.Frame_88_11881}>
+                              <PhoneIcon className="w-5 h-5 text-[#37a65e]" />
+                            </div>
                           </div>
-                        </div>
 
-                      </div>
-                    </div>
-                  </div>
-                  <div className={styles.DivElementorElement_88_11883}>
-                    <div className={styles.DivElementorElement_88_11884}>
-                      <div className={styles.DivElementorWidgetContainer_88_11885}>
-                        <span className={styles.SriLanka_88_11886}>Sri Lanka</span>
-                      </div>
-                    </div>
-                    <div className={styles.DivElementorElement_88_11887}>
-                      <div className={styles.DivElementorWidgetContainer_88_11888}>
-                        <div className={styles.A_88_11889}>
-                          <span className={styles._75_359_5495_88_11890}>+94 75 359 5495</span>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div className={styles.DivElementorElement_88_11891}>
-                  <div className={styles.DivElementorElement_88_11892}>
-                    <div className={styles.DivElementorWidgetContainer_88_11893}>
-                      <div className={styles.DivElementorIconWrapper_88_11894}>
-                        <div className={styles.DivElementorIcon_88_11895}>
-                          <div className={styles.Frame_88_11896}>
-                            <PhoneIcon className="w-5 h-5 text-[#37a65e]" />
+                    <div className={styles.DivElementorElement_88_11883}>
+                      <div className={styles.DivElementorElement_88_11884}>
+                        <div className={styles.DivElementorWidgetContainer_88_11885}>
+                          <span className={styles.SriLanka_88_11886}>Sri Lanka</span>
+                        </div>
+                      </div>
+                      <div className={styles.DivElementorElement_88_11887}>
+                        <div className={styles.DivElementorWidgetContainer_88_11888}>
+                          <div className={styles.A_88_11889}>
+                            <span className={styles._75_359_5495_88_11890}>+94 75 359 5495</span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className={styles.DivElementorElement_88_11898}>
-                    <div className={styles.DivElementorElement_88_11899}>
-                      <div className={styles.DivElementorWidgetContainer_88_11900}>
-                        <span className={styles.Dubai_88_11901}>Dubai</span>
-                      </div>
-                    </div>
-                    <div className={styles.DivElementorElement_88_11902}>
-                      <div className={styles.DivElementorWidgetContainer_88_11903}>
-                        <div className={styles.A_88_11904}>
-                          <span className={styles._56_530_2484_88_11905}>+971 56 530 2484</span>
+                  <div className={styles.DivElementorElement_88_11891}>
+                    <div className={styles.DivElementorElement_88_11892}>
+                      <div className={styles.DivElementorWidgetContainer_88_11893}>
+                        <div className={styles.DivElementorIconWrapper_88_11894}>
+                          <div className={styles.DivElementorIcon_88_11895}>
+                            <div className={styles.Frame_88_11896}>
+                              <PhoneIcon className="w-5 h-5 text-[#37a65e]" />
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div className={styles.DivElementorElement_88_11906}>
-                  <div className={styles.DivElementorElement_88_11907}>
-                    <div className={styles.DivElementorWidgetContainer_88_11908}>
-                      <div className={styles.DivElementorIconWrapper_88_11909}>
-                        <div className={styles.DivElementorIcon_88_11910}>
-                          <div className={styles.Frame_88_11911}>
-                            <PhoneIcon className="w-5 h-5 text-[#37a65e]" />
+                    <div className={styles.DivElementorElement_88_11898}>
+                      <div className={styles.DivElementorElement_88_11899}>
+                        <div className={styles.DivElementorWidgetContainer_88_11900}>
+                          <span className={styles.Dubai_88_11901}>Dubai</span>
+                        </div>
+                      </div>
+                      <div className={styles.DivElementorElement_88_11902}>
+                        <div className={styles.DivElementorWidgetContainer_88_11903}>
+                          <div className={styles.A_88_11904}>
+                            <span className={styles._56_530_2484_88_11905}>+971 56 530 2484</span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className={styles.DivElementorElement_88_11913}>
-                    <div className={styles.DivElementorElement_88_11914}>
-                      <div className={styles.DivElementorWidgetContainer_88_11915}>
-                        <span className={styles.Singapore_88_11916}>Singapore</span>
+                  <div className={styles.DivElementorElement_88_11906}>
+                    <div className={styles.DivElementorElement_88_11907}>
+                      <div className={styles.DivElementorWidgetContainer_88_11908}>
+                        <div className={styles.DivElementorIconWrapper_88_11909}>
+                          <div className={styles.DivElementorIcon_88_11910}>
+                            <div className={styles.Frame_88_11911}>
+                              <PhoneIcon className="w-5 h-5 text-[#37a65e]" />
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div className={styles.DivElementorElement_88_11917}>
-                      <div className={styles.DivElementorWidgetContainer_88_11918}>
-                        <div className={styles.A_88_11919}>
-                          <span className={styles._89_022_082_88_11920}>+65 89 022 082</span>
+                    <div className={styles.DivElementorElement_88_11913}>
+                      <div className={styles.DivElementorElement_88_11914}>
+                        <div className={styles.DivElementorWidgetContainer_88_11915}>
+                          <span className={styles.Singapore_88_11916}>Singapore</span>
+                        </div>
+                      </div>
+                      <div className={styles.DivElementorElement_88_11917}>
+                        <div className={styles.DivElementorWidgetContainer_88_11918}>
+                          <div className={styles.A_88_11919}>
+                            <span className={styles._89_022_082_88_11920}>+65 89 022 082</span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className={styles.DivElementorElementMargin_88_11921}>
+                <div className={styles.DivElementorElementMargin_88_11921} style={{ marginLeft: '-21px' }}>
                 <div className={styles.DivElementorElement_88_11922}>
                   <div className={styles.DivElementorElement_88_11923}>
                     <div className={styles.DivElementorWidgetContainer_88_11924}>
@@ -743,6 +744,7 @@ export function ContactInfoAndFormSection() {
                 </div>
               </div>
             </div>
+              </div>
           </div>
           <div className={styles.DivElementorElement_88_11956}>
             <div className={styles.DivElementorElementMargin_88_11957}>

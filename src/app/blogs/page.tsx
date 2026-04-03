@@ -39,11 +39,11 @@ export default function BlogsPage() {
   return (
     <main className="min-h-screen bg-white m-0 p-0">
       <Navbar bgColor="#0F221B" />
-      <section className="w-full py-12 md:py-16 lg:py-24 bg-white min-h-[80vh] flex items-center justify-center relative">
+      <section className="w-full py-12 md:py-16 lg:py-24 bg-white min-h-[80vh] flex items-center justify-center relative overflow-hidden">
         <img
           src={withBasePath('/images/blogs/Rectangle 1083.png')}
           alt=""
-          className="absolute left-1/2 -translate-x-1/2 top-[360px] md:top-[380px] w-[90%] md:w-[80%] h-auto object-contain z-0"
+          className="absolute left-1/2 -translate-x-1/2 top-[100px] md:top-[80px] w-[90%] md:w-[80%] h-[calc(100%-100px)] md:h-[calc(100%-80px)] object-contain z-0"
         />
           <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 px-4 relative z-10">
             <div className="text-left hidden md:block mt-25" style={{ fontFamily: '"Quicksand", Sans-serif', fontSize: '2em', fontWeight: 700, color: '#626262' }}>
@@ -77,35 +77,17 @@ export default function BlogsPage() {
       </section>
 
       <section className="w-full py-12 md:py-24 bg-white">
-        <div className="max-w-[1200px] mx-auto px-4">
-          <div className="relative">
-            <div 
-              ref={carouselRef}
-              className="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory justify-start md:justify-center pb-4"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-              {loopedBlogs.map((blog, index) => (
-                <BlogCard
-                  key={`${blog.slug}-${index}`}
-                  slug={blog.slug}
-                  title={blog.title}
-                  category={blog.category}
-                  thumbnail={blog.thumbnail}
-                />
-              ))}
-            </div>
-            <button 
-              onClick={scrollLeft}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:translate-x-[-30px] bg-white rounded-full p-1 md:p-2 shadow-lg hover:bg-gray-50 hidden md:block"
-            >
-              <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-gray-600" />
-            </button>
-            <button 
-              onClick={scrollRight}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-[30px] bg-white rounded-full p-1 md:p-2 shadow-lg hover:bg-gray-50 hidden md:block"
-            >
-              <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-gray-600" />
-            </button>
+        <div className="max-w-[1200px] mx-auto px-4 -mt-8">
+          <div className="flex gap-4 md:gap-6 justify-center pb-4">
+            {blogs.slice(1, 4).map((blog) => (
+              <BlogCard
+                key={blog.slug}
+                slug={blog.slug}
+                title={blog.title}
+                category={blog.category}
+                thumbnail={blog.thumbnail}
+              />
+            ))}
           </div>
         </div>
       </section>

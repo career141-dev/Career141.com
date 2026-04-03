@@ -2,11 +2,12 @@
 @import "https://fonts.googleapis.com/css?family=Quicksand:0,700;0,400&display=swap";
 
 .DivElementorElement_115_10489 {
+  background: transparent !important;
   align-items: flex-start;
   justify-content: flex-end;
   gap: 30.01px;
   width: 100%;
-  padding: 350px 20px 0 0;
+  padding: 150px 20px 0 0;
   display: flex;
 }
 
@@ -22,7 +23,7 @@
 }
 
 .DivElementorElement_115_10490 {
-  background: none;
+  background: transparent !important;
   flex-direction: column;
   flex-shrink: 0;
   align-items: flex-start;
@@ -32,6 +33,7 @@
 }
 
 .DivElementorElement_115_10491 {
+  background: transparent !important;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -101,6 +103,7 @@
 }
 
 .DivElementorElement_115_10500 {
+  background: transparent !important;
   flex-direction: column;
   flex-shrink: 0;
   align-items: flex-start;
@@ -112,6 +115,7 @@
 }
 
 .DivElementorElement_115_10501 {
+  background: transparent;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
@@ -248,6 +252,7 @@
 }
 
 .DivElementorElement_115_10522 {
+  background: transparent;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -257,6 +262,7 @@
 }
 
 .DivElementorWidgetContainer_115_10523 {
+  background: transparent;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
@@ -285,7 +291,7 @@
   .DivElementorElement_115_10489 {
     flex-direction: column;
     width: 100%;
-    padding: 91px 20px 0 20px;
+    padding: 80px 20px 0 20px;
     align-items: center;
     text-align: center;
   }

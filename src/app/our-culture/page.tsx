@@ -238,22 +238,22 @@ export default function OurCulturePage() {
               View all job opportunities
             </Link>
           </div>
-          <div className="absolute inset-0 hidden md:flex flex-col md:flex-row items-center p-8 md:p-16 lg:p-24">
-            <div className="md:w-1/2 md:pr-8 order-2 md:order-1 w-full flex justify-center mb-4 md:mb-0">
+          <div className="absolute inset-0 hidden md:flex items-center p-8 md:p-16 lg:p-24">
+            <div className="w-1/2 flex flex-col items-center">
+              <h2 className="mb-4 text-xl md:text-2xl lg:text-[2.4em] text-center" style={{ fontFamily: "'Quicksand', Sans-serif", fontWeight: 400, lineHeight: '1.2em', color: '#11593F' }}>
+                Work with us and make a <b>difference</b>
+              </h2>
               <img 
                 src={withBasePath('/images/Culture/people.png')} 
                 alt="Work with us" 
-                className="w-full max-w-[500px] h-auto"
+                className="w-full max-w-[1000px] h-auto mt-20 mr-20"
               />
             </div>
-            <div className="md:w-1/2 md:pl-8 order-1 md:order-2 w-full">
-              <h2 className="mb-4 text-xl md:text-2xl lg:text-[2.4em]" style={{ fontFamily: "'Quicksand', Sans-serif", fontWeight: 400, lineHeight: '1.2em', color: '#11593F' }}>
-                Work with us and make a <b>difference</b>
-              </h2>
+            <div className="w-1/2 flex flex-col justify-center">
               <p className="[font-family:'Quicksand',Sans-serif] text-gray-600 text-sm md:text-base mb-4">
                 With us you'll have the opportunity to work with industry leaders, embrace cutting-edge technologies, and develop expertise across diverse fields. We offer you the unique opportunity to collaborate with some of the world's leading MNCs and conglomerates. Joining our team means working alongside top industry professionals and contributing to impactful projects that shape the future of global business. Join us and let's shape the future together.
               </p>
-              <Link href="/premium-jobs" className="bg-[#37A65E] text-white [font-family:'Quicksand',Sans-serif] px-8 py-3 rounded-full font-semibold hover:bg-[#2d8a4d] transition-colors inline-block">
+              <Link href="/premium-jobs" className="bg-[#37A65E] text-white [font-family:'Quicksand',Sans-serif] px-6 py-3 rounded-full font-semibold hover:bg-[#2d8a4d] transition-colors inline-block w-max">
                 View all job opportunities
               </Link>
             </div>
