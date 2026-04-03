@@ -2,7 +2,7 @@
 @import "https://fonts.googleapis.com/css?family=Quicksand:0,700;0,400&display=swap";
 
 .DivElementorElement_115_10489 {
-  background: transparent;
+  background: transparent !important;
   align-items: flex-start;
   justify-content: flex-end;
   gap: 30.01px;
@@ -23,7 +23,7 @@
 }
 
 .DivElementorElement_115_10490 {
-  background: none;
+  background: transparent !important;
   flex-direction: column;
   flex-shrink: 0;
   align-items: flex-start;
@@ -33,6 +33,7 @@
 }
 
 .DivElementorElement_115_10491 {
+  background: transparent !important;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -102,7 +103,7 @@
 }
 
 .DivElementorElement_115_10500 {
-  background: transparent;
+  background: transparent !important;
   flex-direction: column;
   flex-shrink: 0;
   align-items: flex-start;
@@ -114,6 +115,7 @@
 }
 
 .DivElementorElement_115_10501 {
+  background: transparent;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
@@ -250,6 +252,7 @@
 }
 
 .DivElementorElement_115_10522 {
+  background: transparent;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -259,6 +262,7 @@
 }
 
 .DivElementorWidgetContainer_115_10523 {
+  background: transparent;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;

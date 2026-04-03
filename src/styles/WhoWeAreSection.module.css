@@ -22,7 +22,7 @@
 }
 
 .TextBox {
-  background: url('/figmaAssets/bg-vision.webp') center center/cover no-repeat;
+  background: #130101bd;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;

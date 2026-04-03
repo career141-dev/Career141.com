@@ -7,11 +7,16 @@ export function FoundersTextElement() {
   const [isExpanded, setIsExpanded] = useState(false)
 
   return (
-    <div className={styles.DivElementorElement_115_10489}>
+    <div className={styles.DivElementorElement_115_10489} style={{ background: 'transparent' }}>
       <div className={styles.DivElementorElement_115_10490}>
         <div className={styles.DivElementorElement_115_10491}>
           <div className={styles.DivElementorWidgetContainer_115_10492}>
-            <div className={styles.P_115_10493} style={{ fontFamily: "'General Sans Variable', Sans-serif", fontSize: '1em', lineHeight: '1.7em', color: '#000000', fontWeight: 'normal' }}>
+            <div className={styles.P_115_10493} style={{ fontFamily: "'General Sans Variable', Sans-serif", fontSize: '1em', lineHeight: '1.7em', color: '#000000', fontWeight: 'normal', position: 'relative' }}>
+              {!isExpanded && (
+                <div 
+                  className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none"
+                />
+              )}
               <span>
                 Over the last two decades, Career141 Sri Lanka has built a trusted reputation as a Sri Lankan, Global
                 Recruitment and executive search firm, serving clients across 25+ countries including Sri Lanka,
