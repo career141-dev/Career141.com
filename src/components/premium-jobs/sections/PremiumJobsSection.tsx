@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { withBasePath } from '@/lib/assetPath'
 import { BrowseAllJobsSection } from './BrowseAllJobsSection'
+import { premiumJobCards } from '../premiumJobsData'
 
 type WhatsAppChannel = {
   industry: string
@@ -116,54 +117,15 @@ const industryTagsRow2 = [
 
 const allIndustryTags = [...industryTagsRow1, ...industryTagsRow2]
 
-const sidebarIndustries = [
-  { label: 'Hospitality', count: '(23)', href: '/premium-jobs' },
-  { label: 'Other', count: '(94)', href: '/premium-jobs' },
-  { label: 'Apparel', count: '(51)', href: '/premium-jobs' },
-  { label: 'FMCG', count: '(14)', href: '/premium-jobs' },
-  { label: 'Automative', count: '(10)', href: '/premium-jobs' },
-  { label: 'Education', count: '(6)', href: '/premium-jobs' },
-  { label: 'Information Technology', count: '(20)', href: '/premium-jobs' },
-  { label: 'Power & Energy', count: '(7)', href: '/premium-jobs' },
-  { label: 'Shipping & Freight', count: '(1)', href: '/premium-jobs' },
-]
-
-const sidebarLocations = [
-  { label: 'Sri Lanka', count: '(180)', href: '/premium-jobs' },
-  { label: 'Bangladesh', count: '(15)', href: '/premium-jobs' },
-  { label: 'India', count: '(10)', href: '/premium-jobs' },
-  { label: 'Singapore', count: '(1)', href: '/premium-jobs' },
-  { label: 'Dubai', count: '(3)', href: '/premium-jobs' },
-  { label: 'Oman', count: '(3)', href: '/premium-jobs' },
-  { label: 'Saudi Arabia', count: '(4)', href: '/premium-jobs' },
-  { label: 'Egypt', count: '(3)', href: '/premium-jobs' },
-  { label: 'Vietnam', count: '(4)', href: '/premium-jobs' },
-  { label: 'Cambodia', count: '(2)', href: '/premium-jobs' },
-  { label: 'UK', count: '(1)', href: '/premium-jobs' },
-]
-
-const sidebarCurrencies = [
-  { label: 'LKR', count: '(186)', href: '/premium-jobs' },
-  { label: 'USD', count: '(40)', href: '/premium-jobs' },
-]
-
-const jobCards = [
-  { industry: 'Other', title: 'Head of Operations - Modern Trade (Supermarket Chain)', currency: 'LKR', salaryMin: '', salaryMax: '-', location: 'Sri Lanka', type: 'Other', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Other', title: 'Senior Sales Manager', currency: 'LKR', salaryMin: '1,000,000', salaryMax: '1,200,000', location: 'Saudi Arabia', type: 'Other', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Other', title: 'EXECUTIVE - RESEARCH & BUSINESS DEVELOPMENT', currency: 'LKR', salaryMin: '55,000', salaryMax: '65,000', location: 'Sri Lanka', type: 'Other', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Power & Energy', title: 'Accountant', currency: 'LKR', salaryMin: '200,000', salaryMax: '250,000', location: 'Sri Lanka', type: 'Power & Energy', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Automative', title: 'General Manager - Sales (4 Wheeler Cars & SUV)', currency: 'LKR', salaryMin: '1,200,000', salaryMax: '', location: 'Sri Lanka', type: 'Automative', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Automative', title: 'General Manager - Sales', currency: 'LKR', salaryMin: '1,200,000', salaryMax: '', location: 'Sri Lanka', type: 'Automative', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Apparel', title: 'Chief Operating Officer', currency: 'USD', salaryMin: '10,000', salaryMax: '', location: 'Sri Lanka', type: 'Apparel', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Other', title: 'Procurement Manager', currency: 'LKR', salaryMin: '400,000', salaryMax: '550,000', location: 'Sri Lanka', type: 'Other', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Information Technology', title: 'Manager / Senior Manager Digital Marketing', currency: 'LKR', salaryMin: '450,000', salaryMax: '550,000', location: 'Sri Lanka', type: 'Information Technology', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Apparel', title: 'Manager - Quality Assurance', currency: 'LKR', salaryMin: '320,000', salaryMax: '420,000', location: 'Sri Lanka', type: 'Apparel', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Apparel', title: 'Cutting Manager', currency: 'LKR', salaryMin: '320,000', salaryMax: '420,000', location: 'Sri Lanka', type: 'Apparel', workType: 'On-Site', date: 'February 27, 2026' },
-  { industry: 'Apparel', title: 'Cluster Manager - Human Resources', currency: 'LKR', salaryMin: '650,000', salaryMax: '800,000', location: 'Sri Lanka', type: 'Apparel', workType: 'On-Site', date: 'February 27, 2026' },
-]
-
 const FilterTag = ({ label, href, active }: { label: string; href: string; active?: boolean }) => (
-  <a href={href} rel="noopener noreferrer" target={href !== '#' ? '_blank' : undefined}>
+  <a 
+    href={href} 
+    rel="noopener noreferrer" 
+    target={href !== '#' ? '_blank' : undefined}
+    onClick={(e) => {
+      if (href === '#') e.preventDefault();
+    }}
+  >
     <div className={`px-5 py-2.5 rounded-[3px] inline-flex items-center cursor-pointer ${active ? 'bg-career-14-1comeden' : 'bg-[#f2f2f2]'}`}>
       <span className={`[font-family:'Inter',Helvetica] font-normal text-[13.5px] md:text-[14.5px] text-center leading-[15px] whitespace-nowrap [text-shadow:0px_0px_10px_#0000004c] ${active ? 'text-career141comelectric-lime' : 'text-career-14-1comblack'}`}>
         {label}
@@ -422,6 +384,9 @@ export function PremiumJobsSection() {
                 href={tag.href}
                 rel="noopener noreferrer"
                 target={tag.href !== '#' ? '_blank' : undefined}
+                onClick={(e) => {
+                  if (tag.href === '#') e.preventDefault();
+                }}
                 className="w-full"
               >
                 <div className={`w-full px-6 py-3 rounded-[3px] flex items-center cursor-pointer ${tag.active ? 'bg-career-14-1comeden' : 'bg-[#f2f2f2]'}`}>
@@ -436,10 +401,10 @@ export function PremiumJobsSection() {
       </section>
 
       <BrowseAllJobsSection 
-        jobCards={jobCards}
-        sidebarIndustries={sidebarIndustries}
-        sidebarLocations={sidebarLocations}
-        sidebarCurrencies={sidebarCurrencies}
+        jobCards={premiumJobCards}
+        sidebarIndustries={[]} // Handled dynamically inside component now
+        sidebarLocations={[]} 
+        sidebarCurrencies={[]} 
       />
     </div>
   )

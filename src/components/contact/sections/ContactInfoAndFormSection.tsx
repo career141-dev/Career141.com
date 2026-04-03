@@ -2,8 +2,9 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { CheckCircle2Icon, ChevronRightIcon, InstagramIcon, LinkedinIcon, MailIcon, MapPinIcon, PhoneIcon } from 'lucide-react'
+import PhoneInput from 'react-phone-input-2'
 import { withBasePath } from '@/lib/assetPath'
 import styles from './ContactInfoAndFormSection.module.css'
 
@@ -203,7 +204,12 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [captchaChecked, setCaptchaChecked] = useState(false)
-  const { register, handleSubmit, reset } = useForm<FormData>()
+  const { register, control, handleSubmit, reset } = useForm<FormData>({
+    defaultValues: {
+      phone: '',
+      country: '',
+    },
+  })
 
   const onSubmit = async (data: FormData) => {
     if (!captchaChecked) return
@@ -284,22 +290,31 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
           <div className={styles.DivWpformsLayoutRow_88_11987}>
             <div className={styles.DivWpformsLayoutColumn_88_11988}>
               <div className={styles.DivIti_88_11989}>
-                <div className={styles.InputWpforms_10038Field_8_88_11990}>
-                  <input
-                    type="tel"
-                    {...register('phone')}
-                    placeholder="Phone Number"
-                    className="w-full bg-transparent border-none text-white text-[15.4px] font-['Inter'] outline-none placeholder:text-white/50"
-                  />
-                </div>
-                <div className={styles.DivItiFlagContainer_88_11993}>
-                  <div className={styles.SelectedCountry_88_11994}>
-                    <div className={styles.DivItiFlag_88_11995} />
-                    <div className={styles.DivItiArrowMargin_88_11996}>
-                      <div className={styles.DivItiArrow_88_11997} />
-                    </div>
-                  </div>
-                </div>
+                <Controller
+                  name="phone"
+                  control={control}
+                  render={({ field }) => (
+                    <PhoneInput
+                      country="lk"
+                      value={field.value || ''}
+                      onChange={(value) => {
+                        field.onChange(value)
+                      }}
+                      enableSearch
+                      disableSearchIcon
+                      placeholder="Phone Number"
+                      containerClass={styles.PhoneInputContainerDark}
+                      inputClass={styles.PhoneInputFieldDark}
+                      buttonClass={styles.PhoneInputButtonDark}
+                      dropdownClass={styles.PhoneInputDropdownDark}
+                      searchClass={styles.PhoneInputSearchDark}
+                      inputProps={{
+                        name: field.name,
+                        onBlur: field.onBlur,
+                      }}
+                    />
+                  )}
+                />
               </div>
             </div>
             <div className={styles.DivWpformsLayoutColumn_88_11998}>
@@ -320,7 +335,7 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
             <textarea
               {...register('message')}
               placeholder="Message"
-              rows={1}
+              rows={2}
               className="w-full bg-transparent border-none text-white text-[15.5px] font-['Inter'] outline-none placeholder:text-white/50 resize-none"
             />
           </div>
@@ -333,17 +348,31 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
           <FloatingInput label="Company Name" {...register('companyName')} dark={dark} />
 
           <div className="relative pb-1">
-            <div className={`flex items-center border-b ${dark ? 'border-white/20' : 'border-[#ccc]'} py-2.5`}>
-              <span className={`text-[13px] mr-1 font-['Inter',Helvetica] ${dark ? 'text-white/50' : 'text-[#555]'}`}>+94</span>
-              <input
-                type="tel"
-                {...register('phone')}
-                placeholder="Phone Number"
-                className={`flex-1 bg-transparent text-[14px] font-['Inter',Helvetica] outline-none placeholder:opacity-50 ${
-                  dark ? 'text-white placeholder:text-white' : 'text-[#333] placeholder:text-[#555]'
-                }`}
-              />
-            </div>
+            <Controller
+              name="phone"
+              control={control}
+              render={({ field }) => (
+                <PhoneInput
+                  country="lk"
+                  value={field.value || ''}
+                  onChange={(value) => {
+                    field.onChange(value)
+                  }}
+                  enableSearch
+                  disableSearchIcon
+                  placeholder="Phone Number"
+                  containerClass={styles.PhoneInputContainerLight}
+                  inputClass={styles.PhoneInputFieldLight}
+                  buttonClass={styles.PhoneInputButtonLight}
+                  dropdownClass={styles.PhoneInputDropdownLight}
+                  searchClass={styles.PhoneInputSearchLight}
+                  inputProps={{
+                    name: field.name,
+                    onBlur: field.onBlur,
+                  }}
+                />
+              )}
+            />
           </div>
 
           <FloatingSelect label="Country" options={countries} {...register('country')} dark={dark} />
@@ -450,7 +479,7 @@ export function ContactInfoAndFormSection() {
     <div className="flex flex-col w-full items-start">
       <section
         id="contact"
-        className="md:hidden flex flex-col w-full relative min-h-screen"
+        className="lg:hidden flex flex-col w-full relative min-h-screen"
         style={{ background: `url(${withBasePath('/figmaAssets/div.elementor-element.png')}) center center / cover no-repeat` }}
       >
         <div className="absolute inset-0 bg-[#0f3424]/80" />
@@ -458,9 +487,12 @@ export function ContactInfoAndFormSection() {
         <div className="relative z-10 flex flex-col w-full pt-[72px]">
           <div className="px-5 pt-8 pb-6">
             <h1 className="font-['Quicksand',Helvetica] font-bold text-white text-[26px] leading-[1.2] uppercase mb-5">
-              Find your future talent
-              <br />
-              with us today
+              <span className="block">
+                <span className="text-black">Find</span> your future
+              </span>
+              <span className="block">
+                talent <span className="text-black">with us</span> today
+              </span>
             </h1>
             <div className="flex items-center gap-3">
               <a
@@ -496,7 +528,7 @@ export function ContactInfoAndFormSection() {
 
       <section
         id="contact-desktop"
-        className="hidden md:flex items-center justify-center py-[80px] px-[60px] relative w-full min-h-[80vh]"
+        className="hidden lg:flex items-center justify-center py-[80px] px-[60px] relative w-full min-h-[80vh]"
         style={{ background: `url(${withBasePath('/figmaAssets/div.elementor-element.png')}) 50% 50% / cover no-repeat` }}
       >
         <div className={styles.DivElementorElement_88_11864}>
@@ -506,9 +538,12 @@ export function ContactInfoAndFormSection() {
                 <div className={styles.DivElementorWidgetContainer_88_11868}>
                   <div className={styles.H1ElementorHeadingTitle_88_11869}>
                     <span className={styles.FindYourFutureTalentWithUsToday_88_11870}>
-                      Find your future talent
-                      <br />
-                      with us today
+                      <span className={styles.HeadingLine}>
+                        <span className={styles.HeadingBlackWord}>Find</span> your future
+                      </span>
+                      <span className={styles.HeadingLine}>
+                        talent <span className={styles.HeadingBlackWord}>with us</span> today
+                      </span>
                     </span>
                   </div>
                 </div>
@@ -517,11 +552,7 @@ export function ContactInfoAndFormSection() {
                 <div className={styles.DivElementorWidgetContainer_88_11872}>
                   <div className={styles.P_88_11873}>
                     <span className={styles.EveryInteractionYourCustomersHaveWithYourCompanySDigitalPropertiesEitherBringsYouCloserOrFartherAwayFromYourBusinessGoals_88_11874}>
-                      Every interaction your customers have with your company&apos;s digital
-                      <br />
-                      properties either brings you closer or farther away from your
-                      <br />
-                      business goals.
+                      Every interaction your customers have with your company&apos;s digital properties either brings you closer or farther away from your business goals.
                     </span>
                   </div>
                 </div>

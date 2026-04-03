@@ -8,6 +8,7 @@ export { ExecutiveSearchSpecializationsSection } from './ExecutiveSearchSpeciali
 export { TalentAccessSection } from './TalentAccessSection'
 export { BackgroundSubsection } from './BackgroundSubsection'
 export { BackgroundWrapperSubsection } from './BackgroundWrapperSubsection'
+export { ContainerSubsection } from './ContainerSubsection'
 export { MobileGlobalReachSubsection } from './MobileGlobalReachSubsection'
 export { GlobalReachSubsection } from './GlobalReachSubsection'
 export { MeetingSchedulerSubsection } from './MeetingSchedulerSubsection'
