@@ -127,62 +127,62 @@ export default function DivElementorElement({ currentPage = 1, onPageChange }: {
           </div>
         </div>
 
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-24 w-full mb-16 px-4 max-w-7xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-24 w-full mb-16 px-4 max-w-7xl mx-auto">
                 <ClientCard 
                     company="Brandix"
                     name="Ushan De Silva"
                     title="Group Head of Logistics"
-                    image={imgGroup3085Webp}
+                    image={imgMaskGroupWebp}
                     content="One of my career objective was to join a MNC at some point of my career. However i never expected that it could be achieved in a time where all of us were trying to secure our current job s due to the economic downturn caused by COVID19 outbreak."
                 />
                 <ClientCard 
                     company="Brandix"
                     name="Asanka Wimalaratna"
                     title="Director / Chief Executive Officer"
-                    image={imgGroup2679Webp}
+                    image={imgMaskGroupWebp}
                     content="Azeem has been a constant go to in our efforts to spot top technical talents in apparel. His deep understanding of the industry, job roles and the strong network has been very helpful to us."
                 />
                 <ClientCard 
                     company="Unilever"
                     name="Nayani Peiris"
                     title="Head of Employee Relations and Senior HR Business Partner"
-                    image={imgGroup2676Webp}
-                    content="“It has been a tremendous pleasure working with Azeem during the past few years. I had my very first connect with him in 2012 when he reached out to offer me a position in a MNC which I was able to succeed with his guidance. Ever since then he has remained as my go to person."
+                    image={imgGroup3085Webp}
+                    content="It has been a tremendous pleasure working with Azeem during the past few years. I had my very first connect with him in 2012 when he reached out to offer me a position in a MNC which I was able to succeed with his guidance. Ever since then he has remained as my go to person."
                 />
                 <ClientCard 
                     company="George Steuart"
                     name="Achala Silva"
                     title="Director Group Human Resources & Administration"
-                    image={imgGroup30891Webp}
+                    image={imgGroup2679Webp}
                     content="Working with Azeem and the Team in finding the right talent had been a pleasant and a smooth experience. Azeem had been very professional and have promptly adhered to given timelines. Kept us informed the progress time to time enabling us to be updated."
                 />
                 <ClientCard 
                     company="Avery Dennison"
                     name="Nishantha Navurunnage"
                     title="Director Human Resources Asia Pacific"
-                    image={imgGroup30892Webp}
+                    image={imgGroup2676Webp}
                     content="It has been an absolute pleasure to work with Azeem and his team. We were impressed by their professionalism, commitment, and interest they took to source a suitable candidate for us. We recently used their services to hire a Manager, they performed exceptionally."
                 />
                 <ClientCard 
                     company="Daraz"
                     name="Kaushal Mendis"
                     title="Chief Human Resources Officer"
-                    image={imgGroup2668Webp}
+                    image={imgGroup30891Webp}
                     content="It is hard to put into words what Azeem Ansar (Career141) has done for me and the organisations for which I have served. Not only was I a candidate, but as an employer, I received exceptional service from Azeem, particularly in senior-level placements."
                 />
                 <ClientCard 
                     company="Link Natural"
                     name="Ashan Ransilige"
                     title="Chief Executive Officer"
-                    image={imgGroup3086Webp}
-                    content="As a visionary leader, I drive global holistic wellness by blending innovation with excellence, elevating Sri Lanka’s Ayurvedic heritage to the world stage. As a visionary leader, I drive global holistic wellness by blending innovation with excellence."
+                    image={imgGroup30892Webp}
+                    content="As a visionary leader, I drive global holistic wellness by blending innovation with excellence, elevating Sri Lanka's Ayurvedic heritage to the world stage. As a visionary leader, I drive global holistic wellness by blending innovation with excellence."
                 />
                 <ClientCard 
                     company="Timex"
                     name="Prasad Kavindra"
                     title="CEO"
-                    image={imgGroup3085Webp}
-                    content="“Azeem has been working with me through out my professional journey in many projects with partnering to attract apparel industry top talent . His dedication and commitment , selecting the right resources within the timelines is excellent. I wish him and the team the best."
+                    image={imgMaskGroupWebp}
+                    content="Azeem has been working with me through out my professional journey in many projects with partnering to attract apparel industry top talent . His dedication and commitment , selecting the right resources within the timelines is excellent. I wish him and the team the best."
                 />
         </div>
 
