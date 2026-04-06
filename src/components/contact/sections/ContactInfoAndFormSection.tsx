@@ -435,7 +435,7 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
       <div className={dark ? styles.WpformsFieldContainer_88_12005 : 'flex flex-col gap-4'}>
         <div style={{ marginBottom: '16px' }}>
           <Turnstile
-            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
+            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAC1MnbcrrWWcB6e-'}
             onSuccess={(token) => setTurnstileToken(token)}
             onError={() => setTurnstileToken(null)}
             onExpire={() => setTurnstileToken(null)}

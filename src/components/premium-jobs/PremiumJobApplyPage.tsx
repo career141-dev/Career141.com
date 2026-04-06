@@ -434,7 +434,7 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
 
       <div className="pb-[24px] flex justify-center">
         <Turnstile
-          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
+          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAC1MnbcrrWWcB6e-'}
           onSuccess={(token) => setTurnstileToken(token)}
           onError={() => setTurnstileToken('')}
           onExpire={() => setTurnstileToken('')}

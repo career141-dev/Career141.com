@@ -371,7 +371,7 @@ export function MeetingSchedulerSubsection() {
 
                       <div style={{ marginBottom: '16px' }}>
                         <Turnstile
-                          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
+                          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAC1MnbcrrWWcB6e-'}
                           onSuccess={(token) => setTurnstileToken(token)}
                           onError={() => setTurnstileToken(null)}
                           onExpire={() => setTurnstileToken(null)}
