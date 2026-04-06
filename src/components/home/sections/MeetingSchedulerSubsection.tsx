@@ -396,18 +396,12 @@ export function MeetingSchedulerSubsection() {
                       </div>
 
                       <div style={{ marginBottom: '16px' }}>
-                        {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ? (
-                          <Turnstile
-                            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-                            onSuccess={(token) => setTurnstileToken(token)}
-                            onError={() => setTurnstileToken(null)}
-                            onExpire={() => setTurnstileToken(null)}
-                          />
-                        ) : (
-                          <div className="text-xs text-amber-600 bg-amber-50 p-3 border border-amber-200 rounded text-center w-full">
-                            Turnstile site key missing. Verification bypassed for development.
-                          </div>
-                        )}
+                        <Turnstile
+                          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAC1MnbcrrWWcB6e-'}
+                          onSuccess={(token) => setTurnstileToken(token)}
+                          onError={() => setTurnstileToken(null)}
+                          onExpire={() => setTurnstileToken(null)}
+                        />
                       </div>
 
                       <button 

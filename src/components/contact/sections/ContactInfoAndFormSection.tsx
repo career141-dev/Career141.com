@@ -218,8 +218,7 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
 
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
-      console.warn('Turnstile site key missing. Auto-bypassing for development.')
-      setTurnstileToken('dev-token')
+      console.warn('Turnstile site key missing. Using Cloudflare test key for development.')
     }
   }, [])
   const { register, control, handleSubmit, reset, setError, formState: { errors } } = useForm<FormData>({
@@ -465,18 +464,12 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
 
       <div className={dark ? styles.WpformsFieldContainer_88_12005 : 'flex flex-col gap-4'}>
         <div style={{ marginBottom: '16px' }}>
-          {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ? (
-            <Turnstile
-              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-              onSuccess={(token) => setTurnstileToken(token)}
-              onError={() => setTurnstileToken('')}
-              onExpire={() => setTurnstileToken('')}
-            />
-          ) : (
-            <div className="text-xs text-amber-600 bg-amber-50 p-3 border border-amber-200 rounded text-center w-full">
-              Turnstile site key missing. Verification bypassed for development.
-            </div>
-          )}
+          <Turnstile
+            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAC1MnbcrrWWcB6e-'}
+            onSuccess={(token) => setTurnstileToken(token)}
+            onError={() => setTurnstileToken('')}
+            onExpire={() => setTurnstileToken('')}
+          />
         </div>
       </div>
 
