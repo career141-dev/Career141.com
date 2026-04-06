@@ -128,9 +128,7 @@ export function ContainerSubsection() {
             className="lg:hidden w-full flex items-center mb-[14px]"
             style={{
               height: 85,
-              backgroundImage: `url(${withBasePath('/figmaAssets/testimonials-blue-line.png')})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
+              backgroundColor: '#006763',
               borderRadius: 2,
             }}
           >

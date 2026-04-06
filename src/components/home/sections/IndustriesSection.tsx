@@ -226,8 +226,8 @@ export function IndustriesSection(): JSX.Element {
 
       <div className="hidden lg:block" style={{ position: 'relative', zIndex: 10, paddingTop: '8.6vh' }}>
         <div style={{ textAlign: 'center', lineHeight: 1.2 }}>
-          <span style={{ fontFamily: "'Quicksand', Helvetica, sans-serif", fontSize: 45, fontWeight: 700, color: '#BFEF00', letterSpacing: '0.3px' }}>INDUSTRIES</span>
-          <span style={{ fontFamily: "'Quicksand', Helvetica, sans-serif", fontSize: 45, fontWeight: 400, color: '#FFFFFF' }}> we work on</span>
+          <span style={{ fontFamily: "'Quicksand', sans-serif", fontSize: 45, fontWeight: 700, color: '#BFEF00', letterSpacing: '0.3px' }}>Industries</span>
+          <span style={{ fontFamily: "'Quicksand', sans-serif", fontSize: 45, fontWeight: 400, color: '#FFFFFF' }}> we work on</span>
         </div>
 
         <div style={{ height: 'clamp(80px, 16.4vh, 160px)' }} />
@@ -251,14 +251,14 @@ export function IndustriesSection(): JSX.Element {
 
       <div className="ind-scroll-container lg:hidden" style={{ position: 'relative', zIndex: 10, width: '100%', height: '100%' }}>
         <div style={{ padding: '26px 20px 40px' }}>
-          <div style={{ lineHeight: 1.3, textAlign: 'left' }}>
+          <div style={{ lineHeight: 1.3, textAlign: 'center' }}>
             <span style={{ fontFamily: "'Quicksand', Helvetica, sans-serif", fontSize: 24, fontWeight: 700, color: '#BFEF00', letterSpacing: '0.3px' }}>INDUSTRIES</span>
             <span style={{ fontFamily: "'Quicksand', Helvetica, sans-serif", fontSize: 24, fontWeight: 400, color: '#FFFFFF' }}> we work on</span>
           </div>
 
           <div style={{ height: 60 }} />
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 50, rowGap: 50 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 10, rowGap: 20 }}>
             {INDUSTRIES.map((industry, idx) => (
               <div key={idx} style={{ width: '100%', aspectRatio: '142.5 / 44.15' }}>
                 <MobilePillButton label={industry.label} idx={idx} onClick={() => handleClick(idx)} fontSize="clamp(9px, 2.8vw, 11px)" />

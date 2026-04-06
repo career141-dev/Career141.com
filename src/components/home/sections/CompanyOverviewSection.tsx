@@ -2,34 +2,48 @@ import { withBasePath } from '@/lib/assetPath'
 
 export function CompanyOverviewSection() {
   return (
-    <section className="w-full bg-white pt-8 lg:pt-16 pb-0 lg:pb-16 overflow-visible" style={{ backgroundColor: 'white' }}>
-      <div className="flex flex-col lg:hidden">
-        <div className="px-[21px] pt-[10px]">
+    <section className="w-full bg-white pt-8 lg:pt-16 pb-0 lg:pb-16 overflow-visible lg:block flex flex-col items-center" style={{ backgroundColor: 'white' }}>
+      <div className="flex flex-col lg:hidden items-stretch mx-auto px-4 pb-12">
+        <div className="flex-shrink-0 flex items-start">
           <div
-            className="w-full h-[196px] bg-cover bg-center"
+            className="w-[320px] h-[180px] bg-cover bg-center"
             style={{ backgroundImage: `url(${withBasePath('/figmaAssets/image-of-career141-office--our-culture.png')})` }}
           />
         </div>
 
-        <div className="mx-[12px] -mt-10 bg-[#006763] px-6 pt-10 pb-10 relative z-10">
-          <div className="[font-family:'Quicksand',Helvetica] font-normal text-[30px] leading-[1.2] mb-5">
-            <span className="text-white">Our people make the </span>
-            <span className="font-bold text-[#cbfc06]">difference</span>
-          </div>
-          <div className="border-l-[1.6px] border-[#cbfc06] pl-4 mb-6">
-            <p className="[font-family:'Inter',Helvetica] font-light text-white text-[14px] leading-[1.7] m-0">
-              We pride ourselves on cultivating a dynamic and inclusive environment that encourages collaboration, innovation, and excellence
-              while recognizing and rewarding the exceptional efforts of our own team.
-            </p>
-          </div>
-          <a
-            href="https://career141.com/index.php/our-culture/"
-            rel="noopener noreferrer"
-            target="_blank"
-            className="inline-flex items-center justify-center py-[11px] px-[22px] rounded-[100px] border border-solid border-white text-white [font-family:'Quicksand',Helvetica] font-semibold text-[11.2px] tracking-[0.50px] leading-[13.4px] whitespace-nowrap no-underline hover:bg-white hover:text-[#006763] transition-colors duration-200"
+        <div className="flex items-end justify-center relative flex-shrink-0 -ml-8 -mt-10">
+          <div
+            className="relative w-[320px] h-[200px] bg-cover bg-[100%_100%]"
+            style={{ backgroundImage: `url(${withBasePath('/figmaAssets/home-culture-green-box-1-svg-fill.svg')})` }}
           >
-            OUR CULTURE
-          </a>
+            <div className="flex flex-col items-start justify-center absolute top-3 left-4 w-[calc(100%-30px)]">
+              <div className="[font-family:'Quicksand',Helvetica] font-normal text-transparent text-[20px] tracking-[0] leading-[24px]">
+                <span className="text-white">
+                  Our people make the
+                  <br />
+                </span>
+                <span className="font-bold text-[#cbfc06]">difference</span>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-start gap-1 absolute top-[70px] left-5 w-[260px]">
+              <div className="flex flex-col items-start pl-2 pr-0 py-0 border-l-[1.6px] border-solid border-[#cbfc06] w-full">
+                <p className="[font-family:'Inter',Helvetica] font-light text-white text-[11px] tracking-[0] leading-[14px] m-0">
+                  We pride ourselves on cultivating a dynamic and inclusive environment that encourages collaboration, innovation, and excellence while recognizing and rewarding the exceptional efforts of our own team
+                </p>
+              </div>
+              <div className="flex flex-col items-start mt-1">
+                <a
+                  href="https://career141.com/index.php/our-culture/"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="inline-flex items-center justify-center pt-1 pb-1 px-3 rounded-[100px] border border-solid border-white text-white [text-shadow:0px_0px_10px_#0000004c] [font-family:'Quicksand',Helvetica] font-semibold text-[9px] text-center tracking-[0.50px] leading-[10px] whitespace-nowrap no-underline hover:bg-white hover:text-[#006763] transition-colors duration-200"
+                >
+                  OUR CULTURE
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

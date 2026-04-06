@@ -467,7 +467,7 @@ export function HowWeDifferentiateSection() {
           position: 'absolute',
           left: 0,
           top: 0,
-          width: '80%',
+          width: '100%',
           height: '100%',
           zIndex: 0,
         }}
@@ -483,7 +483,7 @@ export function HowWeDifferentiateSection() {
         className="md:hidden"
         style={{
           position: 'absolute',
-          left: 0,
+          left: '20%',
           top: 0,
           width: '100%',
           height: '100%',
