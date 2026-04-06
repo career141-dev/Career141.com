@@ -272,12 +272,12 @@ export function MeetingSchedulerSubsection() {
   return (
     <section className="relative w-full py-[80px] lg:py-[120px] px-4 sm:px-8 md:px-12 lg:px-20 overflow-hidden bg-[#0d1f15]">
       <div className="absolute inset-0 z-0">
-          <img alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-60" src={imgDivElementorElement} />
+          <img alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-60" src={imgDivElementorElement} loading="lazy" decoding="async" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto rounded-[18px] overflow-hidden border border-white/20 shadow-2xl bg-white/10 backdrop-blur-md">
           <div className="relative w-full min-h-[700px] flex flex-col lg:flex-row">
-              <img alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-60" src={imgDivElementorElement1} />
+              <img alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-60" src={imgDivElementorElement1} loading="lazy" decoding="async" />
               
               <div className="relative z-10 flex-1 p-8 md:p-12 lg:p-16 flex flex-col justify-center gap-12">
                   <h2 className="font-['Quicksand',sans-serif] font-bold text-[#CBFC06] text-[32px] md:text-[41.6px] leading-tight">
@@ -371,7 +371,7 @@ export function MeetingSchedulerSubsection() {
 
                       <div style={{ marginBottom: '16px' }}>
                         <Turnstile
-                          siteKey={process.env.NODE_ENV === 'development' ? '1x00000000000000000000AA' : '0x4AAAAAAC1MnbcrrWWcB6e-'}
+                          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
                           onSuccess={(token) => setTurnstileToken(token)}
                           onError={() => setTurnstileToken(null)}
                           onExpire={() => setTurnstileToken(null)}

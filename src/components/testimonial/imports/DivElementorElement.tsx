@@ -63,7 +63,7 @@ function ClientCard({ company, name, title, content, image }: { company: string;
                 </div>
                 <div className="max-w-[90px] pointer-events-none relative rounded-[100px] shrink-0 size-[90px]">
                     <div className="absolute inset-0 overflow-hidden rounded-[100px]">
-                        <img alt="" className="absolute h-full left-[-0.33%] max-w-none top-0 w-[100.66%] object-cover" src={image} />
+                        <img alt="" className="absolute h-full left-[-0.33%] max-w-none top-0 w-[100.66%] object-cover" src={image} loading="lazy" decoding="async" />
                     </div>
                     <div aria-hidden="true" className="absolute border border-black border-solid inset-0 rounded-[100px]" />
                 </div>
@@ -124,7 +124,7 @@ export default function DivElementorElement({ currentPage = 1, onPageChange }: {
             <h2 className="font-['Quicksand',sans-serif] font-normal text-[32px] text-black uppercase tracking-widest leading-none">
               Clients
             </h2>
-            <img alt="" className="opacity-60 w-24 h-24 object-contain" src={imgDivElementorElement} />
+            <img alt="" className="opacity-60 w-24 h-24 object-contain" src={imgDivElementorElement} loading="lazy" decoding="async" />
           </div>
         </div>
 

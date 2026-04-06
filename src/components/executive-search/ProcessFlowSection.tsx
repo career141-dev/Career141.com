@@ -72,14 +72,14 @@ export function ProcessFlowSection() {
                 {/* Connector to Right */}
                 {index < row1.length - 1 && (
                   <div className="hidden md:block absolute top-[111px] left-[80px] right-[-40%] z-0">
-                    <img src="/images/line.svg" alt="" className="w-[200px] h-auto" />
+                    <img src="/images/line.svg" alt="" className="w-[200px] h-auto" loading="lazy" decoding="async" />
                   </div>
                 )}
 
                 {/* Connector to Next Row (5 -> 6) */}
                 {step.id === 5 && (
                   <div className="hidden md:block absolute top-[180px] left-[38px] rotate-90 origin-top-left z-0">
-                    <img src="/images/line.svg" alt="" className="w-[1000px] h-auto" style={{ width: '600px' }} />
+                    <img src="/images/line.svg" alt="" className="w-[1000px] h-auto" style={{ width: '600px' }} loading="lazy" decoding="async" />
                   </div>
                 )}
 
@@ -126,7 +126,7 @@ export function ProcessFlowSection() {
                 {/* Connector to Left (mirrored from Row 1) */}
                 {index < row2.length - 1 && (
                   <div className="hidden md:block absolute top-[22px] left-[-205px] z-0 rotate-180">
-                    <img src="/images/line.svg" alt="" className="w-[200px] h-auto" />
+                    <img src="/images/line.svg" alt="" className="w-[200px] h-auto" loading="lazy" decoding="async" />
                   </div>
                 )}
 

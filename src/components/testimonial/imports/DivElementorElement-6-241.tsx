@@ -61,7 +61,7 @@ export default function DivElementorElement() {
               <h2 className="font-['Quicksand',sans-serif] font-normal text-[32px] text-black uppercase tracking-wider">
                 Employees
               </h2>
-              <img alt="" className="opacity-60 w-24 h-24 object-contain" src={imgDivElementorElement} />
+              <img alt="" className="opacity-60 w-24 h-24 object-contain" src={imgDivElementorElement} loading="lazy" decoding="async" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

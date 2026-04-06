@@ -129,6 +129,8 @@ export default function ExecutiveSearchPage() {
                 src={item.img} 
                 alt={item.title}
                 className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span className="[font-family:'Quicksand',Helvetica] text-white text-lg md:text-xl lg:text-2xl font-bold">
@@ -144,7 +146,7 @@ export default function ExecutiveSearchPage() {
         {statsData.map((stat, index) => (
           <div key={index} className="flex flex-col items-center justify-center lg:flex-1">
             <CountUp end={stat.numEnd} start={stat.numStart} isRange={stat.isRange} hasPercent={stat.hasPercent} />
-            <img className="w-[60px] lg:w-[82px] h-5 lg:h-6 mt-2" alt="Underline" src={stat.containerSrc} />
+            <img className="w-[60px] lg:w-[82px] h-5 lg:h-6 mt-2" alt="Underline" src={stat.containerSrc} loading="lazy" decoding="async" />
             <p className="mt-2 [font-family:'Inter',Helvetica] font-medium text-[#4c4c4c] text-[12px] lg:text-[15px] text-center tracking-[0] leading-[1.3] lg:leading-[19.2px]">
               {stat.label}
             </p>
@@ -201,6 +203,8 @@ export default function ExecutiveSearchPage() {
                     src={isMobGreen ? '/images/greenrec.svg' : '/images/wightrec.svg'} 
                     alt="" 
                     className="w-full h-full block object-cover md:hidden" 
+                    loading="lazy"
+                    decoding="async"
                   />
                   <span className={`absolute [font-family:'Quicksand',Helvetica] text-center text-sm font-semibold px-2 w-full md:hidden ${isMobGreen ? 'text-white' : 'text-black'}`}>
                     {item.title}
@@ -211,6 +215,8 @@ export default function ExecutiveSearchPage() {
                     src={isDeskGreen ? '/images/greenrec.svg' : '/images/wightrec.svg'} 
                     alt="" 
                     className="w-full h-full hidden md:block object-cover" 
+                    loading="lazy"
+                    decoding="async"
                   />
                   <span className={`absolute [font-family:'Quicksand',Helvetica] text-center md:text-lg lg:text-xl font-semibold px-2 w-full hidden md:block ${isDeskGreen ? 'text-white' : 'text-black'}`}>
                     {item.title}
@@ -259,6 +265,8 @@ export default function ExecutiveSearchPage() {
                       src={`/images/logos/${logo}`} 
                       alt="" 
                       className="w-full h-full object-contain" 
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 </div>

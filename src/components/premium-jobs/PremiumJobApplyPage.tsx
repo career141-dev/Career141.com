@@ -417,7 +417,7 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
             </div>
           ) : (
             <>
-              <img alt="Upload" className="w-[30px] h-[30px] object-contain" src={withBasePath('/figmaAssets/Component 2.png')} />
+              <img alt="Upload" className="w-[30px] h-[30px] object-contain" src={withBasePath('/figmaAssets/Component 2.png')} loading="lazy" decoding="async" />
               <span className="text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '14.9px', lineHeight: '24px', color: 'rgba(0,0,0,0.7)' }}>Click or drag a file to this area to upload (PDF, DOC, DOCX — max 5MB)</span>
             </>
           )}
@@ -434,7 +434,7 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
 
       <div className="pb-[24px] flex justify-center">
         <Turnstile
-          siteKey={process.env.NODE_ENV === 'development' ? '1x00000000000000000000AA' : '0x4AAAAAAC1MnbcrrWWcB6e-'}
+          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
           onSuccess={(token) => setTurnstileToken(token)}
           onError={() => setTurnstileToken('')}
           onExpire={() => setTurnstileToken('')}

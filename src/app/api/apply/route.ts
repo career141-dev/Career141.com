@@ -122,9 +122,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: errors.join('. ') }, { status: 400 })
     }
 
-    const turnstileSecret = process.env.NODE_ENV === 'development' 
-      ? '1x0000000000000000000000000000000AA' 
-      : (process.env.TURNSTILE_SECRET_KEY || '0x4AAAAAAC1MncdyRPIYHYHKjzXwEWjq40M')
+    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY || ''
     const turnstileFormData = new URLSearchParams()
     turnstileFormData.append('secret', turnstileSecret)
     turnstileFormData.append('response', turnstileToken)

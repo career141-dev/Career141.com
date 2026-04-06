@@ -36,7 +36,7 @@ function MobileCard({ company, name, title, content, image }: { company: string;
                 <Frame />
                 {image && (
                    <div className="w-[80px] h-[80px] rounded-full border border-black overflow-hidden bg-white">
-                      <img src={image} className="w-full h-full object-cover" alt={name} />
+                       <img src={image} className="w-full h-full object-cover" alt={name} loading="lazy" decoding="async" />
                    </div>
                 )}
             </div>
@@ -106,7 +106,7 @@ export default function Component390WDefault({
             <h2 className="font-['Quicksand',sans-serif] font-normal text-[32px] text-black uppercase tracking-widest leading-none">
               Clients
             </h2>
-            <img alt="" className="opacity-60 w-16 h-16 md:w-24 md:h-24 object-contain" src={imgDivElementorElement} />
+            <img alt="" className="opacity-60 w-16 h-16 md:w-24 md:h-24 object-contain" src={imgDivElementorElement} loading="lazy" decoding="async" />
           </div>
         </div>
         
@@ -131,13 +131,13 @@ export default function Component390WDefault({
 
       {/* Candidates Section */}
       <div className="px-6 py-12 relative overflow-hidden">
-          <img src={imgDivElementorElement1} className="absolute inset-0 w-full h-full object-cover z-0 opacity-40" />
+          <img src={imgDivElementorElement1} className="absolute inset-0 w-full h-full object-cover z-0 opacity-40" loading="lazy" decoding="async" />
           <div className="relative z-10">
               <div className="flex items-center justify-center gap-6 mb-16 relative z-10">
               <h2 className="font-['Quicksand',sans-serif] font-normal text-[32px] text-black uppercase tracking-wider">
                 Candidates
               </h2>
-              <img alt="" className="opacity-60 w-16 h-16 md:w-24 md:h-24 object-contain" src={imgDivElementorElement1} />
+              <img alt="" className="opacity-60 w-16 h-16 md:w-24 md:h-24 object-contain" src={imgDivElementorElement1} loading="lazy" decoding="async" />
           </div>
               
               <MobileCard 
@@ -154,7 +154,7 @@ export default function Component390WDefault({
       <div className="px-6 py-12 relative bg-[#f9f9f9]">
            <div className="flex items-center justify-center gap-6 mb-12 relative z-10">
                <h2 className="font-['Quicksand',sans-serif] font-normal text-[32px] uppercase tracking-widest">Employees</h2>
-               <img src={imgDivElementorElement} className="w-16 h-16 md:w-24 md:h-24 object-contain opacity-60" />
+               <img src={imgDivElementorElement} className="w-16 h-16 md:w-24 md:h-24 object-contain opacity-60" loading="lazy" decoding="async" />
            </div>
            <MobileCard 
                 company="Employee"
@@ -167,10 +167,10 @@ export default function Component390WDefault({
       {/* Mobile Contact Form Section with Restored Background Images */}
       <div className="relative min-h-[850px] bg-[#0d1f15] overflow-hidden">
            {/* Background Overlay Images */}
-           <div className="absolute inset-0 z-0 flex flex-col">
-               <img src={imgDivElementorElement2} className="w-full h-1/2 object-cover pointer-events-none opacity-80" />
-               <img src={imgDivElementorElement3} className="w-full h-1/2 object-cover pointer-events-none opacity-80" />
-           </div>
+            <div className="absolute inset-0 z-0 flex flex-col">
+                <img src={imgDivElementorElement2} className="w-full h-1/2 object-cover pointer-events-none opacity-80" loading="lazy" decoding="async" />
+                <img src={imgDivElementorElement3} className="w-full h-1/2 object-cover pointer-events-none opacity-80" loading="lazy" decoding="async" />
+            </div>
 
            <div className="relative z-10 px-[23px] py-[31px]">
                <div className="bg-white/10 backdrop-blur-md rounded-[18px] p-6 flex flex-col gap-8 shadow-xl border border-white/20">

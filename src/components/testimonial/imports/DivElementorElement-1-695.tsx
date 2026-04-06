@@ -78,14 +78,14 @@ function CandidateCard({ name, content }: { name: string; content: string }) {
 export default function DivElementorElement({ currentPage = 1, onPageChange }: { currentPage?: number; onPageChange?: (p: number) => void }) {
   return (
     <div className="relative w-full pb-24 pt-16 overflow-hidden">
-      <img alt="" className="absolute inset-0 w-full h-full object-cover opacity-50 z-0 pointer-events-none" src={imgDivElementorElement} />
+      <img alt="" className="absolute inset-0 w-full h-full object-cover opacity-50 z-0 pointer-events-none" src={imgDivElementorElement} loading="lazy" decoding="async" />
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 md:px-12 lg:px-20">
           <div className="flex items-center justify-center gap-6 mb-16 relative z-10">
               <h2 className="font-['Quicksand',sans-serif] font-normal text-[32px] text-black uppercase tracking-wider">
                 Candidates
               </h2>
-              <img alt="" className="opacity-60 w-24 h-24 object-contain" src={imgDivElementorElement1} />
+              <img alt="" className="opacity-60 w-24 h-24 object-contain" src={imgDivElementorElement1} loading="lazy" decoding="async" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">

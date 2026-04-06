@@ -109,25 +109,25 @@ export const premiumJobCards: PremiumJob[] = [
   { slug: 'operations-excellence-sustainability-engineer', industry: 'Apparel', title: 'Operations Excellence & Sustainability Engineer', currency: 'LKR', salaryMin: '150000', salaryMax: '175000', location: 'Biyagama, Sri Lanka', type: 'Apparel', workType: 'On-Site', date: 'January 16, 2026' },
 
   // January 8, 2026
-  { slug: 'marketing-manager-fmcg-jan8', industry: 'FMCG', title: 'Marketing Manager', currency: 'LKR', salaryMin: '800000', salaryMax: '900000', location: 'Sri Lanka', type: 'FMCG', workType: 'On-Site', date: 'January 8, 2026' },
-  { slug: 'assistant-manager-finance-hospitality-jan8', industry: 'Hospitality', title: 'Assistant Manager Finance', currency: 'LKR', salaryMin: '', salaryMax: '200000', location: 'Sri Lanka', type: 'Hospitality', workType: 'On-Site', date: 'January 8, 2026' },
+  { slug: 'marketing-manager-fmcg-jan8', industry: 'FMCG', title: 'Marketing Manager', currency: 'LKR', salaryMin: '800000', salaryMax: '900000', location: 'Colombo, Sri Lanka', type: 'FMCG', workType: 'On-Site', date: 'January 8, 2026' },
+  { slug: 'assistant-manager-finance-hospitality-jan8', industry: 'Hospitality', title: 'Assistant Manager Finance', currency: 'LKR', salaryMin: '', salaryMax: '200000', location: 'Wattala, Sri Lanka', type: 'Hospitality', workType: 'On-Site', date: 'January 8, 2026' },
   { slug: 'general-manager-quality-cambodia', industry: 'Apparel', title: 'General Manager Quality', currency: 'USD', salaryMin: '6500', salaryMax: '7000', location: 'Cambodia', type: 'Apparel', workType: 'On-Site', date: 'January 8, 2026' },
 
   // January 3, 2026
-  { slug: 'product-development-manager-apparel-bangladesh', industry: 'Apparel', title: 'Product Development Manager', currency: 'USD', salaryMin: '', salaryMax: '4998', location: 'Bangladesh', type: 'Apparel', workType: 'On-Site', date: 'January 3, 2026' },
-  { slug: 'junior-product-development-manager-bangladesh', industry: 'Apparel', title: 'Junior Product Development Manager', currency: 'USD', salaryMin: '', salaryMax: '', location: 'Bangladesh', type: 'Apparel', workType: 'On-Site', date: 'January 3, 2026' },
+  { slug: 'product-development-manager-apparel-bangladesh', industry: 'Apparel', title: 'Product Development Manager', currency: 'USD', salaryMin: '', salaryMax: '4998', location: 'Dhaka, Bangladesh', type: 'Apparel', workType: 'On-Site', date: 'January 3, 2026' },
+  { slug: 'junior-product-development-manager-bangladesh', industry: 'Apparel', title: 'Junior Product Development Manager', currency: 'USD', salaryMin: '', salaryMax: '', location: 'Dhaka, Bangladesh', type: 'Apparel', workType: 'On-Site', date: 'January 3, 2026' },
   { slug: 'country-manager-buying-office', industry: 'Apparel', title: 'Country Manager – Buying Office', currency: 'USD', salaryMin: '', salaryMax: '', location: 'Bangladesh', type: 'Apparel', workType: 'On-Site', date: 'January 3, 2026' },
   { slug: 'head-of-quality-assurance-vietnam', industry: 'Apparel', title: 'Head of Quality Assurance', currency: 'USD', salaryMin: '6000', salaryMax: '6499', location: 'Vietnam', type: 'Apparel', workType: 'On-Site', date: 'January 3, 2026' },
-  { slug: 'senior-safety-officer', industry: 'Other', title: 'Senior Safety Officer', currency: 'LKR', salaryMin: '', salaryMax: '', location: 'Sri Lanka', type: 'Other', workType: 'On-Site', date: 'January 3, 2026' },
+  { slug: 'senior-safety-officer', industry: 'Other', title: 'Senior Safety Officer', currency: 'LKR', salaryMin: '', salaryMax: '', location: 'Horana, Sri Lanka', type: 'Other', workType: 'On-Site', date: 'January 3, 2026' },
 
   // December 24, 2025
   { slug: 'merchandise-manager-bangladesh', industry: 'Apparel', title: 'Merchandise Manager', currency: 'USD', salaryMin: '4500', salaryMax: '5000', location: 'Bangladesh', type: 'Apparel', workType: 'On-Site', date: 'December 24, 2025' },
-  { slug: 'legal-manager-company-secretary', industry: 'Other', title: 'Legal Manager cum Company Secretary', currency: 'LKR', salaryMin: '', salaryMax: '', location: 'Sri Lanka', type: 'Other', workType: 'On-Site', date: 'December 24, 2025' },
+  { slug: 'legal-manager-company-secretary', industry: 'Other', title: 'Legal Manager cum Company Secretary', currency: 'LKR', salaryMin: '', salaryMax: '', location: 'Mount Lavinia – Ratmalana, Sri Lanka', type: 'Other', workType: 'On-Site', date: 'December 24, 2025' },
 
   // December 19, 2025
-  { slug: 'head-of-operations-dec19', industry: 'Other', title: 'Head of Operations', currency: 'LKR', salaryMin: '', salaryMax: '1100000', location: 'Sri Lanka', type: 'Other', workType: 'On-Site', date: 'December 19, 2025' },
-  { slug: 'general-manager-hospitality-dec19', industry: 'Hospitality', title: 'General Manager', currency: 'LKR', salaryMin: '', salaryMax: '250000', location: 'Sri Lanka', type: 'Hospitality', workType: 'On-Site', date: 'December 19, 2025' },
-  { slug: 'tech-lead-senior-tech-lead-mobile', industry: 'Information Technology', title: 'Tech Lead / Senior Tech Lead – Mobile Application Development', currency: 'LKR', salaryMin: '', salaryMax: '900000', location: 'Sri Lanka', type: 'Information Technology', workType: 'On-Site', date: 'December 19, 2025' },
+  { slug: 'head-of-operations-dec19', industry: 'Other', title: 'Head of Operations', currency: 'LKR', salaryMin: '', salaryMax: '1100000', location: 'Biyagama, Sri Lanka', type: 'Other', workType: 'On-Site', date: 'December 19, 2025' },
+  { slug: 'general-manager-hospitality-dec19', industry: 'Hospitality', title: 'General Manager', currency: 'LKR', salaryMin: '', salaryMax: '250000', location: 'Katunayake, Sri Lanka', type: 'Hospitality', workType: 'On-Site', date: 'December 19, 2025' },
+  { slug: 'tech-lead-senior-tech-lead-mobile', industry: 'Information Technology', title: 'Tech Lead / Senior Tech Lead – Mobile Application Development', currency: 'LKR', salaryMin: '', salaryMax: '900000', location: 'Colombo, Sri Lanka', type: 'Information Technology', workType: 'On-Site', date: 'December 19, 2025' },
   { slug: 'senior-key-account-manager-dec19', industry: 'Information Technology', title: 'Senior Key Account Manager', currency: 'LKR', salaryMin: '', salaryMax: '500000', location: 'Sri Lanka', type: 'Information Technology', workType: 'On-Site', date: 'December 19, 2025' },
 
   // December 18, 2025

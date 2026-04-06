@@ -31,7 +31,9 @@ export function HeroSection() {
               src={withBasePath('/images/Vector 20.svg')} 
               alt="" 
               className="absolute left-0 -bottom-4 sm:-bottom-24 lg:-bottom-30 h-[120px] sm:h-[280px] lg:h-[370px] w-auto sm:w-full lg:w-[570px] z-0" 
-              style={{ filter: 'drop-shadow(0 0 12px rgba(203, 252, 6, 0.8))' }} 
+              style={{ filter: 'drop-shadow(0 0 12px rgba(203, 252, 6, 0.8))' }}
+              loading="lazy"
+              decoding="async"
             />
             
             {/* Layer 2 & 3: Text & Button - Top */}

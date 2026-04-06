@@ -83,6 +83,8 @@ export function ImageSlideshow() {
             src={slides[currentSlide].src}
             alt={slides[currentSlide].title}
             className="w-full h-full object-contain"
+            loading="lazy"
+            decoding="async"
           />
           
           <div 

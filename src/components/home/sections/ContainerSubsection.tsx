@@ -147,6 +147,8 @@ export function ContainerSubsection() {
               alt=""
               className="h-full w-full object-cover"
               style={{ objectPosition: 'center center' }}
+              loading="lazy"
+              decoding="async"
             />
           </div>
           <div className="relative z-10 flex flex-col items-start w-full">
@@ -234,6 +236,8 @@ export function ContainerSubsection() {
                         src={testimonial.avatar}
                         alt={testimonial.name}
                         className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
                       />
                     </div>
                     <div className="flex flex-col gap-[8.4px] lg:gap-[10px]">
