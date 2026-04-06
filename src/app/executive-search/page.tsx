@@ -232,7 +232,9 @@ export default function ExecutiveSearchPage() {
         </div>
       </div>
 
-      <ContainerSubsection />
+      <div className="w-full mt-20 lg:mt-32">
+        <ContainerSubsection />
+      </div>
 
       <h2 className="[font-family:'Quicksand',Helvetica] text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black py-8 sm:py-12 mt-20 lg:mt-32">
         Who we work with

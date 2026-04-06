@@ -4,6 +4,7 @@ import { CompanyFooter } from '@/components/common'
 import { JobCard } from '@/components/common/JobCard'
 import { withBasePath } from '@/lib/assetPath'
 import { getPremiumJobBySlug, premiumJobCards, type PremiumJob } from './premiumJobsData'
+import { jobDetailsBySlug, type JobDetailNode } from './jobDetailsData'
 
 function HeroSection({ job }: { job: PremiumJob }) {
   const heroBackgroundSrc = withBasePath('/figmaAssets/premium-jobs-detail-hero-source.png')
@@ -99,7 +100,39 @@ function BulletItem({ children }: { children: React.ReactNode }) {
   )
 }
 
-function RolesContent() {
+function StructuredJobDetailContent({ nodes }: { nodes: JobDetailNode[] }) {
+  return (
+    <div className="w-full pl-[20px]" style={{ fontFamily: 'Inter, sans-serif', color: '#252525' }}>
+      {nodes.map((node, index) => {
+        if (node.type === 'heading') {
+          return (
+            <p key={index} className="text-[13.2px] leading-[25.92px] font-bold mt-2">
+              {node.text}
+            </p>
+          )
+        }
+
+        if (node.type === 'bullets') {
+          return (
+            <ul key={index} className="list-disc pl-[40px]">
+              {node.items.map((item, itemIndex) => (
+                <BulletItem key={itemIndex}>{item}</BulletItem>
+              ))}
+            </ul>
+          )
+        }
+
+        return (
+          <p key={index} className="text-[13.5px] leading-[25.92px]">
+            {node.text}
+          </p>
+        )
+      })}
+    </div>
+  )
+}
+
+function DefaultRolesContent() {
   return (
     <div className="w-full pl-[20px]" style={{ fontFamily: 'Inter, sans-serif', color: '#252525' }}>
       <p className="text-[13.5px] leading-[25.92px] mb-0">
@@ -183,7 +216,7 @@ function RolesContent() {
   )
 }
 
-function PreRequisitesContent() {
+function DefaultPreRequisitesContent() {
   return (
     <div className="w-full pl-[20px]" style={{ fontFamily: 'Inter, sans-serif', color: '#252525' }}>
       <p className="text-[13.1px] leading-[25.92px] font-bold">Educational &amp; Professional Qualifications</p>
@@ -343,6 +376,26 @@ function RelatedJobs({ currentSlug }: { currentSlug: string }) {
   )
 }
 
+function JobRolesContentBySlug({ slug }: { slug: string }) {
+  const details = jobDetailsBySlug[slug]
+
+  if (details?.roles?.length) {
+    return <StructuredJobDetailContent nodes={details.roles} />
+  }
+
+  return <DefaultRolesContent />
+}
+
+function JobPreRequisitesContentBySlug({ slug }: { slug: string }) {
+  const details = jobDetailsBySlug[slug]
+
+  if (details?.preRequisites?.length) {
+    return <StructuredJobDetailContent nodes={details.preRequisites} />
+  }
+
+  return <DefaultPreRequisitesContent />
+}
+
 export function PremiumJobApplyPage({ slug }: { slug: string }) {
   const job = getPremiumJobBySlug(slug)
 
@@ -370,19 +423,54 @@ export function PremiumJobApplyPage({ slug }: { slug: string }) {
       <section className="relative w-full z-10 -mt-[50px] md:-mt-[72px]">
         <div className="relative w-full max-w-[1440px] mx-auto px-[23.413px] lg:px-[153.6px] py-8">
           <div className="flex flex-col lg:flex-row gap-5 lg:gap-[40px] items-start w-full">
-            <div className="flex flex-col gap-5 w-full lg:w-[449.36px] lg:shrink-0">
+            <div className="flex flex-col gap-5 w-full lg:w-[280px] lg:shrink-0">
               <SidebarSummary job={job} />
               <div>
                 <div style={{ fontFamily: 'Quicksand, sans-serif', fontWeight: 700, fontSize: '19.2px', lineHeight: '19.2px', color: '#11593f' }}>Share job</div>
+                <div className="flex gap-4 mt-3 items-center">
+                  <a
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : 'https://career141.com')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full bg-[#1f7145] hover:bg-[#165a34] flex items-center justify-center transition-colors"
+                    title="Share on Facebook"
+                  >
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                  </a>
+                  <a
+                    href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : 'https://career141.com')}&text=${encodeURIComponent(`Check out this job: ${job.title}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full bg-[#1f7145] hover:bg-[#165a34] flex items-center justify-center transition-colors"
+                    title="Share on Twitter"
+                  >
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M23.953 4.57a10 10 0 002.856-3.515 10 10 0 01-2.859 1.97 5 5 0 00-8.622 4.42c0 .39.045.765.14 1.123a14.05 14.05 0 01-10.177-5.148 5 5 0 001.55 6.573 5 5 0 01-2.257-.616c-.054 2.281 1.581 4.415 3.949 4.89a5 5 0 01-2.25.085 5.004 5.004 0 004.659 3.468 10.025 10.025 0 01-6.177 2.13c-.39 0-.779-.023-1.17-.067a14.052 14.052 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A10.025 10.025 0 0024 4.59z" />
+                    </svg>
+                  </a>
+                  <a
+                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : 'https://career141.com')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full bg-[#1f7145] hover:bg-[#165a34] flex items-center justify-center transition-colors"
+                    title="Share on LinkedIn"
+                  >
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.731-2.004 1.438-.103.252-.129.604-.129.957v5.41h-3.553v-9.001h3.413v1.231h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v4.165zM5.337 8.855c-1.144 0-2.063-.931-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.134-.924 2.065-2.064 2.065zm1.782 11.597H3.555v-9.001h3.564v9.001zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
 
             <div className="flex flex-col gap-5 flex-1 min-w-0">
               <SectionHeader title="Roles &amp; Responsibilities" />
-              <RolesContent />
+              <JobRolesContentBySlug slug={job.slug} />
 
               <SectionHeader title="Pre Requisites" />
-              <PreRequisitesContent />
+              <JobPreRequisitesContentBySlug slug={job.slug} />
 
               <SectionHeader title="Apply now" />
               <div className="pt-[24px] pb-[48px]">

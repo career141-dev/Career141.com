@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import styles from '@/styles/BrowseAllJobs.module.css'
 import { JobCard, type Job } from '@/components/common/JobCard'
 import DivELoopLoadMore from '@/components/DivELoopLoadMore'
@@ -47,8 +47,39 @@ const SidebarFilterLink = ({ item }: { item: SidebarItem }) => (
 export function BrowseAllJobsSection({
   jobCards,
 }: BrowseAllJobsSectionProps) {
-  const [visibleCount, setVisibleCount] = useState(12)
+  // Restore visibleCount from sessionStorage, default to 12
+  const [visibleCount, setVisibleCount] = useState(() => {
+    if (typeof window === 'undefined') return 12
+    const saved = sessionStorage.getItem('jobsVisibleCount')
+    return saved ? parseInt(saved, 10) : 12
+  })
+  
   const [searchQuery, setSearchQuery] = useState('')
+  const [scrollPosition, setScrollPosition] = useState(0)
+
+  // Persist visibleCount to sessionStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('jobsVisibleCount', visibleCount.toString())
+    }
+  }, [visibleCount])
+
+  // Restore scroll position on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = sessionStorage.getItem('jobsScrollPosition')
+      if (saved) {
+        const position = parseInt(saved, 10)
+        // Use requestAnimationFrame to ensure DOM is fully rendered
+        requestAnimationFrame(() => {
+          window.scrollTo({
+            top: position,
+            behavior: 'instant' as ScrollBehavior
+          })
+        })
+      }
+    }
+  }, [])
 
   // 1. Filter jobs based on search
   const filteredJobs = useMemo(() => {
@@ -90,8 +121,11 @@ export function BrowseAllJobsSection({
 
   const handleLoadMore = (e: React.MouseEvent) => {
     e.preventDefault()
-    // Capture current scroll position
-    const currentScrollY = window.scrollY;
+    // Capture current scroll position BEFORE updating state
+    const currentScrollY = window.scrollY
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('jobsScrollPosition', currentScrollY.toString())
+    }
     
     setVisibleCount(prev => prev + 12)
     
@@ -100,9 +134,37 @@ export function BrowseAllJobsSection({
       window.scrollTo({
         top: currentScrollY,
         behavior: 'instant' as ScrollBehavior
-      });
-    });
+      })
+    })
   }
+
+  // Save scroll position when navigating away from browse page
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('jobsScrollPosition', window.scrollY.toString())
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    
+    // Also save when clicking links (job cards navigate away)
+    const handleLinkClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (target.closest('a') || target.closest('button[role="link"]')) {
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('jobsScrollPosition', window.scrollY.toString())
+        }
+      }
+    }
+
+    document.addEventListener('click', handleLinkClick)
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+      document.removeEventListener('click', handleLinkClick)
+    }
+  }, [])
 
   return (
     <section className="flex flex-col items-start w-full bg-white">
@@ -138,6 +200,10 @@ export function BrowseAllJobsSection({
                         onChange={(e) => {
                           setSearchQuery(e.target.value)
                           setVisibleCount(12) // Reset pagination on search
+                          // Clear saved scroll position when searching
+                          if (typeof window !== 'undefined') {
+                            sessionStorage.removeItem('jobsScrollPosition')
+                          }
                         }}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter') e.preventDefault();
