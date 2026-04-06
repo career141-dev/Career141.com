@@ -12,7 +12,7 @@ const TESTIMONIALS = [
     name: 'Ushan De Silva',
     company: 'Brandix',
     title: 'Group Head of Logistics',
-    avatar: withBasePath('/figmaAssets/testimonial/4070bd9e51852d03cfa7140318625c0573388c17.png'),
+    avatar: withBasePath('/figmaAssets/testimonial/c950370038110512e5778a8917c41c855fefff8e.png'),
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const TESTIMONIALS = [
     name: 'Asanka Wimalaratna',
     company: 'Brandix',
     title: 'Director / Chief Executive Officer',
-    avatar: withBasePath('/figmaAssets/testimonial/b1167b44a1cc44d87ba4da5a08f621d20e08df9a.png'),
+    avatar: withBasePath('/figmaAssets/testimonial/c950370038110512e5778a8917c41c855fefff8e.png'),
   },
   {
     id: 3,
@@ -28,7 +28,7 @@ const TESTIMONIALS = [
     name: 'Nayani Peiris',
     company: 'Unilever',
     title: 'Head of Employee Relations and Senior HR Business Partner',
-    avatar: withBasePath('/figmaAssets/testimonial/382255309c396fda7ea0065e6b5032bdb2dea13e.png'),
+    avatar: withBasePath('/figmaAssets/testimonial/4070bd9e51852d03cfa7140318625c0573388c17.png'),
   },
   {
     id: 4,
@@ -36,7 +36,7 @@ const TESTIMONIALS = [
     name: 'Achala Silva',
     company: 'George Steuart',
     title: 'Director Group Human Resources & Administration',
-    avatar: withBasePath('/figmaAssets/testimonial/79fa2bcfdbd09f91322a514e29542098f2a8d836.png'),
+    avatar: withBasePath('/figmaAssets/testimonial/b1167b44a1cc44d87ba4da5a08f621d20e08df9a.png'),
   },
   {
     id: 5,
@@ -44,7 +44,7 @@ const TESTIMONIALS = [
     name: 'Nishantha Navurunnage',
     company: 'Avery Dennison',
     title: 'Director Human Resources Asia Pacific',
-    avatar: withBasePath('/figmaAssets/testimonial/38a839e79cb0d600ece329ffb9d7ee69ff2c3dac.png'),
+    avatar: withBasePath('/figmaAssets/testimonial/382255309c396fda7ea0065e6b5032bdb2dea13e.png'),
   },
   {
     id: 6,
@@ -52,7 +52,7 @@ const TESTIMONIALS = [
     name: 'Kaushal Mendis',
     company: 'Daraz',
     title: 'Chief Human Resources Officer',
-    avatar: withBasePath('/figmaAssets/testimonial/8bb56835335e113d27a06ab4b8290ba98569a188.png'),
+    avatar: withBasePath('/figmaAssets/testimonial/79fa2bcfdbd09f91322a514e29542098f2a8d836.png'),
   },
   {
     id: 7,
@@ -70,6 +70,7 @@ const TESTIMONIALS = [
     title: 'CEO',
     avatar: withBasePath('/figmaAssets/testimonial/c1fd7aa368850e590565f2a79763c912bd4bb1c7.png'),
   },
+  
 ]
 
 const sliderVariants = {
@@ -118,7 +119,7 @@ export function ContainerSubsection() {
 
   const onManualNav = (dir: number) => {
     paginate(dir)
-    // startTimer() // Uncomment to restart auto-play after manual nav
+    startTimer()
   }
 
   return (
