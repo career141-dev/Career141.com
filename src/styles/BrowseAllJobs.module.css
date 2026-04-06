@@ -269,6 +269,28 @@
   width: 100%;
   display: flex;
 }
+@media (max-width: 768px) {
+  .DivWpcTermItemContentWrapper_11_2227 {
+    min-width: auto;
+    flex: 0 0 auto;
+    width: auto;
+  }
+  .SpanWpcFilterLabelWrapper_11_2229 {
+    padding: 1px 4px !important;
+    gap: 1px !important;
+  }
+  .Hospitality_11_2231,
+  .generated_23_11_2234 {
+    font-size: 10px !important;
+    line-height: 14px !important;
+  }
+  .Label_11_2228 {
+    padding: 2px 6px !important;
+    border: 1px solid #ccc !important;
+    background: #f9f9f9 !important;
+    width: auto;
+  }
+}
 .Label_11_2228 {
   box-sizing: border-box;
   border: 1px solid #0000001a;
@@ -285,9 +307,9 @@
   justify-content: flex-start;
   gap: 3.35px;
   padding: 1.8px 9.8px;
-  display: flex;
-  flex-wrap: nowrap;
-  flex: 1;
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
   min-width: 0;
 }
 .A_11_2230 {
@@ -6263,8 +6285,8 @@
 }
 
 .FilterTermsList {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   width: 100%;
 }

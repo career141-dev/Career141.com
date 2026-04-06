@@ -68,14 +68,12 @@ export default function OurCulturePage() {
             alt="Our Culture Hero"
             className="hidden md:block w-full h-auto object-cover md:object-fill"
           />
-          <div className="md:hidden w-full relative">
-            <h3 className="[font-family:'Quicksand',Sans-serif] text-[#11593f] text-xl font-bold text-center mb-4 px-4">
-              Our Culture
-            </h3>
+          <div className="md:hidden w-full relative overflow-hidden">
             <img
-              src={withBasePath('/images/Culture/Group-3092.webp')}
+              src={withBasePath('/images/Culture/Group 3584.png')}
               alt="Our Culture Hero"
-              className="w-full h-auto block"
+              className="w-full h-auto block object-cover object-left"
+              style={{ height: '300px' }}
             />
           </div>
           <img

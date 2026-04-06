@@ -118,8 +118,8 @@ export default function DivElementorElement({ currentPage = 1, onPageChange }: {
         </div>
       </div>
 
-      <div className="w-full bg-gradient-to-b from-white via-[#eeeffe] to-[#f4eec7] pt-20 pb-16">
-        <div className="content-stretch flex flex-col items-center justify-center relative shrink-0 w-full mb-16 px-4">
+      <div className="w-full bg-gradient-to-b from-white via-[#eeeffe] to-[#f4eec7] -mt-4 md:mt-0 pt-0 md:pt-20 pb-16">
+        <div className="content-stretch flex flex-col items-center justify-center relative shrink-0 w-full mb-4 md:mb-16 px-4">
           <div className="flex items-center justify-center gap-6">
             <h2 className="font-['Quicksand',sans-serif] font-normal text-[32px] text-black uppercase tracking-widest leading-none">
               Clients
