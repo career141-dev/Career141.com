@@ -230,7 +230,7 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
   })
 
   const onSubmit = async (data: any) => {
-    if (!turnstileToken) {
+    if (!turnstileToken && process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
       alert("Please complete the CAPTCHA")
       return
     }
@@ -483,7 +483,7 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
       <div className={dark ? styles.DivWpformsSubmitContainer_88_12034 : 'mt-2'}>
         <button
           type="submit"
-          disabled={!turnstileToken || submitting}
+          disabled={(!turnstileToken || submitting) && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
           className={dark ? styles.ButtonWpformsSubmit_10038_88_12035 : `flex items-center gap-2 px-7 py-3 rounded-full font-['Inter',Helvetica] font-medium text-[13px] tracking-wider transition-all duration-300 ${
             turnstileToken && !submitting
               ? 'bg-[#111] text-white hover:bg-[#6abf4b] cursor-pointer'

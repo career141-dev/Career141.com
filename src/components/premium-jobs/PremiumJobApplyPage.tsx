@@ -327,7 +327,7 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
       setError('root', { message: 'Please upload your CV/resume' })
       return
     }
-    if (!turnstileToken) {
+    if (!turnstileToken && process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
       setError('root', { message: 'Please complete the captcha' })
       return
     }
@@ -494,7 +494,7 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
 
       <button
         type="submit"
-        disabled={!turnstileToken || isSubmitting}
+        disabled={(!turnstileToken || isSubmitting) && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
         className="bg-white flex h-[41px] items-center justify-center px-[15.8px] py-px rounded-[100px] w-full relative cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         style={{ border: '1px solid #11593f' }}
       >

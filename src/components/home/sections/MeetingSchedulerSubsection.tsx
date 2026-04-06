@@ -209,7 +209,7 @@ export function MeetingSchedulerSubsection() {
       return
     }
 
-    if (!turnstileToken) {
+    if (!turnstileToken && process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
       alert('Please complete the CAPTCHA')
       return
     }
@@ -412,7 +412,7 @@ export function MeetingSchedulerSubsection() {
 
                       <button 
                         type="submit"
-                        disabled={!turnstileToken || submitting}
+                        disabled={(!turnstileToken || submitting) && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
                         className="bg-white text-black font-['Quicksand',sans-serif] font-bold py-3 rounded-full hover:bg-gray-100 transition-colors text-[16px] w-full disabled:opacity-50"
                       >
                         {submitting ? 'Sending...' : 'Submit'}
