@@ -105,7 +105,46 @@ export default function ExecutiveSearchPage() {
       </h2>
 
       <div className="w-full overflow-hidden">
-        <div className="flex w-full h-[250px] md:h-[400px] lg:h-[500px]">
+        {/* Mobile: Vertical stacked with tap to expand */}
+        <div className="md:hidden">
+          {[
+            { img: '/images/specialized/Apparel & Accessories.webp', title: 'Apparel & Accessories' },
+            { img: '/images/specialized/FMCG.webp', title: 'FMCG' },
+            { img: '/images/specialized/Information Technology.webp', title: 'Information Technology' },
+            { img: '/images/specialized/Healthcare.webp', title: 'Healthcare' },
+            { img: '/images/specialized/Pharmaceutical.webp', title: 'Pharmaceutical' },
+            { img: '/images/specialized/E-commerce.webp', title: 'E-commerce' },
+            { img: '/images/specialized/Retail Market.webp', title: 'Retail Market' },
+            { img: '/images/specialized/Automotive.webp', title: 'Automotive' },
+            { img: '/images/specialized/Construction.webp', title: 'Construction' },
+            { img: '/images/specialized/Power & Energy.webp', title: 'Power & Energy' },
+            { img: '/images/specialized/Education.webp', title: 'Education' },
+            { img: '/images/specialized/Hospitality.webp', title: 'Hospitality' },
+            { img: '/images/specialized/Shipping & Freight.webp', title: 'Shipping & Freight' },
+          ].map((item, index) => (
+            <div 
+              key={index}
+              className="industry-card relative h-[80px] overflow-hidden cursor-pointer transition-all duration-300"
+              onClick={(e) => {
+                e.currentTarget.classList.toggle('expanded');
+              }}
+            >
+              <img 
+                src={item.img} 
+                alt={item.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="industry-text absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 transition-opacity duration-300 pointer-events-none">
+                <span className="[font-family:'Quicksand',Helvetica] text-white text-lg font-bold">
+                  {item.title}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop: Original flex with hover expand */}
+        <div className="hidden md:flex w-full h-[250px] md:h-[400px] lg:h-[500px]">
           {[
             { img: '/images/specialized/Apparel & Accessories.webp', title: 'Apparel & Accessories' },
             { img: '/images/specialized/FMCG.webp', title: 'FMCG' },
@@ -156,7 +195,7 @@ export default function ExecutiveSearchPage() {
         Skill Specializations
       </h2>
 
-      <div className="w-full px-4 sm:px-6 lg:px-8">
+      <div className="w-full">
         <div className="grid grid-cols-2 md:grid-cols-4 w-full gap-0">
           {[
             { title: 'Consumer Insight & Experience', img: '/images/Skills/Consumer Insight & Experience.png' },
@@ -239,7 +278,7 @@ export default function ExecutiveSearchPage() {
       </h2>
 
       {/* Desktop: grid with show more, Mobile: horizontal scroll 2 rows */}
-      <div className="w-full px-4 sm:px-6 lg:px-8">
+      <div className="w-full">
         {/* Mobile horizontal scroll view */}
         <div className="md:hidden overflow-x-auto pb-4 snap-x snap-mandatory">
           {logoRows.map((row, rowIndex) => (

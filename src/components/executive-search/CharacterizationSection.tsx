@@ -111,6 +111,8 @@ export function CharacterizationSection() {
               src={slidesData[currentIndex].desktopImage}
               alt={slidesData[currentIndex].title}
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
             
             {/* Content Overlay - Right aligned */}
@@ -190,6 +192,8 @@ export function CharacterizationSection() {
               src={slidesData[currentIndex].mobileImage}
               alt={slidesData[currentIndex].title}
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
             
             {/* Content Overlay - Centered */}

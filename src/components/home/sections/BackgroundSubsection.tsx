@@ -91,7 +91,7 @@ function MobileLogoCarousel() {
       <div
         ref={scrollRef}
         onScroll={onScroll}
-        className="flex gap-[10px] overflow-x-auto snap-x snap-mandatory ml-[15vw] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="flex gap-[10px] overflow-x-visible snap-x snap-mandatory ml-[15vw] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden px-4"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {ALL_BRANDS.map((brand, i) => (

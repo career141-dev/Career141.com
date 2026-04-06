@@ -127,6 +127,8 @@ function FlipCard({ card, size }: FlipCardProps) {
                 alt={card.text.replace('\n', ' ')} 
                 style={{ width: size, height: size, objectFit: 'contain', display: 'block' }} 
                 draggable={false} 
+                loading="lazy"
+                decoding="async"
               />
               
               <motion.div
@@ -285,6 +287,8 @@ function MobileDiamondCard({ card }: { card: (typeof CARDS)[0] }) {
               alt={card.text.replace('\n', ' ')}
               style={{ width: fixedWidth, height: fixedHeight, objectFit: 'contain', display: 'block' }}
               draggable={false}
+              loading="lazy"
+              decoding="async"
             />
             
             <motion.div
@@ -476,6 +480,8 @@ export function HowWeDifferentiateSection() {
           src={withBasePath('/figmaAssets/How_WE.png')}
           alt=""
           style={{ width: '100%', height: 'auto', display: 'block' }}
+          loading="lazy"
+          decoding="async"
         />
       </div>
 
@@ -494,6 +500,8 @@ export function HowWeDifferentiateSection() {
           src={withBasePath('/figmaAssets/How_WE.png')}
           alt=""
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          loading="lazy"
+          decoding="async"
         />
       </div>
 

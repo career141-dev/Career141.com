@@ -25,15 +25,15 @@ export function CoreValuesSection() {
             }}
           />
 
-          <div className="relative z-10 pl-6 md:pl-[35%] pr-6 md:pr-[5%]">
-            <div className="relative w-80 h-80 md:w-60 md:h-60 ml-20">
+            <div className="relative z-10 pl-6 md:pl-[35%] pr-6 md:pr-[5%] pt-10 md:pt-0">
+            <div className="relative w-48 h-48 md:w-60 md:h-60 ml-20">
               <img
                 src={withBasePath('/images/Vector 97.svg')}
                 alt=""
                 className="w-full h-full"
               />
-              <h2
-                className="absolute inset-0 flex items-center justify-center font-['Quicksand',Helvetica,sans-serif] font-bold text-[#11593f] text-center -translate-x-40"
+                <h2
+                className="absolute inset-0 flex items-center justify-center font-['Quicksand',Helvetica,sans-serif] font-bold text-[#11593f] text-center -translate-x-10 md:-translate-x-40"
                 style={{
                   fontSize: 'clamp(28px, 2.5vw, 38.4px)',
                   lineHeight: '1.1',
@@ -46,7 +46,7 @@ export function CoreValuesSection() {
           </div>
         </div>
 
-        <div className="relative flex-1 flex items-center justify-center pt-20 md:pt-24 pb-4 md:pb-6 px-4 md:px-6 lg:px-8 -mt-20">
+        <div className="relative flex-1 flex items-center justify-center pt-10 md:pt-24 pb-4 md:pb-6 px-4 md:px-6 lg:px-8 -mt-5 md:-mt-20">
           <img
             src={withBasePath('/figmaAssets/corevalues-diagram.svg')}
             alt="Core Values: Quality and Commitment, Integrity and Ethics, Confidentiality and Trust, Agility and Innovation"

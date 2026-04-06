@@ -307,6 +307,8 @@ export function PremiumJobsSection() {
                       width={93}
                       height={93}
                       className="w-[80px] h-[80px] md:w-[93px] md:h-[93px] rounded-[50%] object-cover border-[6px] border-white shadow-[4px_4px_8px_rgba(0,0,0,0.24)]"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <div className="absolute top-[40px] left-0 w-full h-[250px] md:h-[283px] flex flex-col items-center justify-center pt-10 px-4 rounded-[42px] bg-[linear-gradient(180deg,rgba(222,237,230,1)_0%,rgba(204,255,222,1)_100%)] pointer-events-none">
@@ -341,7 +343,7 @@ export function PremiumJobsSection() {
             className="absolute top-[152px] left-0 md:left-2 w-[30px] h-[30px] p-0 border-0 bg-transparent cursor-pointer z-10"
             aria-label="Previous channel"
           >
-            <img className="w-full h-full pointer-events-none" alt="" src={withBasePath('/figmaAssets/previous-slide.svg')} />
+            <img className="w-full h-full pointer-events-none" alt="" src={withBasePath('/figmaAssets/previous-slide.svg')} loading="lazy" decoding="async" />
           </button>
           <button
             type="button"
@@ -352,7 +354,7 @@ export function PremiumJobsSection() {
             className="absolute top-[152px] right-0 md:right-2 w-[30px] h-[30px] p-0 border-0 bg-transparent cursor-pointer z-10"
             aria-label="Next channel"
           >
-            <img className="w-full h-full pointer-events-none" alt="" src={withBasePath('/figmaAssets/next-slide.svg')} />
+            <img className="w-full h-full pointer-events-none" alt="" src={withBasePath('/figmaAssets/next-slide.svg')} loading="lazy" decoding="async" />
           </button>
         </div>
       </section>

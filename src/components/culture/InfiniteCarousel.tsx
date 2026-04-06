@@ -178,13 +178,14 @@ export function InfiniteCarousel({ autoPlayInterval = 4000, isMobile }: Infinite
       <h2 
         className="text-center mb-8"
         style={{ 
-          fontFamily: 'Nordeco, sans-serif',
-          fontSize: 'var(--text-4xl)',
-          lineHeight: 'var(--tw-leading, var(--text-4xl--line-height))',
-          color: 'white'
+          fontFamily: '"Quicksand", Sans-serif',
+          fontSize: '2.2 em',
+          fontWeight: 400,
+          lineHeight: '1.2em',
+          color: '#ffffff'
         }}
       >
-        Stories from our <span style={{ color: '#006763' }}><b>team</b></span>
+        Stories from <span style={{ color: '#37A65E' }}><b> our team</b></span>
       </h2>
       <div 
         className="relative h-[550px] md:h-[780px] flex items-center justify-center cursor-grab active:cursor-grabbing select-none"
