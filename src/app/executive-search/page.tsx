@@ -12,6 +12,22 @@ import { ContainerSubsection } from '@/components/home/sections/ContainerSubsect
 import { withBasePath } from '@/lib/assetPath'
 import { useEffect, useRef, useState } from 'react'
 
+const industries = [
+  { img: '/images/specialized/Apparel & Accessories.webp', title: 'Apparel & Accessories' },
+  { img: '/images/specialized/FMCG.webp', title: 'FMCG' },
+  { img: '/images/specialized/Information Technology.webp', title: 'Information Technology' },
+  { img: '/images/specialized/Healthcare.webp', title: 'Healthcare' },
+  { img: '/images/specialized/Pharmaceutical.webp', title: 'Pharmaceutical' },
+  { img: '/images/specialized/E-commerce.webp', title: 'E-commerce' },
+  { img: '/images/specialized/Retail Market.webp', title: 'Retail Market' },
+  { img: '/images/specialized/Automotive.webp', title: 'Automotive' },
+  { img: '/images/specialized/Construction.webp', title: 'Construction' },
+  { img: '/images/specialized/Power & Energy.webp', title: 'Power & Energy' },
+  { img: '/images/specialized/Education.webp', title: 'Education' },
+  { img: '/images/specialized/Hospitality.webp', title: 'Hospitality' },
+  { img: '/images/specialized/Shipping & Freight.webp', title: 'Shipping & Freight' },
+]
+
 function CountUp({
   end,
   start = 0,
@@ -88,7 +104,7 @@ export default function ExecutiveSearchPage() {
   const displayedRows = showAllLogos ? logoRows : initialRows
 
   return (
-    <main className="min-h-screen bg-white m-0 p-0">
+    <main className="min-h-screen bg-white m-0 p-0" suppressHydrationWarning>
       <Navbar />
       <HeroSection />
       
@@ -104,24 +120,33 @@ export default function ExecutiveSearchPage() {
         Specialized Industry
       </h2>
 
+      <style jsx>{`
+        .industry-card {
+          height: 80px;
+          transition: height 0.3s ease-in-out;
+        }
+        .industry-card.expanded {
+          height: 250px;
+        }
+        .industry-card .industry-text {
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out;
+        }
+        .industry-card.expanded .industry-text {
+          opacity: 1;
+        }
+        .industry-card-desktop {
+          transition: flex 0.3s ease-in-out;
+        }
+        .industry-card-desktop:hover {
+          flex: 2;
+        }
+      `}</style>
+
       <div className="w-full overflow-hidden">
         {/* Mobile: Vertical stacked with tap to expand */}
         <div className="md:hidden">
-          {[
-            { img: '/images/specialized/Apparel & Accessories.webp', title: 'Apparel & Accessories' },
-            { img: '/images/specialized/FMCG.webp', title: 'FMCG' },
-            { img: '/images/specialized/Information Technology.webp', title: 'Information Technology' },
-            { img: '/images/specialized/Healthcare.webp', title: 'Healthcare' },
-            { img: '/images/specialized/Pharmaceutical.webp', title: 'Pharmaceutical' },
-            { img: '/images/specialized/E-commerce.webp', title: 'E-commerce' },
-            { img: '/images/specialized/Retail Market.webp', title: 'Retail Market' },
-            { img: '/images/specialized/Automotive.webp', title: 'Automotive' },
-            { img: '/images/specialized/Construction.webp', title: 'Construction' },
-            { img: '/images/specialized/Power & Energy.webp', title: 'Power & Energy' },
-            { img: '/images/specialized/Education.webp', title: 'Education' },
-            { img: '/images/specialized/Hospitality.webp', title: 'Hospitality' },
-            { img: '/images/specialized/Shipping & Freight.webp', title: 'Shipping & Freight' },
-          ].map((item, index) => (
+          {industries.map((item, index) => (
             <div 
               key={index}
               className="industry-card relative overflow-hidden cursor-pointer"
