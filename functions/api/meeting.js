@@ -49,29 +49,29 @@ function validatePayload(body) {
   const errors = [];
 
   if (!body || typeof body !== "object") {
-    return ["Invalid request body"];
+    return [{ path: ["body"], message: "Invalid request body" }];
   }
 
   if (!body.firstName || String(body.firstName).trim().length < 1) {
-    errors.push("First name is required");
+    errors.push({ path: ["firstName"], message: "First name is required" });
   }
   if (!body.lastName || String(body.lastName).trim().length < 1) {
-    errors.push("Last name is required");
+    errors.push({ path: ["lastName"], message: "Last name is required" });
   }
   if (!body.email || !isValidEmail(String(body.email))) {
-    errors.push("Invalid email address");
+    errors.push({ path: ["email"], message: "Invalid email address" });
   }
   if (!body.phone || String(body.phone).trim().length < 5) {
-    errors.push("Invalid phone number");
+    errors.push({ path: ["phone"], message: "Invalid phone number" });
   }
   if (!body.subject || String(body.subject).trim().length < 1) {
-    errors.push("Subject is required");
+    errors.push({ path: ["subject"], message: "Subject is required" });
   }
   if (!body.message || String(body.message).trim().length < 10) {
-    errors.push("Message must be at least 10 characters");
+    errors.push({ path: ["message"], message: "Message must be at least 10 characters" });
   }
   if (!body.turnstileToken || String(body.turnstileToken).trim().length < 1) {
-    errors.push("Captcha verification is required");
+    errors.push({ path: ["turnstileToken"], message: "Captcha verification is required" });
   }
 
   return errors;
