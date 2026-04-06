@@ -9,13 +9,20 @@
   }
   .industry-card {
     height: 80px;
-    transition: height 0.3s ease-in-out;
+    transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
   }
   .industry-card.expanded {
-    height: 250px !important;
+    height: 250px;
+  }
+  .industry-card .industry-text {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
   }
   .industry-card.expanded .industry-text {
-    opacity: 1 !important;
+    opacity: 1;
+  }
+  .industry-card-desktop {
+    transition: flex 0.3s ease-in-out;
   }
   .industry-card-desktop:hover {
     flex: 2 !important;

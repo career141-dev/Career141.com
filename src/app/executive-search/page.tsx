@@ -124,7 +124,7 @@ export default function ExecutiveSearchPage() {
           ].map((item, index) => (
             <div 
               key={index}
-              className="industry-card relative h-[80px] overflow-hidden cursor-pointer transition-all duration-300"
+              className="industry-card relative overflow-hidden cursor-pointer"
               onClick={(e) => {
                 e.currentTarget.classList.toggle('expanded');
               }}
@@ -162,7 +162,7 @@ export default function ExecutiveSearchPage() {
           ].map((item, index) => (
             <div 
               key={index}
-              className="group industry-card-desktop relative h-full min-w-[80px] md:min-w-[120px] flex-1 transition-all duration-300 ease-in-out hover:flex-[2] cursor-pointer overflow-hidden"
+              className="group industry-card-desktop relative h-full min-w-[80px] md:min-w-[120px] flex-1 cursor-pointer overflow-hidden"
             >
               <img 
                 src={item.img} 
