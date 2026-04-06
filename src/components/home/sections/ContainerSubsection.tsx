@@ -211,7 +211,7 @@ export function ContainerSubsection() {
                 >
                   <div className="flex flex-col items-start gap-[2.8px] w-full" style={{ alignItems: 'flex-start' }}>
                     <p
-                      className="[font-family:'Inter',Helvetica] font-medium text-white tracking-[0] w-full text-[13px] lg:text-[14.9px]"
+                      className="[font-family:'Inter',Helvetica] font-medium text-white tracking-[0] w-full text-[20px] lg:text-[18px]"
                       style={{ lineHeight: '24px' }}
                     >
                       {isExpanded ? testimonial.quote : testimonial.quote.length > 150 ? testimonial.quote.substring(0, 150) + '...' : testimonial.quote}

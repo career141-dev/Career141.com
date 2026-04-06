@@ -44,16 +44,27 @@ const slides = [
 
 const SLIDE_DURATION = 5000
 
-export function ImageSlideshow() {
-  const [currentSlide, setCurrentSlide] = useState(0)
+export function ImageSlideshow({ currentSlide: externalSlide, onSlideChange }: { currentSlide?: number; onSlideChange?: (index: number) => void }) {
+  const [internalSlide, setInternalSlide] = useState(0)
+  const currentSlide = externalSlide ?? internalSlide
+  
+  const setSlide = useCallback((newSlide: number) => {
+    if (externalSlide !== undefined) {
+      onSlideChange?.(newSlide)
+    } else {
+      setInternalSlide(newSlide)
+    }
+  }, [externalSlide, onSlideChange])
 
   const nextSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length)
-  }, [])
+    const next = (currentSlide + 1) % slides.length
+    setSlide(next)
+  }, [currentSlide, setSlide])
 
   const prevSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
-  }, [])
+    const next = (currentSlide - 1 + slides.length) % slides.length
+    setSlide(next)
+  }, [currentSlide, setSlide])
 
   useEffect(() => {
     const interval = setInterval(nextSlide, SLIDE_DURATION)
@@ -117,29 +128,7 @@ export function ImageSlideshow() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Mobile text below carousel - outside slideshow */}
-      <div className="md:hidden px-4 mt-2 py-10 bg-white text-right ">
-        <motion.h3 
-          key={`mobile-title-${currentSlide}`}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="[font-family:'Quicksand',Helvetica] font-extrabold text-[#11593F] text-lg mb-1"
-        >
-          {slides[currentSlide].title}
-        </motion.h3>
-        
-        <motion.p 
-          key={`mobile-desc-${currentSlide}`}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          className="[font-family:'General Sans',Helvetica] text-xs text-[#2C3E4E] leading-relaxed font-medium"
-        >
-          {slides[currentSlide].description}
-        </motion.p>
-      </div>
-
+      {/* Navigation buttons */}
       <button
         onClick={prevSlide}
         className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg z-30 transition-all hover:scale-110 active:scale-95"

@@ -11,6 +11,7 @@ import { MeetingSchedulerSubsection } from '@/components/home/sections/MeetingSc
 import { ContainerSubsection } from '@/components/home/sections/ContainerSubsection'
 import { withBasePath } from '@/lib/assetPath'
 import { useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
 
 function CountUp({
   end,
@@ -74,8 +75,65 @@ const statsData = [
   { numEnd: 85, numStart: 0, isRange: false, hasPercent: true, label: 'Repeat Business', containerSrc: withBasePath('/figmaAssets/container.svg') },
 ]
 
+function ExpandableIndustryCard({ img, title, isExpanded, onToggle }: { img: string; title: string; isExpanded: boolean; onToggle: () => void }) {
+  return (
+    <div 
+      className="relative overflow-hidden cursor-pointer transition-all duration-300"
+      style={{ height: isExpanded ? '200px' : '80px' }}
+      onClick={onToggle}
+    >
+      <img 
+        src={img} 
+        alt={title}
+        className="w-full h-full object-cover"
+      />
+      <div 
+        className="absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity duration-300"
+        style={{ opacity: isExpanded ? 1 : 0 }}
+      >
+        <span className="[font-family:'Quicksand',Helvetica] text-white text-lg font-bold">
+          {title}
+        </span>
+      </div>
+    </div>
+  )
+}
+
+const slides = [
+  { 
+    title: 'Results Driven Legacy', 
+    description: "The firm's long-standing legacy is defined by a results-driven approach. Clients have come to expect not just placements, but a track record of successful, impactful placements that have contributed to the success of organizations over the years." 
+  },
+  { 
+    title: 'Client-Centric Excellence', 
+    description: 'We are dedicated to delivering exceptional service that goes beyond expectations, ensuring our clients\' success is at the forefront of everything we do.' 
+  },
+  { 
+    title: 'Global Visionary', 
+    description: 'Having successfully placed executives in both local and overseas positions, the brand projects a global perspective. It is seen as a visionary in identifying and connecting top-tier talent across international boundaries.' 
+  },
+  { 
+    title: 'Trusted Steward', 
+    description: 'The firm is perceived as a trusted steward of both client and candidate interests. Its long history underscores a commitment to ethical practices, confidentiality, and the responsible handling of sensitive information.' 
+  },
+  { 
+    title: 'Strategic Partnership', 
+    description: 'We strive to be more than just a service provider; we aim to be a trusted strategic partner, deeply invested in the success and growth of our clients.' 
+  },
+  { 
+    title: 'Strategic Navigator', 
+    description: "With a deep understanding of the business landscape, the brand is seen as a strategic navigator, helping clients and candidates alike chart successful courses in their professional journeys. The emphasis is on long-term success and strategic alignment." 
+  },
+  { 
+    title: 'Strategic Navigator', 
+    description: "With a deep understanding of the business landscape, the brand is seen as a strategic navigator, helping clients and candidates alike chart successful courses in their professional journeys. The emphasis is on long-term success and strategic alignment." 
+  },
+]
+
 export default function ExecutiveSearchPage() {
   const [showAllLogos, setShowAllLogos] = useState(false)
+  const [expandedCard, setExpandedCard] = useState<number | null>(null)
+  const [currentSlide, setCurrentSlide] = useState(0)
 
   const logoRows = [
     ['10-Brandix.png', '11-Hirdaramani.png', '12-MAS.png', '13-AE.png', '14-Aeturnum.png'],
@@ -98,15 +156,30 @@ export default function ExecutiveSearchPage() {
       <h2 className="[font-family:'Quicksand',Helvetica] text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black py-8 sm:py-12">
         Our Characterization 
       </h2>
-      <ImageSlideshow />
+      <ImageSlideshow currentSlide={currentSlide} onSlideChange={setCurrentSlide} />
+      <div className="md:hidden px-4 py-6 bg-white text-right">
+        <motion.div
+          key={currentSlide}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <h3 className="[font-family:'Quicksand',Helvetica] font-extrabold text-[#11593F] text-lg mb-1">
+            {slides[currentSlide].title}
+          </h3>
+          <p className="[font-family:'General Sans',Helvetica] text-xs text-[#2C3E4E] leading-relaxed font-medium">
+            {slides[currentSlide].description}
+          </p>
+        </motion.div>
+      </div>
       <ProcessFlowSection />
       <h2 className="[font-family:'Quicksand',Helvetica] text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black py-8 sm:py-12">
         Specialized Industry
       </h2>
 
       <div className="w-full overflow-hidden">
-        {/* Mobile: Vertical stacked with tap to expand */}
-        <div className="md:hidden">
+        {/* Mobile: Vertical stacked with expand on tap */}
+        <div className="md:hidden flex flex-col">
           {[
             { img: '/images/specialized/Apparel & Accessories.webp', title: 'Apparel & Accessories' },
             { img: '/images/specialized/FMCG.webp', title: 'FMCG' },
@@ -122,24 +195,13 @@ export default function ExecutiveSearchPage() {
             { img: '/images/specialized/Hospitality.webp', title: 'Hospitality' },
             { img: '/images/specialized/Shipping & Freight.webp', title: 'Shipping & Freight' },
           ].map((item, index) => (
-            <div 
-              key={index}
-              className="industry-card relative h-[80px] overflow-hidden cursor-pointer transition-all duration-300"
-              onClick={(e) => {
-                e.currentTarget.classList.toggle('expanded');
-              }}
-            >
-              <img 
-                src={item.img} 
-                alt={item.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="industry-text absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 transition-opacity duration-300 pointer-events-none">
-                <span className="[font-family:'Quicksand',Helvetica] text-white text-lg font-bold">
-                  {item.title}
-                </span>
-              </div>
-            </div>
+            <ExpandableIndustryCard 
+              key={index} 
+              img={item.img} 
+              title={item.title}
+              isExpanded={expandedCard === index}
+              onToggle={() => setExpandedCard(expandedCard === index ? null : index)}
+            />
           ))}
         </div>
 
