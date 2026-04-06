@@ -473,41 +473,41 @@ export function ContactInfoAndFormSection() {
         className="lg:hidden flex flex-col w-full relative min-h-screen"
         style={{ background: `url(${withBasePath('/figmaAssets/div.elementor-element.png')}) center center / cover no-repeat` }}
       >
-        <div className="absolute inset-0 bg-[#0f3424]/80" />
+        <div className="absolute inset-0 bg-[#0f3424]/0 md:/80" />
 
         <div className="relative z-10 flex flex-col w-full pt-[72px]">
-          <div className="px-5 pt-8 pb-6">
-            <h1 className="font-['Quicksand',Helvetica] font-bold text-white text-[26px] leading-[1.2] uppercase mb-5">
-              <span className="block">
-                <span className="text-black">Find</span> your future
-              </span>
-              <span className="block">
-                talent <span className="text-black">with us</span> today
-              </span>
-            </h1>
-            <div className="flex items-center gap-3">
-              <a
-                href="https://www.instagram.com/life_at_career141/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="flex w-9 h-9 items-center justify-center rounded-full border border-white/40 text-white hover:border-[#6abf4b] hover:text-[#6abf4b] transition-all"
-              >
-                <InstagramIcon className="w-4 h-4" />
-              </a>
-              <a
-                href="https://lk.linkedin.com/company/career-consultants-pvt-ltd"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="flex w-9 h-9 items-center justify-center rounded-full border border-white/40 text-white hover:border-[#6abf4b] hover:text-[#6abf4b] transition-all"
-              >
-                <LinkedinIcon className="w-4 h-4" />
-              </a>
+          <div className="mx-4 mb-8 bg-gradient-to-r from-[#11593F] to-[#37A65E] rounded-2xl shadow-2xl p-6 border border-white/15">
+            <div className="px-1 pt-2 pb-4">
+              <h1 className="font-['Quicksand',Helvetica] font-bold text-[#CBFC06] text-[26px] leading-[1.2] uppercase mb-5">
+                <span className="block">
+                  <span className="text-white">Find</span> your future
+                </span>
+                <span className="block">
+                  talent <span className="text-white">with us</span> today
+                </span>
+              </h1>
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://www.instagram.com/life_at_career141/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="flex w-12 h-12 md:w-9 md:h-9 items-center justify-center rounded-full border border-white/40 text-white hover:border-[#6abf4b] hover:text-[#6abf4b] transition-all"
+                >
+                  <InstagramIcon className="w-6 h-6 md:w-4 md:h-4" />
+                </a>
+                <a
+                  href="https://lk.linkedin.com/company/career-consultants-pvt-ltd"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="flex w-12 h-12 md:w-9 md:h-9 items-center justify-center rounded-full border border-white/40 text-white hover:border-[#6abf4b] hover:text-[#6abf4b] transition-all"
+                >
+                  <LinkedinIcon className="w-6 h-6 md:w-4 md:h-4" />
+                </a>
+              </div>
             </div>
-          </div>
 
-          <div className="mx-4 mb-8 bg-[#11593f] rounded-2xl shadow-2xl p-6 border border-white/15">
             <div className="flex items-baseline gap-3 mb-5">
               <span className="font-['Quicksand',Helvetica] font-bold text-[#6abf4b] text-[30px] leading-none">Hello!</span>
               <span className="font-['Inter',Helvetica] font-medium text-white text-[14px]">We would love to hear from you!</span>
@@ -736,7 +736,7 @@ export function ContactInfoAndFormSection() {
           {officeLocations.map((location) => (
             <div
               key={location.city}
-              className="flex flex-col p-5 rounded-xl border-l-4 border-[#6abf4b] bg-[#1a3829] shadow-lg"
+              className="flex flex-col p-5 rounded-xl border-l-4 border-[#6abf4b] bg-gradient-to-r from-[#11593F] to-[#37A65E] shadow-lg min-h-[220px]"
             >
               <div className="flex flex-col mb-3">
                 <h3 className="font-['Quicksand',Helvetica] font-bold text-white text-[20px] leading-tight">{location.city}</h3>

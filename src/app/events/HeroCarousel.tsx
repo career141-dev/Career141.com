@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { withBasePath } from '@/lib/assetPath'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
@@ -38,8 +38,16 @@ export function HeroCarousel() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isTransitioning, setIsTransitioning] = useState(false)
-  const itemsPerView = 3
+  const [isMobile, setIsMobile] = useState(false)
 
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  const itemsPerView = isMobile ? 1 : 3
   const maxIndex = Math.max(0, heroEvents.length - itemsPerView)
   const displayIndex = hoveredIndex !== null ? hoveredIndex : activeIndex
 

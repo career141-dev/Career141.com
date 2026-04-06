@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { withBasePath } from "@/lib/assetPath";
 import rawSvgPaths from "./svg-6m3w3nzzg8";
+import { useState } from "react";
 
 const imgDivElementorElement = withBasePath("/figmaAssets/testimonial/17c4028a605359300c9ddb69a9b0ee7da5187dc0.png");
 const imgGroup3087Webp = withBasePath("/figmaAssets/testimonial/e18349222d5bac12ef0f29b45387a19fe672faf3.png");
@@ -11,6 +12,28 @@ const imgDivElementorElement2 = withBasePath("/figmaAssets/testimonial/032702031
 const imgDivElementorElement3 = withBasePath("/figmaAssets/testimonial/f5fc7d0a8ab3374cd43c8bfed2b6b9ba03f8d49d.png");
 const imgDivRcAnchorLogoImg = withBasePath("/figmaAssets/testimonial/4736508c795667dcea21f8d864233031223b7832.png");
 const svgPaths = rawSvgPaths as Record<string, string>;
+
+const clientsTestimonials = [
+  { company: "Ananta Intimate Division", name: "Nawaff Mubarak", title: "Chief Executive Officer", image: imgGroup3087Webp, content: "Azeem has been a mentor and career advisor and was able to guide me on numerous occasions, giving me the confidence to take on challenging c-suite positions within the industry." },
+  { company: "FCI", name: "Devinda Peries", title: "Director Marketing", image: imgGroup3088Webp, content: "It gives me great pleasure to write this note of recommendation! After working at MAS Intimates for nearly 16 years I was quite apprehensive to talk to anyone outside of my comfort zone." },
+  { company: "MAS Intimates", name: "Shane Gunaratne", title: "Senior HR Manager", image: imgGroup3089Webp, content: "Career141 has been instrumental in helping us find top talent across the region. Their professionalism and dedication are unmatched." },
+  { company: "John Keells Holdings", name: "Kavinda Silva", title: "Head of Operations", image: imgGroup3087Webp, content: "The team at Career141 understood our requirements perfectly and delivered exceptional candidates. Highly recommended!" },
+];
+
+const candidatesTestimonials = [
+  { company: "Candidate", name: "Akarshana Waduge", title: "Professional", content: "I am truly grateful to Career141 for their guidance and support in helping me find better job opportunity. Their professional advice, personalized approach, and encouragement gave me the confidence." },
+  { company: "Candidate", name: "Amaya Perera", title: "Marketing Manager", content: "Career141 helped me land my dream job in Dubai. The entire process was smooth and professional." },
+  { company: "Candidate", name: "Nimal Fernando", title: "Software Engineer", content: "Excellent recruitment agency with a global network. They connected me with opportunities I never knew existed." },
+  { company: "Candidate", name: "Sanjaya Wickramasinghe", title: "Finance Director", content: "Professional, efficient, and reliable. Career141 made my career transition seamless." },
+  { company: "Candidate", name: "Dilini Rathnayake", title: "HR Manager", content: "The team provided excellent career guidance and matched me with the perfect role. Thank you Career141!" },
+];
+
+const employeesTestimonials = [
+  { company: "Employee", name: "Nuha Iqbarek", title: "Senior Executive", content: "It's been just over two months since I joined Career141, and it's been such a meaningful journey so far. I've gained hands-on experience in talent acquisition." },
+  { company: "Employee", name: "Kavindu Fernando", title: "Recruitment Consultant", content: "Career141 has given me the opportunity to grow professionally. The team is supportive and the work environment is fantastic." },
+  { company: "Employee", name: "Shehani Silva", title: "Account Manager", content: "I love working here! The culture is inclusive and I've learned so much about the recruitment industry." },
+  { company: "Employee", name: "Rashmika Perera", title: "Business Development Lead", content: "Great place to build your career. The management truly cares about employee growth and development." },
+];
 
 function Frame() {
   return (
@@ -30,6 +53,7 @@ function Frame() {
 }
 
 function MobileCard({ company, name, title, content, image }: { company: string; name: string; title: string; content: string; image?: string }) {
+    const [expanded, setExpanded] = useState(false);
     return (
         <div className="bg-white min-h-[380px] relative rounded-[20px] w-full border border-black border-solid p-6 pt-12 flex flex-col mb-12">
             <div className="absolute -top-8 left-6 right-8 flex items-end justify-between">
@@ -47,19 +71,24 @@ function MobileCard({ company, name, title, content, image }: { company: string;
             </div>
             <div className="w-full h-px bg-[#f2f2f2] mb-4"></div>
             <div className="flex-grow font-['Quicksand',sans-serif] font-semibold text-[#626262] text-[16px] leading-[24px]">
-                {content}
+                {expanded ? content : content.slice(0, 100) + (content.length > 100 ? "..." : "")}
             </div>
             <div className="mt-4 flex flex-col gap-2">
                 <div className="w-1/3 border-t-4 border-[#01c5c4] pt-2"></div>
-                <div className="text-[#37a65e] font-['Quicksand',sans-serif] font-semibold text-[16px] text-right cursor-pointer">Read More</div>
+                <div 
+                    className="text-[#37a65e] font-['Quicksand',sans-serif] font-semibold text-[16px] text-right cursor-pointer"
+                    onClick={() => setExpanded(!expanded)}
+                >
+                    {expanded ? "Show Less" : "Read More"}
+                </div>
             </div>
         </div>
     );
 }
 
-function Pagination({ current, total, onChange }: { current: number; total: number; onChange?: (p: number) => void }) {
+function Pagination({ current, total, onChange, className = "" }: { current: number; total: number; onChange?: (p: number) => void; className?: string }) {
     return (
-        <div className="flex justify-center items-center gap-3 py-8">
+        <div className={"flex justify-center items-center gap-3 py-8 " + className}>
             {Array.from({ length: total }, (_, i) => i + 1).map(p => (
                 <div 
                     key={p} 
@@ -79,21 +108,25 @@ function Pagination({ current, total, onChange }: { current: number; total: numb
 export default function Component390WDefault({ 
     clientsPage = 1, 
     candidatesPage = 1,
+    employeesPage = 1,
     onClientsPageChange,
-    onCandidatesPageChange 
+    onCandidatesPageChange,
+    onEmployeesPageChange 
 }: { 
     clientsPage?: number; 
     candidatesPage?: number;
+    employeesPage?: number;
     onClientsPageChange?: (p: number) => void;
     onCandidatesPageChange?: (p: number) => void;
+    onEmployeesPageChange?: (p: number) => void;
 }) {
   return (
     <div className="bg-white content-stretch flex flex-col items-start relative w-full overflow-x-hidden">
       {/* Header Intro for Mobile */}
-      <div className="bg-white w-full pt-[100px] pb-12">
+      <div className="bg-white w-full pt-[120px] md:pt-[100px] pb-12">
         <div className="px-6 flex flex-col items-center gap-6">
             <div className="text-[#37a65e] font-['Quicksand',sans-serif] font-semibold text-[22.4px] uppercase tracking-widest text-center">Testimonials</div>
-            <h1 className="font-['Quicksand',sans-serif] font-semibold text-[#555] text-[28px] text-center leading-tight">
+            <h1 className="font-['Quicksand',sans-serif] font-semibold text-[#555] text-[28px] text-center leading-tight mt-4 md:mt-0">
                What Our Clients Say | Sri Lankan, Global Recruitment Testimonials
             </h1>
         </div>
@@ -111,57 +144,102 @@ export default function Component390WDefault({
         </div>
         
         <div className="px-6 flex flex-col gap-8">
-              <MobileCard 
-                company="Ananta Intimate Division"
-                name="Nawaff Mubarak"
-                title="Chief Executive Officer"
-                image={imgGroup3087Webp}
-                content="Azeem has been a mentor and career advisor and was able to guide me on numerous occasions, giving me the confidence to take on challenging c-suite positions within the industry."
-              />
-              <MobileCard 
-                company="FCI"
-                name="Devinda Peries"
-                title="Director Marketing"
-                image={imgGroup3088Webp}
-                content="It gives me great pleasure to write this note of recommendation! After working at MAS Intimates for nearly 16 years I was quite apprehensive to talk to anyone outside of my comfort zone."
-              />
+          {clientsTestimonials.slice((clientsPage - 1) * 2, clientsPage * 2).map((item, idx) => (
+            <MobileCard key={`client-${clientsPage}-${idx}`} {...item} />
+          ))}
         </div>
-        <Pagination current={clientsPage} total={4} onChange={onClientsPageChange} />
+        <div className="md:hidden flex justify-center items-center gap-2 py-4">
+          <button 
+            onClick={() => onClientsPageChange?.(Math.max(1, clientsPage - 1))}
+            disabled={clientsPage === 1}
+            className="w-10 h-10 rounded-full border border-[#11593f] flex items-center justify-center text-[#11593f] disabled:opacity-30"
+          >
+            ←
+          </button>
+          <span className="text-[#11593f] font-semibold px-2">{clientsPage} / {Math.ceil(clientsTestimonials.length / 2)}</span>
+          <button 
+            onClick={() => onClientsPageChange?.(Math.min(Math.ceil(clientsTestimonials.length / 2), clientsPage + 1))}
+            disabled={clientsPage >= Math.ceil(clientsTestimonials.length / 2)}
+            className="w-10 h-10 rounded-full border border-[#11593f] flex items-center justify-center text-[#11593f] disabled:opacity-30"
+          >
+            →
+          </button>
+        </div>
+        <Pagination current={clientsPage} total={Math.ceil(clientsTestimonials.length / 2)} onChange={onClientsPageChange} className="hidden md:flex" />
       </div>
 
       {/* Candidates Section */}
-      <div className="px-6 py-12 relative overflow-hidden">
-          <img src={imgDivElementorElement1} className="absolute inset-0 w-full h-full object-cover z-0 opacity-40" loading="lazy" decoding="async" />
+      <div className="px-6 py-12 relative">
+          <div className="absolute inset-0 z-0 h-[200px]">
+              <img src={imgDivElementorElement1} className="w-full h-full object-cover opacity-40" loading="lazy" decoding="async" />
+          </div>
           <div className="relative z-10">
-              <div className="flex items-center justify-center gap-6 mb-16 relative z-10">
+              <div className="flex items-center justify-center gap-6 mb-16">
               <h2 className="font-['Quicksand',sans-serif] font-normal text-[32px] text-black uppercase tracking-wider">
                 Candidates
               </h2>
-              <img alt="" className="opacity-60 w-16 h-16 md:w-24 md:h-24 object-contain" src={imgDivElementorElement1} loading="lazy" decoding="async" />
-          </div>
-              
-              <MobileCard 
-                company="Candidate"
-                name="Akarshana Waduge"
-                title="Professional"
-                content="I am truly grateful to Career141 for their guidance and support in helping me find better job opportunity. Their professional advice, personalized approach, and encouragement gave me the confidence."
+              <img 
+                alt="" 
+                className="opacity-100 w-12 h-12 md:w-24 md:h-24 object-contain" 
+                src={imgDivElementorElement1} 
+                loading="lazy" 
+                decoding="async" 
               />
-              <Pagination current={candidatesPage} total={5} onChange={onCandidatesPageChange} />
+          </div>
+              <div className="flex flex-col gap-8">
+                {candidatesTestimonials.slice((candidatesPage - 1) * 2, candidatesPage * 2).map((item, idx) => (
+                  <MobileCard key={`cand-${candidatesPage}-${idx}`} {...item} />
+                ))}
+              </div>
+              <div className="md:hidden flex justify-center items-center gap-2 py-4">
+                <button 
+                  onClick={() => onCandidatesPageChange?.(Math.max(1, candidatesPage - 1))}
+                  disabled={candidatesPage === 1}
+                  className="w-10 h-10 rounded-full border border-[#11593f] flex items-center justify-center text-[#11593f] disabled:opacity-30"
+                >
+                  ←
+                </button>
+                <span className="text-[#11593f] font-semibold px-2">{candidatesPage} / {Math.ceil(candidatesTestimonials.length / 2)}</span>
+                <button 
+                  onClick={() => onCandidatesPageChange?.(Math.min(Math.ceil(candidatesTestimonials.length / 2), candidatesPage + 1))}
+                  disabled={candidatesPage >= Math.ceil(candidatesTestimonials.length / 2)}
+                  className="w-10 h-10 rounded-full border border-[#11593f] flex items-center justify-center text-[#11593f] disabled:opacity-30"
+                >
+                  →
+                </button>
+              </div>
+               <Pagination current={candidatesPage} total={Math.ceil(candidatesTestimonials.length / 2)} onChange={onCandidatesPageChange} className="hidden md:flex" />
           </div>
       </div>
 
       {/* Employees Section */}
       <div className="px-6 py-12 relative bg-[#f9f9f9]">
            <div className="flex items-center justify-center gap-6 mb-12 relative z-10">
-               <h2 className="font-['Quicksand',sans-serif] font-normal text-[32px] uppercase tracking-widest">Employees</h2>
+               <h2 className="font-['Quicksand',sans-serif] font-normal text-[32px] uppercase tracking-widest text-black md:text-inherit">Employees</h2>
                <img src={imgDivElementorElement} className="w-16 h-16 md:w-24 md:h-24 object-contain opacity-60" loading="lazy" decoding="async" />
            </div>
-           <MobileCard 
-                company="Employee"
-                name="Nuha Iqbarek"
-                title="Senior Executive"
-                content="It’s been just over two months since I joined Career141, and it’s been such a meaningful journey so far. I’ve gained hands-on experience in talent acquisition."
-           />
+           <div className="flex flex-col gap-8">
+             {employeesTestimonials.slice((employeesPage - 1) * 2, employeesPage * 2).map((item, idx) => (
+               <MobileCard key={`emp-${employeesPage}-${idx}`} {...item} />
+             ))}
+           </div>
+           <div className="md:hidden flex justify-center items-center gap-2 py-4">
+             <button 
+               onClick={() => onEmployeesPageChange?.(Math.max(1, employeesPage - 1))}
+               disabled={employeesPage === 1}
+               className="w-10 h-10 rounded-full border border-[#11593f] flex items-center justify-center text-[#11593f] disabled:opacity-30"
+             >
+               ←
+             </button>
+             <span className="text-[#11593f] font-semibold px-2">{employeesPage} / {Math.ceil(employeesTestimonials.length / 2)}</span>
+             <button 
+               onClick={() => onEmployeesPageChange?.(Math.min(Math.ceil(employeesTestimonials.length / 2), employeesPage + 1))}
+               disabled={employeesPage >= Math.ceil(employeesTestimonials.length / 2)}
+               className="w-10 h-10 rounded-full border border-[#11593f] flex items-center justify-center text-[#11593f] disabled:opacity-30"
+             >
+               →
+             </button>
+           </div>
       </div>
 
       {/* Mobile Contact Form Section with Restored Background Images */}

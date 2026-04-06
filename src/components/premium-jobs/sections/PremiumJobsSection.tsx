@@ -379,7 +379,7 @@ export function PremiumJobsSection() {
             ))}
           </div>
 
-          <div className="flex md:hidden flex-col items-center gap-2 w-full pb-4">
+          <div className="flex md:hidden flex-wrap justify-start items-start gap-2 w-full pb-4">
             {allIndustryTags.map((tag) => (
               <a
                 key={tag.label}
@@ -389,10 +389,10 @@ export function PremiumJobsSection() {
                 onClick={(e) => {
                   if (tag.href === '#') e.preventDefault();
                 }}
-                className="w-full"
+                className="flex-shrink-0"
               >
-                <div className={`w-full px-6 py-3 rounded-[3px] flex items-center cursor-pointer ${tag.active ? 'bg-career-14-1comeden' : 'bg-[#f2f2f2]'}`}>
-                  <span className={`[font-family:'Inter',Helvetica] font-normal text-[13.8px] leading-[14.4px] [text-shadow:0px_0px_10px_#0000004c] ${tag.active ? 'text-career141comelectric-lime' : 'text-career-14-1comblack'}`}>
+                <div className={`px-4 py-2 rounded-[3px] flex items-center cursor-pointer ${tag.active ? 'bg-career-14-1comeden' : 'bg-[#f2f2f2]'}`}>
+                  <span className={`[font-family:'Inter',Helvetica] font-normal text-[13.8px] leading-[14.4px] whitespace-nowrap ${tag.active ? 'text-career141comelectric-lime' : 'text-career-14-1comblack'}`}>
                     {tag.label}
                   </span>
                 </div>

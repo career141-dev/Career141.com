@@ -18,6 +18,7 @@ const galleryImages = eventsData.events
 
 export default function EventsPage() {
   const [hoveredGallery, setHoveredGallery] = useState<number | null>(null)
+  const [currentGalleryIndex, setCurrentGalleryIndex] = useState(0)
 
   return (
     <main className="min-h-screen bg-white m-0 p-0">
@@ -54,7 +55,7 @@ export default function EventsPage() {
             Event <span className="text-[#006763] font-bold">Gallery</span>
           </h2>
           
-          <div className="flex flex-col gap-8 md:gap-12">
+          <div className="md:flex flex-col gap-8 md:gap-12 hidden">
             {galleryImages.map((item, index) => (
               <div 
                 key={index} 
@@ -84,6 +85,47 @@ export default function EventsPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Mobile: One event at a time */}
+          <div className="md:hidden">
+            <div className="relative h-[300px] w-full rounded-2xl overflow-hidden">
+              <img
+                src={withBasePath(galleryImages[currentGalleryIndex].image)}
+                alt={galleryImages[currentGalleryIndex].name}
+                className="w-full h-full object-cover rounded-2xl"
+              />
+              <div 
+                className="absolute top-0 left-0 bottom-0 w-full rounded-2xl flex flex-col items-start justify-center px-8"
+                style={{ 
+                  background: 'linear-gradient(180deg, rgba(17,89,63,0.9) 0%, rgba(17,89,63,0.4) 100%)'
+                }}
+              >
+                <p className="[font-family:'Quicksand',Sans-serif] text-white text-xl font-bold text-left mb-2">
+                  {galleryImages[currentGalleryIndex].name}
+                </p>
+                <Link href={`/events/${galleryImages[currentGalleryIndex].slug}`} className="[font-family:'Quicksand',Sans-serif] text-white text-sm border border-white px-4 py-2 rounded-full hover:bg-white hover:text-[#006763] transition-colors inline-block">
+                  View Event
+                </Link>
+              </div>
+            </div>
+            <div className="flex justify-center items-center gap-4 mt-6">
+              <button 
+                onClick={() => setCurrentGalleryIndex(Math.max(0, currentGalleryIndex - 1))}
+                disabled={currentGalleryIndex === 0}
+                className="w-10 h-10 rounded-full bg-[#006763] text-white flex items-center justify-center disabled:opacity-50"
+              >
+                ←
+              </button>
+              <span className="text-[#006763] font-semibold">{currentGalleryIndex + 1} / {galleryImages.length}</span>
+              <button 
+                onClick={() => setCurrentGalleryIndex(Math.min(galleryImages.length - 1, currentGalleryIndex + 1))}
+                disabled={currentGalleryIndex === galleryImages.length - 1}
+                className="w-10 h-10 rounded-full bg-[#006763] text-white flex items-center justify-center disabled:opacity-50"
+              >
+                →
+              </button>
+            </div>
           </div>
         </div>
       </section>

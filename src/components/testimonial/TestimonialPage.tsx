@@ -12,6 +12,7 @@ export function TestimonialPage() {
   const [isMobile, setIsMobile] = useState(false)
   const [clientsPage, setClientsPage] = useState(1)
   const [candidatesPage, setCandidatesPage] = useState(1)
+  const [employeesPage, setEmployeesPage] = useState(1)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -43,8 +44,10 @@ export function TestimonialPage() {
             <Component390WDefault
               clientsPage={clientsPage}
               candidatesPage={candidatesPage}
+              employeesPage={employeesPage}
               onClientsPageChange={setClientsPage}
               onCandidatesPageChange={setCandidatesPage}
+              onEmployeesPageChange={setEmployeesPage}
             />
           </div>
         ) : (
