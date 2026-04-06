@@ -56,6 +56,9 @@ export function BrowseAllJobsSection({
   
   const [searchQuery, setSearchQuery] = useState('')
   const [scrollPosition, setScrollPosition] = useState(0)
+  const [salaryMin, setSalaryMin] = useState(0)
+  const [salaryMax, setSalaryMax] = useState(1200000)
+  const SALARY_MAX = 1200000
 
   // Persist visibleCount to sessionStorage whenever it changes
   useEffect(() => {
@@ -81,16 +84,24 @@ export function BrowseAllJobsSection({
     }
   }, [])
 
-  // 1. Filter jobs based on search
+  // 1. Filter jobs based on search and salary
   const filteredJobs = useMemo(() => {
-    if (!searchQuery) return jobCards
-    const q = searchQuery.toLowerCase()
-    return jobCards.filter(job => 
-      job.title.toLowerCase().includes(q) || 
-      job.industry.toLowerCase().includes(q) ||
-      job.location.toLowerCase().includes(q)
-    )
-  }, [jobCards, searchQuery])
+    return jobCards.filter(job => {
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase()
+        if (!job.title.toLowerCase().includes(q) &&
+            !job.industry.toLowerCase().includes(q) &&
+            !job.location.toLowerCase().includes(q)) {
+          return false
+        }
+      }
+      const salary = Number(job.salaryMin) || 0
+      if (salary < salaryMin || salary > salaryMax) {
+        return false
+      }
+      return true
+    })
+  }, [jobCards, searchQuery, salaryMin, salaryMax])
 
   // 2. Calculate Dynamic Sidebar Stats
   const dynamicStats = useMemo(() => {
@@ -100,13 +111,19 @@ export function BrowseAllJobsSection({
 
     jobCards.forEach(job => {
       industries[job.industry] = (industries[job.industry] || 0) + 1
-      locations[job.location] = (locations[job.location] || 0) + 1
+      const loc = job.location
+      let country = loc
+      if (loc.includes(', ')) {
+        const parts = loc.split(', ')
+        country = parts[parts.length - 1].trim()
+      }
+      locations[country] = (locations[country] || 0) + 1
       currencies[job.currency] = (currencies[job.currency] || 0) + 1
     })
 
     const toSidebar = (obj: Record<string, number>) => 
       Object.entries(obj)
-        .sort((a, b) => b[1] - a[1]) // Sort by count descending
+        .sort((a, b) => b[1] - a[1])
         .map(([label, count]) => ({ label, count: `(${count})`, href: '#' }))
 
     return {
@@ -244,7 +261,7 @@ export function BrowseAllJobsSection({
                 </div>
 
                 {/* Currency */}
-                <div className={styles.DivWpcFiltersSection_11_2404}>
+                <div className={styles.DivWpcFiltersSection_11_2404} style={{ position: 'relative' }}>
                   <div className={styles.DivWidgetTitle_11_2405}>
                     <span className={styles.Currency_11_2406}>Currency</span>
                   </div>
@@ -258,17 +275,56 @@ export function BrowseAllJobsSection({
                 </div>
 
                 {/* Salary Section */}
-                <div className={styles.DivWpcFiltersSection_11_2404}>
+                <div className={styles.DivWpcFiltersSection_11_2404} style={{ position: 'relative' }}>
                   <div className={styles.DivWidgetTitle_11_2405}>
-                    <span className={styles.Currency_11_2406}>Salary</span>
+                    <span className={styles.Salary_11_2426}>Salary</span>
                   </div>
-                  <div className={styles.FilterSalarySliderRow}>
-                    <div className={styles.FilterSalaryTrack}>
-                      <div className={styles.FilterSalaryTrackFill} />
+                  <div className="w-full px-1">
+                    <div className="flex justify-between mb-3">
+                      <span className="text-xs text-[#252525] font-medium">
+                        {salaryMin.toLocaleString()}
+                      </span>
+                      <span className="text-xs text-[#252525] font-medium">
+                        {salaryMax.toLocaleString()}
+                      </span>
                     </div>
-                    <div className="flex justify-between mt-2 text-xs text-[#252525] font-medium opacity-80">
-                      <span>0</span>
-                      <span>1,200,000</span>
+                    <div className="relative h-6 flex items-center">
+                      <div className="absolute w-full h-1 bg-[#c5c5c5] rounded-full" />
+                      <div
+                        className="absolute h-1 bg-[#0570e2] rounded-full"
+                        style={{
+                          left: `${(salaryMin / SALARY_MAX) * 100}%`,
+                          right: `${100 - (salaryMax / SALARY_MAX) * 100}%`,
+                        }}
+                      />
+                      <input
+                        type="range"
+                        min={0}
+                        max={SALARY_MAX}
+                        step={10000}
+                        value={salaryMin}
+                        onChange={(e) => {
+                          const val = Math.min(Number(e.target.value), salaryMax - 10000)
+                          setSalaryMin(val)
+                          setVisibleCount(12)
+                        }}
+                        className="absolute w-full h-6 appearance-none bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[#0570e2] [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-[#0570e2] [&::-moz-range-thumb]:shadow-md [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:bg-transparent"
+                        style={{ zIndex: salaryMin > SALARY_MAX / 2 ? 2 : 1 }}
+                      />
+                      <input
+                        type="range"
+                        min={0}
+                        max={SALARY_MAX}
+                        step={10000}
+                        value={salaryMax}
+                        onChange={(e) => {
+                          const val = Math.max(Number(e.target.value), salaryMin + 10000)
+                          setSalaryMax(val)
+                          setVisibleCount(12)
+                        }}
+                        className="absolute w-full h-6 appearance-none bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[#0570e2] [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-[#0570e2] [&::-moz-range-thumb]:shadow-md [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:bg-transparent"
+                        style={{ zIndex: salaryMax <= SALARY_MAX / 2 ? 2 : 1 }}
+                      />
                     </div>
                   </div>
                 </div>

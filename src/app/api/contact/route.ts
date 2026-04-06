@@ -11,6 +11,7 @@ const contactSchema = z.object({
   phone: z.string().min(5, 'Invalid phone number').max(20, 'Phone number is too long'),
   country: z.string().max(50, 'Country is too long').optional(),
   message: z.string().min(10, 'Message must be at least 10 characters').max(2000, 'Message is too long'),
+  turnstileToken: z.string().min(1, 'Captcha verification is required'),
 })
 
 type ContactFormData = z.infer<typeof contactSchema>
@@ -90,7 +91,7 @@ async function sendEmailViaBrevo(data: ContactFormData): Promise<boolean> {
         },
         to: [
           {
-            email: process.env.CONTACT_RECIPIENT_EMAIL || 'info@career141.com',
+            email: process.env.CONTACT_RECIPIENT_EMAIL || 'sanjeev@career141.com',
             name: 'Career141 Contact',
           },
         ],
@@ -101,6 +102,8 @@ async function sendEmailViaBrevo(data: ContactFormData): Promise<boolean> {
     })
 
     if (!response.ok) {
+      const errText = await response.text()
+      console.error('Brevo API Error:', response.status, errText)
       return false
     }
 
@@ -143,6 +146,24 @@ export async function POST(request: NextRequest) {
     }
 
     const data = validationResult.data
+
+    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY || '0x4AAAAAAC1MncdyRPIYHYHKjzXwEWjq40M'
+    const turnstileFormData = new URLSearchParams()
+    turnstileFormData.append('secret', turnstileSecret)
+    turnstileFormData.append('response', data.turnstileToken)
+
+    const turnstileRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      body: turnstileFormData,
+      method: 'POST',
+    })
+    
+    const turnstileOutcome = await turnstileRes.json()
+    if (!turnstileOutcome.success) {
+      return NextResponse.json(
+        { error: 'Captcha verification failed' },
+        { status: 400 }
+      )
+    }
 
     const success = await sendEmailViaBrevo(data)
 

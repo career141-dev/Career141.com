@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { Controller, useForm } from 'react-hook-form'
 import { CheckCircle2Icon, ChevronRightIcon, InstagramIcon, LinkedinIcon, Loader2, MailIcon, MapPinIcon, PhoneIcon } from 'lucide-react'
 import PhoneInput from 'react-phone-input-2'
+import { Turnstile } from '@marsidev/react-turnstile'
 import { withBasePath } from '@/lib/assetPath'
 import styles from './ContactInfoAndFormSection.module.css'
 
@@ -213,7 +214,7 @@ function FloatingSelect({
 function ContactForm({ dark = false }: { dark?: boolean }) {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-  const [captchaChecked, setCaptchaChecked] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const { register, control, handleSubmit, reset, setError, formState: { errors } } = useForm<FormData>({
     defaultValues: {
       phone: '',
@@ -221,15 +222,19 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
     },
   })
 
-  const onSubmit = async (data: FormData) => {
-    if (!captchaChecked) return
+  const onSubmit = async (data: any) => {
+    if (!turnstileToken) {
+      alert("Please complete the CAPTCHA")
+      return
+    }
 
     setSubmitting(true)
     try {
+      const payload = { ...data, turnstileToken }
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       })
 
       if (!response.ok) {
@@ -273,7 +278,10 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={dark ? styles.FormWpformsForm_10038_88_11967 : 'flex flex-col gap-4 w-full'}>
+    <form onSubmit={handleSubmit(onSubmit, (errs) => {
+      const errMsgs = Object.values(errs).map(e => e?.message).filter(Boolean);
+      alert("Please fix the following errors:\n" + errMsgs.join("\n"));
+    })} className={dark ? styles.FormWpformsForm_10038_88_11967 : 'flex flex-col gap-4 w-full'}>
       {dark ? (
         <div className={styles.DivWpformsFieldContainer_88_11968}>
           {/* Row 1: Name & Designation */}
@@ -332,6 +340,7 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
                 <Controller
                   name="phone"
                   control={control}
+                  rules={{ required: 'Phone number is required', minLength: { value: 5, message: 'Invalid phone number' } }}
                   render={({ field }) => (
                     <PhoneInput
                       country="lk"
@@ -393,6 +402,7 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
             <Controller
               name="phone"
               control={control}
+              rules={{ required: 'Phone number is required', minLength: { value: 5, message: 'Invalid phone number' } }}
               render={({ field }) => (
                 <PhoneInput
                   country="lk"
@@ -423,83 +433,22 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
       )}
 
       <div className={dark ? styles.WpformsFieldContainer_88_12005 : 'flex flex-col gap-4'}>
-        <div className={dark ? styles.Div_88_12006 : 'flex flex-col gap-3 bg-[#f9f9f9] rounded-[3px] border border-[#d3d3d3] p-3 shadow-sm'}>
-          {dark ? (
-            <div className={styles.Iframe_88_12007}>
-              <div className={styles.Body_88_12008}>
-                <div className={styles.DivRcAnchorContainer_88_12009}>
-                  <div className={styles.DivRcAnchorContainerShadow_88_12010} />
-                  <div className={styles.DivRcAnchorContent_88_12011}>
-                    <div className={styles.DivRcAnchorCenterContainer_88_12012}>
-                      <div className={styles.DivRcAnchorCenterItem_88_12013}>
-                        <button 
-                          type="button" 
-                          onClick={() => setCaptchaChecked(!captchaChecked)}
-                          className={`${styles.SpanRecaptchaAnchor_88_12014} flex items-center justify-center border border-[#d3d3d3] rounded bg-white hover:border-[#6abf4b] transition-colors`}
-                        >
-                          {captchaChecked ? (
-                            <CheckCircle2Icon className="w-5 h-5 text-[#6abf4b]" />
-                          ) : (
-                            <div className={styles.DivRecaptchaCheckboxBorder_88_12019} />
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                    <div className={styles.DivRcAnchorCenterContainer_88_12020}>
-                      <div className={styles.LabelRecaptchaAnchorLabel_88_12021}>
-                        <span className={styles.IMNotARobo_88_12022}>I&apos;m not a robot</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={styles.DivRcAnchorNormalFooter_88_12023}>
-                    <div className={styles.DivRcAnchorLogoPortrait_88_12024}>
-                      <div className={styles.DivRcAnchorLogoImg_88_12025} />
-                      <div className={styles.DivRcAnchorLogoText_88_12026}>
-                        <span className={styles.ReCaptcha_88_12027}>reCAPTCHA</span>
-                      </div>
-                    </div>
-                    <div className={styles.DivRcAnchorPt_88_12028}>
-                      <div className={styles.A_88_12029}><span className={styles.Privacy_88_12030}>Privacy</span></div>
-                      <span className={styles.generated__88_12031}> - </span>
-                      <div className={styles.A_88_12032}><span className={styles.Terms_88_12033}>Terms</span></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <>
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setCaptchaChecked(!captchaChecked)}
-                  className={`w-6 h-6 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
-                    captchaChecked ? 'bg-[#6abf4b] border-[#6abf4b]' : 'bg-white border-[#aaa] hover:border-[#6abf4b]'
-                  }`}
-                >
-                  {captchaChecked && (
-                    <svg viewBox="0 0 12 10" className="w-3 h-3" aria-hidden="true">
-                      <polyline points="1.5 6 4.5 9 10.5 1" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  )}
-                </button>
-                <span className="font-['Inter',Helvetica] text-black text-sm flex-1">I&apos;m not a robot</span>
-                <div className="flex flex-col items-center gap-1">
-                  <Image className="w-7 h-7" alt="reCAPTCHA" src={withBasePath('/figmaAssets/div-rc-anchor-logo-img.png')} width={28} height={28} />
-                  <span className="text-[#555] text-[8px] font-['Inter',Helvetica]">reCAPTCHA</span>
-                </div>
-              </div>
-            </>
-          )}
+        <div style={{ marginBottom: '16px' }}>
+          <Turnstile
+            siteKey="0x4AAAAAAC1MnbcrrWWcB6e-"
+            onSuccess={(token) => setTurnstileToken(token)}
+            onError={() => setTurnstileToken(null)}
+            onExpire={() => setTurnstileToken(null)}
+          />
         </div>
       </div>
 
       <div className={dark ? styles.DivWpformsSubmitContainer_88_12034 : 'mt-2'}>
         <button
           type="submit"
-          disabled={!captchaChecked || submitting}
+          disabled={!turnstileToken || submitting}
           className={dark ? styles.ButtonWpformsSubmit_10038_88_12035 : `flex items-center gap-2 px-7 py-3 rounded-full font-['Inter',Helvetica] font-medium text-[13px] tracking-wider transition-all duration-300 ${
-            captchaChecked && !submitting
+            turnstileToken && !submitting
               ? 'bg-[#111] text-white hover:bg-[#6abf4b] cursor-pointer'
               : 'bg-[#ccc] text-white cursor-not-allowed'
           }`}

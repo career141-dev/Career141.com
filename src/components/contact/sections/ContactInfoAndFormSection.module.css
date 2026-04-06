@@ -1062,15 +1062,15 @@
   flex-direction: column;
   align-items: flex-start;
   width: 304px;
-  height: 150px;
+  height: auto;
   display: flex;
 }
 .Iframe_88_12007 {
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  height: 150px;
-  padding-bottom: 74.4px;
+  height: auto;
+  padding-bottom: 20px; /* Reduced from 74.4px */
   display: flex;
   overflow: hidden;
 }
@@ -1121,6 +1121,9 @@
 .SpanRecaptchaAnchor_88_12014 {
   width: 28px;
   height: 28px;
+  cursor: pointer !important;
+  position: relative;
+  z-index: 50;
 }
 .DivRecaptchaCheckboxBorderAnimation_88_12015 {
   background: #d3d3d3 none 0 0/300% 3000% no-repeat;
@@ -1274,7 +1277,7 @@
   flex-direction: column;
   align-items: flex-start;
   width: 459.68px;
-  margin-top: -50px;
+  margin-top: 10px;
   display: flex;
 }
 .ButtonWpformsSubmit_10038_88_12035 {
@@ -1286,6 +1289,15 @@
   height: 41px;
   padding: 11.89px 14.8px 13.11px;
   display: flex;
+  cursor: pointer;
+  position: relative;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+.ButtonWpformsSubmit_10038_88_12035:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #ffffff55;
 }
 .Connect_88_12036 {
   color: #fff;
