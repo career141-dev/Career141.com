@@ -144,22 +144,33 @@ export default function ExecutiveSearchPage() {
       `}</style>
 
       <div className="w-full overflow-hidden">
-        {/* Mobile: Vertical stacked with tap to expand */}
-        <div className="md:hidden">
-          {industries.map((item, index) => (
+        {/* Mobile: Vertical stacked with hover to expand */}
+        <div className="md:hidden flex flex-col gap-1">
+          {[
+            { img: '/images/specialized/Apparel & Accessories.webp', title: 'Apparel & Accessories' },
+            { img: '/images/specialized/FMCG.webp', title: 'FMCG' },
+            { img: '/images/specialized/Information Technology.webp', title: 'Information Technology' },
+            { img: '/images/specialized/Healthcare.webp', title: 'Healthcare' },
+            { img: '/images/specialized/Pharmaceutical.webp', title: 'Pharmaceutical' },
+            { img: '/images/specialized/E-commerce.webp', title: 'E-commerce' },
+            { img: '/images/specialized/Retail Market.webp', title: 'Retail Market' },
+            { img: '/images/specialized/Automotive.webp', title: 'Automotive' },
+            { img: '/images/specialized/Construction.webp', title: 'Construction' },
+            { img: '/images/specialized/Power & Energy.webp', title: 'Power & Energy' },
+            { img: '/images/specialized/Education.webp', title: 'Education' },
+            { img: '/images/specialized/Hospitality.webp', title: 'Hospitality' },
+            { img: '/images/specialized/Shipping & Freight.webp', title: 'Shipping & Freight' },
+          ].map((item, index) => (
             <div 
               key={index}
-              className="industry-card relative overflow-hidden cursor-pointer"
-              onClick={(e) => {
-                e.currentTarget.classList.toggle('expanded');
-              }}
+              className="specialized-card relative overflow-hidden cursor-pointer"
             >
               <img 
                 src={item.img} 
                 alt={item.title}
                 className="w-full h-full object-cover"
               />
-              <div className="industry-text absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 transition-opacity duration-300 pointer-events-none">
+              <div className="specialized-text absolute inset-0 bg-black/40 flex items-center justify-center">
                 <span className="[font-family:'Quicksand',Helvetica] text-white text-lg font-bold">
                   {item.title}
                 </span>
@@ -168,7 +179,7 @@ export default function ExecutiveSearchPage() {
           ))}
         </div>
 
-        {/* Desktop: Original flex with hover expand */}
+        {/* Desktop: Horizontal flex with hover expand */}
         <div className="hidden md:flex w-full h-[250px] md:h-[400px] lg:h-[500px]">
           {[
             { img: '/images/specialized/Apparel & Accessories.webp', title: 'Apparel & Accessories' },
@@ -187,14 +198,14 @@ export default function ExecutiveSearchPage() {
           ].map((item, index) => (
             <div 
               key={index}
-              className="group industry-card-desktop relative h-full min-w-[80px] md:min-w-[120px] flex-1 cursor-pointer overflow-hidden"
+              className="specialized-desktop relative h-full min-w-[80px] md:min-w-[120px] flex-1 cursor-pointer overflow-hidden"
             >
               <img 
                 src={item.img} 
                 alt={item.title}
                 className="w-full h-full object-cover"
               />
-              <div className="industry-text absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="specialized-text absolute inset-0 bg-black/40 flex items-center justify-center">
                 <span className="[font-family:'Quicksand',Helvetica] text-white text-lg md:text-xl lg:text-2xl font-bold">
                   {item.title}
                 </span>
