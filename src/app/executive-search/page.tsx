@@ -158,19 +158,21 @@ export default function ExecutiveSearchPage() {
       </h2>
       <ImageSlideshow currentSlide={currentSlide} onSlideChange={setCurrentSlide} />
       <div className="md:hidden px-4 py-6 bg-white text-right">
-        <motion.div
-          key={currentSlide}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <h3 className="[font-family:'Quicksand',Helvetica] font-extrabold text-[#11593F] text-lg mb-1">
-            {slides[currentSlide].title}
-          </h3>
-          <p className="[font-family:'General Sans',Helvetica] text-xs text-[#2C3E4E] leading-relaxed font-medium">
-            {slides[currentSlide].description}
-          </p>
-        </motion.div>
+        {slides[currentSlide] && (
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <h3 className="[font-family:'Quicksand',Helvetica] font-extrabold text-[#11593F] text-lg mb-1">
+              {slides[currentSlide].title}
+            </h3>
+            <p className="[font-family:'General Sans',Helvetica] text-xs text-[#2C3E4E] leading-relaxed font-medium">
+              {slides[currentSlide].description}
+            </p>
+          </motion.div>
+        )}
       </div>
       <ProcessFlowSection />
       <h2 className="[font-family:'Quicksand',Helvetica] text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black py-8 sm:py-12">

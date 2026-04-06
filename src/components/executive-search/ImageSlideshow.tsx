@@ -46,7 +46,13 @@ const SLIDE_DURATION = 5000
 
 export function ImageSlideshow({ currentSlide: externalSlide, onSlideChange }: { currentSlide?: number; onSlideChange?: (index: number) => void }) {
   const [internalSlide, setInternalSlide] = useState(0)
-  const currentSlide = externalSlide ?? internalSlide
+  const currentSlide = externalSlide !== undefined ? externalSlide : internalSlide
+
+  useEffect(() => {
+    if (externalSlide !== undefined && externalSlide !== internalSlide) {
+      setInternalSlide(externalSlide)
+    }
+  }, [externalSlide, internalSlide])
   
   const setSlide = useCallback((newSlide: number) => {
     if (externalSlide !== undefined) {
@@ -71,11 +77,13 @@ export function ImageSlideshow({ currentSlide: externalSlide, onSlideChange }: {
     return () => clearInterval(interval)
   }, [nextSlide])
 
+  const safeSlide = slides[currentSlide] || slides[0]
+
   return (
     <div className="relative w-full overflow-hidden bg-white">
       {/* Invisible spacer to maintain proportional height based on image aspect ratio */}
       <img 
-        src={slides[0].src} 
+        src={safeSlide.src} 
         alt="" 
         className="w-full h-auto invisible pointer-events-none" 
         aria-hidden="true"
@@ -91,8 +99,8 @@ export function ImageSlideshow({ currentSlide: externalSlide, onSlideChange }: {
           className="absolute inset-0 flex items-center justify-center font-['General_Sans',Helvetica]"
         >
           <img
-            src={slides[currentSlide].src}
-            alt={slides[currentSlide].title}
+            src={safeSlide.src}
+            alt={safeSlide.title}
             className="w-full h-full object-contain"
           />
           
@@ -113,7 +121,7 @@ export function ImageSlideshow({ currentSlide: externalSlide, onSlideChange }: {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="[font-family:'Quicksand',Helvetica] font-extrabold text-[#11593F] text-lg sm:text-xl md:text-2xl lg:text-3xl mb-1 sm:mb-2"
             >
-              {slides[currentSlide].title}
+              {safeSlide.title}
             </motion.h3>
             
             <motion.p 
@@ -122,7 +130,7 @@ export function ImageSlideshow({ currentSlide: externalSlide, onSlideChange }: {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="[font-family:'General Sans',Helvetica] text-sm sm:text-base md:text-lg text-[#2C3E4E] leading-relaxed font-medium"
             >
-              {slides[currentSlide].description}
+              {safeSlide.description}
             </motion.p>
           </div>
         </motion.div>
