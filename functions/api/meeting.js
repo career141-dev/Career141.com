@@ -78,24 +78,38 @@ function validatePayload(body) {
 }
 
 async function verifyTurnstile(secret, token) {
+  // If secret is missing, we bypass verification in development/local environments
+  if (!secret) {
+    console.warn("TURNSTILE_SECRET_KEY is missing. Bypassing verification for development.");
+    return true;
+  }
+
   const formData = new URLSearchParams();
-  formData.append("secret", secret || "");
+  formData.append("secret", secret);
   formData.append("response", token || "");
 
-  const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-    method: "POST",
-    body: formData,
-  });
+  try {
+    const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body: formData,
+    });
 
-  if (!response.ok) return false;
+    if (!response.ok) return false;
 
-  const result = await response.json();
-  return Boolean(result.success);
+    const result = await response.json();
+    return Boolean(result.success);
+  } catch (err) {
+    console.error("Turnstile verification error:", err);
+    return false;
+  }
 }
 
 async function sendEmailViaBrevo(env, data) {
   const brevoApiKey = env.BREVO_API_KEY;
-  if (!brevoApiKey) return false;
+  if (!brevoApiKey) {
+    console.error("BREVO_API_KEY is missing in environment");
+    return false;
+  }
 
   const senderEmail = env.BREVO_SENDER_EMAIL || "noreply@career141.com";
   const senderName = env.BREVO_SENDER_NAME || "Career141";
@@ -120,33 +134,38 @@ async function sendEmailViaBrevo(env, data) {
     Message: ${sanitizeInput(data.message)}
   `;
 
-  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: {
-      "api-key": brevoApiKey,
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      sender: { email: senderEmail, name: senderName },
-      to: [
-        {
-          email: env.CONTACT_RECIPIENT_EMAIL || "info@career141.com",
-          name: "Career141 Meeting Request",
-        },
-      ],
-      subject: `Meeting Request: ${sanitizeInput(data.subject)}`,
-      htmlContent,
-      textContent,
-    }),
-  });
+  try {
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "api-key": brevoApiKey,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        sender: { email: senderEmail, name: senderName },
+        to: [
+          {
+            email: env.CONTACT_RECIPIENT_EMAIL || "info@career141.com",
+            name: "Career141 Meeting Request",
+          },
+        ],
+        subject: `Meeting Request: ${sanitizeInput(data.subject)}`,
+        htmlContent,
+        textContent,
+      }),
+    });
 
-  if (!response.ok) {
-    const errText = await response.text();
-    console.error("Brevo API Error:", response.status, errText);
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error("Brevo API Error:", response.status, errText);
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    console.error("Error sending email via Brevo:", err);
     return false;
   }
-
-  return true;
 }
 
 export async function onRequestPost(context) {
@@ -170,7 +189,7 @@ export async function onRequestPost(context) {
       return json({ error: "Validation failed", details: errors }, 400);
     }
 
-    const verified = await verifyTurnstile(env.TURNSTILE_SECRET_KEY || "", body.turnstileToken);
+    const verified = await verifyTurnstile(env.TURNSTILE_SECRET_KEY, body.turnstileToken);
     if (!verified) {
       return json({ error: "Captcha verification failed" }, 400);
     }
@@ -186,3 +205,4 @@ export async function onRequestPost(context) {
     return json({ error: "Internal server error" }, 500);
   }
 }
+

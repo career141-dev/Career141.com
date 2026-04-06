@@ -147,18 +147,31 @@ export async function POST(request: NextRequest) {
 
     const data = validationResult.data
 
-    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY || ''
-    const turnstileFormData = new URLSearchParams()
-    turnstileFormData.append('secret', turnstileSecret)
-    turnstileFormData.append('response', data.turnstileToken)
+    let isVerified = false
+    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY
 
-    const turnstileRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      body: turnstileFormData,
-      method: 'POST',
-    })
-    
-    const turnstileOutcome = await turnstileRes.json()
-    if (!turnstileOutcome.success) {
+    if (!turnstileSecret) {
+      console.warn("TURNSTILE_SECRET_KEY is missing. Bypassing verification for development.")
+      isVerified = true
+    } else {
+      const turnstileFormData = new URLSearchParams()
+      turnstileFormData.append('secret', turnstileSecret)
+      turnstileFormData.append('response', data.turnstileToken)
+
+      const turnstileRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        body: turnstileFormData,
+        method: 'POST',
+      })
+      
+      const turnstileOutcome = await turnstileRes.json()
+      if (turnstileOutcome.success) {
+        isVerified = true
+      } else {
+        console.error('Turnstile verification failed:', turnstileOutcome['error-codes'])
+      }
+    }
+
+    if (!isVerified) {
       return NextResponse.json(
         { error: 'Captcha verification failed' },
         { status: 400 }

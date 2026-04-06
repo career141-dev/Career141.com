@@ -102,37 +102,50 @@ export async function POST(request: NextRequest) {
     const turnstileToken = formData.get('turnstileToken')?.toString() || ''
     const file = formData.get('file') as File | null
 
-    const errors: string[] = []
-    if (firstName.length < 2) errors.push('First name must be at least 2 characters')
-    if (lastName.length < 2) errors.push('Last name must be at least 2 characters')
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('Valid email is required')
-    if (!phone || phone.length < 5) errors.push('Valid phone number is required')
-    if (!age || Number(age) < 18) errors.push('Age must be 18 or above')
-    if (!jobTitle) errors.push('Job title is required')
-    if (!file) errors.push('CV/resume file is required')
-    if (!turnstileToken) errors.push('Captcha is required')
+    const errors: { path: string[], message: string }[] = []
+    if (firstName.length < 2) errors.push({ path: ['firstName'], message: 'First name must be at least 2 characters' })
+    if (lastName.length < 2) errors.push({ path: ['lastName'], message: 'Last name must be at least 2 characters' })
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push({ path: ['email'], message: 'Valid email is required' })
+    if (!phone || phone.length < 5) errors.push({ path: ['phone'], message: 'Valid phone number is required' })
+    if (!age || Number(age) < 18) errors.push({ path: ['age'], message: 'Age must be 18 or above' })
+    if (!jobTitle) errors.push({ path: ['jobTitle'], message: 'Job title is required' })
+    if (!file) errors.push({ path: ['file'], message: 'CV/resume file is required' })
+    if (!turnstileToken) errors.push({ path: ['turnstileToken'], message: 'Captcha is required' })
 
     if (file) {
       const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
-      if (!allowedTypes.includes(file.type)) errors.push('Only PDF, DOC, and DOCX files are allowed')
-      if (file.size > 5 * 1024 * 1024) errors.push('File size must be under 5MB')
+      if (!allowedTypes.includes(file.type)) errors.push({ path: ['file'], message: 'Only PDF, DOC, and DOCX files are allowed' })
+      if (file.size > 5 * 1024 * 1024) errors.push({ path: ['file'], message: 'File size must be under 5MB' })
     }
 
     if (errors.length > 0) {
-      return NextResponse.json({ error: errors.join('. ') }, { status: 400 })
+      return NextResponse.json({ error: 'Validation failed', details: errors }, { status: 400 })
     }
 
-    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY || ''
-    const turnstileFormData = new URLSearchParams()
-    turnstileFormData.append('secret', turnstileSecret)
-    turnstileFormData.append('response', turnstileToken)
+    let isVerified = false
+    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY
 
-    const turnstileRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      body: turnstileFormData,
-      method: 'POST',
-    })
-    const turnstileOutcome = await turnstileRes.json()
-    if (!turnstileOutcome.success) {
+    if (!turnstileSecret) {
+      console.warn("TURNSTILE_SECRET_KEY is missing. Bypassing verification for development.")
+      isVerified = true
+    } else {
+      const turnstileFormData = new URLSearchParams()
+      turnstileFormData.append('secret', turnstileSecret)
+      turnstileFormData.append('response', turnstileToken)
+
+      const turnstileRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        body: turnstileFormData,
+        method: 'POST',
+      })
+      const turnstileOutcome = await turnstileRes.json()
+      if (turnstileOutcome.success) {
+        isVerified = true
+      } else {
+        console.error('Turnstile verification failed:', turnstileOutcome['error-codes'])
+      }
+    }
+
+    if (!isVerified) {
       return NextResponse.json({ error: 'Captcha verification failed' }, { status: 400 })
     }
 

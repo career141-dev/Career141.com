@@ -59,24 +59,38 @@ function arrayBufferToBase64(buffer) {
 }
 
 async function verifyTurnstile(secret, token) {
+  // If secret is missing, we bypass verification in development/local environments
+  if (!secret) {
+    console.warn("TURNSTILE_SECRET_KEY is missing. Bypassing verification for development.");
+    return true;
+  }
+
   const formData = new URLSearchParams();
-  formData.append("secret", secret || "");
+  formData.append("secret", secret);
   formData.append("response", token || "");
 
-  const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-    method: "POST",
-    body: formData,
-  });
+  try {
+    const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body: formData,
+    });
 
-  if (!response.ok) return false;
+    if (!response.ok) return false;
 
-  const result = await response.json();
-  return Boolean(result.success);
+    const result = await response.json();
+    return Boolean(result.success);
+  } catch (err) {
+    console.error("Turnstile verification error:", err);
+    return false;
+  }
 }
 
 async function sendEmailViaBrevo(env, fields, fileName, fileBase64) {
   const brevoApiKey = env.BREVO_API_KEY;
-  if (!brevoApiKey) return false;
+  if (!brevoApiKey) {
+    console.error("BREVO_API_KEY is missing in environment");
+    return false;
+  }
 
   const senderEmail = env.BREVO_SENDER_EMAIL || "noreply@career141.com";
   const senderName = env.BREVO_SENDER_NAME || "Career141";
@@ -104,29 +118,34 @@ async function sendEmailViaBrevo(env, fields, fileName, fileBase64) {
     Attachment: ${sanitizeInput(fileName)}
   `;
 
-  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: {
-      "api-key": brevoApiKey,
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      sender: { email: senderEmail, name: senderName },
-      to: [{ email: "sanjeev@career141.com", name: "Sanjeev - Career141" }],
-      subject: `Job Application: ${sanitizeInput(fields.jobTitle)} — ${sanitizeInput(fields.firstName)} ${sanitizeInput(fields.lastName)}`,
-      htmlContent,
-      textContent,
-      attachment: [{ name: fileName, content: fileBase64 }],
-    }),
-  });
+  try {
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "api-key": brevoApiKey,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        sender: { email: senderEmail, name: senderName },
+        to: [{ email: "sanjeev@career141.com", name: "Sanjeev - Career141" }],
+        subject: `Job Application: ${sanitizeInput(fields.jobTitle)} — ${sanitizeInput(fields.firstName)} ${sanitizeInput(fields.lastName)}`,
+        htmlContent,
+        textContent,
+        attachment: [{ name: fileName, content: fileBase64 }],
+      }),
+    });
 
-  if (!response.ok) {
-    const errText = await response.text();
-    console.error("Brevo API Error:", response.status, errText);
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error("Brevo API Error:", response.status, errText);
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    console.error("Error sending email via Brevo:", err);
     return false;
   }
-
-  return true;
 }
 
 export async function onRequestPost(context) {
@@ -151,31 +170,31 @@ export async function onRequestPost(context) {
     const file = formData.get("file");
 
     const errors = [];
-    if (firstName.trim().length < 2) errors.push("First name must be at least 2 characters");
-    if (lastName.trim().length < 2) errors.push("Last name must be at least 2 characters");
-    if (!email || !isValidEmail(email)) errors.push("Valid email is required");
-    if (!phone || phone.trim().length < 5) errors.push("Valid phone number is required");
-    if (!age || Number(age) < 18) errors.push("Age must be 18 or above");
-    if (!jobTitle) errors.push("Job title is required");
-    if (!turnstileToken) errors.push("Captcha is required");
+    if (firstName.trim().length < 2) errors.push({ path: ["firstName"], message: "First name must be at least 2 characters" });
+    if (lastName.trim().length < 2) errors.push({ path: ["lastName"], message: "Last name must be at least 2 characters" });
+    if (!email || !isValidEmail(email)) errors.push({ path: ["email"], message: "Valid email is required" });
+    if (!phone || phone.trim().length < 5) errors.push({ path: ["phone"], message: "Valid phone number is required" });
+    if (!age || Number(age) < 18) errors.push({ path: ["age"], message: "Age must be 18 or above" });
+    if (!jobTitle) errors.push({ path: ["jobTitle"], message: "Job title is required" });
+    if (!turnstileToken) errors.push({ path: ["turnstileToken"], message: "Captcha is required" });
 
     if (!(file instanceof File)) {
-      errors.push("CV/resume file is required");
+      errors.push({ path: ["file"], message: "CV/resume file is required" });
     } else {
       const allowedTypes = [
         "application/pdf",
         "application/msword",
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       ];
-      if (!allowedTypes.includes(file.type)) errors.push("Only PDF, DOC, and DOCX files are allowed");
-      if (file.size > 5 * 1024 * 1024) errors.push("File size must be under 5MB");
+      if (!allowedTypes.includes(file.type)) errors.push({ path: ["file"], message: "Only PDF, DOC, and DOCX files are allowed" });
+      if (file.size > 5 * 1024 * 1024) errors.push({ path: ["file"], message: "File size must be under 5MB" });
     }
 
     if (errors.length > 0) {
-      return json({ error: errors.join(". ") }, 400);
+      return json({ error: "Validation failed", details: errors }, 400);
     }
 
-    const verified = await verifyTurnstile(env.TURNSTILE_SECRET_KEY || "", turnstileToken);
+    const verified = await verifyTurnstile(env.TURNSTILE_SECRET_KEY, turnstileToken);
     if (!verified) {
       return json({ error: "Captcha verification failed" }, 400);
     }
@@ -196,3 +215,4 @@ export async function onRequestPost(context) {
     return json({ error: "Internal server error" }, 500);
   }
 }
+

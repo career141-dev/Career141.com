@@ -339,8 +339,44 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
       formData.append('turnstileToken', turnstileToken)
 
       const res = await fetch('/api/apply', { method: 'POST', body: formData })
-      const json = await res.json()
-      if (!res.ok) throw new Error(json.error || 'Submission failed')
+      
+      const responseText = await res.text()
+      let responseData: any = {}
+      try {
+        responseData = JSON.parse(responseText)
+      } catch (e) {
+        responseData = { error: responseText || 'Unknown error' }
+      }
+
+      if (!res.ok) {
+        if (res.status === 400 && (responseData.details || responseData.error === 'Validation failed')) {
+          if (Array.isArray(responseData.details)) {
+            let hasMappedError = false
+            responseData.details.forEach((detail: any) => {
+              const isObject = typeof detail === 'object' && detail !== null
+              const field = isObject && Array.isArray(detail.path) ? detail.path[0] : null
+              const message = isObject ? detail.message : detail
+              
+              if (field && field in data) {
+                setError(field as any, { type: 'manual', message: message })
+                hasMappedError = true
+              }
+            })
+            
+            if (!hasMappedError) {
+              const allMsgs = responseData.details
+                .map((d: any) => (typeof d === 'object' ? d.message : d))
+                .join('. ')
+              setError('root', { message: `Validation failed: ${allMsgs}` })
+            }
+          } else {
+            setError('root', { message: responseData.error || 'Validation failed' })
+          }
+          return
+        }
+        throw new Error(responseData.error || `Server responded with ${res.status}`)
+      }
+      
       setIsSuccess(true)
       reset()
       setFile(null)
@@ -349,12 +385,14 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
       if (fileInputRef.current) fileInputRef.current.value = ''
       setTimeout(() => setIsSuccess(false), 5000)
     } catch (err: unknown) {
+      console.error('Apply form submission error:', err)
       const message = err instanceof Error ? err.message : 'Something went wrong'
       setErrorMsg(message)
     } finally {
       setIsSubmitting(false)
     }
   }
+
 
   if (isSuccess) {
     return (
@@ -434,7 +472,7 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
 
       <div className="pb-[24px] flex justify-center">
         <Turnstile
-          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAC1MnbcrrWWcB6e-'}
+          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
           onSuccess={(token) => setTurnstileToken(token)}
           onError={() => setTurnstileToken('')}
           onExpire={() => setTurnstileToken('')}

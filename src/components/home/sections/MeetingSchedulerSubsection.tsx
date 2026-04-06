@@ -226,30 +226,47 @@ export function MeetingSchedulerSubsection() {
         body: JSON.stringify(payload),
       })
 
+      const responseText = await response.text()
+      let responseData: any = {}
+      try {
+        responseData = JSON.parse(responseText)
+      } catch (e) {
+        responseData = { error: responseText || 'Unknown error' }
+      }
+
       if (!response.ok) {
-        let errorData: any = {}
-        try {
-          errorData = await response.json()
-        } catch (e) {}
-        
-        if (response.status === 400) {
-          if (errorData?.details) {
+        if (response.status === 400 && (responseData.details || responseData.error === 'Validation failed')) {
+          if (Array.isArray(responseData.details)) {
             const newValidationErrors: FormErrors = { ...errors }
-            errorData.details.forEach((detail: any) => {
-              const field = detail.path[0] as keyof FormErrors
-              if (field) {
-                newValidationErrors[field] = detail.message
+            let hasMappedError = false
+            
+            responseData.details.forEach((detail: any) => {
+              const isObject = typeof detail === 'object' && detail !== null
+              const field = isObject && Array.isArray(detail.path) ? detail.path[0] : null
+              const message = isObject ? detail.message : detail
+              
+              if (field && field in form) {
+                newValidationErrors[field as keyof FormErrors] = message
+                hasMappedError = true
               }
             })
-            setErrors(newValidationErrors)
+            
+            if (hasMappedError) {
+              setErrors(newValidationErrors)
+            } else {
+              const allMsgs = responseData.details
+                .map((d: any) => (typeof d === 'object' ? d.message : d))
+                .join('\n')
+              alert(`Validation failed:\n${allMsgs}`)
+            }
+          } else {
+            alert(responseData.error || 'Validation failed')
           }
           return
         }
         
-        throw new Error(errorData?.error || 'Failed to send')
+        throw new Error(responseData?.error || `Server responded with ${response.status}`)
       }
-
-      const successData = await response.json()
 
       alert('Message sent! We will contact you shortly.')
       setForm({
@@ -263,10 +280,12 @@ export function MeetingSchedulerSubsection() {
       setTouched({})
       setErrors({})
     } catch (error: any) {
+      console.error('Meeting form submission error:', error)
       alert(error.message || 'Failed to send message. Please try again.')
     } finally {
       setSubmitting(false)
     }
+
   }
 
   return (
@@ -371,10 +390,10 @@ export function MeetingSchedulerSubsection() {
 
                       <div style={{ marginBottom: '16px' }}>
                         <Turnstile
-                          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAC1MnbcrrWWcB6e-'}
+                          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
                           onSuccess={(token) => setTurnstileToken(token)}
-                          onError={() => setTurnstileToken(null)}
-                          onExpire={() => setTurnstileToken(null)}
+                          onError={() => setTurnstileToken('')}
+                          onExpire={() => setTurnstileToken('')}
                         />
                       </div>
 
