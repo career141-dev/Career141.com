@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import clsx from 'clsx'
+import { Turnstile } from '@marsidev/react-turnstile'
 import { withBasePath } from '@/lib/assetPath'
 
 const imgDivElementorElement = withBasePath("/figmaAssets/testimonial/032702031c80235a48f8edff72693cef0a9031ec.png");
@@ -108,7 +109,7 @@ export function MeetingSchedulerSubsection() {
   const [errors, setErrors] = useState<FormErrors>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [submitting, setSubmitting] = useState(false)
-  const [captchaChecked, setCaptchaChecked] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
 
   const update = (field: keyof FormData) => (v: string) => {
     let finalValue = v
@@ -201,8 +202,8 @@ export function MeetingSchedulerSubsection() {
       return
     }
 
-    if (!captchaChecked) {
-      alert('Please check the "I\'m not a robot" box')
+    if (!turnstileToken) {
+      alert('Please complete the CAPTCHA')
       return
     }
     
@@ -216,6 +217,7 @@ export function MeetingSchedulerSubsection() {
         phone: form.phone,
         subject: form.subject,
         message: `Subject: ${form.subject}\n\n${form.message}`,
+        turnstileToken,
       }
       
       const response = await fetch('/api/meeting', {
@@ -367,31 +369,18 @@ export function MeetingSchedulerSubsection() {
                         )}
                       </div>
 
-                      <div className="bg-white rounded-[3px] p-4 flex items-center justify-between w-full sm:w-[302px] h-[75px] shadow-sm self-start">
-                          <div className="flex items-center gap-3">
-                              <button 
-                                type="button"
-                                onClick={() => setCaptchaChecked(!captchaChecked)}
-                                className="w-[28px] h-[28px] border-[2px] border-[#d3d3d3] bg-white rounded-[2px] flex items-center justify-center transition-colors hover:border-[#6abf4b]"
-                              >
-                                {captchaChecked && <div className="w-4 h-4 bg-[#6abf4b] rounded-[1px]" />}
-                              </button>
-                               <span className="text-black text-[14px] font-['Roboto',sans-serif] font-normal">I'm not a robot</span>
-                          </div>
-                          <div className="flex flex-col items-center gap-1">
-                              <img src={imgDivRcAnchorLogoImg} className="w-[32px] h-[32px]" alt="reCAPTCHA" />
-                              <span className="text-[10px] text-[#555] font-['Roboto',sans-serif] font-normal leading-[10px]">reCAPTCHA</span>
-                              <div className="flex gap-1 text-[8px] text-[#555] font-['Roboto',sans-serif] font-normal">
-                                  <a href="#" className="hover:underline">Privacy</a>
-                                  <span>-</span>
-                                  <a href="#" className="hover:underline">Terms</a>
-                              </div>
-                          </div>
+                      <div style={{ marginBottom: '16px' }}>
+                        <Turnstile
+                          siteKey={process.env.NODE_ENV === 'development' ? '1x00000000000000000000AA' : '0x4AAAAAAC1MnbcrrWWcB6e-'}
+                          onSuccess={(token) => setTurnstileToken(token)}
+                          onError={() => setTurnstileToken(null)}
+                          onExpire={() => setTurnstileToken(null)}
+                        />
                       </div>
 
                       <button 
                         type="submit"
-                        disabled={submitting}
+                        disabled={!turnstileToken || submitting}
                         className="bg-white text-black font-['Quicksand',sans-serif] font-bold py-3 rounded-full hover:bg-gray-100 transition-colors text-[16px] w-full disabled:opacity-50"
                       >
                         {submitting ? 'Sending...' : 'Submit'}

@@ -1,4 +1,9 @@
+'use client'
+
+import { useState, useRef, useCallback } from 'react'
 import Link from 'next/link'
+import { useForm } from 'react-hook-form'
+import { Turnstile } from '@marsidev/react-turnstile'
 import { Navbar } from '@/components/common/Navbar'
 import { CompanyFooter } from '@/components/common'
 import { JobCard } from '@/components/common/JobCard'
@@ -241,113 +246,217 @@ function FormInput({
   type = 'text',
   required = false,
   min,
+  error,
+  register,
 }: {
   label: string
   name: string
   type?: 'text' | 'email' | 'number'
   required?: boolean
   min?: number
+  error?: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  register?: any
 }) {
   return (
     <div className="flex flex-col gap-[15px] py-[15px] w-full">
       <div style={{ fontFamily: 'Quicksand, sans-serif', fontWeight: 700, fontSize: '17.6px', lineHeight: '19px', color: '#303030' }}>
         {label} {required && <span style={{ color: '#d63637', fontWeight: 400 }}>*</span>}
       </div>
-      <div className="relative w-full h-[42.2px] bg-[rgba(255,255,255,0.08)] focus-within:ring-1 focus-within:ring-[#2563eb] focus-within:ring-offset-0">
+      <div className={`relative w-full h-[42.2px] bg-[rgba(255,255,255,0.08)] focus-within:ring-1 focus-within:ring-[#2563eb] focus-within:ring-offset-0 ${error ? 'ring-1 ring-red-500' : ''}`}>
         <input
-          name={name}
+          {...(register ? register(name) : {})}
           type={type}
           min={min}
-          required={required}
           className="w-full h-full bg-transparent px-[14px] py-[10.3px] outline-none text-[#111]"
           style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '15.1px', caretColor: '#2563eb' }}
         />
-        <div className="absolute bottom-[-0.8px] left-0 right-0 border-b-[0.8px] border-[#37a65e] focus-within:border-[#2563eb]" />
+        <div className={`absolute bottom-[-0.8px] left-0 right-0 border-b-[0.8px] ${error ? 'border-red-500' : 'border-[#37a65e] focus-within:border-[#2563eb]'}`} />
       </div>
+      {error && <span className="text-red-500 text-xs mt-1">{error}</span>}
     </div>
   )
 }
 
-function ApplyForm() {
+function ApplyForm({ jobTitle }: { jobTitle: string }) {
+  const { register, handleSubmit, formState: { errors }, setError, clearErrors, reset } = useForm<{
+    firstName: string
+    lastName: string
+    email: string
+    phone: string
+    age: string
+    designation: string
+  }>({ mode: 'onBlur' })
+
+  const [file, setFile] = useState<File | null>(null)
+  const [fileName, setFileName] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0]
+    if (f) {
+      const allowed = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
+      const maxSize = 5 * 1024 * 1024
+      if (!allowed.includes(f.type)) {
+        setError('root', { message: 'Only PDF, DOC, and DOCX files are allowed' })
+        return
+      }
+      if (f.size > maxSize) {
+        setError('root', { message: 'File size must be under 5MB' })
+        return
+      }
+      clearErrors('root')
+      setFile(f)
+      setFileName(f.name)
+    }
+  }, [setError, clearErrors])
+
+  const onSubmit = async (data: { firstName: string; lastName: string; email: string; phone: string; age: string; designation: string }) => {
+    if (!file) {
+      setError('root', { message: 'Please upload your CV/resume' })
+      return
+    }
+    if (!turnstileToken) {
+      setError('root', { message: 'Please complete the captcha' })
+      return
+    }
+    setIsSubmitting(true)
+    setErrorMsg('')
+    try {
+      const formData = new FormData()
+      formData.append('firstName', data.firstName)
+      formData.append('lastName', data.lastName)
+      formData.append('email', data.email)
+      formData.append('phone', data.phone)
+      formData.append('age', data.age)
+      formData.append('designation', data.designation)
+      formData.append('jobTitle', jobTitle)
+      formData.append('file', file)
+      formData.append('turnstileToken', turnstileToken)
+
+      const res = await fetch('/api/apply', { method: 'POST', body: formData })
+      const json = await res.json()
+      if (!res.ok) throw new Error(json.error || 'Submission failed')
+      setIsSuccess(true)
+      reset()
+      setFile(null)
+      setFileName('')
+      setTurnstileToken('')
+      if (fileInputRef.current) fileInputRef.current.value = ''
+      setTimeout(() => setIsSuccess(false), 5000)
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Something went wrong'
+      setErrorMsg(message)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  if (isSuccess) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12 text-center">
+        <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-4">
+          <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h3 className="text-xl font-bold text-[#161618] mb-2">Application Sent!</h3>
+        <p className="text-[#666]">Your application has been submitted successfully.</p>
+      </div>
+    )
+  }
+
   return (
-    <form className="w-full">
+    <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+      {errors.root && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-600 text-sm">
+          {errors.root.message}
+        </div>
+      )}
+
       <div className="flex flex-col md:flex-row w-full gap-0">
-        <div className="w-full md:flex-1 px-0 md:px-[10px]"><FormInput label="First Name" name="firstName" required /></div>
-        <div className="w-full md:flex-1 px-0 md:px-[10px]"><FormInput label="Last Name" name="lastName" required /></div>
+        <div className="w-full md:flex-1 px-0 md:px-[10px]">
+          <FormInput label="First Name" name="firstName" required error={errors.firstName?.message} register={register} />
+        </div>
+        <div className="w-full md:flex-1 px-0 md:px-[10px]">
+          <FormInput label="Last Name" name="lastName" required error={errors.lastName?.message} register={register} />
+        </div>
       </div>
 
       <div className="flex flex-col md:flex-row w-full gap-0">
-        <div className="w-full md:flex-1 px-0 md:px-[10px]"><FormInput label="Email" name="email" type="email" required /></div>
-        <div className="w-full md:flex-1 px-0 md:px-[10px]"><FormInput label="Age" name="age" type="number" min={18} required /></div>
+        <div className="w-full md:flex-1 px-0 md:px-[10px]">
+          <FormInput label="Email" name="email" type="email" required error={errors.email?.message} register={register} />
+        </div>
+        <div className="w-full md:flex-1 px-0 md:px-[10px]">
+          <FormInput label="Phone" name="phone" type="text" required error={errors.phone?.message} register={register} />
+        </div>
       </div>
 
-      <div className="flex flex-col gap-[15px] pb-[15px] w-full">
-        <div style={{ fontFamily: 'Quicksand, sans-serif', fontWeight: 700, fontSize: '17.6px', lineHeight: '19px', color: '#303030' }}>Current Designation</div>
-        <div className="relative w-full h-[42.2px] bg-[rgba(255,255,255,0.08)] focus-within:ring-1 focus-within:ring-[#2563eb] focus-within:ring-offset-0">
-          <input
-            name="designation"
-            type="text"
-            className="w-full h-full bg-transparent px-[14px] py-[10.3px] outline-none text-[#111]"
-            style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '15.1px', caretColor: '#2563eb' }}
-          />
-          <div className="absolute bottom-[-0.8px] left-0 right-0 border-b-[0.8px] border-[#37a65e]" />
+      <div className="flex flex-col md:flex-row w-full gap-0">
+        <div className="w-full md:flex-1 px-0 md:px-[10px]">
+          <FormInput label="Age" name="age" type="number" min={18} required error={errors.age?.message} register={register} />
+        </div>
+        <div className="w-full md:flex-1 px-0 md:px-[10px]">
+          <FormInput label="Current Designation" name="designation" register={register} />
         </div>
       </div>
 
       <div className="flex flex-col gap-[15.8px] pb-[15px] items-center w-full">
-        <div className="w-full"><div style={{ fontFamily: 'Quicksand, sans-serif', fontWeight: 700, fontSize: '17.6px', lineHeight: '19px', color: '#303030' }}>File Upload</div></div>
+        <div className="w-full"><div style={{ fontFamily: 'Quicksand, sans-serif', fontWeight: 700, fontSize: '17.6px', lineHeight: '19px', color: '#303030' }}>Upload CV / Resume <span style={{ color: '#d63637', fontWeight: 400 }}>*</span></div></div>
         <label className="bg-white flex flex-col items-center justify-center gap-2 p-[20px] rounded-[3px] w-full min-h-[82px] cursor-pointer relative transition-colors focus-within:ring-2 focus-within:ring-[#2563eb]" style={{ border: '1px solid rgba(0,0,0,0.25)' }}>
-          <img
-            alt="Upload"
-            className="w-[30px] h-[30px] object-contain"
-            src={withBasePath('/figmaAssets/Component 2.png')}
-          />
-          <span className="text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '14.9px', lineHeight: '24px', color: 'rgba(0,0,0,0.7)' }}>Click or drag a file to this area to upload.</span>
+          {fileName ? (
+            <div className="flex items-center gap-2 text-[#11593f]">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="text-sm font-medium">{fileName}</span>
+            </div>
+          ) : (
+            <>
+              <img alt="Upload" className="w-[30px] h-[30px] object-contain" src={withBasePath('/figmaAssets/Component 2.png')} />
+              <span className="text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '14.9px', lineHeight: '24px', color: 'rgba(0,0,0,0.7)' }}>Click or drag a file to this area to upload (PDF, DOC, DOCX — max 5MB)</span>
+            </>
+          )}
           <input
-            name="resume"
+            ref={fileInputRef}
             type="file"
             className="absolute inset-0 opacity-0 cursor-pointer"
             accept=".pdf,.doc,.docx"
+            onChange={handleFileChange}
             aria-label="Upload resume"
           />
         </label>
       </div>
 
-      <div className="pb-[74.4px]">
-        <div className="bg-[#f9f9f9] flex h-[75.6px] items-start p-[0.8px] rounded-[3px] w-[301.6px] relative" style={{ border: '1px solid #d3d3d3', boxShadow: '0px 0px 4px 1px rgba(0,0,0,0.08)' }}>
-          <div className="flex items-center justify-center px-3 h-full">
-            <div className="relative size-[28px]">
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <img alt="" className="absolute h-[3000%] left-0 max-w-none top-0 w-[300%]" src={withBasePath('/figmaAssets/card-back-check.png')} />
-              </div>
-              <div className="absolute h-[30px] left-[-5px] top-0 w-[38px] overflow-hidden pointer-events-none">
-                <img alt="" className="absolute h-[4200%] left-0 max-w-none top-0 w-full" src={withBasePath('/figmaAssets/card-front-check.png')} />
-              </div>
-              <div className="absolute left-0 rounded-[2px] size-[27.2px] top-0 bg-white" style={{ border: '1px solid #444746' }} />
-            </div>
-          </div>
-          <div className="flex flex-col items-start min-w-[152px] h-full justify-center">
-            <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '14px', lineHeight: '17px', color: 'black' }}>I&apos;m not a robo</p>
-          </div>
-          <div className="absolute right-0 top-0 h-full flex flex-col items-center justify-center pr-3">
-            <div className="flex flex-col gap-[4.4px] items-center w-[58px]">
-              <div className="relative size-[32px] overflow-hidden">
-                <img alt="" className="absolute left-0 max-w-none size-full top-0" src={withBasePath('/figmaAssets/div-rc-anchor-logo-img.png')} />
-              </div>
-              <p style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 400, fontSize: '10px', lineHeight: '10px', color: '#555' }}>reCAPTCHA</p>
-              <div className="flex gap-1">
-                <a href="https://www.google.com/intl/en/policies/privacy/" target="_blank" rel="noopener noreferrer" className="text-[#555]" style={{ fontFamily: 'Roboto, sans-serif', fontSize: '8px', lineHeight: 'normal' }}>Privacy</a>
-                <span style={{ fontFamily: 'Roboto, sans-serif', fontSize: '8px' }}> - </span>
-                <a href="https://www.google.com/intl/en/policies/terms/" target="_blank" rel="noopener noreferrer" className="text-[#555]" style={{ fontFamily: 'Roboto, sans-serif', fontSize: '8px', lineHeight: 'normal' }}>Terms</a>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="pb-[24px] flex justify-center">
+        <Turnstile
+          siteKey={process.env.NODE_ENV === 'development' ? '1x00000000000000000000AA' : '0x4AAAAAAC1MnbcrrWWcB6e-'}
+          onSuccess={(token) => setTurnstileToken(token)}
+          onError={() => setTurnstileToken('')}
+          onExpire={() => setTurnstileToken('')}
+        />
       </div>
 
-      <button type="button" className="bg-white flex h-[41px] items-center justify-center px-[15.8px] py-px rounded-[100px] w-full relative cursor-pointer" style={{ border: '1px solid #11593f' }}>
-        <span style={{ fontFamily: 'Quicksand, sans-serif', fontWeight: 700, fontSize: '17.6px', lineHeight: '17.6px', color: '#11593f' }}>Submit</span>
+      <button
+        type="submit"
+        disabled={!turnstileToken || isSubmitting}
+        className="bg-white flex h-[41px] items-center justify-center px-[15.8px] py-px rounded-[100px] w-full relative cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+        style={{ border: '1px solid #11593f' }}
+      >
+        <span style={{ fontFamily: 'Quicksand, sans-serif', fontWeight: 700, fontSize: '17.6px', lineHeight: '17.6px', color: '#11593f' }}>
+          {isSubmitting ? 'Submitting...' : 'Submit Application'}
+        </span>
       </button>
+
+      {errorMsg && (
+        <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded text-red-600 text-sm text-center">
+          {errorMsg}
+        </div>
+      )}
     </form>
   )
 }
@@ -474,7 +583,7 @@ export function PremiumJobApplyPage({ slug }: { slug: string }) {
 
               <SectionHeader title="Apply now" />
               <div className="pt-[24px] pb-[48px]">
-                <ApplyForm />
+                <ApplyForm jobTitle={job.title} />
               </div>
             </div>
           </div>

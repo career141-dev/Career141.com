@@ -10,6 +10,7 @@ const meetingSchema = z.object({
   phone: z.string().min(5, 'Invalid phone number').max(20, 'Phone number is too long'),
   subject: z.string().min(1, 'Subject is required').max(200, 'Subject is too long'),
   message: z.string().min(10, 'Message must be at least 10 characters').max(2000, 'Message is too long'),
+  turnstileToken: z.string().min(1, 'Captcha verification is required'),
 })
 
 type MeetingFormData = z.infer<typeof meetingSchema>
@@ -96,6 +97,8 @@ async function sendEmailViaBrevo(data: MeetingFormData): Promise<boolean> {
     })
 
     if (!response.ok) {
+      const errText = await response.text()
+      console.error('Brevo API Error:', response.status, errText)
       return false
     }
 
@@ -139,6 +142,26 @@ export async function POST(request: NextRequest) {
     }
 
     const data = validationResult.data
+
+    const turnstileSecret = process.env.NODE_ENV === 'development' 
+      ? '1x0000000000000000000000000000000AA' 
+      : (process.env.TURNSTILE_SECRET_KEY || '0x4AAAAAAC1MncdyRPIYHYHKjzXwEWjq40M')
+    const turnstileFormData = new URLSearchParams()
+    turnstileFormData.append('secret', turnstileSecret)
+    turnstileFormData.append('response', data.turnstileToken)
+
+    const turnstileRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      body: turnstileFormData,
+      method: 'POST',
+    })
+    
+    const turnstileOutcome = await turnstileRes.json()
+    if (!turnstileOutcome.success) {
+      return NextResponse.json(
+        { error: 'Captcha verification failed' },
+        { status: 400 }
+      )
+    }
 
     const success = await sendEmailViaBrevo(data)
 
