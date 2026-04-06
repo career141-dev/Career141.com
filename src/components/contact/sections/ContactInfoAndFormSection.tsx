@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { Controller, useForm } from 'react-hook-form'
 import { CheckCircle2Icon, ChevronRightIcon, InstagramIcon, LinkedinIcon, Loader2, MailIcon, MapPinIcon, PhoneIcon } from 'lucide-react'
@@ -215,6 +215,13 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
+      console.warn('Turnstile site key missing. Auto-bypassing for development.')
+      setTurnstileToken('dev-token')
+    }
+  }, [])
   const { register, control, handleSubmit, reset, setError, formState: { errors } } = useForm<FormData>({
     defaultValues: {
       phone: '',
@@ -458,12 +465,18 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
 
       <div className={dark ? styles.WpformsFieldContainer_88_12005 : 'flex flex-col gap-4'}>
         <div style={{ marginBottom: '16px' }}>
-          <Turnstile
-            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
-            onSuccess={(token) => setTurnstileToken(token)}
-            onError={() => setTurnstileToken('')}
-            onExpire={() => setTurnstileToken('')}
-          />
+          {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ? (
+            <Turnstile
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+              onSuccess={(token) => setTurnstileToken(token)}
+              onError={() => setTurnstileToken('')}
+              onExpire={() => setTurnstileToken('')}
+            />
+          ) : (
+            <div className="text-xs text-amber-600 bg-amber-50 p-3 border border-amber-200 rounded text-center w-full">
+              Turnstile site key missing. Verification bypassed for development.
+            </div>
+          )}
         </div>
       </div>
 

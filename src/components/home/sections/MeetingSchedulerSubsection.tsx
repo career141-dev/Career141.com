@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import clsx from 'clsx'
 import { Turnstile } from '@marsidev/react-turnstile'
 import { withBasePath } from '@/lib/assetPath'
@@ -110,6 +110,13 @@ export function MeetingSchedulerSubsection() {
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [submitting, setSubmitting] = useState(false)
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
+      console.warn('Turnstile site key missing. Auto-bypassing for development.')
+      setTurnstileToken('dev-token')
+    }
+  }, [])
 
   const update = (field: keyof FormData) => (v: string) => {
     let finalValue = v
@@ -389,12 +396,18 @@ export function MeetingSchedulerSubsection() {
                       </div>
 
                       <div style={{ marginBottom: '16px' }}>
-                        <Turnstile
-                          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
-                          onSuccess={(token) => setTurnstileToken(token)}
-                          onError={() => setTurnstileToken('')}
-                          onExpire={() => setTurnstileToken('')}
-                        />
+                        {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ? (
+                          <Turnstile
+                            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                            onSuccess={(token) => setTurnstileToken(token)}
+                            onError={() => setTurnstileToken(null)}
+                            onExpire={() => setTurnstileToken(null)}
+                          />
+                        ) : (
+                          <div className="text-xs text-amber-600 bg-amber-50 p-3 border border-amber-200 rounded text-center w-full">
+                            Turnstile site key missing. Verification bypassed for development.
+                          </div>
+                        )}
                       </div>
 
                       <button 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { Turnstile } from '@marsidev/react-turnstile'
@@ -296,6 +296,13 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
   const [errorMsg, setErrorMsg] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
+      console.warn('Turnstile site key missing. Auto-bypassing for development.')
+      setTurnstileToken('dev-token')
+    }
+  }, [])
+
   const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0]
     if (f) {
@@ -471,12 +478,18 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
       </div>
 
       <div className="pb-[24px] flex justify-center">
-        <Turnstile
-          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
-          onSuccess={(token) => setTurnstileToken(token)}
-          onError={() => setTurnstileToken('')}
-          onExpire={() => setTurnstileToken('')}
-        />
+        {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ? (
+          <Turnstile
+            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+            onSuccess={(token) => setTurnstileToken(token)}
+            onError={() => setTurnstileToken('')}
+            onExpire={() => setTurnstileToken('')}
+          />
+        ) : (
+          <div className="text-xs text-amber-600 bg-amber-50 p-3 border border-amber-200 rounded text-center w-full">
+            Turnstile site key missing. Verification bypassed for development.
+          </div>
+        )}
       </div>
 
       <button
