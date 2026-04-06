@@ -37,13 +37,13 @@ export function HeroSection() {
             />
             
             {/* Layer 2 & 3: Text & Button - Top */}
-            <div className="relative z-10 flex flex-col items-center sm:items-start pt-8 sm:pt-10 lg:pt-2 sm:pl-4 lg:pl-8">
+            <div className="relative z-10 flex flex-col items-start pt-8 sm:pt-10 lg:pt-2 sm:pl-4 lg:pl-8">
               <nav className="text-gray-300 mb-2 text-xs sm:text-sm">
                 <Link href="/" className="hover:text-white transition-colors">Career141</Link>
                 <span> &gt; </span>
                 <span className="text-white">Executive Search</span>
               </nav>
-              <h1 className="[font-family:'Open Sans',Helvetica] font-bold text-white text-sm sm:text-lg md:text-2xl lg:text-4xl leading-tight text-left mb-2 sm:mb-4 lg:mb-6">
+              <h1 className="[font-family:'Open Sans',Helvetica] font-bold text-white text-sm sm:text-lg md:text-2xl lg:text-4xl leading-tight text-left mb-2 sm:mb-4 lg:mb-6 pl-4 lg:pl-0">
                 Global Executive Search <b className="[font-family:'Quicksand',Helvetica] text-sm sm:text-lg md:text-2xl lg:text-4xl" style={{ color: '#CBFC06' }}>&amp; Leadership Recruitment</b>
                 <br />by Career141
               </h1>
@@ -51,7 +51,7 @@ export function HeroSection() {
               {/* Button - Under heading */}
               <Link 
                 href="/contact-us" 
-                className="bg-[#11593f] hover:bg-[#0e4d34] text-white font-semibold rounded-full transition-colors text-xs sm:text-sm w-[120px] sm:w-[150px] h-[35px] sm:h-[40px] flex items-center justify-center"
+                className="bg-[#11593f] hover:bg-[#0e4d34] text-white font-semibold rounded-full transition-colors text-xs w-[100px] h-[30px] flex items-center justify-center mt-2 ml-4 sm:ml-0"
               >
                 Get In Touch
               </Link>

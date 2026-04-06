@@ -7,11 +7,11 @@ export function FoundersTextElement() {
   const [isExpanded, setIsExpanded] = useState(false)
 
   return (
-    <div className={styles.DivElementorElement_115_10489} style={{ background: 'transparent' }}>
-      <div className={styles.DivElementorElement_115_10490}>
+    <div className={`${styles.DivElementorElement_115_10489} w-full px-4 md:px-0`} style={{ background: 'transparent' }}>
+      <div className={`${styles.DivElementorElement_115_10490} w-full md:w-[719.75px]`}>
         <div className={styles.DivElementorElement_115_10491}>
           <div className={styles.DivElementorWidgetContainer_115_10492}>
-            <div className={styles.P_115_10493} style={{ fontFamily: "'General Sans Variable', Sans-serif", fontSize: '1em', lineHeight: '1.7em', color: '#000000', fontWeight: 'normal', position: 'relative' }}>
+            <div className={`${styles.P_115_10493} text-sm md:text-base`} style={{ fontFamily: "'General Sans Variable', Sans-serif", fontSize: '1em', lineHeight: '1.7em', color: '#000000', fontWeight: 'normal', position: 'relative' }}>
               {!isExpanded && (
                 <div 
                   className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none"

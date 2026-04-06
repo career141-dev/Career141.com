@@ -68,12 +68,14 @@ export default function OurCulturePage() {
             alt="Our Culture Hero"
             className="hidden md:block w-full h-auto object-cover md:object-fill"
           />
-          <div className="block md:hidden overflow-hidden relative">
+          <div className="md:hidden w-full relative">
+            <h3 className="[font-family:'Quicksand',Sans-serif] text-[#11593f] text-xl font-bold text-center mb-4 px-4">
+              Our Culture
+            </h3>
             <img
-              src={withBasePath('/images/Culture/Group 3584.png')}
+              src={withBasePath('/images/Culture/Group-3092.webp')}
               alt="Our Culture Hero"
-              className="w-full h-auto"
-              style={{ minWidth: '200vw' }}
+              className="w-full h-auto block"
             />
           </div>
           <img
@@ -81,8 +83,8 @@ export default function OurCulturePage() {
             alt=""
             className="hidden md:block absolute top-[70px] right-0 z-10 w-2/4 h-auto"
           />
-          <div className="md:absolute md:top-30 md:right-20 md:z-20 md:w-[40%] md:flex md:flex-col md:gap-4 md:p-6 block px-4 py-4">
-            <div className="md:flex md:flex-col md:items-start md:justify-center md:gap-1 md:mt-22 md:ml-36 mb-0">
+          <div className="md:absolute md:top-30 md:right-20 md:z-20 md:w-[40%] md:flex md:flex-col md:gap-4 md:p-6 block px-4 py-4 flex flex-col items-start md:items-end">
+            <div className="flex flex-col items-start md:flex md:flex-col md:items-start md:justify-center md:gap-1 md:mt-22 md:ml-36 mb-0">
               <div className="flex items-center gap-2 mb-2">
                 <img
                   src={withBasePath('/images/Culture/g1.svg')}
@@ -93,12 +95,12 @@ export default function OurCulturePage() {
                   Our Culture
                 </span>
               </div>
-              <span style={{ fontFamily: "'Nordeco', Sans-serif" }} className="text-[#000000] text-sm md:text-[2.8em] font-normal leading-[1.2em] mb-0 block">
+              <span style={{ fontFamily: "'Nordeco', Sans-serif" }} className="text-[#000000] text-sm md:text-[2.8em] font-normal leading-[1.2em] mb-0 block text-left">
                 Growth, Performance <br className="hidden md:block" />And Collaboration
               </span>
             </div>
-            <div className="md:flex md:flex-col md:items-end md:gap-2 md:mt-2">
-              <p className="[font-family:'Quicksand',Sans-serif] text-[#000000] text-sm md:text-base md:max-w-[300px] text-left md:text-right mb-3 mt-4">
+            <div className="flex flex-col items-end md:flex md:flex-col md:items-end md:gap-2 md:mt-2">
+              <p className="[font-family:'Quicksand',Sans-serif] text-[#000000] text-sm md:text-base md:max-w-[300px] text-right md:text-right mb-3 mt-4">
                 Welcome to Career141, where we pride ourselves on cultivating a dynamic and inclusive environment.
               </p>
               <button onClick={scrollToScheduler} className="bg-gradient-to-r from-[#37A65E] to-[#11593F] text-white [font-family:'Quicksand',Sans-serif] text-[0.9em] font-medium px-10 py-1.5 rounded-[10px] whitespace-nowrap w-fit border-none hover:opacity-90 transition-opacity">
@@ -152,7 +154,7 @@ export default function OurCulturePage() {
             <img 
               src={withBasePath('/images/Culture/Image differentiate.svg')} 
               alt="How we differentiate" 
-              className="w-full h-auto"
+              className="hidden md:block w-full h-auto"
             />
           </div>
         </div>
@@ -205,8 +207,18 @@ export default function OurCulturePage() {
           <img 
             src={withBasePath('/images/Culture/hexigon.png')} 
             alt="Hexigon" 
-            className="h-auto max-w-full w-full"
+            className="hidden md:block h-auto max-w-full w-full"
           />
+          <div className="md:hidden w-full">
+            <h2 className="mb-4 text-center" style={{ fontFamily: "'Quicksand', Sans-serif", fontWeight: 400, lineHeight: '1.2em', color: '#444444', textTransform: 'uppercase', fontSize: '1.25rem' }}>
+              <b>Work with us and make a</b> <b style={{ color: '#37A65E', fontWeight: 'bold' }}>difference</b>
+            </h2>
+            <img 
+              src={withBasePath('/images/Culture/Group-3092.webp')} 
+              alt="Hexigon" 
+              className="h-auto max-w-full w-full"
+            />
+          </div>
           <div className="absolute top-1/2 left-1/2 -translate-x-[200%] -translate-y-[250%] px-2 md:px-0">
             <h2 className="[font-family:'Quicksand',Sans-serif] text-sm md:text-xl lg:text-[2em] font-light uppercase leading-[1.4] text-center" style={{ color: '#444444' }}>
               Enjoy our <span style={{ color: '#37A65E', fontWeight: 'bold' }}>benefits</span> & <br className="hidden md:block" /> <span style={{ color: '#37A65E', fontWeight: 'bold' }}>grow with us</span>
@@ -227,7 +239,7 @@ export default function OurCulturePage() {
               Work with us and make a <b>difference</b>
             </h2>
             <img 
-              src={withBasePath('/images/Culture/people.png')} 
+              src={withBasePath('/images/Culture/Frame-2442-1024x437.webp')} 
               alt="Work with us" 
               className="w-full h-auto mb-4"
             />

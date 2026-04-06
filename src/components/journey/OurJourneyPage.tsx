@@ -19,7 +19,7 @@ export function OurJourneyPage() {
 
       <QuoteHighlightSection />
       
-      <div className="relative z-[999] w-full">
+      <div className="relative z-[999] w-full mt-20 md:mt-0">
         <FoundersViewSection />
       </div>
 

@@ -91,7 +91,7 @@ function MobileLogoCarousel() {
       <div
         ref={scrollRef}
         onScroll={onScroll}
-        className="flex gap-[10px] overflow-x-auto snap-x snap-mandatory pl-[23px] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="flex gap-[10px] overflow-x-visible snap-x snap-mandatory ml-[15vw] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden px-4"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {ALL_BRANDS.map((brand, i) => (
@@ -136,17 +136,18 @@ export function BackgroundSubsection() {
       style={{ backgroundImage: `url(${withBasePath('/figmaAssets/blue-horizontal-tube-1-svg-fill-1.svg')})`, backgroundColor: 'white' }}
     >
       <div className="lg:hidden flex flex-col pt-[55px] pb-8 gap-6">
-        <div className="mx-[23px] border-l-[1.6px] border-solid border-[#fe8d2b] pl-5">
-          <p className="[font-family:'Quicksand',Helvetica] font-normal text-black text-[30px] leading-[36px]">Worked with the</p>
-          <p className="[font-family:'Quicksand',Helvetica] font-bold text-[#fe8d2b] text-[30px] leading-[36px] ml-[40px]">best brands</p>
+        <div className="absolute left-5 top-10 w-[1.6px] bg-[#fe8d2b]" style={{ height: '380px' }} />
+        <div className="mx-[23px] pl-5 pt-0">
+          <p className="[font-family:'General Sans Variable',Sans-serif] font-normal text-black text-[30px] leading-[36px] ml-4 mt-2">Worked with the</p>
+          <p className="[font-family:'General Sans Variable',Sans-serif] font-bold text-[#fe8d2b] text-[30px] leading-[36px] ml-[44px]">best brands</p>
 
-          <div className="flex items-start gap-4 mt-[6px]">
+          <div className="flex items-start gap-4 mt-4">
             <div className="w-7 shrink-0 mt-[10px] border-t-[2.4px] border-solid border-[#fe8d2b]" />
-            <p className="[font-family:'Inter',Helvetica] font-semibold text-[#444444] text-[14px] leading-[22px]">
-              Our strength and growth are a testament to our enduring partnerships and collaborations with leading global and
-              local brands built on trust, integrity, and results.
-            </p>
           </div>
+          <p className="[font-family:'Inter',Helvetica] font-semibold text-[#444444] text-[14px] leading-[22px]">
+            Our strength and growth are a testament to our enduring partnerships and collaborations with leading global and
+            local brands built on trust, integrity, and results.
+          </p>
         </div>
 
         <MobileLogoCarousel />

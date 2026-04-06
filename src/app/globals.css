@@ -7,6 +7,12 @@
   .all-\[unset\] {
     all: unset;
   }
+  .industry-card.expanded {
+    height: 200px;
+  }
+  .industry-card.expanded .industry-text {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeIn {

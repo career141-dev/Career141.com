@@ -83,12 +83,10 @@ export function ImageSlideshow() {
             src={slides[currentSlide].src}
             alt={slides[currentSlide].title}
             className="w-full h-full object-contain"
-            loading="lazy"
-            decoding="async"
           />
           
           <div 
-            className="absolute z-20 flex flex-col items-start px-6"
+            className="absolute z-20 flex flex-col items-start px-6 hidden md:flex"
             style={{
               top: '42%',
               left: '42%',
@@ -118,6 +116,29 @@ export function ImageSlideshow() {
           </div>
         </motion.div>
       </AnimatePresence>
+
+      {/* Mobile text below carousel - outside slideshow */}
+      <div className="md:hidden px-4 mt-2 py-10 bg-white text-right ">
+        <motion.h3 
+          key={`mobile-title-${currentSlide}`}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="[font-family:'Quicksand',Helvetica] font-extrabold text-[#11593F] text-lg mb-1"
+        >
+          {slides[currentSlide].title}
+        </motion.h3>
+        
+        <motion.p 
+          key={`mobile-desc-${currentSlide}`}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="[font-family:'General Sans',Helvetica] text-xs text-[#2C3E4E] leading-relaxed font-medium"
+        >
+          {slides[currentSlide].description}
+        </motion.p>
+      </div>
 
       <button
         onClick={prevSlide}
