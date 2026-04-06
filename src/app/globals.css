@@ -7,11 +7,18 @@
   .all-\[unset\] {
     all: unset;
   }
+  .industry-card {
+    height: 80px;
+    transition: height 0.3s ease-in-out;
+  }
   .industry-card.expanded {
-    height: 200px;
+    height: 250px !important;
   }
   .industry-card.expanded .industry-text {
-    opacity: 1;
+    opacity: 1 !important;
+  }
+  .industry-card-desktop:hover {
+    flex: 2 !important;
   }
 }
 

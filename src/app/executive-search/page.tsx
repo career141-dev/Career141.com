@@ -162,14 +162,14 @@ export default function ExecutiveSearchPage() {
           ].map((item, index) => (
             <div 
               key={index}
-              className="group relative h-full min-w-[80px] md:min-w-[120px] flex-1 transition-all duration-300 ease-in-out hover:flex-[2] cursor-pointer overflow-hidden"
+              className="group industry-card-desktop relative h-full min-w-[80px] md:min-w-[120px] flex-1 transition-all duration-300 ease-in-out hover:flex-[2] cursor-pointer overflow-hidden"
             >
               <img 
                 src={item.img} 
                 alt={item.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="industry-text absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span className="[font-family:'Quicksand',Helvetica] text-white text-lg md:text-xl lg:text-2xl font-bold">
                   {item.title}
                 </span>
