@@ -130,6 +130,22 @@ const slides = [
   },
 ]
 
+const specializedIndustryItems = [
+  { img: withBasePath('/images/specialized/Apparel & Accessories.webp'), title: 'Apparel & Accessories' },
+  { img: withBasePath('/images/specialized/FMCG.webp'), title: 'FMCG' },
+  { img: withBasePath('/images/specialized/Information Technology.webp'), title: 'Information Technology' },
+  { img: withBasePath('/images/specialized/Healthcare.webp'), title: 'Healthcare' },
+  { img: withBasePath('/images/specialized/Pharmaceutical.webp'), title: 'Pharmaceutical' },
+  { img: withBasePath('/images/specialized/E-commerce.webp'), title: 'E-commerce' },
+  { img: withBasePath('/images/specialized/Retail Market.webp'), title: 'Retail Market' },
+  { img: withBasePath('/images/specialized/Automotive.webp'), title: 'Automotive' },
+  { img: withBasePath('/images/specialized/Construction.webp'), title: 'Construction' },
+  { img: withBasePath('/images/specialized/Power & Energy.webp'), title: 'Power & Energy' },
+  { img: withBasePath('/images/specialized/Education.webp'), title: 'Education' },
+  { img: withBasePath('/images/specialized/Hospitality.webp'), title: 'Hospitality' },
+  { img: withBasePath('/images/specialized/Shipping & Freight.webp'), title: 'Shipping & Freight' },
+]
+
 export default function ExecutiveSearchPage() {
   const [showAllLogos, setShowAllLogos] = useState(false)
   const [expandedCard, setExpandedCard] = useState<number | null>(null)
@@ -182,21 +198,7 @@ export default function ExecutiveSearchPage() {
       <div className="w-full overflow-hidden">
         {/* Mobile: Vertical stacked with expand on tap */}
         <div className="md:hidden flex flex-col">
-          {[
-            { img: '/images/specialized/Apparel & Accessories.webp', title: 'Apparel & Accessories' },
-            { img: '/images/specialized/FMCG.webp', title: 'FMCG' },
-            { img: '/images/specialized/Information Technology.webp', title: 'Information Technology' },
-            { img: '/images/specialized/Healthcare.webp', title: 'Healthcare' },
-            { img: '/images/specialized/Pharmaceutical.webp', title: 'Pharmaceutical' },
-            { img: '/images/specialized/E-commerce.webp', title: 'E-commerce' },
-            { img: '/images/specialized/Retail Market.webp', title: 'Retail Market' },
-            { img: '/images/specialized/Automotive.webp', title: 'Automotive' },
-            { img: '/images/specialized/Construction.webp', title: 'Construction' },
-            { img: '/images/specialized/Power & Energy.webp', title: 'Power & Energy' },
-            { img: '/images/specialized/Education.webp', title: 'Education' },
-            { img: '/images/specialized/Hospitality.webp', title: 'Hospitality' },
-            { img: '/images/specialized/Shipping & Freight.webp', title: 'Shipping & Freight' },
-          ].map((item, index) => (
+          {specializedIndustryItems.map((item, index) => (
             <ExpandableIndustryCard 
               key={index} 
               img={item.img} 
@@ -209,21 +211,7 @@ export default function ExecutiveSearchPage() {
 
         {/* Desktop: Original flex with hover expand */}
         <div className="hidden md:flex w-full h-[250px] md:h-[400px] lg:h-[500px]">
-          {[
-            { img: '/images/specialized/Apparel & Accessories.webp', title: 'Apparel & Accessories' },
-            { img: '/images/specialized/FMCG.webp', title: 'FMCG' },
-            { img: '/images/specialized/Information Technology.webp', title: 'Information Technology' },
-            { img: '/images/specialized/Healthcare.webp', title: 'Healthcare' },
-            { img: '/images/specialized/Pharmaceutical.webp', title: 'Pharmaceutical' },
-            { img: '/images/specialized/E-commerce.webp', title: 'E-commerce' },
-            { img: '/images/specialized/Retail Market.webp', title: 'Retail Market' },
-            { img: '/images/specialized/Automotive.webp', title: 'Automotive' },
-            { img: '/images/specialized/Construction.webp', title: 'Construction' },
-            { img: '/images/specialized/Power & Energy.webp', title: 'Power & Energy' },
-            { img: '/images/specialized/Education.webp', title: 'Education' },
-            { img: '/images/specialized/Hospitality.webp', title: 'Hospitality' },
-            { img: '/images/specialized/Shipping & Freight.webp', title: 'Shipping & Freight' },
-          ].map((item, index) => (
+          {specializedIndustryItems.map((item, index) => (
             <div 
               key={index}
               className="group relative h-full min-w-[80px] md:min-w-[120px] flex-1 transition-all duration-300 ease-in-out hover:flex-[2] cursor-pointer overflow-hidden"
