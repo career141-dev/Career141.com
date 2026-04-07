@@ -93,7 +93,7 @@ async function sendEmailViaBrevo(data: ContactFormData): Promise<boolean> {
         },
         to: [
           {
-            email: process.env.CONTACT_RECIPIENT_EMAIL || 'sanjeev@career141.com',
+            email: process.env.CONTACT_RECIPIENT_EMAIL || 'hello@career141.com',
             name: 'Career141 Contact',
           },
         ],

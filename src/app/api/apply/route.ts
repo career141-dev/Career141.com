@@ -75,7 +75,7 @@ async function sendEmailViaBrevo(fields: Record<string, string>, fileName: strin
       },
       body: JSON.stringify({
         sender: { email: senderEmail, name: senderName },
-        to: [{ email: 'sanjeev@career141.com', name: 'Sanjeev - Career141' }],
+        to: [{ email: process.env.JOBS_RECIPIENT_EMAIL || 'jobs@career141.com', name: 'Career141 Jobs' }],
         subject: `Job Application: ${sanitizeInput(fields.jobTitle)} — ${sanitizeInput(fields.firstName)} ${sanitizeInput(fields.lastName)}`,
         htmlContent,
         textContent,

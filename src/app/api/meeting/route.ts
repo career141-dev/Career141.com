@@ -88,7 +88,7 @@ async function sendEmailViaBrevo(data: MeetingFormData): Promise<boolean> {
         },
         to: [
           {
-            email: process.env.CONTACT_RECIPIENT_EMAIL || 'info@career141.com',
+            email: process.env.CONTACT_RECIPIENT_EMAIL || 'hello@career141.com',
             name: 'Career141 Meeting Request',
           },
         ],

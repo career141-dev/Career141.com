@@ -141,16 +141,15 @@ export function ContainerSubsection() {
               backgroundPosition: 'center top',
             }}
           />
-          <div aria-hidden="true" className="absolute inset-0 lg:hidden">
-            <img
-              src={withBasePath('/figmaAssets/Container (4).png')}
-              alt=""
-              className="h-full w-full object-cover"
-              style={{ objectPosition: 'center center' }}
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 lg:hidden bg-no-repeat"
+            style={{
+              backgroundImage: `url('${withBasePath('/figmaAssets/Container (4).png')}')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center center',
+            }}
+          />
           <div className="relative z-10 flex flex-col items-start w-full">
           <div
             className="lg:hidden w-full flex items-center mb-[14px]"
