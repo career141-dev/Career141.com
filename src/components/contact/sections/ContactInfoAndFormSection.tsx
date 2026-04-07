@@ -9,7 +9,6 @@ import { Turnstile } from '@marsidev/react-turnstile'
 import { withBasePath } from '@/lib/assetPath'
 import styles from './ContactInfoAndFormSection.module.css'
 
-
 type FormData = {
   name: string
   designation: string
@@ -433,11 +432,16 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
       )}
 
       <div className={dark ? styles.WpformsFieldContainer_88_12005 : 'flex flex-col gap-4'}>
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAAChNiVM7iCS2gP6';
+
         <div style={{ marginBottom: '16px' }}>
           <Turnstile
             siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
             onSuccess={(token) => setTurnstileToken(token)}
-            onError={() => setTurnstileToken(null)}
+            onError={() => {
+              console.error('Turnstile error: Failed to load widget')
+              setTurnstileToken(null)
+            }}
             onExpire={() => setTurnstileToken(null)}
           />
         </div>

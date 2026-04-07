@@ -373,7 +373,10 @@ export function MeetingSchedulerSubsection() {
                         <Turnstile
                           siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
                           onSuccess={(token) => setTurnstileToken(token)}
-                          onError={() => setTurnstileToken(null)}
+                          onError={() => {
+                            console.error('Turnstile error: Failed to load widget')
+                            setTurnstileToken(null)
+                          }}
                           onExpire={() => setTurnstileToken(null)}
                         />
                       </div>

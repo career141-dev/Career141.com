@@ -436,7 +436,10 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
         <Turnstile
           siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
           onSuccess={(token) => setTurnstileToken(token)}
-          onError={() => setTurnstileToken('')}
+          onError={() => {
+            console.error('Turnstile error: Failed to load widget')
+            setTurnstileToken('')
+          }}
           onExpire={() => setTurnstileToken('')}
         />
       </div>
