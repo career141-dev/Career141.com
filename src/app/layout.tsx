@@ -27,6 +27,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Career141 - Executive Search & Recruitment',
   description: 'Global Executive Search & Recruitment Excellence',
+  icons: {
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/icon.png',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
