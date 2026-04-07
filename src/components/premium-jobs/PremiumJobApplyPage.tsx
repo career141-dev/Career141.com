@@ -8,6 +8,7 @@ import { Navbar } from '@/components/common/Navbar'
 import { CompanyFooter } from '@/components/common'
 import { JobCard } from '@/components/common/JobCard'
 import { withBasePath } from '@/lib/assetPath'
+import { getTurnstileSiteKey } from '@/lib/turnstile'
 import { getPremiumJobBySlug, premiumJobCards, type PremiumJob } from './premiumJobsData'
 import { jobDetailsBySlug, type JobDetailNode } from './jobDetailsData'
 
@@ -279,6 +280,8 @@ function FormInput({
 }
 
 function ApplyForm({ jobTitle }: { jobTitle: string }) {
+  const turnstileSiteKey = getTurnstileSiteKey()
+
   const { register, handleSubmit, formState: { errors }, setError, clearErrors, reset } = useForm<{
     firstName: string
     lastName: string
@@ -433,15 +436,21 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
       </div>
 
       <div className="pb-[24px] flex justify-center">
-        <Turnstile
-          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
-          onSuccess={(token) => setTurnstileToken(token)}
-          onError={() => {
-            console.error('Turnstile error: Failed to load widget')
-            setTurnstileToken('')
-          }}
-          onExpire={() => setTurnstileToken('')}
-        />
+        {turnstileSiteKey ? (
+          <Turnstile
+            siteKey={turnstileSiteKey}
+            onSuccess={(token) => setTurnstileToken(token)}
+            onError={() => {
+              console.error('Turnstile error: Failed to load widget')
+              setTurnstileToken('')
+            }}
+            onExpire={() => setTurnstileToken('')}
+          />
+        ) : (
+          <p className="text-sm text-[#555]">
+            Captcha is not configured. Please set NEXT_PUBLIC_TURNSTILE_SITE_KEY.
+          </p>
+        )}
       </div>
 
       <button
