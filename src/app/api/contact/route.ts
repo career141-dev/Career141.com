@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 
+export const runtime = 'edge'
+
 const brevoApiKey = process.env.BREVO_API_KEY
 
 const contactSchema = z.object({
