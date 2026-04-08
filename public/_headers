@@ -2,6 +2,7 @@
   Cache-Control: public, max-age=0, must-revalidate
 
 /jobs/*
+/jobs
   Cache-Control: no-cache, no-store, must-revalidate
 
 /_next/static/*
