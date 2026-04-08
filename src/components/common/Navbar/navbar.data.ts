@@ -2,26 +2,26 @@ import { LinkedinIcon, FacebookIcon } from 'lucide-react'
 
 export const EXECUTIVE_SEARCH_CATEGORIES = [
   [
-    'Apparel Merchandising & Marketing',
-    'Continuous Improvement',
-    'IT Software & Infrastructure Solutions',
-    'Mechanical Engineering & Production',
-    'Human Resource, L&D, Compensation & Benefit',
-    'Digital Transformation',
+    { label: 'Apparel Merchandising & Marketing', href: '/jobs/apparel-merchandising-marketing' },
+    { label: 'Continuous Improvement', href: '/jobs/continuous-improvement' },
+    { label: 'IT Software & Infrastructure Solutions', href: '/jobs/it-software' },
+    { label: 'Mechanical Engineering & Production', href: '/jobs/mechanical-engineering' },
+    { label: 'Human Resource, L&D, Compensation & Benefit', href: '/jobs/hr-training' },
+    { label: 'Digital Transformation', href: '/jobs/digital-transformation' },
   ],
   [
-    'Finance & Auditing',
-    'Data Analytics & Research',
-    'Legal & Secretarial',
-    'Supply chain & Logistics',
-    'Fashion Designing & Development',
+    { label: 'Finance & Auditing', href: '/jobs/finance-auditing' },
+    { label: 'Data Analytics & Research', href: '/jobs/data-analytics' },
+    { label: 'Legal & Secretarial', href: '/jobs/legal-secretarial' },
+    { label: 'Supply chain & Logistics', href: '/jobs/supply-chain' },
+    { label: 'Fashion Designing & Development', href: '/jobs/fashion-design' },
   ],
   [
-    'Construction & Engineering',
-    'EHS',
-    'Maintenance Engineering',
-    'Marketing, Consumer Insight & Customer Experience',
-    'Digital Marketing',
+    { label: 'Construction & Engineering', href: '/jobs/construction-engineering' },
+    { label: 'EHS', href: '/jobs/ehs' },
+    { label: 'Maintenance Engineering', href: '/jobs/maintenance-engineering' },
+    { label: 'Marketing, Consumer Insight & Customer Experience', href: '/jobs/marketing-customer-experience' },
+    { label: 'Digital Marketing', href: '/jobs/digital-marketing' },
   ],
 ]
 

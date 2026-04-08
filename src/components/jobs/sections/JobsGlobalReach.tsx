@@ -111,12 +111,12 @@ const markerVariants = {
   },
 }
 
-export function GlobalReachSubsection() {
+export function JobsGlobalReach() {
   const containerRef = useRef(null)
   const isInView = useInView(containerRef, { once: true, amount: 0.3 })
 
   return (
-    <section className="hidden md:block w-full bg-white py-10 lg:py-[60px] overflow-hidden">
+    <section className="w-full bg-white py-10 lg:py-[60px] overflow-hidden">
       <div className="w-full max-w-[1440px] mx-auto px-5 md:px-10 lg:px-[91px]">
         <div style={{ maxWidth: '1905px', width: '737.61px', margin: '0 auto 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>

@@ -179,7 +179,7 @@ export function InfiniteCarousel({ autoPlayInterval = 4000, isMobile }: Infinite
         className="text-center mb-8"
         style={{ 
           fontFamily: '"Quicksand", Sans-serif',
-          fontSize: '2.2 em',
+          fontSize: '3em',
           fontWeight: 400,
           lineHeight: '1.2em',
           color: '#ffffff'

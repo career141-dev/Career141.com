@@ -7496,13 +7496,17 @@ function DivElementorElement275() {
   );
 }
 
-function DivElementor() {
+type SectionKey = 'specializations' | 'brands' | 'globalReach'
+
+function DivElementor({ sectionsToShow }: { sectionsToShow?: SectionKey[] }) {
+  const showAll = !sectionsToShow || sectionsToShow.length === 0
+  
   return (
     <div className="absolute h-[5424.64px] left-0 right-0 top-[-11.86px]" data-name="div.elementor">
       {/* <DivElementorElement /> - Now using modular ApparelHero section instead */}
       <DivElementorElement5 />
-      <DivElementorElement80 />
-      <DivElementorElement101 />
+      {(showAll || sectionsToShow?.includes('brands')) && <DivElementorElement80 />}
+      {(showAll || sectionsToShow?.includes('globalReach')) && <DivElementorElement101 />}
     </div>
   );
 }
@@ -10205,19 +10209,19 @@ function DivElementorElement342() {
   );
 }
 
-function EndMetaPixelCode() {
+function EndMetaPixelCode({ sectionsToShow }: { sectionsToShow?: SectionKey[] }) {
   return (
     <div className="relative shrink-0 w-full" data-name="End Meta Pixel Code">
-      <DivElementor />
+      <DivElementor sectionsToShow={sectionsToShow} />
     </div>
   );
 }
 
-export default function Frame() {
+export default function Frame({ sectionsToShow }: { sectionsToShow?: SectionKey[] }) {
   return (
     <div className="bg-white content-stretch flex flex-col items-start relative size-full" data-name="Frame">
       <DivHtCtcChat />
-      <EndMetaPixelCode />
+      <EndMetaPixelCode sectionsToShow={sectionsToShow} />
     </div>
   );
 }
