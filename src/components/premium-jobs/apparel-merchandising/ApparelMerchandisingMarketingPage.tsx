@@ -7,6 +7,12 @@ import FrameDesktop from './Frame'
 import FrameMobile from './390WDefault/390WDefault'
 import { ApparelHero } from './sections/ApparelHero'
 
+type SectionKey = 'specializations' | 'brands' | 'globalReach'
+
+interface ApparelMerchandisingMarketingPageProps {
+  sectionsToShow?: SectionKey[]
+}
+
 /**
  * ApparelMerchandisingMarketingPage Component
  * 
@@ -16,7 +22,7 @@ import { ApparelHero } from './sections/ApparelHero'
  * served from the original high-fidelity frames but is "cropped" to 
  * show only the lower sections.
  */
-export function ApparelMerchandisingMarketingPage() {
+export function ApparelMerchandisingMarketingPage({ sectionsToShow }: ApparelMerchandisingMarketingPageProps) {
   const [mounted, setMounted] = useState(false)
   const [scaleFactor, setScaleFactor] = useState(1)
 
@@ -62,17 +68,18 @@ export function ApparelMerchandisingMarketingPage() {
           We hide the top 584px (Original Hero) and show the remaining 4840px.
         */}
         <div className="hidden md:flex flex-col items-center justify-start w-full overflow-hidden" 
-             style={{ height: `${(5425 - desktopHeroH) * scaleFactor}px` }}>
+             style={{ height: `${(4725 - desktopHeroH) * scaleFactor}px` }}>
           <div 
             className="origin-top"
             style={{ 
               width: '1520px', 
               transform: `scale(${scaleFactor})`,
               marginTop: `-${desktopHeroH}px`,
+              marginBottom: 0,
               transition: 'transform 0.1s linear'
             }}
           >
-            <FrameDesktop />
+            <FrameDesktop sectionsToShow={sectionsToShow} />
           </div>
         </div>
 

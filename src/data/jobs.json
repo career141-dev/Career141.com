@@ -1,0 +1,164 @@
+{
+  "sections": [
+    {
+      "id": "apparel",
+      "slug": "apparel-merchandising-marketing",
+      "title": "Apparel Merchandising & Marketing Talent Pipeline",
+      "shortTitle": "Apparel Merchandising & Marketing",
+      "description": "Explore career opportunities in apparel merchandising and marketing. Join leading global brands and shape the future of fashion.",
+      "heroTitle": "Recruit Apparel, Textile & RMG Industry Talent in Sri Lanka and Asia",
+      "theme": "#0c448b",
+      "heroDescription": "Career141 Sri Lanka specializes in recruiting highly skilled professionals across the apparel, textile, and ready-made garment (RMG) industries. From merchandisers and fashion designers to production heads and washing plant managers, we connect you with the right talent to drive operational efficiency and innovation.",
+      "heroImage": "/figmaAssets/apparel-merchandising/7806820e0bd90b541f139a0558f8ac853e8abb6b.png",
+      "image": "/images/jobs/apparel-jobs-image.png",
+      "jobCategories": [
+        {
+          "heading": "Marketing Roles",
+          "jobs": [
+            "Chief Marketing Officer",
+            "Chief Operating Officer",
+            "Head of Manufacturing",
+            "Head of Product Development",
+            "Head of Design",
+            "Head of Merchandising",
+            "Head of Marketing",
+            "Head of Sourcing",
+            "Head of Technical Design",
+            "Director Operations",
+            "Head of Production",
+            "Vice President – Manufacturing Excellence"
+          ]
+        },
+        {
+          "heading": "Merchandising & Marketing",
+          "jobs": [
+            "Merchandising Manager",
+            "Account Manager",
+            "Senior Merchandiser",
+            "Merchandising Manager – Manufacturing",
+            "Assistant Merchandising Manager",
+            "Assistant Merchandiser",
+            "Junior Merchandiser"
+          ]
+        },
+        {
+          "heading": "Product Development & Fashion Design",
+          "jobs": [
+            "Product Development Manager",
+            "Sample Development Manager",
+            "Design Manager – Apparel",
+            "Assistant Product Development Manager",
+            "Assistant Design Manager",
+            "Fashion Designer – Exports",
+            "Technical Designer",
+            "CAD Designer – Apparel",
+            "Product Development Executive"
+          ]
+        },
+        {
+          "heading": "Production & Factory Operations",
+          "jobs": [
+            "Operations Manager",
+            "Factory Manager",
+            "Production Manager",
+            "Cutting Manager",
+            "Finishing Manager",
+            "Work Study Officer",
+            "Pattern Technologist",
+            "CAD Operator",
+            "Industrial Engineering Manager",
+            "Quality Assurance Manager",
+            "Planning Manager",
+            "Washing Manager",
+            "Dyeing Manager",
+            "Washing Technician",
+            "Dyeing Technician",
+            "Fabric Technologist",
+            "Maintenance Manager"
+          ]
+        },
+        {
+          "heading": "More Roles",
+          "jobs": [
+            "Trend Forecaster",
+            "Customer Experience Manager",
+            "Fashion Journalist/Blogger",
+            "Retail Analyst",
+            "Fashion Event Coordinator",
+            "Digital Marketing Specialist",
+            "Sustainability Specialist",
+            "Catalog Manager",
+            "Wholesale Account Executive",
+            "Fashion Sales Representative",
+            "Apparel Design Consultant",
+            "Retail Buyer Assistant"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "textile",
+      "slug": "textile-engineering",
+      "title": "Textile Engineering Talent Pipeline",
+      "shortTitle": "Textile Engineering",
+      "description": "Find your path in textile engineering. Innovate and lead in one of the world's most dynamic industries.",
+      "heroTitle": "Recruit Textile Engineering Talent in Sri Lanka and Asia",
+      "theme": "#1a8550",
+      "heroDescription": "Career141 connects leading textile companies with highly skilled engineers and technical professionals. From process engineers to plant managers, we find the talent that drives innovation in the textile industry.",
+      "heroImage": "/figmaAssets/apparel-merchandising/7806820e0bd90b541f139a0558f8ac853e8abb6b.png",
+      "image": "/images/jobs/textile-jobs.jpg",
+      "jobCategories": [
+        {
+          "heading": "Engineering",
+          "jobs": [
+            "Textile Engineer",
+            "Production Engineer",
+            "Process Engineer",
+            "Quality Engineer"
+          ]
+        },
+        {
+          "heading": "Management",
+          "jobs": [
+            "Plant Manager",
+            "Production Manager",
+            "Quality Control Manager",
+            "Technical Director"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rmg",
+      "slug": "rmg-industry",
+      "title": "RMG Industry Talent Pipeline",
+      "shortTitle": "RMG Industry",
+      "description": "Build your career in the RMG sector. Be part of a global supply chain that powers worldwide fashion.",
+      "heroTitle": "Recruit RMG Industry Talent in Sri Lanka and Asia",
+      "theme": "#7c3aed",
+      "heroDescription": "We specialize in recruiting for the Ready-Made Garment industry, connecting global brands with skilled professionals who keep the fashion supply chain moving.",
+      "heroImage": "/figmaAssets/apparel-merchandising/7806820e0bd90b541f139a0558f8ac853e8abb6b.png",
+      "image": "/images/jobs/rmg-jobs.jpg",
+      "jobCategories": [
+        {
+          "heading": "Operations",
+          "jobs": [
+            "Merchandiser",
+            "Senior Merchandiser",
+            "Assistant Manager Operations",
+            "Manager Operations"
+          ]
+        },
+        {
+          "heading": "Planning",
+          "jobs": [
+            "Production Planner",
+            "Planning Manager",
+            "Inventory Manager",
+            "Supply Chain Manager"
+          ]
+        }
+      ]
+    }
+  ]
+}
