@@ -129,6 +129,53 @@
       ]
     },
     {
+      "id": "continuous-improvement",
+      "slug": "continuous-improvement",
+      "title": "Continuous Improvement Talent Pipeline",
+      "shortTitle": "Continuous Improvement",
+      "description": "Build careers in continuous improvement, operational excellence, and lean transformation across leading organizations.",
+      "heroTitle": "Recruit Continuous Improvement Talent in Sri Lanka and Asia",
+      "theme": "#0f6e4f",
+      "heroDescription": "Career141 connects businesses with continuous improvement leaders who strengthen productivity, streamline processes, and create measurable operational gains. From lean specialists to operational excellence managers, we identify the talent that drives sustainable performance.",
+      "heroImage": "/figmaAssets/premium-jobs-hero.png",
+      "image": "/images/jobs/Continuous-Improvement-scaled.webp",
+      "jobCategories": [
+        {
+          "heading": "Lean & Operational Excellence",
+          "jobs": [
+            "Continuous Improvement Manager",
+            "Operational Excellence Manager",
+            "Lean Manager",
+            "Business Excellence Manager",
+            "Kaizen Lead",
+            "Six Sigma Manager"
+          ]
+        },
+        {
+          "heading": "Process Improvement",
+          "jobs": [
+            "Process Improvement Manager",
+            "Process Excellence Engineer",
+            "CI Engineer",
+            "Method Engineer",
+            "Industrial Engineer",
+            "Performance Improvement Specialist"
+          ]
+        },
+        {
+          "heading": "Transformation & Quality",
+          "jobs": [
+            "Transformation Lead",
+            "Quality Improvement Manager",
+            "Productivity Manager",
+            "Operations Improvement Manager",
+            "Continuous Improvement Lead",
+            "Workflow Optimization Specialist"
+          ]
+        }
+      ]
+    },
+    {
       "id": "rmg",
       "slug": "rmg-industry",
       "title": "RMG Industry Talent Pipeline",
