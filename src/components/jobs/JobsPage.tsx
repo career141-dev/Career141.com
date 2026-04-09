@@ -16,7 +16,7 @@ import { JobsSpecializations } from './sections/JobsSpecializations'
 import { JobsBrands } from './sections/JobsBrands'
 import { JobsGlobalReach } from './sections/JobsGlobalReach'
 
-interface JobSection {
+export interface JobSection {
   id: string
   title: string
   description: string
@@ -105,7 +105,7 @@ export function JobsPage({ heroData, showSections }: JobsPageProps) {
         
         {sections.emptySection && <JobsEmptySection />}
         
-        {sections.jobsListingSection && <JobsListingSection />}
+        {sections.jobsListingSection && <JobsListingSection section={heroData} />}
         
         {sections.brandsSection && <JobsBrandsSection />}
         
