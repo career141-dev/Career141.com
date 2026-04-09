@@ -4,8 +4,6 @@
       "id": "apparel",
       "slug": "apparel-merchandising-marketing",
       "title": "Apparel Merchandising & Marketing Talent Pipeline",
-      "shortTitle": "Apparel Merchandising & Marketing",
-      "description": "Explore career opportunities in apparel merchandising and marketing. Join leading global brands and shape the future of fashion.",
       "heroTitle": "Recruit Apparel, Textile & RMG Industry Talent in Sri Lanka and Asia",
       "theme": "#0c448b",
       "heroDescription": "Career141 Sri Lanka specializes in recruiting highly skilled professionals across the apparel, textile, and ready-made garment (RMG) industries. From merchandisers and fashion designers to production heads and washing plant managers, we connect you with the right talent to drive operational efficiency and innovation.",
@@ -96,66 +94,109 @@
         }
       ]
     },
+    
     {
-      "id": "textile",
-      "slug": "textile-engineering",
-      "title": "Textile Engineering Talent Pipeline",
-      "shortTitle": "Textile Engineering",
-      "description": "Find your path in textile engineering. Innovate and lead in one of the world's most dynamic industries.",
-      "heroTitle": "Recruit Textile Engineering Talent in Sri Lanka and Asia",
-      "theme": "#1a8550",
-      "heroDescription": "Career141 connects leading textile companies with highly skilled engineers and technical professionals. From process engineers to plant managers, we find the talent that drives innovation in the textile industry.",
-      "heroImage": "/figmaAssets/apparel-merchandising/7806820e0bd90b541f139a0558f8ac853e8abb6b.png",
-      "image": "/images/jobs/textile-jobs.jpg",
+      "id": "continuous improvement",
+      "slug": "continuous-improvement",
+      "title": "Lean & Continuous Improvement Talent Pipeline",
+      "heroTitle": "Hire Lean Six Sigma & Continuous Improvement Talent",
+      "theme": "#00c3be",
+      "heroDescription": "At Career141 Sri Lanka, we specialize in recruiting top-tier continuous improvement professionals—including Lean Six Sigma Black Belt, Green Belt, and Yellow Belt experts—to help your organization streamline processes, enhance productivity, and reduce costs. Whether you're based in Sri Lanka or managing global operations, our executive search team connects you with process improvement leaders who deliver measurable impact across industries. From manufacturing and logistics to services and healthcare, we understand the strategic value of lean thinking and place the right talent to accelerate your operational excellence.",
+      "heroImage": "/images/jobs/Hire Lean & Continuous Improvement Experts _ Sri Lanka & Global _ Career141_files/Subtract-11.webp",
+      "image": "/images/jobs/Hire Lean & Continuous Improvement Experts _ Sri Lanka & Global _ Career141_files/Continuous-Improvement-scaled.webp",
       "jobCategories": [
         {
-          "heading": "Engineering",
+          "heading": "C-Level & Executive Leadership",
           "jobs": [
-            "Textile Engineer",
-            "Production Engineer",
-            "Process Engineer",
-            "Quality Engineer"
+            "Chief Process Excellence Officer",
+            "Chief Transformation Officer",
+            "Chief Lean Officer",
+            "VP / Director of Operations Excellence",
+            "VP Process Improvement",
+            "VP Lean Operations",
+            "Head of Process Excellence",
+            "Head of Operations Excellence",
+            "Head of Continuous Improvement",
+            "Director of Lean & Six Sigma",
+            "Director of Quality & Process Improvement"
           ]
         },
         {
-          "heading": "Management",
+          "heading": "Middle Management",
           "jobs": [
-            "Plant Manager",
-            "Production Manager",
-            "Quality Control Manager",
-            "Technical Director"
+            "Manager Business Process Excellence",
+            "Lean Manufacturing Specialist",
+            "Operations Excellence Manager",
+            "Continuous Improvement Manager",
+            "Lean Six Sigma Manager",
+            "Value Stream Manager",
+            "Process Excellence Manager",
+            "Process Analyst",
+            "Lean Specialist",
+            "Kaizen Lead",
+            "Process Mapping Specialist"
+          ]
+        },
+        {
+          "heading": "Operational & Specialist Roles",
+          "jobs": [
+            "Operational Excellence Consultant",
+            "Performance Improvement Specialist",
+            "Process Engineer",
+            "Production Supervisor",
+            "Kaizen Facilitator",
+            "Project Manager",
+            "Efficiency Consultant",
+            "Quality Control Inspector",
+            "Workflow Optimization Specialist",
+            "Talent Development Manager",
+            "Systems Improvement Analyst",
+            "Logistics Coordinator"
           ]
         }
       ]
     },
     {
-      "id": "rmg",
-      "slug": "rmg-industry",
-      "title": "RMG Industry Talent Pipeline",
-      "shortTitle": "RMG Industry",
-      "description": "Build your career in the RMG sector. Be part of a global supply chain that powers worldwide fashion.",
-      "heroTitle": "Recruit RMG Industry Talent in Sri Lanka and Asia",
+      "id": "it-software",
+      "slug": "it-software",
+      "title": "IT Software & Infrastructure Talent Pipeline",
+      "heroTitle": "IT, Software & Infrastructure Talent Recruitment in Sri Lanka & Beyond",
       "theme": "#7c3aed",
-      "heroDescription": "We specialize in recruiting for the Ready-Made Garment industry, connecting global brands with skilled professionals who keep the fashion supply chain moving.",
-      "heroImage": "/figmaAssets/apparel-merchandising/7806820e0bd90b541f139a0558f8ac853e8abb6b.png",
-      "image": "/images/jobs/rmg-jobs.jpg",
+      "heroDescription": "Career141 Sri Lanka is a leading recruitment agency specializing in sourcing top-tier talent across the IT, software, and infrastructure sectors. From software developers and cybersecurity experts to IT project managers and cloud architects, we provide recruitment solutions that meet the evolving needs of technology-driven businesses. Whether you're seeking specialized talent for a local or global market, Career141 connects you with skilled professionals who can drive innovation and efficiency in your organization.",
+      "heroImage": "/images/jobs/",
+      "image": "/images/jobs/IT, Software & Infrastructure Recruitment _ Career141_files/IT-Software-Infrastructure-1-scaled.webp",
       "jobCategories": [
         {
-          "heading": "Operations",
+          "heading": "Development & Engineering",
           "jobs": [
-            "Merchandiser",
-            "Senior Merchandiser",
-            "Assistant Manager Operations",
-            "Manager Operations"
+            "Full Stack Developer",
+            "Mobile Application Developer",
+            "Software Quality Assurance Tester",
+            "System Analyst"
           ]
         },
         {
-          "heading": "Planning",
+          "heading": "Infrastructure & Networking",
           "jobs": [
-            "Production Planner",
-            "Planning Manager",
-            "Inventory Manager",
-            "Supply Chain Manager"
+            "Data Engineer",
+            "Network Engineer",
+            "Site Reliability Engineer",
+            "Release Manager"
+          ]
+        },
+        {
+          "heading": "Analytics & Design",
+          "jobs": [
+            "Business Intelligence Analyst",
+            "User Experience (UX) Designer",
+            "IT Consultant"
+          ]
+        },
+        {
+          "heading": "Support & Operations",
+          "jobs": [
+            "Help Desk Technician",
+            "IT Consultant"
           ]
         }
       ]

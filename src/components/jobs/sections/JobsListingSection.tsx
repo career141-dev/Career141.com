@@ -3,9 +3,30 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import jobsData from '@/data/jobs.json'
 
-export function JobsListingSection() {
+interface JobCategory {
+  heading: string
+  jobs: string[]
+}
+
+interface SectionData {
+  id: string
+  title: string
+  description?: string
+  shortTitle?: string
+  theme?: string
+  heroTitle?: string
+  heroDescription?: string
+  heroImage?: string
+  image: string
+  jobCategories: JobCategory[]
+}
+
+interface JobsListingSectionProps {
+  sectionData?: SectionData
+}
+
+export function JobsListingSection({ sectionData }: JobsListingSectionProps) {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -16,7 +37,11 @@ export function JobsListingSection() {
     return <div className="w-full bg-white" style={{ height: '600px' }} />
   }
 
-  const section = jobsData.sections[0]
+  const section = sectionData
+
+  if (!section) {
+    return <div className="w-full bg-white" style={{ height: '600px' }} />
+  }
   const themeColor = section.theme || '#0c448b'
   const textStyle = { color: themeColor }
   const blackStyle = { color: '#000000' }

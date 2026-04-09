@@ -19,8 +19,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   return {
-    title: `${section.shortTitle} Jobs | Career141`,
-    description: section.description,
+    title: `${section.title} Jobs | Career141`,
+    description: section.heroDescription,
   }
 }
 

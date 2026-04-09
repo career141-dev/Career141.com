@@ -256,7 +256,8 @@ function Mobile_Hero({ props, heroData }) {
 interface HeroData {
   id: string
   title: string
-  description: string
+  description?: string
+  shortTitle?: string
   theme?: string
   heroTitle?: string
   heroDescription?: string

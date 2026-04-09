@@ -19,7 +19,8 @@ import { JobsGlobalReach } from './sections/JobsGlobalReach'
 interface JobSection {
   id: string
   title: string
-  description: string
+  description?: string
+  shortTitle?: string
   theme?: string
   heroTitle?: string
   heroDescription?: string
@@ -105,7 +106,7 @@ export function JobsPage({ heroData, showSections }: JobsPageProps) {
         
         {sections.emptySection && <JobsEmptySection />}
         
-        {sections.jobsListingSection && <JobsListingSection />}
+        {sections.jobsListingSection && <JobsListingSection sectionData={heroData} />}
         
         {sections.brandsSection && <JobsBrandsSection />}
         
