@@ -70,11 +70,10 @@ function JobsTestimonialsSectionContent() {
       </div>
 
       {/* Desktop View */}
-      <div className="hidden md:block w-full py-[40px] px-0" style={{ 
-        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 85%)',
+      <div className="hidden md:block w-10/12 ml-auto mr-0 py-2 px-0" style={{ 
+        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
         marginTop: '-60px',
         position: 'relative',
-        overflow: 'hidden',
         backgroundColor: '#ffffff'
       }}>
         <div 
@@ -90,18 +89,18 @@ function JobsTestimonialsSectionContent() {
           className="absolute inset-0 pointer-events-none"
           style={{
             backgroundImage: 'url(/images/jobs/1.png)',
-            backgroundSize: '85%',
+            backgroundSize: 'contain',
             backgroundPosition: 'right center',
             backgroundRepeat: 'no-repeat',
           }}
         />
 
         <div 
-          className="w-full py-8 md:py-[40px] px-4 md:px-[91.238px]"
+          className="w-full py-4 md:py-6 px-4 md:px-18"
         >
-          <div className="flex flex-col gap-6 md:gap-[40px] w-full max-w-[1204.5px] mx-auto relative z-10">
+          <div className="flex flex-col gap-4 md:gap-6 w-full max-w-275 ml-auto mr-0 relative z-10">
 
-            <div className="relative overflow-hidden flex justify-end md:justify-end" style={{ marginTop: '-40px' }}>
+            <div className="relative overflow-hidden flex justify-end md:justify-end md:translate-x-6 lg:translate-x-8" style={{ marginTop: '-20px' }}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentIndex}
@@ -109,12 +108,13 @@ function JobsTestimonialsSectionContent() {
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ x: -100, opacity: 0 }}
                   transition={{ duration: 0.5, ease: 'easeInOut' }}
-                  className="w-full md:max-w-[800px] ml-auto"
+                  className="w-full md:max-w-175 ml-auto"
                 >
                   <div 
-                    className="rounded-[20px] p-8 md:p-[40px] flex flex-col gap-6 md:gap-[20px]"
+                    className="rounded-[20px] p-6 md:p-7 flex flex-col gap-4 md:gap-4"
+                    style={{ backgroundColor: '#0c448b' }}
                   >
-                    <p className="font-['Inter:Regular',sans-serif] font-normal text-white text-[16px] md:text-[16px] leading-6 md:leading-[24px]">
+                    <p className="font-['Inter:Regular',sans-serif] font-normal text-white text-[15px] md:text-[15px] leading-6 md:leading-6">
                       {expanded 
                         ? testimonial.content 
                         : testimonial.content.slice(0, 150) + (shouldShowReadMore ? '...' : '')}
@@ -129,15 +129,15 @@ function JobsTestimonialsSectionContent() {
                       </button>
                     )}
 
-                    <div className="flex flex-row items-center mt-auto pt-[20px] border-t border-white border-opacity-30 gap-[20px]">
+                    <div className="flex flex-row items-center mt-auto pt-4 border-t border-white border-opacity-30 gap-4">
                       <div className="ml-auto text-right">
-                        <span className="font-['Quicksand:Bold',sans-serif] font-bold text-white text-[18px] block">
+                        <span className="font-['Quicksand:Bold',sans-serif] font-bold text-white text-[16px] block">
                           {testimonial.name}
                         </span>
-                        <span className="font-['Inter:Regular',sans-serif] font-normal text-white text-opacity-80 text-[14px] block">
+                        <span className="font-['Inter:Regular',sans-serif] font-normal text-white text-opacity-80 text-[13px] block">
                           {testimonial.title}
                         </span>
-                        <span className="font-['Inter:Regular',sans-serif] font-normal text-[#CBFC06] text-[14px] block mt-1">
+                        <span className="font-['Inter:Regular',sans-serif] font-normal text-[#CBFC06] text-[13px] block mt-1">
                           {testimonial.company}
                         </span>
                       </div>

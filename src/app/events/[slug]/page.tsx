@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import { Navbar } from '@/components/common/Navbar'
 import { CompanyFooter } from '@/components/common'
 import { MeetingSchedulerSubsection } from '@/components/home/sections/MeetingSchedulerSubsection'
@@ -16,18 +17,16 @@ export function generateStaticParams() {
 export default async function EventDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params
   const slug = resolvedParams.slug
+
+  // Guard against placeholder/template slugs being treated as real pages.
+  if (!slug || slug.includes('[') || slug.includes(']')) {
+    notFound()
+  }
+
   const eventData = eventsData.events.find(e => e.slug === slug)
 
   if (!eventData) {
-    return (
-      <main className="min-h-screen bg-white m-0 p-0">
-        <Navbar bgColor="#0F221B" />
-        <div className="pt-32 text-center">
-          <h1 className="[font-family:'Quicksand',Sans-serif] text-2xl">Event not found</h1>
-          <Link href="/events" className="text-[#006763] underline mt-4 block">Back to Events</Link>
-        </div>
-      </main>
-    )
+    notFound()
   }
 
   const heroImage = eventData.thumbnail || eventData.images[0]
