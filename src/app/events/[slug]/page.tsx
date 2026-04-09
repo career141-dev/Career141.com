@@ -46,7 +46,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
           <div className="absolute inset-0 flex items-center justify-start pl-[5%] md:pl-[10%]">
             <div className="relative flex items-center justify-start">
               <img
-                src={withBasePath('/images/Vector 20.svg')}
+                src={withBasePath('/images/Vector-20.svg')}
                 alt=""
                 className="w-full max-w-[600px] md:max-w-[800px] h-auto"
               />

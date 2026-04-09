@@ -131,19 +131,19 @@ const slides = [
 ]
 
 const specializedIndustryItems = [
-  { img: withBasePath('/images/specialized/Apparel & Accessories.webp'), title: 'Apparel & Accessories' },
+  { img: withBasePath('/images/specialized/Apparel-Accessories.webp'), title: 'Apparel & Accessories' },
   { img: withBasePath('/images/specialized/FMCG.webp'), title: 'FMCG' },
-  { img: withBasePath('/images/specialized/Information Technology.webp'), title: 'Information Technology' },
+  { img: withBasePath('/images/specialized/Information-Technology.webp'), title: 'Information Technology' },
   { img: withBasePath('/images/specialized/Healthcare.webp'), title: 'Healthcare' },
   { img: withBasePath('/images/specialized/Pharmaceutical.webp'), title: 'Pharmaceutical' },
   { img: withBasePath('/images/specialized/E-commerce.webp'), title: 'E-commerce' },
-  { img: withBasePath('/images/specialized/Retail Market.webp'), title: 'Retail Market' },
+  { img: withBasePath('/images/specialized/Retail-Market.webp'), title: 'Retail Market' },
   { img: withBasePath('/images/specialized/Automotive.webp'), title: 'Automotive' },
   { img: withBasePath('/images/specialized/Construction.webp'), title: 'Construction' },
-  { img: withBasePath('/images/specialized/Power & Energy.webp'), title: 'Power & Energy' },
+  { img: withBasePath('/images/specialized/Power-Energy.webp'), title: 'Power & Energy' },
   { img: withBasePath('/images/specialized/Education.webp'), title: 'Education' },
   { img: withBasePath('/images/specialized/Hospitality.webp'), title: 'Hospitality' },
-  { img: withBasePath('/images/specialized/Shipping & Freight.webp'), title: 'Shipping & Freight' },
+  { img: withBasePath('/images/specialized/Shipping-Freight.webp'), title: 'Shipping & Freight' },
 ]
 
 export default function ExecutiveSearchPage() {
@@ -155,7 +155,7 @@ export default function ExecutiveSearchPage() {
     ['10-Brandix.png', '11-Hirdaramani.png', '12-MAS.png', '13-AE.png', '14-Aeturnum.png'],
     ['15-MS.png', '16-HM.png', '28-Dialog.png', '31-Inivos.png', '32-Inbay.png'],
     ['5-Fonterra.png', '6-Hayleys.png', '7-Hemas.png', '8-Finlays.png', '9-Trelleborg.png'],
-    ['Aqua-Dynamics-Official-Logo-1.webp', 'Artboard 10@2x 1.png', 'Artboard 17@2x 1.png', 'Artboard 33@2x 1.png', 'Artboard 41@2x 1.png'],
+    ['Aqua-Dynamics-Official-Logo-1.webp', 'Artboard-10-2x-1.png', 'Artboard-17-2x-1.png', 'Artboard-33-2x-1.png', 'Artboard-41-2x-1.png'],
   ]
 
   const initialRows = logoRows.slice(0, 2)
@@ -250,18 +250,18 @@ export default function ExecutiveSearchPage() {
       <div className="w-full">
         <div className="grid grid-cols-2 md:grid-cols-4 w-full gap-0">
           {[
-            { title: 'Consumer Insight & Experience', img: '/images/Skills/Consumer Insight & Experience.png' },
-            { title: 'Fashion Design', img: '/images/Skills/fashion design.png' },
-            { title: 'HR, L&D, Compensation & Benefit', img: '/images/Skills/HR, L&D, Compensation & Benefit.png' },
-            { title: 'IT Software & Infrastructure Solutions', img: '/images/Skills/IT Software & Infrastructure Solutions.png' },
-            { title: 'Digital Marketing & Mar-tech', img: '/images/Skills/Digital Marketing & Mar-tech.png' },
-            { title: 'Fabric Technology & Quality', img: '/images/Skills/Fabric Technology & Quality.png' },
-            { title: 'Merchandising & Marketing', img: '/images/Skills/Merchandising & Marketing.png' },
-            { title: 'Supply chain & Logistics', img: '/images/Skills/Supply chain & Logistics.png' },
-            { title: 'Artificial Intelligence', img: '/images/Skills/Artificial Intelligence.png' },
-            { title: 'Continuous Improvement', img: '/images/Skills/Continuous Improvement.png' },
-            { title: 'Legal & Secretarial', img: '/images/Skills/Legal & Secretarial.png' },
-            { title: 'Mechanical & Automation', img: '/images/Skills/Mechanical & Automation.png' },
+            { title: 'Consumer Insight & Experience', img: '/images/Skills/Consumer-Insight-Experience.png' },
+            { title: 'Fashion Design', img: '/images/Skills/fashion-design.png' },
+            { title: 'HR, L&D, Compensation & Benefit', img: '/images/Skills/HR,-LD,-Compensation-Benefit.png' },
+            { title: 'IT Software & Infrastructure Solutions', img: '/images/Skills/IT-Software-Infrastructure-Solutions.png' },
+            { title: 'Digital Marketing & Mar-tech', img: '/images/Skills/Digital-Marketing-Mar-tech.png' },
+            { title: 'Fabric Technology & Quality', img: '/images/Skills/Fabric-Technology-Quality.png' },
+            { title: 'Merchandising & Marketing', img: '/images/Skills/Merchandising-Marketing.png' },
+            { title: 'Supply chain & Logistics', img: '/images/Skills/Supply-chain-Logistics.png' },
+            { title: 'Artificial Intelligence', img: '/images/Skills/Artificial-Intelligence.png' },
+            { title: 'Continuous Improvement', img: '/images/Skills/Continuous-Improvement.png' },
+            { title: 'Legal & Secretarial', img: '/images/Skills/Legal-Secretarial.png' },
+            { title: 'Mechanical & Automation', img: '/images/Skills/Mechanical-Automation.png' },
           ].map((item, index) => {
             const isDeskGreen = (Math.floor(index / 4) + (index % 4)) % 2 === 0;
             const isMobGreen = (Math.floor(index / 2) + (index % 2)) % 2 === 0;

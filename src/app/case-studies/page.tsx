@@ -11,7 +11,7 @@ export default function CaseStudiesPage() {
       <Navbar bgColor="#0F221B" />
       <section className="w-full py-16 md:py-24 bg-white min-h-[60vh] flex items-center justify-center relative">
           <img
-            src={withBasePath('/images/blogs/Rectangle 1083.png')}
+            src={withBasePath('/images/blogs/Rectangle-1083.png')}
             alt=""
             className="absolute top-[25%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[105%] max-w-[1200px] h-auto object-contain z-0"
           />

@@ -15,7 +15,7 @@ const INDUSTRIES = [
   { label: 'EDUCATION', bg: '/images/industries/education.webp' },
   { label: 'TESTING AND CERTIFICATION', bg: '/images/industries/testing-cert.webp' },
   { label: 'AUTOMOTIVE', bg: '/images/industries/automotive.webp' },
-  { label: 'CONSTRUCTION', bg: '/images/industries/construction.png' },
+  { label: 'CONSTRUCTION', bg: '/images/industries/construction.webp' },
   { label: 'SHIPPING & FREIGHT', bg: '/images/industries/shipping.webp' },
 ]
 

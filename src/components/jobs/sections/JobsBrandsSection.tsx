@@ -3,10 +3,10 @@
 import { motion } from 'framer-motion'
 
 const logos = [
-  '/images/logos/Artboard 41@2x 1.png',
-  '/images/logos/Artboard 33@2x 1.png',
-  '/images/logos/Artboard 17@2x 1.png',
-  '/images/logos/Artboard 10@2x 1.png',
+  '/images/logos/Artboard-41-2x-1.png',
+  '/images/logos/Artboard-33-2x-1.png',
+  '/images/logos/Artboard-17-2x-1.png',
+  '/images/logos/Artboard-10-2x-1.png',
   '/images/logos/Aqua-Dynamics-Official-Logo-1.webp',
   '/images/logos/9-Trelleborg.png',
   '/images/logos/8-Finlays.png',
