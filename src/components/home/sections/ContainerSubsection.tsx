@@ -147,7 +147,7 @@ export function ContainerSubsection() {
             aria-hidden="true"
             className="absolute inset-0 lg:hidden bg-no-repeat"
             style={{
-              backgroundImage: `url('${withBasePath('/figmaAssets/Container (4).png')}')`,
+              backgroundImage: `url('${withBasePath('/figmaAssets/Container-4.png')}')`,
               backgroundSize: 'cover',
               backgroundPosition: 'center center',
             }}
