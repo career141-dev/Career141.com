@@ -15,22 +15,22 @@ const heroEvents: HeroEvent[] = [
   {
     folder: "Women's Day and IFTAR",
     slug: 'womens-day-and-iftar',
-    image: "/images/Events/Women's Day and IFTAR/IWD-2025-at-Career141-1-scaled.webp",
+    image: '/images/Events/womens-day-iftar/IWD-2025-at-Career141-1-scaled.webp',
   },
   {
     folder: '2024 NEW YEAR MEET-UP',
     slug: '2024-new-year-meet-up',
-    image: '/images/Events/2024 NEW YEAR MEET-UP/IMG_0999.png',
+    image: '/images/Events/2024-new-year-meetup/IMG_0999.png',
   },
   {
     folder: 'CareerDay SLIIT',
     slug: 'careerday-sliit',
-    image: '/images/Events/CareerDay SLIIT/First-Image.webp',
+    image: '/images/Events/careerday-sliit/First-Image.webp',
   },
   {
     folder: 'PEOPLE SUMMIT 2025 - SLASSCOM',
     slug: 'people-summit-2025-slasscom',
-    image: '/images/Events/PEOPLE SUMMIT 2025 - SLASSCOM/Group.png',
+    image: '/images/Events/people-summit-2025-slasscom/Group.png',
   },
 ]
 
