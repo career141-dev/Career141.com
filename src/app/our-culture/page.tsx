@@ -64,20 +64,20 @@ export default function OurCulturePage() {
       <section className="relative w-full bg-white pb-5 overflow-hidden">
         <div className="relative w-full pt-16 md:pt-4">
           <img
-            src={withBasePath('/images/Culture/Group 3584.png')}
+            src={withBasePath('/images/Culture/Group-3584.png')}
             alt="Our Culture Hero"
             className="hidden md:block w-full h-auto object-cover md:object-fill"
           />
           <div className="md:hidden w-full relative overflow-hidden">
             <img
-              src={withBasePath('/images/Culture/Group 3584.png')}
+              src={withBasePath('/images/Culture/Group-3584.png')}
               alt="Our Culture Hero"
               className="w-full h-auto block object-cover object-left"
               style={{ height: '300px' }}
             />
           </div>
           <img
-            src={withBasePath('/images/Culture/Vector 335.svg')}
+            src={withBasePath('/images/Culture/Vector-335.svg')}
             alt=""
             className="hidden md:block absolute top-[70px] right-0 z-10 w-2/4 h-auto"
           />
@@ -150,7 +150,7 @@ export default function OurCulturePage() {
               ))}
             </div>
             <img 
-              src={withBasePath('/images/Culture/Image differentiate.svg')} 
+              src={withBasePath('/images/Culture/Image-differentiate.svg')} 
               alt="How we differentiate" 
               className="hidden md:block w-full h-auto"
             />
@@ -228,7 +228,7 @@ export default function OurCulturePage() {
       <section className="w-full py-16 md:py-24 relative">
         <div className="w-full relative">
           <img 
-            src={withBasePath('/images/Culture/big tube.png')} 
+            src={withBasePath('/images/Culture/big-tube.png')} 
             alt="Work with us" 
             className="hidden md:block w-full h-auto"
           />
@@ -274,7 +274,7 @@ export default function OurCulturePage() {
       <section className="w-full py-8 md:py-24 relative">
         <div className="w-full relative">
           <img 
-            src={withBasePath('/images/Culture/Group 3587.png')} 
+            src={withBasePath('/images/Culture/Group-3587.png')} 
             alt="Career pathways" 
             className="hidden md:block w-full h-auto"
           />
