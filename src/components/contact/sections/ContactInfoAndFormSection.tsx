@@ -7,8 +7,8 @@ import { CheckCircle2Icon, ChevronRightIcon, InstagramIcon, LinkedinIcon, Loader
 import PhoneInput from 'react-phone-input-2'
 import { Turnstile } from '@marsidev/react-turnstile'
 import { withBasePath } from '@/lib/assetPath'
+import { getTurnstileSiteKey } from '@/lib/turnstile'
 import styles from './ContactInfoAndFormSection.module.css'
-
 
 type FormData = {
   name: string
@@ -212,6 +212,8 @@ function FloatingSelect({
 }
 
 function ContactForm({ dark = false }: { dark?: boolean }) {
+  const turnstileSiteKey = getTurnstileSiteKey()
+
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
@@ -434,12 +436,21 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
 
       <div className={dark ? styles.WpformsFieldContainer_88_12005 : 'flex flex-col gap-4'}>
         <div style={{ marginBottom: '16px' }}>
-          <Turnstile
-            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
-            onSuccess={(token) => setTurnstileToken(token)}
-            onError={() => setTurnstileToken(null)}
-            onExpire={() => setTurnstileToken(null)}
-          />
+          {turnstileSiteKey ? (
+            <Turnstile
+              siteKey={turnstileSiteKey}
+              onSuccess={(token) => setTurnstileToken(token)}
+              onError={() => {
+                console.error('Turnstile error: Failed to load widget')
+                setTurnstileToken(null)
+              }}
+              onExpire={() => setTurnstileToken(null)}
+            />
+          ) : (
+            <p className={dark ? 'text-white/80 text-sm' : 'text-[#555] text-sm'}>
+              Captcha is not configured. Please set NEXT_PUBLIC_TURNSTILE_SITE_KEY.
+            </p>
+          )}
         </div>
       </div>
 

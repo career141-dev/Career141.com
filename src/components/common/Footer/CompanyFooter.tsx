@@ -262,15 +262,16 @@ export function CompanyFooter() {
         </div>
       </footer>
 
-      {/* Scroll to Top */}
-      <button
-        type="button"
-        onClick={scrollToTop}
-        className="fixed right-5 bottom-[80px] md:right-10 md:bottom-10 w-10 h-10 md:w-12 md:h-12 bg-[#37a65e] hover:bg-[#11593f] text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-200 z-40"
-        aria-label="Scroll to top"
+      {/* WhatsApp Button */}
+      <a
+        href="https://api.whatsapp.com/send/?phone=94753595495&text&type=phone_number&app_absent=0"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed right-5 bottom-[80px] md:right-10 md:bottom-10 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-200 z-40"
+        aria-label="Chat on WhatsApp"
       >
-        <ArrowUpIcon className="w-4 h-4 md:w-5 md:h-5" />
-      </button>
+        <img src="/whatsapp.png" alt="WhatsApp" className="w-full h-full object-contain rounded-full" />
+      </a>
     </>
   )
 }

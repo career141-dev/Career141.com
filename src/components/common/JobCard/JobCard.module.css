@@ -23,6 +23,14 @@
   z-index: 1;
 }
 
+.FullCardLink {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
 .CardInner {
   width: 100%;
   height: 100%;

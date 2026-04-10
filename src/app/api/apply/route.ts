@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+export const runtime = 'edge'
+
 const brevoApiKey = process.env.BREVO_API_KEY
 
 const rateLimit = new Map<string, { count: number; resetTime: number }>()
@@ -20,6 +22,19 @@ function checkRateLimit(ip: string): boolean {
 
 function sanitizeInput(input: string): string {
   return input.replace(/[<>]/g, '').replace(/javascript:/gi, '').replace(/on\w+=/gi, '').trim()
+}
+
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer)
+  let binary = ''
+  const chunkSize = 0x8000
+
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    const chunk = bytes.subarray(i, i + chunkSize)
+    binary += String.fromCharCode(...chunk)
+  }
+
+  return btoa(binary)
 }
 
 async function sendEmailViaBrevo(fields: Record<string, string>, fileName: string, fileBase64: string): Promise<boolean> {
@@ -60,7 +75,7 @@ async function sendEmailViaBrevo(fields: Record<string, string>, fileName: strin
       },
       body: JSON.stringify({
         sender: { email: senderEmail, name: senderName },
-        to: [{ email: 'sanjeev@career141.com', name: 'Sanjeev - Career141' }],
+        to: [{ email: process.env.JOBS_RECIPIENT_EMAIL || 'jobs@career141.com', name: 'Career141 Jobs' }],
         subject: `Job Application: ${sanitizeInput(fields.jobTitle)} — ${sanitizeInput(fields.firstName)} ${sanitizeInput(fields.lastName)}`,
         htmlContent,
         textContent,
@@ -137,7 +152,7 @@ export async function POST(request: NextRequest) {
     }
 
     const fileBuffer = await file!.arrayBuffer()
-    const fileBase64 = Buffer.from(fileBuffer).toString('base64')
+    const fileBase64 = arrayBufferToBase64(fileBuffer)
 
     const fields = { firstName, lastName, email, phone, age, designation, jobTitle }
     const success = await sendEmailViaBrevo(fields, file!.name, fileBase64)

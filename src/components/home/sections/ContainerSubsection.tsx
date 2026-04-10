@@ -73,6 +73,8 @@ const TESTIMONIALS = [
   
 ]
 
+const MOBILE_HEADING_IMAGE = withBasePath('/figmaAssets/testimonial/17c4028a605359300c9ddb69a9b0ee7da5187dc0.png')
+
 const sliderVariants = {
   enter: (direction: number) => ({
     x: direction > 0 ? 300 : -300,
@@ -141,28 +143,27 @@ export function ContainerSubsection() {
               backgroundPosition: 'center top',
             }}
           />
-          <div aria-hidden="true" className="absolute inset-0 lg:hidden">
-            <img
-              src={withBasePath('/figmaAssets/Container (4).png')}
-              alt=""
-              className="h-full w-full object-cover"
-              style={{ objectPosition: 'center center' }}
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-          <div className="relative z-10 flex flex-col items-start w-full">
           <div
-            className="lg:hidden w-full flex items-center mb-[14px]"
+            aria-hidden="true"
+            className="absolute inset-0 lg:hidden bg-no-repeat"
             style={{
-              height: 85,
-              borderRadius: 2,
+              backgroundImage: `url('${withBasePath('/figmaAssets/Container-4.png')}')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center center',
             }}
-          >
-            <h2
-              className="[font-family:'Quicksand',Helvetica] font-normal text-white leading-[38px] text-[32px]"
-              style={{ paddingLeft: 102 }}
-            >
+          />
+          <div className="relative z-10 flex flex-col items-start w-full">
+          <div className="lg:hidden w-full flex items-center gap-3 mb-4">
+            <div className="w-18 h-18 shrink-0">
+              <img
+                src={MOBILE_HEADING_IMAGE}
+                alt=""
+                className="w-full h-full object-contain opacity-80"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <h2 className="font-['Quicksand',Helvetica] font-normal text-white leading-tight text-[30px]">
               <span className="text-white">Hear from our</span>
               <br />
               <span className="font-bold text-[#fe8d2b]">clients</span>
@@ -211,7 +212,7 @@ export function ContainerSubsection() {
                 >
                   <div className="flex flex-col items-start gap-[2.8px] w-full" style={{ alignItems: 'flex-start' }}>
                     <p
-                      className="[font-family:'Inter',Helvetica] font-medium text-white tracking-[0] w-full text-[20px] lg:text-[18px]"
+                      className="[font-family:'Inter',Helvetica] font-medium text-white tracking-[0] w-full text-[18px] lg:text-[18px]"
                       style={{ lineHeight: '24px' }}
                     >
                       {isExpanded ? testimonial.quote : testimonial.quote.length > 150 ? testimonial.quote.substring(0, 150) + '...' : testimonial.quote}
@@ -228,10 +229,7 @@ export function ContainerSubsection() {
                   </div>
 
                   <div className="flex items-center gap-[29.34px] w-full">
-                    <div
-                      className="flex-shrink-0 rounded-full bg-white/20 bg-cover bg-center overflow-hidden"
-                      style={{ width: 80, height: 80, maxWidth: 80 }}
-                    >
+                    <div className="shrink-0 rounded-full bg-white/20 bg-cover bg-center overflow-hidden w-16 h-16 md:w-20 md:h-20">
                       <img
                         src={testimonial.avatar}
                         alt={testimonial.name}

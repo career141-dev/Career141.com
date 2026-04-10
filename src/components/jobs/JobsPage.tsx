@@ -108,15 +108,31 @@ export function JobsPage({ heroData, showSections }: JobsPageProps) {
         
         {sections.jobsListingSection && <JobsListingSection sectionData={heroData} />}
         
-        {sections.brandsSection && <JobsBrandsSection />}
+        {sections.brandsSection && (
+          <div className="relative -mt-[60px]">
+            <div 
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage: 'url(/images/jobs/tube.png)',
+                backgroundSize: '90% auto',
+                backgroundPosition: 'center 150px',
+                backgroundRepeat: 'no-repeat',
+                height: '200%',
+                top: '0',
+                zIndex: 0,
+              }}
+            />
+            <JobsBrandsSection />
+          </div>
+        )}
         
-        {sections.testimonialsSection && <JobsTestimonialsSection />}
+        {sections.testimonialsSection && <JobsTestimonialsSection sectionData={heroData} />}
         
         {sections.specializations && <JobsSpecializations />}
         
         {sections.brands && <JobsBrands />}
 
-        {sections.globalReach && <JobsGlobalReach />}
+        {sections.globalReach && <JobsGlobalReach sectionData={heroData} />}
       </main>
 
       <MeetingSchedulerSubsection />

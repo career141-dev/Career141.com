@@ -4,6 +4,7 @@ import { useState } from 'react'
 import clsx from 'clsx'
 import { Turnstile } from '@marsidev/react-turnstile'
 import { withBasePath } from '@/lib/assetPath'
+import { getTurnstileSiteKey } from '@/lib/turnstile'
 
 const imgDivElementorElement = withBasePath("/figmaAssets/testimonial/032702031c80235a48f8edff72693cef0a9031ec.png");
 const imgDivElementorElement1 = withBasePath("/figmaAssets/testimonial/f5fc7d0a8ab3374cd43c8bfed2b6b9ba03f8d49d.png");
@@ -98,6 +99,8 @@ function ContactMethod({ country, phones }: { country: string; phones: string[] 
 }
 
 export function MeetingSchedulerSubsection() {
+  const turnstileSiteKey = getTurnstileSiteKey()
+
   const [form, setForm] = useState<FormData>({
     firstName: '',
     lastName: '',
@@ -370,12 +373,21 @@ export function MeetingSchedulerSubsection() {
                       </div>
 
                       <div style={{ marginBottom: '16px' }}>
-                        <Turnstile
-                          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
-                          onSuccess={(token) => setTurnstileToken(token)}
-                          onError={() => setTurnstileToken(null)}
-                          onExpire={() => setTurnstileToken(null)}
-                        />
+                        {turnstileSiteKey ? (
+                          <Turnstile
+                            siteKey={turnstileSiteKey}
+                            onSuccess={(token) => setTurnstileToken(token)}
+                            onError={() => {
+                              console.error('Turnstile error: Failed to load widget')
+                              setTurnstileToken(null)
+                            }}
+                            onExpire={() => setTurnstileToken(null)}
+                          />
+                        ) : (
+                          <p className="text-white/80 text-sm">
+                            Captcha is not configured. Please set NEXT_PUBLIC_TURNSTILE_SITE_KEY.
+                          </p>
+                        )}
                       </div>
 
                       <button 

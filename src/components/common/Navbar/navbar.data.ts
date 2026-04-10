@@ -11,7 +11,7 @@ export const EXECUTIVE_SEARCH_CATEGORIES = [
   ],
   [
     { label: 'Finance & Auditing', href: '/jobs/finance-auditing' },
-    { label: 'Data Analytics & Research', href: '/jobs/data-analytics' },
+    { label: 'Data Analytics & Research', href: '/jobs/data-analytics-research' },
     { label: 'Legal & Secretarial', href: '/jobs/legal-secretarial' },
     { label: 'Supply chain & Logistics', href: '/jobs/supply-chain' },
     { label: 'Fashion Designing & Development', href: '/jobs/fashion-design' },

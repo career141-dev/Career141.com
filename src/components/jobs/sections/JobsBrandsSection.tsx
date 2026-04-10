@@ -1,13 +1,12 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
 const logos = [
-  '/images/logos/Artboard 41@2x 1.png',
-  '/images/logos/Artboard 33@2x 1.png',
-  '/images/logos/Artboard 17@2x 1.png',
-  '/images/logos/Artboard 10@2x 1.png',
+  '/images/logos/Artboard-41-2x-1.png',
+  '/images/logos/Artboard-33-2x-1.png',
+  '/images/logos/Artboard-17-2x-1.png',
+  '/images/logos/Artboard-10-2x-1.png',
   '/images/logos/Aqua-Dynamics-Official-Logo-1.webp',
   '/images/logos/9-Trelleborg.png',
   '/images/logos/8-Finlays.png',
@@ -26,50 +25,66 @@ const logos = [
   '/images/logos/10-Brandix.png',
 ]
 
+const CARD_WIDTH = 167.36
+const CARD_GAP = 20
+const CARD_STEP_WIDTH = CARD_WIDTH + CARD_GAP
+const TRACK_WIDTH = logos.length * CARD_STEP_WIDTH
+
 function JobsBrandsSectionContent() {
   return (
-    <div className="w-full py-[100px] px-[91.238px]" style={{ marginTop: '0px', position: 'relative', overflow: 'hidden' }}>
-      {/* Background image */}
-      <div 
+    <div className="w-full py-25 px-[91.238px]" style={{ marginTop: '0px', position: 'relative', overflow: 'hidden' }}>
+      {/* Background image - now handled in JobsPage for continuous tube */}
+      {/* <div 
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: 'url(/images/jobs/tube.png)',
           backgroundSize: 'cover',
-          backgroundPosition: 'center 130px',
+          backgroundPosition: 'center -230px',
           backgroundRepeat: 'no-repeat',
         }}
-      />
-      <div className="flex flex-col md:flex-row items-start gap-4 md:gap-[40px] w-full max-w-[1204.5px] mx-auto pr-4 md:pr-0 relative z-10">
-        {/* Left Column - Smaller */}
-        <div className="w-full md:w-[30%] flex items-center">
-          <div className="flex flex-col font-['Quicksand:Bold',sans-serif] font-bold text-[#4c4c4c] text-[28px] md:text-[35.2px]">
+      /> */}
+      <div className="flex flex-col md:flex-row items-start gap-4 md:gap-10 w-full max-w-[1204.5px] ml-auto mr-0 pr-4 md:pr-0 relative z-10 md:translate-x-8 lg:translate-x-12">
+        {/* Left Column - Figma sized */}
+        <div className="w-full md:w-[321.19px] flex items-center">
+          <div
+            className="flex flex-col font-['Quicksand:Bold',sans-serif] font-bold text-[#4c4c4c] text-[28px] md:text-[35.2px]"
+            style={{
+              color: '#4C4C4C',
+              fontFamily: 'Quicksand, sans-serif',
+              fontSize: '35.2px',
+              fontStyle: 'normal',
+              fontWeight: 700,
+              lineHeight: '35.2px',
+            }}
+          >
             <p className="leading-[35.2px] mb-0">Worked with the</p>
             <p className="leading-[35.2px]">best brands</p>
           </div>
         </div>
 
-        {/* Right Column - Larger with Auto-scrolling Carousel */}
-        <div className="w-[95%] md:w-[70%] overflow-hidden flex items-center" style={{ height: '220px' }}>
-          <div className="relative">
+        {/* Right Column - Figma sized */}
+        <div className="w-full md:w-230 overflow-hidden flex items-center" style={{ height: '220px' }}>
+          <div className="relative w-full">
             <motion.div 
-              className="flex gap-[20px]"
+              className="flex w-max gap-5"
               animate={{
-                x: [0, -((logos.length / 2) * 200)]
+                x: [0, -TRACK_WIDTH]
               }}
               transition={{
                 x: {
                   repeat: Infinity,
                   repeatType: "loop",
-                  duration: logos.length * 2,
+                  duration: logos.length * 1.8,
                   ease: "linear",
                 },
               }}
+              style={{ willChange: 'transform' }}
             >
-              {/* Duplicate logos for seamless loop */}
-              {[...logos, ...logos, ...logos].map((logo, index) => (
+              {/* Two identical tracks for seamless chain-loop */}
+              {[...logos, ...logos].map((logo, index) => (
                 <div 
                   key={index}
-                  className="flex-shrink-0 w-[180px] h-[120px] bg-white rounded-[20px] flex items-center justify-center p-4 shadow-md"
+                  className="shrink-0 w-[167.36px] h-[167.36px] bg-white rounded-[18px] border border-[#cfcfcf] flex items-center justify-center p-[18.325px_11.637px]"
                 >
                   <img 
                     src={logo} 

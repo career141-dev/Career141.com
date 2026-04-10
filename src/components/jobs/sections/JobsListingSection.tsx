@@ -59,7 +59,7 @@ export function JobsListingSection({ sectionData }: JobsListingSectionProps) {
         </div>
         <div className="flex-1 py-10 lg:py-[60px] pr-5 md:pr-10 lg:pr-[91px]">
           <div className="flex flex-col items-start">
-            <div className="mb-4">
+            <div className="mb-4 pl-4 border-l-4" style={{ borderColor: themeColor }}>
               <h2 className="font-bold text-[28px] md:text-[32px] lg:text-[38.4px] leading-[1.2]" style={blackStyle}>
                 {section.title}
               </h2>
@@ -100,8 +100,8 @@ export function JobsListingSection({ sectionData }: JobsListingSectionProps) {
             className="object-contain"
           />
         </div>
-        <div className="flex flex-col items-start mt-6 pl-10">
-          <div className="mb-4">
+        <div className="flex flex-col items-start mt-6 pl-4">
+          <div className="mb-4 pl-4 border-l-4" style={{ borderColor: themeColor }}>
             <h2 className="font-bold text-[28px] md:text-[32px] leading-[1.2]" style={blackStyle}>
               {section.title}
             </h2>

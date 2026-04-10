@@ -43,9 +43,11 @@ const PIN_POSITIONS = [
 
 interface MapPinProps {
   label: string
+  themeColor?: string
+  quotationColor?: string
 }
 
-function MapPin({ label }: MapPinProps) {
+function MapPin({ label, themeColor, quotationColor }: MapPinProps) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
@@ -60,13 +62,16 @@ function MapPin({ label }: MapPinProps) {
       aria-label={`Market: ${label}`}
     >
       <span 
-        className="relative inline-flex items-center justify-center w-[14px] h-[14px] rounded-full bg-[#006763] shadow-sm transition-colors duration-300"
+        className="relative inline-flex items-center justify-center w-[14px] h-[14px] rounded-full shadow-sm transition-colors duration-300"
+        style={{ backgroundColor: themeColor || '#006763' }}
       >
         <span 
-          className={`absolute w-[8px] h-[1.6px] rounded-full transition-colors duration-300 ${isHovered ? 'bg-[#ff0a54]' : 'bg-[#CBFC06]'}`} 
+          className={`absolute w-[8px] h-[1.6px] rounded-full transition-colors duration-300`}
+          style={{ backgroundColor: isHovered ? '#CBFC06' : (quotationColor || '#CBFC06') }}
         />
         <span 
-          className={`absolute h-[8px] w-[1.6px] rounded-full transition-colors duration-300 ${isHovered ? 'bg-[#ff0a54]' : 'bg-[#CBFC06]'}`} 
+          className={`absolute h-[8px] w-[1.6px] rounded-full transition-colors duration-300`}
+          style={{ backgroundColor: isHovered ? '#CBFC06' : (quotationColor || '#CBFC06') }} 
         />
       </span>
 
@@ -111,7 +116,13 @@ const markerVariants = {
   },
 }
 
-export function JobsGlobalReach() {
+interface JobsGlobalReachProps {
+  sectionData?: {
+    theme?: string
+  }
+}
+
+export function JobsGlobalReach({ sectionData }: JobsGlobalReachProps) {
   const containerRef = useRef(null)
   const isInView = useInView(containerRef, { once: true, amount: 0.3 })
 
@@ -158,7 +169,7 @@ export function JobsGlobalReach() {
                 variants={markerVariants}
                 data-testid={`img-map-pin-${i}`}
               >
-                <MapPin label={pin.label} />
+                <MapPin label={pin.label} themeColor={sectionData?.theme} />
               </motion.div>
             ))}
           </div>

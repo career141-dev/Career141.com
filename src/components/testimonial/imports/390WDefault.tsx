@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const imgDivElementorElement = withBasePath("/figmaAssets/testimonial/17c4028a605359300c9ddb69a9b0ee7da5187dc0.png");
 const imgGroup3087Webp = withBasePath("/figmaAssets/testimonial/e18349222d5bac12ef0f29b45387a19fe672faf3.png");
-const imgGroup3088Webp = withBasePath("/figmaAssets/testimonial/e9f4a609a4b684ca4c557accfd582a1232+f456d0.png");
+const imgGroup3088Webp = withBasePath("/figmaAssets/testimonial/e9f4a609a4b684ca4c557accfd582a1232f456d0.png");
 const imgGroup3089Webp = withBasePath("/figmaAssets/testimonial/fadb5331d875b978b81c685bcc6146ab1c27cba3.png");
 const imgDivElementorElement1 = withBasePath("/figmaAssets/testimonial/4bd109b0a0da7e94073e68c63d22d9e72294f61e.png");
 const imgDivElementorElement2 = withBasePath("/figmaAssets/testimonial/032702031c80235a48f8edff72693cef0a9031ec.png");

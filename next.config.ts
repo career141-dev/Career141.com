@@ -4,9 +4,10 @@ const isGitHubActions = process.env.GITHUB_ACTIONS === 'true'
 const repositoryName = process.env.GITHUB_REPOSITORY?.split('/')[1] ?? ''
 const shouldUseRepoBasePath = repositoryName.length > 0 && !repositoryName.endsWith('.github.io')
 const basePath = isGitHubActions && shouldUseRepoBasePath ? `/${repositoryName}` : ''
+const shouldUseStaticExport = isGitHubActions
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  ...(shouldUseStaticExport ? { output: 'export' as const } : {}),
   images: {
     unoptimized: true,
   },
