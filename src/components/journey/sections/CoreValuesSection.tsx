@@ -28,7 +28,7 @@ export function CoreValuesSection() {
             <div className="relative z-10 pl-6 md:pl-[35%] pr-6 md:pr-[5%] pt-10 md:pt-0">
             <div className="relative w-48 h-48 md:w-60 md:h-60 ml-20">
               <img
-                src={withBasePath('/images/Vector 97.svg')}
+                src={withBasePath('/images/Vector-97.svg')}
                 alt=""
                 className="w-full h-full"
               />

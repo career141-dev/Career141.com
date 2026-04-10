@@ -28,7 +28,7 @@ export function HeroSection() {
           <div className="relative w-full h-full">
             {/* Layer 1: Vector 20 - Bottom */}
             <img 
-              src={withBasePath('/images/Vector 20.svg')} 
+              src={withBasePath('/images/Vector-20.svg')} 
               alt="" 
               className="absolute left-0 -bottom-4 sm:-bottom-24 lg:-bottom-30 h-[120px] sm:h-[280px] lg:h-[370px] w-auto sm:w-full lg:w-[570px] z-0" 
               style={{ filter: 'drop-shadow(0 0 12px rgba(203, 252, 6, 0.8))' }}

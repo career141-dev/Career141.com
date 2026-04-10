@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import clsx from 'clsx'
 import { Turnstile } from '@marsidev/react-turnstile'
 import { withBasePath } from '@/lib/assetPath'
+import { getTurnstileSiteKey } from '@/lib/turnstile'
 
 const imgDivElementorElement = withBasePath("/figmaAssets/testimonial/032702031c80235a48f8edff72693cef0a9031ec.png");
 const imgDivElementorElement1 = withBasePath("/figmaAssets/testimonial/f5fc7d0a8ab3374cd43c8bfed2b6b9ba03f8d49d.png");
@@ -98,6 +99,8 @@ function ContactMethod({ country, phones }: { country: string; phones: string[] 
 }
 
 export function MeetingSchedulerSubsection() {
+  const turnstileSiteKey = getTurnstileSiteKey()
+
   const [form, setForm] = useState<FormData>({
     firstName: '',
     lastName: '',
@@ -110,13 +113,6 @@ export function MeetingSchedulerSubsection() {
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [submitting, setSubmitting] = useState(false)
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
-      console.warn('Turnstile site key missing. Auto-bypassing for development.')
-      setTurnstileToken('dev-token')
-    }
-  }, [])
 
   const update = (field: keyof FormData) => (v: string) => {
     let finalValue = v
@@ -209,7 +205,7 @@ export function MeetingSchedulerSubsection() {
       return
     }
 
-    if (!turnstileToken && process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
+    if (!turnstileToken) {
       alert('Please complete the CAPTCHA')
       return
     }
@@ -233,47 +229,30 @@ export function MeetingSchedulerSubsection() {
         body: JSON.stringify(payload),
       })
 
-      const responseText = await response.text()
-      let responseData: any = {}
-      try {
-        responseData = JSON.parse(responseText)
-      } catch (e) {
-        responseData = { error: responseText || 'Unknown error' }
-      }
-
       if (!response.ok) {
-        if (response.status === 400 && (responseData.details || responseData.error === 'Validation failed')) {
-          if (Array.isArray(responseData.details)) {
+        let errorData: any = {}
+        try {
+          errorData = await response.json()
+        } catch (e) {}
+        
+        if (response.status === 400) {
+          if (errorData?.details) {
             const newValidationErrors: FormErrors = { ...errors }
-            let hasMappedError = false
-            
-            responseData.details.forEach((detail: any) => {
-              const isObject = typeof detail === 'object' && detail !== null
-              const field = isObject && Array.isArray(detail.path) ? detail.path[0] : null
-              const message = isObject ? detail.message : detail
-              
-              if (field && field in form) {
-                newValidationErrors[field as keyof FormErrors] = message
-                hasMappedError = true
+            errorData.details.forEach((detail: any) => {
+              const field = detail.path[0] as keyof FormErrors
+              if (field) {
+                newValidationErrors[field] = detail.message
               }
             })
-            
-            if (hasMappedError) {
-              setErrors(newValidationErrors)
-            } else {
-              const allMsgs = responseData.details
-                .map((d: any) => (typeof d === 'object' ? d.message : d))
-                .join('\n')
-              alert(`Validation failed:\n${allMsgs}`)
-            }
-          } else {
-            alert(responseData.error || 'Validation failed')
+            setErrors(newValidationErrors)
           }
           return
         }
         
-        throw new Error(responseData?.error || `Server responded with ${response.status}`)
+        throw new Error(errorData?.error || 'Failed to send')
       }
+
+      const successData = await response.json()
 
       alert('Message sent! We will contact you shortly.')
       setForm({
@@ -287,12 +266,10 @@ export function MeetingSchedulerSubsection() {
       setTouched({})
       setErrors({})
     } catch (error: any) {
-      console.error('Meeting form submission error:', error)
       alert(error.message || 'Failed to send message. Please try again.')
     } finally {
       setSubmitting(false)
     }
-
   }
 
   return (
@@ -396,17 +373,26 @@ export function MeetingSchedulerSubsection() {
                       </div>
 
                       <div style={{ marginBottom: '16px' }}>
-                        <Turnstile
-                          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAC1MnbcrrWWcB6e-'}
-                          onSuccess={(token) => setTurnstileToken(token)}
-                          onError={() => setTurnstileToken(null)}
-                          onExpire={() => setTurnstileToken(null)}
-                        />
+                        {turnstileSiteKey ? (
+                          <Turnstile
+                            siteKey={turnstileSiteKey}
+                            onSuccess={(token) => setTurnstileToken(token)}
+                            onError={() => {
+                              console.error('Turnstile error: Failed to load widget')
+                              setTurnstileToken(null)
+                            }}
+                            onExpire={() => setTurnstileToken(null)}
+                          />
+                        ) : (
+                          <p className="text-white/80 text-sm">
+                            Captcha is not configured. Please set NEXT_PUBLIC_TURNSTILE_SITE_KEY.
+                          </p>
+                        )}
                       </div>
 
                       <button 
                         type="submit"
-                        disabled={(!turnstileToken || submitting) && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                        disabled={!turnstileToken || submitting}
                         className="bg-white text-black font-['Quicksand',sans-serif] font-bold py-3 rounded-full hover:bg-gray-100 transition-colors text-[16px] w-full disabled:opacity-50"
                       >
                         {submitting ? 'Sending...' : 'Submit'}

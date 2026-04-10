@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { Turnstile } from '@marsidev/react-turnstile'
@@ -8,6 +8,7 @@ import { Navbar } from '@/components/common/Navbar'
 import { CompanyFooter } from '@/components/common'
 import { JobCard } from '@/components/common/JobCard'
 import { withBasePath } from '@/lib/assetPath'
+import { getTurnstileSiteKey } from '@/lib/turnstile'
 import { getPremiumJobBySlug, premiumJobCards, type PremiumJob } from './premiumJobsData'
 import { jobDetailsBySlug, type JobDetailNode } from './jobDetailsData'
 
@@ -279,6 +280,8 @@ function FormInput({
 }
 
 function ApplyForm({ jobTitle }: { jobTitle: string }) {
+  const turnstileSiteKey = getTurnstileSiteKey()
+
   const { register, handleSubmit, formState: { errors }, setError, clearErrors, reset } = useForm<{
     firstName: string
     lastName: string
@@ -295,12 +298,6 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
   const [isSuccess, setIsSuccess] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
-      console.warn('Turnstile site key missing. Using Cloudflare test key for development.')
-    }
-  }, [])
 
   const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0]
@@ -326,7 +323,7 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
       setError('root', { message: 'Please upload your CV/resume' })
       return
     }
-    if (!turnstileToken && process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
+    if (!turnstileToken) {
       setError('root', { message: 'Please complete the captcha' })
       return
     }
@@ -345,44 +342,8 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
       formData.append('turnstileToken', turnstileToken)
 
       const res = await fetch('/api/apply', { method: 'POST', body: formData })
-      
-      const responseText = await res.text()
-      let responseData: any = {}
-      try {
-        responseData = JSON.parse(responseText)
-      } catch (e) {
-        responseData = { error: responseText || 'Unknown error' }
-      }
-
-      if (!res.ok) {
-        if (res.status === 400 && (responseData.details || responseData.error === 'Validation failed')) {
-          if (Array.isArray(responseData.details)) {
-            let hasMappedError = false
-            responseData.details.forEach((detail: any) => {
-              const isObject = typeof detail === 'object' && detail !== null
-              const field = isObject && Array.isArray(detail.path) ? detail.path[0] : null
-              const message = isObject ? detail.message : detail
-              
-              if (field && field in data) {
-                setError(field as any, { type: 'manual', message: message })
-                hasMappedError = true
-              }
-            })
-            
-            if (!hasMappedError) {
-              const allMsgs = responseData.details
-                .map((d: any) => (typeof d === 'object' ? d.message : d))
-                .join('. ')
-              setError('root', { message: `Validation failed: ${allMsgs}` })
-            }
-          } else {
-            setError('root', { message: responseData.error || 'Validation failed' })
-          }
-          return
-        }
-        throw new Error(responseData.error || `Server responded with ${res.status}`)
-      }
-      
+      const json = await res.json()
+      if (!res.ok) throw new Error(json.error || 'Submission failed')
       setIsSuccess(true)
       reset()
       setFile(null)
@@ -391,14 +352,12 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
       if (fileInputRef.current) fileInputRef.current.value = ''
       setTimeout(() => setIsSuccess(false), 5000)
     } catch (err: unknown) {
-      console.error('Apply form submission error:', err)
       const message = err instanceof Error ? err.message : 'Something went wrong'
       setErrorMsg(message)
     } finally {
       setIsSubmitting(false)
     }
   }
-
 
   if (isSuccess) {
     return (
@@ -461,7 +420,7 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
             </div>
           ) : (
             <>
-              <img alt="Upload" className="w-[30px] h-[30px] object-contain" src={withBasePath('/figmaAssets/Component 2.png')} loading="lazy" decoding="async" />
+              <img alt="Upload" className="w-[30px] h-[30px] object-contain" src={withBasePath('/figmaAssets/Component-2.png')} loading="lazy" decoding="async" />
               <span className="text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '14.9px', lineHeight: '24px', color: 'rgba(0,0,0,0.7)' }}>Click or drag a file to this area to upload (PDF, DOC, DOCX — max 5MB)</span>
             </>
           )}
@@ -477,17 +436,26 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
       </div>
 
       <div className="pb-[24px] flex justify-center">
-        <Turnstile
-          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAC1MnbcrrWWcB6e-'}
-          onSuccess={(token) => setTurnstileToken(token)}
-          onError={() => setTurnstileToken('')}
-          onExpire={() => setTurnstileToken('')}
-        />
+        {turnstileSiteKey ? (
+          <Turnstile
+            siteKey={turnstileSiteKey}
+            onSuccess={(token) => setTurnstileToken(token)}
+            onError={() => {
+              console.error('Turnstile error: Failed to load widget')
+              setTurnstileToken('')
+            }}
+            onExpire={() => setTurnstileToken('')}
+          />
+        ) : (
+          <p className="text-sm text-[#555]">
+            Captcha is not configured. Please set NEXT_PUBLIC_TURNSTILE_SITE_KEY.
+          </p>
+        )}
       </div>
 
       <button
         type="submit"
-        disabled={(!turnstileToken || isSubmitting) && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+        disabled={!turnstileToken || isSubmitting}
         className="bg-white flex h-[41px] items-center justify-center px-[15.8px] py-px rounded-[100px] w-full relative cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         style={{ border: '1px solid #11593f' }}
       >

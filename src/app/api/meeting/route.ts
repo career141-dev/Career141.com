@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 
+export const runtime = 'edge'
+
 const brevoApiKey = process.env.BREVO_API_KEY
 
 const meetingSchema = z.object({
@@ -86,7 +88,7 @@ async function sendEmailViaBrevo(data: MeetingFormData): Promise<boolean> {
         },
         to: [
           {
-            email: process.env.CONTACT_RECIPIENT_EMAIL || 'info@career141.com',
+            email: process.env.CONTACT_RECIPIENT_EMAIL || 'hello@career141.com',
             name: 'Career141 Meeting Request',
           },
         ],

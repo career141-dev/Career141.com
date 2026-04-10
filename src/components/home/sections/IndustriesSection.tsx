@@ -3,20 +3,20 @@
 import { type JSX, useEffect, useRef, useState } from 'react'
 
 const INDUSTRIES = [
-  { label: 'APPAREL', bg: 'https://career141.com/wp-content/uploads/2024/04/Apparel-scaled.webp' },
-  { label: 'FMCG', bg: 'https://career141.com/wp-content/uploads/2024/04/FMCG-scaled.webp' },
-  { label: 'IT', bg: 'https://career141.com/wp-content/uploads/2024/04/it-scaled.webp' },
-  { label: 'RETAIL MARKET', bg: 'https://career141.com/wp-content/uploads/2024/04/retail-scaled.webp' },
-  { label: 'E-COMMERCE', bg: 'https://career141.com/wp-content/uploads/2024/04/ecommerce-scaled.webp' },
-  { label: 'HEALTHCARE', bg: 'https://career141.com/wp-content/uploads/2024/04/healthcare-scaled.webp' },
-  { label: 'PHARMACEUTICAL', bg: 'https://career141.com/wp-content/uploads/2024/04/pharma-scaled.webp' },
-  { label: 'POWER & ENERGY', bg: 'https://career141.com/wp-content/uploads/2024/04/power-and-energy-scaled.webp' },
-  { label: 'HOSPITALITY', bg: 'https://career141.com/wp-content/uploads/2024/04/Hospitality-scaled.webp' },
-  { label: 'EDUCATION', bg: 'https://career141.com/wp-content/uploads/2024/04/education-scaled.webp' },
-  { label: 'TESTING AND CERTIFICATION', bg: 'https://career141.com/wp-content/uploads/2024/04/Testing-and-cert-scaled.webp' },
-  { label: 'AUTOMOTIVE', bg: 'https://career141.com/wp-content/uploads/2024/04/automotive-scaled.webp' },
-  { label: 'CONSTRUCTION', bg: 'https://career141.com/wp-content/uploads/2024/04/construction.png' },
-  { label: 'SHIPPING & FREIGHT', bg: 'https://career141.com/wp-content/uploads/2024/04/shipping-scaled.webp' },
+  { label: 'APPAREL', bg: '/images/industries/apparel.webp' },
+  { label: 'FMCG', bg: '/images/industries/fmcg.webp' },
+  { label: 'IT', bg: '/images/industries/it.webp' },
+  { label: 'RETAIL MARKET', bg: '/images/industries/retail.webp' },
+  { label: 'E-COMMERCE', bg: '/images/industries/ecommerce.webp' },
+  { label: 'HEALTHCARE', bg: '/images/industries/healthcare.webp' },
+  { label: 'PHARMACEUTICAL', bg: '/images/industries/pharma.webp' },
+  { label: 'POWER & ENERGY', bg: '/images/industries/power-energy.webp' },
+  { label: 'HOSPITALITY', bg: '/images/industries/hospitality.webp' },
+  { label: 'EDUCATION', bg: '/images/industries/education.webp' },
+  { label: 'TESTING AND CERTIFICATION', bg: '/images/industries/testing-cert.webp' },
+  { label: 'AUTOMOTIVE', bg: '/images/industries/automotive.webp' },
+  { label: 'CONSTRUCTION', bg: '/images/industries/construction.webp' },
+  { label: 'SHIPPING & FREIGHT', bg: '/images/industries/shipping.webp' },
 ]
 
 function PillButton({ label, idx, onClick, fontSize }: { label: string; idx: number; onClick: () => void; fontSize: string }) {

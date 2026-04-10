@@ -257,10 +257,10 @@ export function Navbar({ bgColor, variant = 'overlay', sticky = false }: NavbarP
                     {col.map((item, itemIdx) => (
                       <Link
                         key={itemIdx}
-                        href={item === APPAREL_EXECUTIVE_LABEL ? APPAREL_EXECUTIVE_HREF : '/executive-search'}
+                        href={item.href || '/executive-search'}
                         className="[font-family:'Quicksand',Helvetica] font-normal text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] transition-colors duration-200 cursor-pointer"
                       >
-                        {item}
+                        {item.label}
                       </Link>
                     ))}
                   </div>
@@ -279,10 +279,7 @@ export function Navbar({ bgColor, variant = 'overlay', sticky = false }: NavbarP
               const hasMobileDropdown = Boolean(item.hasDropdown)
 
               const mobileSubmenu = item.label === 'EXECUTIVE SEARCH'
-                ? EXECUTIVE_SEARCH_CATEGORIES.flat().map((subItem) => ({
-                    label: subItem,
-                    href: subItem === APPAREL_EXECUTIVE_LABEL ? APPAREL_EXECUTIVE_HREF : '/executive-search',
-                  }))
+                ? EXECUTIVE_SEARCH_CATEGORIES.flat()
                 : item.label === 'OUR CULTURE'
                 ? CULTURE_DROPDOWN_ITEMS
                 : item.label === 'RESOURCES'

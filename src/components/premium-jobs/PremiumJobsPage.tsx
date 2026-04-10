@@ -1,5 +1,4 @@
 import { JobListingsSection, PremiumJobsSection } from './sections'
-import { withBasePath } from '@/lib/assetPath'
 import { CompanyFooter } from '@/components/common'
 
 export function PremiumJobsPage() {
@@ -10,12 +9,6 @@ export function PremiumJobsPage() {
         <PremiumJobsSection />
         <CompanyFooter />
       </div>
-
-      <img
-        className="fixed right-10 bottom-10 w-[68px] h-[68px] z-50"
-        alt="Div ht ctc chat"
-        src={withBasePath('/figmaAssets/div-ht-ctc-chat.svg')}
-      />
     </main>
   )
 }

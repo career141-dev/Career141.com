@@ -11,22 +11,7 @@ import { MeetingSchedulerSubsection } from '@/components/home/sections/MeetingSc
 import { ContainerSubsection } from '@/components/home/sections/ContainerSubsection'
 import { withBasePath } from '@/lib/assetPath'
 import { useEffect, useRef, useState } from 'react'
-
-const industries = [
-  { img: '/images/specialized/Apparel & Accessories.webp', title: 'Apparel & Accessories' },
-  { img: '/images/specialized/FMCG.webp', title: 'FMCG' },
-  { img: '/images/specialized/Information Technology.webp', title: 'Information Technology' },
-  { img: '/images/specialized/Healthcare.webp', title: 'Healthcare' },
-  { img: '/images/specialized/Pharmaceutical.webp', title: 'Pharmaceutical' },
-  { img: '/images/specialized/E-commerce.webp', title: 'E-commerce' },
-  { img: '/images/specialized/Retail Market.webp', title: 'Retail Market' },
-  { img: '/images/specialized/Automotive.webp', title: 'Automotive' },
-  { img: '/images/specialized/Construction.webp', title: 'Construction' },
-  { img: '/images/specialized/Power & Energy.webp', title: 'Power & Energy' },
-  { img: '/images/specialized/Education.webp', title: 'Education' },
-  { img: '/images/specialized/Hospitality.webp', title: 'Hospitality' },
-  { img: '/images/specialized/Shipping & Freight.webp', title: 'Shipping & Freight' },
-]
+import { motion } from 'framer-motion'
 
 function CountUp({
   end,
@@ -90,21 +75,94 @@ const statsData = [
   { numEnd: 85, numStart: 0, isRange: false, hasPercent: true, label: 'Repeat Business', containerSrc: withBasePath('/figmaAssets/container.svg') },
 ]
 
+function ExpandableIndustryCard({ img, title, isExpanded, onToggle }: { img: string; title: string; isExpanded: boolean; onToggle: () => void }) {
+  return (
+    <div 
+      className="relative overflow-hidden cursor-pointer transition-all duration-300"
+      style={{ height: isExpanded ? '200px' : '80px' }}
+      onClick={onToggle}
+    >
+      <img 
+        src={img} 
+        alt={title}
+        className="w-full h-full object-cover"
+      />
+      <div 
+        className="absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity duration-300"
+        style={{ opacity: isExpanded ? 1 : 0 }}
+      >
+        <span className="[font-family:'Quicksand',Helvetica] text-white text-lg font-bold">
+          {title}
+        </span>
+      </div>
+    </div>
+  )
+}
+
+const slides = [
+  { 
+    title: 'Results Driven Legacy', 
+    description: "The firm's long-standing legacy is defined by a results-driven approach. Clients have come to expect not just placements, but a track record of successful, impactful placements that have contributed to the success of organizations over the years." 
+  },
+  { 
+    title: 'Client-Centric Excellence', 
+    description: 'We are dedicated to delivering exceptional service that goes beyond expectations, ensuring our clients\' success is at the forefront of everything we do.' 
+  },
+  { 
+    title: 'Global Visionary', 
+    description: 'Having successfully placed executives in both local and overseas positions, the brand projects a global perspective. It is seen as a visionary in identifying and connecting top-tier talent across international boundaries.' 
+  },
+  { 
+    title: 'Trusted Steward', 
+    description: 'The firm is perceived as a trusted steward of both client and candidate interests. Its long history underscores a commitment to ethical practices, confidentiality, and the responsible handling of sensitive information.' 
+  },
+  { 
+    title: 'Strategic Partnership', 
+    description: 'We strive to be more than just a service provider; we aim to be a trusted strategic partner, deeply invested in the success and growth of our clients.' 
+  },
+  { 
+    title: 'Strategic Navigator', 
+    description: "With a deep understanding of the business landscape, the brand is seen as a strategic navigator, helping clients and candidates alike chart successful courses in their professional journeys. The emphasis is on long-term success and strategic alignment." 
+  },
+  { 
+    title: 'Strategic Navigator', 
+    description: "With a deep understanding of the business landscape, the brand is seen as a strategic navigator, helping clients and candidates alike chart successful courses in their professional journeys. The emphasis is on long-term success and strategic alignment." 
+  },
+]
+
+const specializedIndustryItems = [
+  { img: withBasePath('/images/specialized/Apparel-Accessories.webp'), title: 'Apparel & Accessories' },
+  { img: withBasePath('/images/specialized/FMCG.webp'), title: 'FMCG' },
+  { img: withBasePath('/images/specialized/Information-Technology.webp'), title: 'Information Technology' },
+  { img: withBasePath('/images/specialized/Healthcare.webp'), title: 'Healthcare' },
+  { img: withBasePath('/images/specialized/Pharmaceutical.webp'), title: 'Pharmaceutical' },
+  { img: withBasePath('/images/specialized/E-commerce.webp'), title: 'E-commerce' },
+  { img: withBasePath('/images/specialized/Retail-Market.webp'), title: 'Retail Market' },
+  { img: withBasePath('/images/specialized/Automotive.webp'), title: 'Automotive' },
+  { img: withBasePath('/images/specialized/Construction.webp'), title: 'Construction' },
+  { img: withBasePath('/images/specialized/Power-Energy.webp'), title: 'Power & Energy' },
+  { img: withBasePath('/images/specialized/Education.webp'), title: 'Education' },
+  { img: withBasePath('/images/specialized/Hospitality.webp'), title: 'Hospitality' },
+  { img: withBasePath('/images/specialized/Shipping-Freight.webp'), title: 'Shipping & Freight' },
+]
+
 export default function ExecutiveSearchPage() {
   const [showAllLogos, setShowAllLogos] = useState(false)
+  const [expandedCard, setExpandedCard] = useState<number | null>(null)
+  const [currentSlide, setCurrentSlide] = useState(0)
 
   const logoRows = [
     ['10-Brandix.png', '11-Hirdaramani.png', '12-MAS.png', '13-AE.png', '14-Aeturnum.png'],
     ['15-MS.png', '16-HM.png', '28-Dialog.png', '31-Inivos.png', '32-Inbay.png'],
     ['5-Fonterra.png', '6-Hayleys.png', '7-Hemas.png', '8-Finlays.png', '9-Trelleborg.png'],
-    ['Aqua-Dynamics-Official-Logo-1.webp', 'Artboard 10@2x 1.png', 'Artboard 17@2x 1.png', 'Artboard 33@2x 1.png', 'Artboard 41@2x 1.png'],
+    ['Aqua-Dynamics-Official-Logo-1.webp', 'Artboard-10-2x-1.png', 'Artboard-17-2x-1.png', 'Artboard-33-2x-1.png', 'Artboard-41-2x-1.png'],
   ]
 
   const initialRows = logoRows.slice(0, 2)
   const displayedRows = showAllLogos ? logoRows : initialRows
 
   return (
-    <main className="min-h-screen bg-white m-0 p-0" suppressHydrationWarning>
+    <main className="min-h-screen bg-white m-0 p-0">
       <Navbar />
       <HeroSection />
       
@@ -114,98 +172,56 @@ export default function ExecutiveSearchPage() {
       <h2 className="[font-family:'Quicksand',Helvetica] text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black py-8 sm:py-12">
         Our Characterization 
       </h2>
-      <ImageSlideshow />
+      <ImageSlideshow currentSlide={currentSlide} onSlideChange={setCurrentSlide} />
+      <div className="md:hidden px-4 py-6 bg-white text-right">
+        {slides[currentSlide] && (
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <h3 className="[font-family:'Quicksand',Helvetica] font-extrabold text-[#11593F] text-lg mb-1">
+              {slides[currentSlide].title}
+            </h3>
+            <p className="[font-family:'General Sans',Helvetica] text-xs text-[#2C3E4E] leading-relaxed font-medium">
+              {slides[currentSlide].description}
+            </p>
+          </motion.div>
+        )}
+      </div>
       <ProcessFlowSection />
       <h2 className="[font-family:'Quicksand',Helvetica] text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black py-8 sm:py-12">
         Specialized Industry
       </h2>
 
-      <style jsx>{`
-        .industry-card {
-          height: 80px;
-          transition: height 0.3s ease-in-out;
-        }
-        .industry-card.expanded {
-          height: 250px;
-        }
-        .industry-card .industry-text {
-          opacity: 0;
-          transition: opacity 0.3s ease-in-out;
-        }
-        .industry-card.expanded .industry-text {
-          opacity: 1;
-        }
-        .industry-card-desktop {
-          transition: flex 0.3s ease-in-out;
-        }
-        .industry-card-desktop:hover {
-          flex: 2;
-        }
-      `}</style>
-
       <div className="w-full overflow-hidden">
-        {/* Mobile: Vertical stacked with hover to expand */}
-        <div className="md:hidden flex flex-col gap-1">
-          {[
-            { img: '/images/specialized/Apparel & Accessories.webp', title: 'Apparel & Accessories' },
-            { img: '/images/specialized/FMCG.webp', title: 'FMCG' },
-            { img: '/images/specialized/Information Technology.webp', title: 'Information Technology' },
-            { img: '/images/specialized/Healthcare.webp', title: 'Healthcare' },
-            { img: '/images/specialized/Pharmaceutical.webp', title: 'Pharmaceutical' },
-            { img: '/images/specialized/E-commerce.webp', title: 'E-commerce' },
-            { img: '/images/specialized/Retail Market.webp', title: 'Retail Market' },
-            { img: '/images/specialized/Automotive.webp', title: 'Automotive' },
-            { img: '/images/specialized/Construction.webp', title: 'Construction' },
-            { img: '/images/specialized/Power & Energy.webp', title: 'Power & Energy' },
-            { img: '/images/specialized/Education.webp', title: 'Education' },
-            { img: '/images/specialized/Hospitality.webp', title: 'Hospitality' },
-            { img: '/images/specialized/Shipping & Freight.webp', title: 'Shipping & Freight' },
-          ].map((item, index) => (
-            <div 
-              key={index}
-              className="specialized-card relative overflow-hidden cursor-pointer"
-            >
-              <img 
-                src={item.img} 
-                alt={item.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="specialized-text absolute inset-0 bg-black/40 flex items-center justify-center">
-                <span className="[font-family:'Quicksand',Helvetica] text-white text-lg font-bold">
-                  {item.title}
-                </span>
-              </div>
-            </div>
+        {/* Mobile: Vertical stacked with expand on tap */}
+        <div className="md:hidden flex flex-col">
+          {specializedIndustryItems.map((item, index) => (
+            <ExpandableIndustryCard 
+              key={index} 
+              img={item.img} 
+              title={item.title}
+              isExpanded={expandedCard === index}
+              onToggle={() => setExpandedCard(expandedCard === index ? null : index)}
+            />
           ))}
         </div>
 
-        {/* Desktop: Horizontal flex with hover expand */}
+        {/* Desktop: Original flex with hover expand */}
         <div className="hidden md:flex w-full h-[250px] md:h-[400px] lg:h-[500px]">
-          {[
-            { img: '/images/specialized/Apparel & Accessories.webp', title: 'Apparel & Accessories' },
-            { img: '/images/specialized/FMCG.webp', title: 'FMCG' },
-            { img: '/images/specialized/Information Technology.webp', title: 'Information Technology' },
-            { img: '/images/specialized/Healthcare.webp', title: 'Healthcare' },
-            { img: '/images/specialized/Pharmaceutical.webp', title: 'Pharmaceutical' },
-            { img: '/images/specialized/E-commerce.webp', title: 'E-commerce' },
-            { img: '/images/specialized/Retail Market.webp', title: 'Retail Market' },
-            { img: '/images/specialized/Automotive.webp', title: 'Automotive' },
-            { img: '/images/specialized/Construction.webp', title: 'Construction' },
-            { img: '/images/specialized/Power & Energy.webp', title: 'Power & Energy' },
-            { img: '/images/specialized/Education.webp', title: 'Education' },
-            { img: '/images/specialized/Hospitality.webp', title: 'Hospitality' },
-            { img: '/images/specialized/Shipping & Freight.webp', title: 'Shipping & Freight' },
-          ].map((item, index) => (
+          {specializedIndustryItems.map((item, index) => (
             <div 
               key={index}
-              className="specialized-desktop relative h-full min-w-[80px] md:min-w-[120px] flex-1 cursor-pointer overflow-hidden"
+              className="group relative h-full min-w-[80px] md:min-w-[120px] flex-1 transition-all duration-300 ease-in-out hover:flex-[2] cursor-pointer overflow-hidden"
             >
               <img 
                 src={item.img} 
                 alt={item.title}
                 className="w-full h-full object-cover"
               />
-              <div className="specialized-text absolute inset-0 bg-black/40 flex items-center justify-center">
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span className="[font-family:'Quicksand',Helvetica] text-white text-lg md:text-xl lg:text-2xl font-bold">
                   {item.title}
                 </span>
@@ -234,18 +250,18 @@ export default function ExecutiveSearchPage() {
       <div className="w-full">
         <div className="grid grid-cols-2 md:grid-cols-4 w-full gap-0">
           {[
-            { title: 'Consumer Insight & Experience', img: '/images/Skills/Consumer Insight & Experience.png' },
-            { title: 'Fashion Design', img: '/images/Skills/fashion design.png' },
-            { title: 'HR, L&D, Compensation & Benefit', img: '/images/Skills/HR, L&D, Compensation & Benefit.png' },
-            { title: 'IT Software & Infrastructure Solutions', img: '/images/Skills/IT Software & Infrastructure Solutions.png' },
-            { title: 'Digital Marketing & Mar-tech', img: '/images/Skills/Digital Marketing & Mar-tech.png' },
-            { title: 'Fabric Technology & Quality', img: '/images/Skills/Fabric Technology & Quality.png' },
-            { title: 'Merchandising & Marketing', img: '/images/Skills/Merchandising & Marketing.png' },
-            { title: 'Supply chain & Logistics', img: '/images/Skills/Supply chain & Logistics.png' },
-            { title: 'Artificial Intelligence', img: '/images/Skills/Artificial Intelligence.png' },
-            { title: 'Continuous Improvement', img: '/images/Skills/Continuous Improvement.png' },
-            { title: 'Legal & Secretarial', img: '/images/Skills/Legal & Secretarial.png' },
-            { title: 'Mechanical & Automation', img: '/images/Skills/Mechanical & Automation.png' },
+            { title: 'Consumer Insight & Experience', img: '/images/Skills/Consumer-Insight-Experience.png' },
+            { title: 'Fashion Design', img: '/images/Skills/fashion-design.png' },
+            { title: 'HR, L&D, Compensation & Benefit', img: '/images/Skills/HR,-LD,-Compensation-Benefit.png' },
+            { title: 'IT Software & Infrastructure Solutions', img: '/images/Skills/IT-Software-Infrastructure-Solutions.png' },
+            { title: 'Digital Marketing & Mar-tech', img: '/images/Skills/Digital-Marketing-Mar-tech.png' },
+            { title: 'Fabric Technology & Quality', img: '/images/Skills/Fabric-Technology-Quality.png' },
+            { title: 'Merchandising & Marketing', img: '/images/Skills/Merchandising-Marketing.png' },
+            { title: 'Supply chain & Logistics', img: '/images/Skills/Supply-chain-Logistics.png' },
+            { title: 'Artificial Intelligence', img: '/images/Skills/Artificial-Intelligence.png' },
+            { title: 'Continuous Improvement', img: '/images/Skills/Continuous-Improvement.png' },
+            { title: 'Legal & Secretarial', img: '/images/Skills/Legal-Secretarial.png' },
+            { title: 'Mechanical & Automation', img: '/images/Skills/Mechanical-Automation.png' },
           ].map((item, index) => {
             const isDeskGreen = (Math.floor(index / 4) + (index % 4)) % 2 === 0;
             const isMobGreen = (Math.floor(index / 2) + (index % 2)) % 2 === 0;

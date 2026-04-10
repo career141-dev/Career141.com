@@ -40,6 +40,7 @@ const PIN_POSITIONS = [
   { left: '21.7%', top: '39.3%', label: 'Canada' },
   { left: '48.9%', top: '42.0%', label: 'Netherlands' },
 ]
+
 interface MapPinProps {
   label: string
 }
@@ -91,7 +92,7 @@ const containerVariants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.15, // Increased from 0.1 for a slower sequence
+      staggerChildren: 0.15,
     },
   },
 }
@@ -103,8 +104,8 @@ const markerVariants = {
     opacity: 1,
     transition: {
       type: 'spring' as const,
-      stiffness: 80,  // Reduced from 260 for slower motion
-      damping: 20,    // Maintained for smoothness
+      stiffness: 80,
+      damping: 20,
       mass: 1,
     },
   },

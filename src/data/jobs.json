@@ -1,0 +1,643 @@
+{
+  "sections": [
+    {
+      "id": "apparel",
+      "slug": "apparel-merchandising-marketing",
+      "title": "Apparel Merchandising & Marketing Talent Pipeline",
+      "heroTitle": "Recruit Apparel, Textile & RMG Industry Talent in Sri Lanka and Asia",
+      "theme": "#0c448b",
+      "quotationColor": "#9fbfe9",
+      "heroDescription": "Career141 Sri Lanka specializes in recruiting highly skilled professionals across the apparel, textile, and ready-made garment (RMG) industries. From merchandisers and fashion designers to production heads and washing plant managers, we connect you with the right talent to drive operational efficiency and innovation.",
+      "heroImage": "/figmaAssets/apparel-merchandising/7806820e0bd90b541f139a0558f8ac853e8abb6b.png",
+      "image": "/images/jobs/apparel-jobs-image.png",
+      "jobCategories": [
+        {
+          "heading": "Marketing Roles",
+          "jobs": [
+            "Chief Marketing Officer",
+            "Chief Operating Officer",
+            "Head of Manufacturing",
+            "Head of Product Development",
+            "Head of Design",
+            "Head of Merchandising",
+            "Head of Marketing",
+            "Head of Sourcing",
+            "Head of Technical Design",
+            "Director Operations",
+            "Head of Production",
+            "Vice President – Manufacturing Excellence"
+          ]
+        },
+        {
+          "heading": "Merchandising & Marketing",
+          "jobs": [
+            "Merchandising Manager",
+            "Account Manager",
+            "Senior Merchandiser",
+            "Merchandising Manager – Manufacturing",
+            "Assistant Merchandising Manager",
+            "Assistant Merchandiser",
+            "Junior Merchandiser"
+          ]
+        },
+        {
+          "heading": "Product Development & Fashion Design",
+          "jobs": [
+            "Product Development Manager",
+            "Sample Development Manager",
+            "Design Manager – Apparel",
+            "Assistant Product Development Manager",
+            "Assistant Design Manager",
+            "Fashion Designer – Exports",
+            "Technical Designer",
+            "CAD Designer – Apparel",
+            "Product Development Executive"
+          ]
+        },
+        {
+          "heading": "Production & Factory Operations",
+          "jobs": [
+            "Operations Manager",
+            "Factory Manager",
+            "Production Manager",
+            "Cutting Manager",
+            "Finishing Manager",
+            "Work Study Officer",
+            "Pattern Technologist",
+            "CAD Operator",
+            "Industrial Engineering Manager",
+            "Quality Assurance Manager",
+            "Planning Manager",
+            "Washing Manager",
+            "Dyeing Manager",
+            "Washing Technician",
+            "Dyeing Technician",
+            "Fabric Technologist",
+            "Maintenance Manager"
+          ]
+        },
+        {
+          "heading": "More Roles",
+          "jobs": [
+            "Trend Forecaster",
+            "Customer Experience Manager",
+            "Fashion Journalist/Blogger",
+            "Retail Analyst",
+            "Fashion Event Coordinator",
+            "Digital Marketing Specialist",
+            "Sustainability Specialist",
+            "Catalog Manager",
+            "Wholesale Account Executive",
+            "Fashion Sales Representative",
+            "Apparel Design Consultant",
+            "Retail Buyer Assistant"
+          ]
+        }
+      ]
+    },
+    
+    {
+      "id": "continuous improvement",
+      "slug": "continuous-improvement",
+      "title": "Lean & Continuous Improvement Talent Pipeline",
+      "heroTitle": "Hire Lean Six Sigma & Continuous Improvement Talent",
+      "theme": "#026aa2",
+      "quotationColor": "#00caaf",
+      "heroDescription": "At Career141 Sri Lanka, we specialize in recruiting top-tier continuous improvement professionals—including Lean Six Sigma Black Belt, Green Belt, and Yellow Belt experts—to help your organization streamline processes, enhance productivity, and reduce costs. Whether you're based in Sri Lanka or managing global operations, our executive search team connects you with process improvement leaders who deliver measurable impact across industries. From manufacturing and logistics to services and healthcare, we understand the strategic value of lean thinking and place the right talent to accelerate your operational excellence.",
+      "heroImage": "/images/jobs/Hire Lean & Continuous Improvement Experts _ Sri Lanka & Global _ Career141_files/Subtract-11.webp",
+      "image": "/images/jobs/Hire Lean & Continuous Improvement Experts _ Sri Lanka & Global _ Career141_files/Continuous-Improvement-scaled.webp",
+      "jobCategories": [
+        {
+          "heading": "C-Level & Executive Leadership",
+          "jobs": [
+            "Chief Process Excellence Officer",
+            "Chief Transformation Officer",
+            "Chief Lean Officer",
+            "VP / Director of Operations Excellence",
+            "VP Process Improvement",
+            "VP Lean Operations",
+            "Head of Process Excellence",
+            "Head of Operations Excellence",
+            "Head of Continuous Improvement",
+            "Director of Lean & Six Sigma",
+            "Director of Quality & Process Improvement"
+          ]
+        },
+        {
+          "heading": "Middle Management",
+          "jobs": [
+            "Manager Business Process Excellence",
+            "Lean Manufacturing Specialist",
+            "Operations Excellence Manager",
+            "Continuous Improvement Manager",
+            "Lean Six Sigma Manager",
+            "Value Stream Manager",
+            "Process Excellence Manager",
+            "Process Analyst",
+            "Lean Specialist",
+            "Kaizen Lead",
+            "Process Mapping Specialist"
+          ]
+        },
+        {
+          "heading": "Operational & Specialist Roles",
+          "jobs": [
+            "Operational Excellence Consultant",
+            "Performance Improvement Specialist",
+            "Process Engineer",
+            "Production Supervisor",
+            "Kaizen Facilitator",
+            "Project Manager",
+            "Efficiency Consultant",
+            "Quality Control Inspector",
+            "Workflow Optimization Specialist",
+            "Talent Development Manager",
+            "Systems Improvement Analyst",
+            "Logistics Coordinator"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "it-software",
+      "slug": "it-software",
+      "title": "IT Software & Infrastructure Talent Pipeline",
+      "heroTitle": "IT, Software & Infrastructure Talent Recruitment in Sri Lanka & Beyond",
+      "theme": "#8c230a",
+      "quotationColor": "#ffffff",
+      "heroDescription": "Career141 Sri Lanka is a leading recruitment agency specializing in sourcing top-tier talent across the IT, software, and infrastructure sectors. From software developers and cybersecurity experts to IT project managers and cloud architects, we provide recruitment solutions that meet the evolving needs of technology-driven businesses. Whether you're seeking specialized talent for a local or global market, Career141 connects you with skilled professionals who can drive innovation and efficiency in your organization.",
+      "heroImage": "/images/jobs/IT, Software & Infrastructure Recruitment _ Career141_files/Subtract-13.webp",
+      "image": "/images/jobs/IT, Software & Infrastructure Recruitment _ Career141_files/IT-Software-Infrastructure-1-scaled.webp",
+"jobCategories": [
+        {
+          "heading": "+ More roles been added",
+          "jobs": [
+            "Full Stack Developer",
+            "System Analyst",
+            "Data Engineer",
+            "Network Engineer",
+            "Software Quality Assurance Tester",
+            "User Experience (UX) Designer",
+            "IT Consultant",
+            "Site Reliability Engineer",
+            "Release Manager",
+            "Business Intelligence Analyst",
+            "Mobile Application Developer",
+            "Help Desk Technician"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mechanical-engineering-production",
+      "slug": "mechanical-engineering",
+      "title": "Mechanical Engineering & Production Talent Pipeline",
+      "heroTitle": "Mechanical Engineering & Production Talent Recruitment in Sri Lanka",
+      "theme": "#004691",
+      "quotationColor": "#01afb6",
+      "heroDescription": "Career141 Sri Lanka offers expert recruitment services for the mechanical engineering and production sectors. We specialize in sourcing skilled professionals, from mechanical engineers and industrial engineers to production managers and maintenance specialists. Our recruitment solutions cater to local and international manufacturing needs, ensuring that businesses have access to the best talent to optimize production processes and drive operational excellence.",
+      "heroImage": "/images/jobs/mechanical/Subtract-3.webp",
+      "image": "/images/jobs/mechanical/Mechanical-Engineering-Production-scaled.webp",
+"jobCategories": [
+        {
+          "heading": "Mechanical Engineering & Production Roles",
+          "jobs": [
+            "Industrial Engineer",
+            "Machinery Design Engineer",
+            "Production Supervisor",
+            "Testing Engineer",
+            "Research and Development Engineer",
+            "Materials Engineer",
+            "Reliability Engineer",
+            "Assembly Line Engineer",
+            "Supply Chain Engineer",
+            "Tooling Engineer",
+            "Field Service Engineer",
+            "Engineering Manager"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hr-training",
+      "slug": "hr-training",
+      "title": "Human Resource, L&D, Compensation & Benefit Talent Pipeline",
+      "heroTitle": "Human Resources, Learning & Development, Compensation & Benefits Talent Recruitment",
+      "theme": "#9a940b",
+      "quotationColor": "#d3e515",
+      "heroDescription": "Career141 Sri Lanka offers comprehensive recruitment services for Human Resources, Learning & Development, and Compensation & Benefits roles. We connect businesses with top-tier professionals in HR management, organizational development, and benefits strategy. Whether you're hiring for local or international HR positions, Career141 ensures your company has the expertise to foster employee engagement, optimize talent management, and drive long-term success.",
+      "heroImage": "/images/jobs/hr/Subtract-5.webp",
+      "image": "/images/jobs/hr/hr.webp",
+      "jobCategories": [
+        {
+          "heading": "Senior Level",
+          "jobs": [
+            "Chief Human Resources Officer (CHRO)",
+            "VP / Director of Human Resources",
+            "Country HR Manager",
+            "Chief People Officer (CPO)",
+            "Chief People & Culture Officer",
+            "Chief Diversity Officer (CDO)",
+            "Director of Learning & Development",
+            "Head of Compliance",
+            "Head of HR Operations"
+          ]
+        },
+        {
+          "heading": "Middle Level",
+          "jobs": [
+            "Employee Relations Manager",
+            "HR Analyst",
+            "HR Business Partner (HRBP)",
+            "Talent Acquisition Manager",
+            "Learning & Development Manager",
+            "Compensation & Benefits Manager",
+            "HRIS Manager",
+            "Talent Acquisition Specialist",
+            "Payroll Specialist",
+            "Diversity and Inclusion Manager",
+            "Employee Engagement Manager",
+            "Organizational Development Manager",
+            "HR & Admin Manager"
+          ]
+        },
+        {
+          "heading": "+ More roles been added",
+          "jobs": [
+            "Succession Planning Manager",
+            "Diversity and Inclusion Officer",
+            "Corporate Trainer",
+            "HR Information Systems Analyst",
+            "Onboarding Specialist",
+            "Employee Engagement Coordinator",
+            "Benefits Administrator",
+            "Workforce Planning Analyst",
+            "Change Management Specialist",
+            "Career Development Advisor",
+            "Learning Management System Administrator",
+            "HR Strategic Planner"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "digital-transformation",
+      "slug": "digital-transformation",
+      "title": "Digital Transformation Talent Pipeline",
+      "heroTitle": "Digital Transformation Recruitment for Innovation, Strategy & Global Scale-Up",
+      "theme": "#ff830b",
+      "quotationColor": "#fecf22",
+      "heroDescription": "Career141 Sri Lanka enables forward-thinking organizations to recruit top digital transformation professionals who drive innovation, operational agility, and customer-centric growth. We specialize in hiring Digital Transformation Consultants, Agile Coaches, IT Change Managers, Product Owners, Business Process Analysts, Digital Project Managers, UI/UX Experts, and Cloud Solution Architects. Whether you're evolving internal systems or launching customer-facing platforms, we help build world-class teams in Sri Lanka and support offshore digital transformation centers for businesses in the United Kingdom, United States, Australia, Singapore, Dubai, Africa, and other regions. Our talent pool combines strategic, technical, and executional capabilities to accelerate enterprise digitization and technology-led transformation.",
+      "heroImage": "/images/jobs/dt/Subtract-17.webp",
+      "image": "/images/jobs/dt/dt.webp",
+      "jobCategories": [
+        {
+          "heading": "+ More roles been added",
+          "jobs": [
+            "Cybersecurity Analyst",
+            "Digital Product Manager",
+            "Process Improvement Specialist",
+            "Technology Adoption Specialist",
+            "Digital Marketing Strategist",
+            "ERP Implementation Specialist",
+            "Customer Experience Manager",
+            "Robotics Process Automation (RPA) Developer",
+            "Blockchain Analyst",
+            "Digital Governance Manager",
+            "Artificial Intelligence (AI) Specialist",
+            "IoT Solutions Architect"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "finance-auditing",
+      "slug": "finance-auditing",
+      "title": "Finance & Auditing Talent Pipeline",
+      "heroTitle": "Finance, Audit & Advisory Talent Recruitment for Global Firms and Offshore Projects",
+      "theme": "#ff830b",
+      "quotationColor": "#fecf22",
+      "heroDescription": "Career141 Sri Lanka is the trusted recruitment partner for Big Four accounting firms, international audit and advisory practices, and corporate finance teams seeking world-class finance and auditing professionals. We specialize in hiring highly qualified talent—ACCA, CA, and CIMA—for roles such as Chief Financial Officer (CFO), Financial Controller, Audit Manager, Tax Consultant, Risk and Compliance Specialist, and Forensic Auditor. We also support global businesses looking to establish offshore finance, audit, and compliance operations in Sri Lanka. From startup advisory firms to multinational corporations, Career141 helps build high-performing teams for clients across the United Kingdom, United States, Australia, Singapore, Dubai, Africa, and beyond. Our recruitment solutions ensure that every candidate meets global standards in audit, taxation, financial reporting, and regulatory compliance.",
+      "heroImage": "/images/jobs/Finance/Subtract-5.webp",
+      "image": "/images/jobs/Finance/Finance.webp",
+      "jobCategories": [
+        {
+          "heading": "+ More roles",
+          "jobs": [
+            "Asset Valuation",
+            "Cost Accounting",
+            "Performance Analysis",
+            "Financial Software Proficiency (e.g., SAP, QuickBooks)",
+            "Data Analysis",
+            "Forensic Accounting",
+            "Strategic Planning",
+            "Mergers and Acquisitions",
+            "Treasury Management",
+            "Cash Flow Management",
+            "Fraud Detection and Prevention",
+            "Non-profit Accounting",
+            "International Finance"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "data-analytics-research",
+      "slug": "data-analytics-research",
+      "title": "Data Analytics & Research Talent Pipeline",
+      "heroTitle": "Data Analytics & Research Talent Recruitment for Global, Local & Offshore Needs",
+      "theme": "#6700a6",
+      "quotationColor": "#c907a0",
+      "heroDescription": "Career141 Sri Lanka is your strategic recruitment partner for sourcing high-caliber professionals in data analytics, research, and business intelligence. We recruit for positions such as Data Scientist, Research Analyst, BI Developer, Data Engineer, Machine Learning Engineer, AI Specialist, and Statistical Researcher—ensuring businesses have access to decision-making power backed by deep data insights. We also support global organizations looking to set up offshore data analytics and research centers in Sri Lanka. Whether you're a consulting firm, technology startup, or global enterprise, Career141 helps build specialized analytics teams for operations across the United Kingdom, United States, Australia, Singapore, Dubai, Africa, and beyond. Our candidate pool is skilled in tools like Python, R, SQL, Power BI, Tableau, and advanced statistical and machine learning frameworks, enabling data-driven transformation across industries.",
+      "heroImage": "/images/jobs/da/Subtract-9.webp",
+      "image": "/images/jobs/da/da.webp",
+      "jobCategories": [
+        {
+          "heading": "Data Analytics & Research Roles",
+          "jobs": [
+            "Data Governance Analyst",
+            "Data Visualization Engineer",
+            "Principal Investigator",
+            "Quantitative Researcher",
+            "Qualitative Researcher",
+            "Project Coordinator",
+            "Research Associate",
+            "Research Assistant",
+            "Statistician"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "legal-secretarial",
+      "slug": "legal-secretarial",
+      "title": "Secretarial & Legal Talent Pipeline",
+      "heroTitle": "Legal and Company Secretarial Talent Recruitment | Global, In-House & Offshore Solutions",
+      "theme": "#04bf7c",
+      "quotationColor": "#29dd7c",
+      "heroDescription": "Career141 Sri Lanka specializes in the recruitment of highly qualified legal professionals and company secretaries for law firms, multinational corporations, and consulting firms. Our hiring portfolio spans roles such as Corporate Lawyer, Legal Officer, Legal Advisor, Paralegal, Legal Associate, Compliance Officer, and Chartered Company Secretary (ACSL/FCMA qualified). Whether you're expanding an in-house legal team or seeking regional experts in governance and statutory compliance, we ensure credible placements across diverse legal functions. We also support international companies establishing offshore legal and company secretarial functions in Sri Lanka, offering end-to-end recruitment support for firms across the United Kingdom, United States, Australia, Singapore, Dubai, Africa, and other regions. With access to legal talent skilled in commercial law, regulatory compliance, contract drafting, and litigation support, Career141 is your trusted partner in building agile legal teams ready for global business environments.",
+      "heroImage": "/images/jobs/leagal/Subtract-19.webp",
+      "image": "/images/jobs/leagal/Secretarial-Legal-scaled.webp",
+      "jobCategories": [
+        {
+          "heading": "Secretarial & Legal Roles",
+          "jobs": [
+            "Court Clerk",
+            "Real Estate Paralegal",
+            "Legal Transcriptionist",
+            "Regulatory Affairs Specialist",
+            "Case Manager",
+            "Risk Management Specialist",
+            "Administrative Assistant",
+            "Title Examiner",
+            "Legal Research Analyst",
+            "Trust Officer",
+            "Family Law Paralegal",
+            "Employment Law Consultant"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supply-chain",
+      "slug": "supply-chain",
+      "title": "Supply chain Management Talent Pipeline",
+      "heroTitle": "Supply Chain, Logistics & Procurement Talent Recruitment for Global and Offshore Operations",
+      "theme": "#880801",
+      "quotationColor": "#c54e09",
+      "heroDescription": "Career141 Sri Lanka is a trusted partner for sourcing high-performing talent across the supply chain, procurement, logistics, and distribution functions. We recruit for roles such as Supply Chain Manager, Procurement Specialist, Logistics Coordinator, Inventory Analyst, Demand Planner, Vendor Development Manager, Shipping Executive, Warehouse Manager, and Freight Operations Head. Our clients include multinational corporations, manufacturing firms, FMCG giants, and third-party logistics (3PL) providers. We also support companies looking to set up offshore supply chain operations in Sri Lanka—from sourcing and procurement hubs to logistics support teams. Whether you're building a local team or a global supply chain control tower, Career141 connects you with proven professionals in Sri Lanka for roles across the United Kingdom, United States, Australia, Singapore, Dubai, Africa, and beyond.",
+      "heroImage": "/images/jobs/supply/Subtract-12.webp",
+      "image": "/images/jobs/supply/Supply-chain-Management-scaled.webp",
+      "jobCategories": [
+        {
+          "heading": "Supply Chain, Logistics & Procurement Roles",
+          "jobs": [
+            "Production Planner",
+            "Freight Forwarder",
+            "Quality Assurance Specialist",
+            "Import/Export Coordinator",
+            "Supply Chain Consultant",
+            "Category Manager",
+            "Demand Forecasting Analyst",
+            "Business Development Manager",
+            "Sourcing Analyst",
+            "Supply Chain Data Analyst",
+            "Customer Service Manager",
+            "Continuous Improvement Specialist"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fashion-design",
+      "slug": "fashion-design",
+      "title": "Fashion Designing & Development Talent Pipeline",
+      "heroTitle": "Fashion Design & Apparel Product Development Recruitment for Global & Offshore Teams",
+      "theme": "#830b8c",
+      "quotationColor": "#9206c7",
+      "heroDescription": "Career141 Sri Lanka connects fashion and apparel businesses with creative and technically skilled professionals in fashion design and product development. We recruit for roles such as Fashion Designer, Product Developer, Technical Designer, CAD Pattern Maker, Fashion Illustrator, Fabric Developer, Colorist, Merchandiser, and Fashion Stylist. Our talent solutions serve both export-oriented apparel manufacturers and international fashion brands looking to build offshore creative and technical teams in Sri Lanka. Whether you're seeking runway designers, fast fashion innovators, or design-to-delivery specialists, Career141 ensures access to high-impact fashion professionals across the United Kingdom, United States, Australia, Singapore, Dubai, Africa, and more.",
+      "heroImage": "/images/jobs/fashion/Subtract-14.webp",
+      "image": "/images/jobs/fashion/Fashion-Designing-Development-1-scaled.webp",
+      "jobCategories": [
+        {
+          "heading": "Fashion Design & Product Development Roles",
+          "jobs": [
+            "Collection Manager",
+            "Trend Forecaster",
+            "Sourcing Specialist",
+            "Fashion Production Manager",
+            "Senior Designer",
+            "Brand Designer",
+            "Fashion Entrepreneur",
+            "Accessories Designer",
+            "Sustainability Consultant",
+            "Sample Maker",
+            "Fashion Marketing Specialist",
+            "Visual Merchandiser"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "construction-engineering",
+      "slug": "construction-engineering",
+      "title": "Construction & Civil Engineering Talent Pipeline",
+      "heroTitle": "Construction & Civil Engineering Talent Recruitment for Regional Projects",
+      "theme": "#c7013d",
+      "quotationColor": "#ff85a9",
+      "heroDescription": "Career141 Sri Lanka is a trusted recruitment partner for companies operating across infrastructure, real estate, urban development, and large-scale construction. We specialize in hiring Project Managers, Civil Engineers, Site Engineers, Quantity Surveyors (QS), MEP Engineers, Architects, Planning Engineers, Structural Engineers, AutoCAD Draftsmen, Health & Safety Officers, and more. With an expansive network across Sri Lanka, the Middle East, Maldives, Singapore, Africa, Bangladesh, and Vietnam, we help clients meet urgent project timelines and long-term resource needs with qualified talent. Whether you're developing high-rises, hospitality projects, roads and bridges, or commercial infrastructure, Career141 delivers skilled professionals with site-readiness and regional experience.",
+      "heroImage": "/images/jobs/const/Subtract-15.webp",
+      "image": "/images/jobs/const/Construction-Engineering-scaled.webp",
+      "jobCategories": [
+        {
+          "heading": "Construction & Civil Engineering Roles",
+          "jobs": [
+            "Sustainable Construction",
+            "Mechanical Engineering",
+            "Electrical Engineering",
+            "Procurement and Logistics",
+            "CAD Software Proficiency",
+            "Risk Assessment",
+            "Workforce Management",
+            "Infrastructure Development",
+            "Urban Planning",
+            "Health and Safety Regulations",
+            "Construction Scheduling",
+            "Geotechnical Engineering",
+            "Energy Efficiency Analysis"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ehs",
+      "slug": "ehs",
+      "title": "EHS (Environment, Health & Safety) Talent Pipeline",
+      "heroTitle": "Environment, Health & Safety (EHS) Recruitment for Safe and Compliant Workplaces",
+      "theme": "#1d8c0b",
+      "quotationColor": "#0fca04",
+      "heroDescription": "Career141 Sri Lanka is a leading recruitment firm providing skilled Environment, Health & Safety (EHS) talent to companies operating in manufacturing, construction, energy, FMCG, pharmaceuticals, and logistics sectors. We source and recruit HSE Engineers, Safety Officers, Environmental Compliance Managers, Industrial Hygienists, Fire & Safety Officers, HSEQ Coordinators, Occupational Health & Safety Consultants, and Sustainability Specialists. We support hiring for critical roles across Sri Lanka, the Middle East, Maldives, Singapore, Africa, Bangladesh, and Vietnam, helping employers meet regulatory standards, improve workplace safety, and promote a culture of sustainability and risk mitigation. Whether you're scaling up operations or undergoing safety audits, Career141 delivers the professionals you need to lead your EHS agenda.",
+      "heroImage": "/images/jobs/ehs/Subtract-10.webp",
+      "image": "/images/jobs/ehs/Frame-2305-scaled.webp",
+      "jobCategories": [
+        {
+          "heading": "EHS Roles",
+          "jobs": [
+            "CAD Engineering",
+            "Colorist",
+            "Lab Engineer",
+            "Quality Audit",
+            "Quality Assurance",
+            "Production",
+            "Management",
+            "Factory Management",
+            "Finishing & Packaging",
+            "Industrial Engineering",
+            "Cutting",
+            "Compliance",
+            "Maintenance"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "maintenance-engineering",
+      "slug": "maintenance-engineering",
+      "title": "Maintenance Engineering Talent Pipeline",
+      "heroTitle": "Maintenance Engineering & Automation Talent Solutions for Efficient Plant & Facility Operations",
+      "theme": "#11593f",
+      "quotationColor": "#30ccac",
+      "heroDescription": "Career141 Sri Lanka is a leading recruitment agency specializing in maintenance engineering, automation engineering, and project-based engineering roles. We provide access to highly skilled professionals including Maintenance Managers, Electrical Maintenance Engineers, Mechanical Maintenance Engineers, Automation Engineers, Project Engineers, MEP Engineers, Preventive Maintenance Specialists, Facility Engineers, HVAC Technicians, and Equipment Diagnostics Experts. We support a variety of industries—manufacturing, FMCG, apparel, energy, food processing, and logistics—in hiring top-tier talent for long-term and project-specific roles across Sri Lanka, Middle East, Maldives, Singapore, Africa, Bangladesh, and Vietnam. Whether you're working on automation projects, managing plant operations, or maintaining high-efficiency systems, Career141 ensures you have the right engineers for the job, improving uptime, reliability, and process efficiency.",
+      "heroImage": "/images/jobs/me/Subtract-4.webp",
+      "image": "/images/jobs/me/Frame-2314-scaled.webp",
+      "jobCategories": [
+        {
+          "heading": "Maintenance Engineering Roles",
+          "jobs": [
+            "Electrical Maintenance Engineer",
+            "Mechanical Maintenance Engineer",
+            "Electrical Maintenance Technician",
+            "Mechanical Maintenance Technician",
+            "Mechanical Maintenance Craftsman",
+            "Engineer",
+            "Mechanical Fitter",
+            "Shift Engineer",
+            "Shift Technician",
+            "Plant Engineer",
+            "Plant Technician",
+            "Reliability Engineer"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "marketing-customer-experience",
+      "slug": "marketing-customer-experience",
+      "title": "Marketing, Consumer Insight & Customer Experience Talent Pipeline",
+      "heroTitle": "Marketing, Consumer Insight & Customer Experience",
+      "theme": "#039263",
+      "quotationColor": "#2fcbab",
+      "heroDescription": "Recruit marketing, consumer insight, and CX professionals who drive brand engagement and customer loyalty with Career141.",
+      "heroImage": "/images/jobs/mci/Subtract-2.webp",
+      "image": "/images/jobs/mci/Frame-2301-scaled.webp",
+      "jobCategories": [
+        {
+          "heading": "Marketing Roles",
+          "jobs": [
+            "Chief Marketing Officer",
+            "Director Marketing",
+            "Group Marketing Director",
+            "VP / Head of Marketing",
+            "Director of Market Intelligence & Analytics",
+            "Category Manager",
+            "Product Marketing Manager",
+            "Director of Brand Strategy",
+            "Brand Manager",
+            "Channel Marketing Manager",
+            "Key Accountant Manager",
+            "Regional Sales Manager",
+            "Area Sales Manager",
+            "Corporate Communications Manager"
+          ]
+        },
+        {
+          "heading": "Consumer Insight & Research Roles",
+          "jobs": [
+            "Chief Experience Officer (CXO)",
+            "Chief Customer Officer (CCO)",
+            "Customer Experience Manager",
+            "Consumer Insight Manager",
+            "Market Research Manager",
+            "Customer Loyalty Program Manager",
+            "Consumer Insight Analyst",
+            "Strategic Marketing Analyst",
+            "Shopper Insight Specialist"
+          ]
+        },
+        {
+          "heading": "+ More",
+          "jobs": [
+            "Product Marketing Manager",
+            "User Experience Manager",
+            "Performance Marketer",
+            "Marketing Consultant",
+            "Brand Manager",
+            "Corporate Communications Director",
+            "PR Manager",
+            "Qualitative Research Assistant"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "digital-marketing",
+      "slug": "digital-marketing",
+      "title": "Digital Marketing Talent Pipeline",
+      "heroTitle": "Digital Marketing Talent Recruitment for Sri Lanka & Global Markets",
+      "theme": "#511690",
+      "quotationColor": "#5238c7",
+      "heroDescription": "Career141 Sri Lanka specializes in recruiting high-impact digital marketing professionals who can accelerate your brand's online presence and ROI. From SEO specialists, social media managers, and content strategists to performance marketers, email automation experts, and digital marketing heads, we provide access to the talent you need to stay competitive. Whether you're a startup, agency, or multinational, our recruitment expertise spans all digital functions—delivering creative, analytical, and tech-savvy professionals across Sri Lanka and international markets.",
+      "heroImage": "/images/jobs/digital/Subtract-18.webp",
+      "image": "/images/jobs/digital/Digital-Marketing-scaled.webp",
+      "jobCategories": [
+        {
+          "heading": "Digital Marketing Roles",
+          "jobs": [
+            "Marketing Automation Specialist",
+            "UX/UI Designer",
+            "Online Community Manager",
+            "E-commerce Marketing Specialist",
+            "SEM Specialist",
+            "Influencer Marketing Coordinator",
+            "Growth Hacker",
+            "Conversion Rate Optimization Specialist",
+            "Video Marketing Specialist",
+            "Digital PR Specialist",
+            "Mobile Marketing Manager",
+            "Data-driven Marketing Analyst"
+          ]
+        }
+      ]
+    }
+  ]
+}

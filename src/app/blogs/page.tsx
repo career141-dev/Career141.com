@@ -41,7 +41,7 @@ export default function BlogsPage() {
       <Navbar bgColor="#0F221B" />
       <section className="w-full py-12 md:py-16 lg:py-24 bg-white min-h-[80vh] flex items-center justify-center relative overflow-hidden">
         <img
-          src={withBasePath('/images/blogs/Rectangle 1083.png')}
+          src={withBasePath('/images/blogs/Rectangle-1083.png')}
           alt=""
           className="absolute left-1/2 -translate-x-1/2 top-[100px] md:top-[80px] w-[90%] md:w-[80%] h-[calc(100%-100px)] md:h-[calc(100%-80px)] object-contain z-0"
         />

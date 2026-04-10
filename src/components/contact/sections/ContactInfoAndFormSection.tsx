@@ -1,14 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import { Controller, useForm } from 'react-hook-form'
 import { CheckCircle2Icon, ChevronRightIcon, InstagramIcon, LinkedinIcon, Loader2, MailIcon, MapPinIcon, PhoneIcon } from 'lucide-react'
 import PhoneInput from 'react-phone-input-2'
 import { Turnstile } from '@marsidev/react-turnstile'
 import { withBasePath } from '@/lib/assetPath'
+import { getTurnstileSiteKey } from '@/lib/turnstile'
 import styles from './ContactInfoAndFormSection.module.css'
-
 
 type FormData = {
   name: string
@@ -212,15 +212,11 @@ function FloatingSelect({
 }
 
 function ContactForm({ dark = false }: { dark?: boolean }) {
+  const turnstileSiteKey = getTurnstileSiteKey()
+
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
-      console.warn('Turnstile site key missing. Using Cloudflare test key for development.')
-    }
-  }, [])
   const { register, control, handleSubmit, reset, setError, formState: { errors } } = useForm<FormData>({
     defaultValues: {
       phone: '',
@@ -229,7 +225,7 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
   })
 
   const onSubmit = async (data: any) => {
-    if (!turnstileToken && process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
+    if (!turnstileToken) {
       alert("Please complete the CAPTCHA")
       return
     }
@@ -243,55 +239,31 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
         body: JSON.stringify(payload),
       })
 
-      const responseText = await response.text()
-      let errorData: any = {}
-      try {
-        errorData = JSON.parse(responseText)
-      } catch (e) {
-        errorData = { error: responseText || 'Unknown error' }
-      }
-
       if (!response.ok) {
+        const errorData = await response.json()
         if (response.status === 400 && (errorData.details || errorData.error === 'Validation failed')) {
-          if (Array.isArray(errorData.details)) {
-            let hasMappedError = false
+          if (errorData.details) {
             errorData.details.forEach((detail: any) => {
-              // Handle both Zod-style {path:[], message:""} and simple strings
-              const isObject = typeof detail === 'object' && detail !== null
-              const field = isObject && Array.isArray(detail.path) ? detail.path[0] : null
-              const message = isObject ? detail.message : detail
-
-              if (field && field in data) {
-                setError(field as keyof FormData, { type: 'manual', message: message })
-                hasMappedError = true
+              const field = detail.path[0] as keyof FormData
+              if (field) {
+                setError(field, { type: 'manual', message: detail.message })
               }
             })
-            
-            if (!hasMappedError) {
-              const allMsgs = errorData.details
-                .map((d: any) => (typeof d === 'object' ? d.message : d))
-                .join('\n')
-              alert(`Validation failed:\n${allMsgs}`)
-            }
-          } else {
-            alert(errorData.error || 'Validation failed')
           }
           return
         }
-        throw new Error(errorData.error || `Server responded with ${response.status}`)
+        throw new Error(errorData.error || 'Failed to send')
       }
 
       setSubmitted(true)
       reset()
       setTimeout(() => setSubmitted(false), 4000)
     } catch (error: any) {
-      console.error('Submission error:', error)
       alert(error.message || 'Failed to send message. Please try again.')
     } finally {
       setSubmitting(false)
     }
   }
-
 
   if (submitted) {
     return (
@@ -464,19 +436,28 @@ function ContactForm({ dark = false }: { dark?: boolean }) {
 
       <div className={dark ? styles.WpformsFieldContainer_88_12005 : 'flex flex-col gap-4'}>
         <div style={{ marginBottom: '16px' }}>
-          <Turnstile
-            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAC1MnbcrrWWcB6e-'}
-            onSuccess={(token) => setTurnstileToken(token)}
-            onError={() => setTurnstileToken('')}
-            onExpire={() => setTurnstileToken('')}
-          />
+          {turnstileSiteKey ? (
+            <Turnstile
+              siteKey={turnstileSiteKey}
+              onSuccess={(token) => setTurnstileToken(token)}
+              onError={() => {
+                console.error('Turnstile error: Failed to load widget')
+                setTurnstileToken(null)
+              }}
+              onExpire={() => setTurnstileToken(null)}
+            />
+          ) : (
+            <p className={dark ? 'text-white/80 text-sm' : 'text-[#555] text-sm'}>
+              Captcha is not configured. Please set NEXT_PUBLIC_TURNSTILE_SITE_KEY.
+            </p>
+          )}
         </div>
       </div>
 
       <div className={dark ? styles.DivWpformsSubmitContainer_88_12034 : 'mt-2'}>
         <button
           type="submit"
-          disabled={(!turnstileToken || submitting) && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+          disabled={!turnstileToken || submitting}
           className={dark ? styles.ButtonWpformsSubmit_10038_88_12035 : `flex items-center gap-2 px-7 py-3 rounded-full font-['Inter',Helvetica] font-medium text-[13px] tracking-wider transition-all duration-300 ${
             turnstileToken && !submitting
               ? 'bg-[#111] text-white hover:bg-[#6abf4b] cursor-pointer'

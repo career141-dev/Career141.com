@@ -27,7 +27,7 @@ const SPECIALIZATIONS = [
   {
     title: 'Continuous Improvement',
     img: withBasePath('/home/Subtract-11.webp'),
-    href: 'https://career141.com/continuous-improvement/',
+    href: '/jobs/continuous-improvement',
   },
   {
     title: 'Data Analytics & Research',
