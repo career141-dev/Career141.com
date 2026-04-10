@@ -1,0 +1,51 @@
+.DivElementorElement_115_10263 {
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1429.56px;
+  display: flex;
+  margin: 0 auto;
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.DivElementorWidgetContainer_115_10264 {
+  flex-direction: column;
+  flex: 1 0 0;
+  align-items: flex-start;
+  width: 100%;
+  display: flex;
+}
+
+.DivElementorIconWrapper_115_10265 {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  display: flex;
+}
+
+.DivElementorIcon_115_10266 {
+  align-items: flex-start;
+  display: flex;
+}
+
+.Frame_115_10267 {
+  width: 100%;
+  height: auto;
+  max-width: 1184px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .DivElementorElement_115_10263 {
+    display: flex;
+    top: -20px;
+    transform: translateX(-50%) scale(0.4);
+    transform-origin: top center;
+  }
+}

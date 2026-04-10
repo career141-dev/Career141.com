@@ -20,7 +20,7 @@
   align-items: flex-start;
   gap: 20px;
   width: 574.48px;
-  padding: 30px 60px 30px 41.362px;
+  padding: 30px 60px 30px 20px;
   display: flex;
 }
 .DivElementorElement_88_11867 {
@@ -40,11 +40,17 @@
 .FindYourFutureTalentWithUsToday_88_11870 {
   color: #37a65e;
   font-family: Quicksand;
-  font-size: 41.6px;
+  font-size: 40px;
   font-style: normal;
   font-weight: 700;
-  line-height: 41.6px;
+  line-height: 42px;
   display: inline-block;
+}
+.HeadingBlackWord {
+  color: #000000;
+}
+.HeadingLine {
+  display: block;
 }
 .DivElementorElement_88_11871 {
   flex-direction: column;
@@ -537,8 +543,9 @@
   align-items: flex-start;
   gap: -3.568px;
   width: 542.4px;
-  padding: 41.36px 41.362px 37.78px;
+  padding: 24px 41.362px 22px;
   display: flex;
+  margin-left: 40px;
 }
 .DivElementorElementMargin_88_11957 {
   flex-direction: column;
@@ -610,13 +617,13 @@
 }
 .FormWpformsForm_10038_88_11967 {
   width: 100%;
-  height: 416px;
+  height: 460px;
 }
 .DivWpformsFieldContainer_88_11968 {
   flex-direction: column;
   align-items: center;
   width: 459.68px;
-  padding-bottom: 15.8px;
+  padding-bottom: 25.8px;
   display: flex;
 }
 .DivWpformsLayoutRow_88_11969 {
@@ -812,6 +819,92 @@
   display: flex;
   position: relative;
 }
+.PhoneInputContainerDark {
+  width: 100%;
+}
+.PhoneInputContainerDark :global(.form-control) {
+  box-sizing: border-box;
+  background: transparent !important;
+  color: #ffffff !important;
+  border: 0 !important;
+  border-bottom: 0.8px solid #ffffff2b !important;
+  border-radius: 3px !important;
+  width: 100% !important;
+  height: 42.2px !important;
+  padding: 10.3px 14px 10.3px 56px !important;
+  font-family: Inter, Helvetica, sans-serif !important;
+  font-size: 15.4px !important;
+}
+.PhoneInputContainerDark :global(.form-control::placeholder) {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+.PhoneInputContainerDark :global(.flag-dropdown) {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 0.8px solid #ffffff2b !important;
+}
+.PhoneInputContainerDark :global(.selected-flag) {
+  background: transparent !important;
+  padding: 0 0 0 10px !important;
+  width: 44px !important;
+}
+.PhoneInputContainerDark :global(.selected-flag:hover),
+.PhoneInputContainerDark :global(.selected-flag:focus) {
+  background: transparent !important;
+}
+.PhoneInputContainerDark :global(.country-list) {
+  background: #173f2f !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+.PhoneInputContainerDark :global(.country-list .country) {
+  color: #ffffff !important;
+}
+.PhoneInputContainerDark :global(.country-list .country:hover),
+.PhoneInputContainerDark :global(.country-list .country.highlight) {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+.PhoneInputContainerDark :global(.search-box) {
+  width: calc(100% - 16px) !important;
+  margin: 8px !important;
+}
+
+.PhoneInputContainerLight {
+  width: 100%;
+}
+.PhoneInputContainerLight :global(.form-control) {
+  box-sizing: border-box;
+  background: transparent !important;
+  color: #333333 !important;
+  border: 0 !important;
+  border-bottom: 1px solid #cccccc !important;
+  border-radius: 0 !important;
+  width: 100% !important;
+  height: 42px !important;
+  padding: 10px 10px 10px 56px !important;
+  font-family: Inter, Helvetica, sans-serif !important;
+  font-size: 14px !important;
+}
+.PhoneInputContainerLight :global(.form-control::placeholder) {
+  color: #555555 !important;
+}
+.PhoneInputContainerLight :global(.flag-dropdown) {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid #cccccc !important;
+}
+.PhoneInputContainerLight :global(.selected-flag) {
+  background: transparent !important;
+  padding-left: 10px !important;
+  width: 44px !important;
+}
+.PhoneInputContainerLight :global(.selected-flag:hover),
+.PhoneInputContainerLight :global(.selected-flag:focus) {
+  background: transparent !important;
+}
+.PhoneInputContainerLight :global(.country-list) {
+  border: 1px solid #dddddd !important;
+}
 .InputWpforms_10038Field_8_88_11990 {
   box-sizing: border-box;
   border-bottom: 0.8px solid #ffffff2b;
@@ -930,11 +1023,17 @@
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  height: 42.2px;
-  min-height: 42.2px;
+  min-height: 56px;
   padding: 14px;
   display: flex;
+  overflow: visible;
+}
+.TextareaWpforms_10038Field_10_88_12002 textarea {
+  width: 100%;
+  min-height: 26px;
+  line-height: 1.35;
   overflow: hidden;
+  resize: none;
 }
 .DivPlaceholder_88_12003 {
   opacity: 0.5;
@@ -963,15 +1062,15 @@
   flex-direction: column;
   align-items: flex-start;
   width: 304px;
-  height: 150px;
+  height: auto;
   display: flex;
 }
 .Iframe_88_12007 {
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  height: 150px;
-  padding-bottom: 74.4px;
+  height: auto;
+  padding-bottom: 20px; /* Reduced from 74.4px */
   display: flex;
   overflow: hidden;
 }
@@ -1022,6 +1121,9 @@
 .SpanRecaptchaAnchor_88_12014 {
   width: 28px;
   height: 28px;
+  cursor: pointer !important;
+  position: relative;
+  z-index: 50;
 }
 .DivRecaptchaCheckboxBorderAnimation_88_12015 {
   background: #d3d3d3 none 0 0/300% 3000% no-repeat;
@@ -1174,7 +1276,8 @@
 .DivWpformsSubmitContainer_88_12034 {
   flex-direction: column;
   align-items: flex-start;
-  width: 459.68px;
+  width: 100%;
+  margin-top: 10px;
   display: flex;
 }
 .ButtonWpformsSubmit_10038_88_12035 {
@@ -1186,6 +1289,21 @@
   height: 41px;
   padding: 11.89px 14.8px 13.11px;
   display: flex;
+  cursor: pointer;
+  position: relative;
+  z-index: 10;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .ButtonWpformsSubmit_10038_88_12035 {
+    width: auto;
+  }
+}
+.ButtonWpformsSubmit_10038_88_12035:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #ffffff55;
 }
 .Connect_88_12036 {
   color: #fff;
@@ -1196,4 +1314,83 @@
   font-weight: 500;
   line-height: 14px;
   display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .DivElementorElement_88_11864 {
+    flex-direction: column;
+    padding: 20px;
+  }
+  .DivElementorElementMargin_88_11865 {
+    width: 100% !important;
+  }
+  .DivElementorElement_88_11866 {
+    width: 100% !important;
+    padding: 20px !important;
+    border-radius: 12px;
+  }
+  .DivElementorElement_88_11956 {
+    width: 100% !important;
+    padding: 24px !important;
+    border-radius: 12px;
+    margin-top: 20px;
+  }
+  .DivWpformsFieldContainer_88_11968 {
+    width: 100% !important;
+  }
+  .DivWpformsLayoutRow_88_11969,
+  .DivWpformsLayoutRow_88_11978,
+  .DivWpformsLayoutRow_88_11987 {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  .DivWpformsLayoutColumn_88_11970,
+  .DivWpformsLayoutColumn_88_11974,
+  .DivWpformsLayoutColumn_88_11979,
+  .DivWpformsLayoutColumn_88_11983,
+  .DivWpformsLayoutColumn_88_11988,
+  .DivWpformsLayoutColumn_88_11998 {
+    padding: 10px 0 !important;
+    width: 100% !important;
+  }
+  .InputWpforms_10038Field_2_88_11971,
+  .InputWpforms_10038Field_3_88_11975,
+  .InputWpforms_10038Field_5_88_11980,
+  .InputWpforms_10038Field_6_88_11984,
+  .InputWpforms_10038Field_8_88_11990,
+  .InputWpforms_10038Field_9_88_11999 {
+    width: 100% !important;
+  }
+  .TextareaWpforms_10038Field_10_88_12002 {
+    width: 100% !important;
+  }
+  .DivWpformsSubmitContainer_88_12034 {
+    width: 100% !important;
+    align-items: center !important;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .FormWpformsForm_10038_88_11967 {
+    height: auto !important;
+  }
+  .FindYourFutureTalentWithUsToday_88_11870 {
+    font-size: 24px !important;
+    line-height: normal !important;
+  }
+  .EveryInteractionYourCustomersHaveWithYourCompanySDigitalPropertiesEitherBringsYouCloserOrFartherAwayFromYourBusinessGoals_88_11874 {
+    font-size: 14px !important;
+  }
+  /* reCAPTCHA mobile adjustments */
+  .Iframe_88_12007 {
+    width: 100% !important;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .Div_88_12006 {
+    padding: 10px !important;
+    width: 100% !important;
+    max-width: 300px;
+    margin: 0 auto;
+  }
 }

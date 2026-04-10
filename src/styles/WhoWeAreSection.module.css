@@ -1,0 +1,155 @@
+@import "https://fonts.googleapis.com/css?family=Inter:0,500&display=swap";
+
+/* Desktop Styles */
+.WhoWeAreContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+  padding-bottom: 50px;
+}
+
+.MissionContentRow {
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  display: flex;
+  position: relative;
+  z-index: 5;
+  margin-top: 350px; /* Increased to reveal background heading properly */
+}
+
+.TextBox {
+  background: #130101bd;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1064.91px;
+  padding: 85px 85px;
+  display: flex;
+  position: relative;
+}
+
+.TextBox::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 0;
+}
+
+.InnerContent {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+
+.MissionText {
+  color: #444;
+  font-family: 'Inter', sans-serif;
+  font-size: 17.7px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32.64px;
+}
+
+.ImageWrapper {
+  align-items: center;
+  display: flex;
+  margin-left: -91px;
+  z-index: 10;
+}
+
+.QuoteImage {
+  aspect-ratio: 117/89;
+  background: url('/figmaAssets/group-2279.webp') center center/cover no-repeat;
+  width: 507.6px;
+  height: 386.1px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* MOBILE DESIGN OVERRIDES (From User) */
+@media (max-width: 768px) {
+  .WhoWeAreContainer {
+    padding-bottom: 30px;
+    padding-top: 0 !important;
+    margin-top: 140px !important; /* Added margin to show background heading */
+  }
+
+  .MissionContentRow {
+    flex-direction: column-reverse !important; /* Text then image reversed to match design order if needed */
+    align-items: flex-start !important;
+    margin-top: 0 !important;
+    gap: 0px !important;
+  }
+
+  /* Mission Block Container */
+  .DivElementorElement_115_9588 {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.005px;
+    width: 390.4px;
+    display: flex;
+  }
+
+  /* SVG Title Wrapper */
+  .DivElementorIconWrapper_115_9591 {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0 0 6.4px 80px; /* Adjusted to fit */
+    display: flex;
+  }
+
+  .Frame_115_9593 {
+    width: 100%;
+    max-width: 758px;
+    height: auto;
+    overflow: hidden;
+    transform: scale(0.6); /* Scaled down */
+    transform-origin: left center;
+  }
+
+  /* Text Area */
+  .TextBox {
+    background: #d3d3d3 url('/figmaAssets/bg-mission.webp') -312.588px 0/185.177% 100% no-repeat !important;
+    padding: 22.013px 22.013px 22.013px 36.688px !important;
+    width: 100% !important;
+    max-width: 390.4px !important;
+    min-height: 156.32px !important;
+    border-radius: 0 !important;
+  }
+
+  .TextBox::before {
+    display: none !important; /* Use background property from code */
+  }
+
+  .MissionText {
+    font-size: 13.4px !important;
+    line-height: 24.48px !important;
+    font-weight: 400 !important;
+  }
+
+  /* Image Area */
+  .ImageWrapper {
+    margin-left: 0 !important;
+    margin-bottom: -40px !important; /* Reverse overlap overlap */
+    z-index: 5;
+    padding-left: 23.4px;
+  }
+
+  .QuoteImage {
+    width: 117.44px !important; /* Smaller image as requested */
+    height: 89.33px !important;
+    background: #d3d3d3 url('/figmaAssets/group-2279.webp') 0 0/100% 100% no-repeat !important;
+    border-radius: 0 !important;
+    aspect-ratio: 117/89 !important;
+  }
+}

@@ -2,19 +2,36 @@
 
 import { useRef, useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { ChevronDownIcon } from 'lucide-react'
-import { EXECUTIVE_SEARCH_CATEGORIES, NAV_ITEMS, SOCIAL_LINKS } from './navbar.data'
+import { EXECUTIVE_SEARCH_CATEGORIES, NAV_ITEMS, SOCIAL_LINKS, CULTURE_DROPDOWN_ITEMS, RESOURCES_DROPDOWN_ITEMS, RESOURCES_CATEGORIES } from './navbar.data'
 import { withBasePath } from '@/lib/assetPath'
 
+const APPAREL_EXECUTIVE_LABEL = 'Apparel Merchandising & Marketing'
+const APPAREL_EXECUTIVE_HREF = '/apparel-merchandising-marketing'
+
+
+
 type NavbarProps = {
+  bgColor?: string
   variant?: 'overlay' | 'solid'
+  sticky?: boolean
 }
 
-export function Navbar({ variant = 'overlay' }: NavbarProps) {
+export function Navbar({ bgColor, variant = 'overlay', sticky = false }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [mobileDropdown, setMobileDropdown] = useState<string | null>(null)
   const [execDropOpen, setExecDropOpen] = useState(false)
+  const [cultureDropOpen, setCultureDropOpen] = useState(false)
+  const [resourcesDropOpen, setResourcesDropOpen] = useState(false)
+  const [connectDropOpen, setConnectDropOpen] = useState(false)
   const execDropTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const cultureDropTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const resourcesDropTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const connectDropTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const pathname = usePathname()
   const isSolid = variant === 'solid'
+  const headerPositionClass = sticky ? 'fixed' : 'absolute'
 
   const handleExecEnter = () => {
     if (execDropTimeout.current) clearTimeout(execDropTimeout.current)
@@ -25,68 +42,137 @@ export function Navbar({ variant = 'overlay' }: NavbarProps) {
     execDropTimeout.current = setTimeout(() => setExecDropOpen(false), 150)
   }
 
+  const handleCultureEnter = () => {
+    if (cultureDropTimeout.current) clearTimeout(cultureDropTimeout.current)
+    setCultureDropOpen(true)
+  }
+
+  const handleCultureLeave = () => {
+    cultureDropTimeout.current = setTimeout(() => setCultureDropOpen(false), 150)
+  }
+
+  const handleResourcesEnter = () => {
+    if (resourcesDropTimeout.current) clearTimeout(resourcesDropTimeout.current)
+    setResourcesDropOpen(true)
+  }
+
+  const handleResourcesLeave = () => {
+    resourcesDropTimeout.current = setTimeout(() => setResourcesDropOpen(false), 150)
+  }
+
+  const handleConnectEnter = () => {
+    if (connectDropTimeout.current) clearTimeout(connectDropTimeout.current)
+    setConnectDropOpen(true)
+  }
+
+  const handleConnectLeave = () => {
+    connectDropTimeout.current = setTimeout(() => setConnectDropOpen(false), 150)
+  }
+
   return (
     <>
       <header
-        className={`top-0 left-0 right-0 z-30 flex w-full items-stretch justify-between border-b border-[#ffffff2e] ${
-          isSolid
-            ? 'fixed bg-[#0d1f15]'
+        className={`top-0 left-0 right-0 z-50 flex w-full items-stretch justify-between border-b border-[#ffffff2e] ${
+          isSolid || bgColor
+            ? `${headerPositionClass} bg-[#0d1f15]`
+            : bgColor
+            ? 'absolute'
             : 'absolute bg-[linear-gradient(180deg,rgba(0,0,0,0.21)_40%,rgba(0,0,0,0)_100%)]'
         }`}
+        style={bgColor && !isSolid ? { backgroundColor: bgColor } : undefined}
       >
-        <div className="flex items-center justify-center h-[56px] lg:h-[89.34px] px-4 lg:px-[30.41px] border-r border-[#ffffff2e] shrink-0">
+        <Link href="/" className="flex items-center justify-center h-[70px] lg:h-[89.34px] px-4 lg:px-[30.41px] border-r border-[#ffffff2e] shrink-0 hover:opacity-80 transition-opacity">
           <div
             className="w-[138px] h-[45px] lg:w-[200px] lg:h-[65.34px] bg-cover bg-center"
             style={{ backgroundImage: `url(${withBasePath('/figmaAssets/career141-logo-with-20-year-anniversary-mark.png')})` }}
           />
-        </div>
+        </Link>
 
         <nav className="hidden lg:flex items-center flex-1 px-[17.8px]">
           <div className="flex items-center justify-between w-full">
-            {NAV_ITEMS.map((item, index) => (
-              <div
-                key={index}
-                className="relative inline-flex items-center px-3 py-[31px] cursor-pointer group"
-                onMouseEnter={item.hasExecDrop ? handleExecEnter : undefined}
-                onMouseLeave={item.hasExecDrop ? handleExecLeave : undefined}
-              >
-                {item.href ? (
-                  item.href.startsWith('/') ? (
-                    <Link
-                      className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[12.8px] tracking-[0] leading-[19.2px] whitespace-nowrap hover:text-[#cbfc06] transition-colors duration-200"
-                      href={item.href}
-                    >
-                      {item.label}
-                    </Link>
+            {NAV_ITEMS.map((item, index) => {
+              const isActive = item.href === pathname || (item.hasExecDrop && pathname.startsWith('/executive-search'))
+              const isLocal = item.href?.startsWith('/') && !item.href?.startsWith('//')
+              
+              return (
+                <div
+                  key={index}
+                  className="relative inline-flex items-center px-3 py-[31px] cursor-pointer group"
+                  onMouseEnter={item.hasExecDrop ? handleExecEnter : item.label === 'RESOURCES' ? handleResourcesEnter : item.hasDropdown && !item.hasExecDrop ? handleCultureEnter : undefined}
+                  onMouseLeave={item.hasExecDrop ? handleExecLeave : item.label === 'RESOURCES' ? handleResourcesLeave : item.hasDropdown && !item.hasExecDrop ? handleCultureLeave : undefined}
+                >
+                  {item.href ? (
+                    isLocal ? (
+                      <Link
+                        href={item.href}
+                        className={`[font-family:'Quicksand',Helvetica] font-medium text-[12.8px] tracking-[0] leading-[19.2px] whitespace-nowrap transition-colors duration-200 ${
+                          isActive ? 'text-[#cbfc06]' : 'text-white hover:text-[#cbfc06]'
+                        }`}
+                      >
+                        {item.label}
+                      </Link>
+                    ) : (
+                      <a
+                        className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[12.8px] tracking-[0] leading-[19.2px] whitespace-nowrap hover:text-[#cbfc06] transition-colors duration-200"
+                        href={item.href}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        {item.label}
+                      </a>
+                    )
                   ) : (
-                    <a
-                      className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[12.8px] tracking-[0] leading-[19.2px] whitespace-nowrap hover:text-[#cbfc06] transition-colors duration-200"
-                      href={item.href}
-                      rel="noopener noreferrer"
-                      target="_blank"
+                    <span
+                      className={`[font-family:'Quicksand',Helvetica] font-medium text-[12.8px] tracking-[0] leading-[19.2px] whitespace-nowrap transition-colors duration-200 ${
+                        item.hasExecDrop && execDropOpen ? 'text-[#cbfc06]' : 'text-white hover:text-[#cbfc06]'
+                      }`}
                     >
                       {item.label}
-                    </a>
-                  )
-                ) : (
-                  <span
-                    className={`[font-family:'Quicksand',Helvetica] font-medium text-[12.8px] tracking-[0] leading-[19.2px] whitespace-nowrap transition-colors duration-200 ${
-                      item.hasExecDrop && execDropOpen ? 'text-[#cbfc06]' : 'text-white hover:text-[#cbfc06]'
-                    }`}
-                  >
-                    {item.label}
-                  </span>
-                )}
-                {item.hasDropdown && (
-                  <ChevronDownIcon
-                    className={`ml-[5px] shrink-0 transition-all duration-200 ${
-                      item.hasExecDrop && execDropOpen ? 'text-[#cbfc06] rotate-180' : 'text-white group-hover:text-[#cbfc06]'
-                    }`}
-                    style={{ width: '10.24px', height: '10.24px' }}
-                  />
-                )}
-              </div>
-            ))}
+                    </span>
+                  )}
+                  {item.hasDropdown && (
+                    <ChevronDownIcon
+                      className={`ml-[5px] shrink-0 transition-all duration-200 ${
+                        (item.hasExecDrop && execDropOpen) || (item.label === 'OUR CULTURE' && cultureDropOpen) || (item.label === 'RESOURCES' && resourcesDropOpen) ? 'text-[#cbfc06] rotate-180' : 'text-white group-hover:text-[#cbfc06]'
+                      }`}
+                      style={{ width: '10.24px', height: '10.24px' }}
+                    />
+                  )}
+                  
+                  {item.label === 'OUR CULTURE' && cultureDropOpen && item.dropdownItems && (
+                    <div className="absolute top-full left-0 z-[32] bg-white shadow-xl animate-dropdown-fade border-t-2 border-[#006763]">
+                      <div className="px-6 py-3">
+                        {CULTURE_DROPDOWN_ITEMS.map((menuItem, idx) => (
+                          <Link
+                            key={idx}
+                            href={menuItem.href}
+                            className="[font-family:'Quicksand',Helvetica] font-normal text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] transition-colors duration-200 cursor-pointer whitespace-nowrap block"
+                          >
+                            {menuItem.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {item.label === 'RESOURCES' && resourcesDropOpen && item.dropdownItems && (
+                    <div className="absolute top-full left-0 z-[32] bg-white shadow-xl animate-dropdown-fade border-t-2 border-[#006763]">
+                      <div className="px-6 py-3 flex flex-col gap-3">
+                        {RESOURCES_DROPDOWN_ITEMS.map((menuItem, idx) => (
+                          <Link
+                            key={idx}
+                            href={menuItem.href}
+                            className="[font-family:'Quicksand',Helvetica] font-normal text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] transition-colors duration-200 cursor-pointer whitespace-nowrap block"
+                          >
+                            {menuItem.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
         </nav>
 
@@ -110,11 +196,36 @@ export function Navbar({ variant = 'overlay' }: NavbarProps) {
           </div>
         </div>
 
-        <div className="hidden lg:flex items-center justify-center pl-[23.74px] pr-3 shrink-0">
-          <button className="inline-flex items-center [font-family:'Quicksand',Helvetica] font-medium text-white text-[12.8px] tracking-[0] leading-[19.2px] whitespace-nowrap hover:text-[#cbfc06] transition-colors duration-200">
+        <div 
+          className="hidden lg:flex items-center justify-center pl-[23.74px] pr-3 shrink-0 relative"
+          onMouseEnter={handleConnectEnter}
+          onMouseLeave={handleConnectLeave}
+        >
+          <div className="inline-flex items-center [font-family:'Quicksand',Helvetica] font-medium text-white text-[12.8px] tracking-[0] leading-[19.2px] whitespace-nowrap hover:text-[#cbfc06] transition-colors duration-200 cursor-pointer">
             LET&apos;S CONNECT
-            <ChevronDownIcon className="ml-[5px] text-white shrink-0" style={{ width: '10.24px', height: '10.24px' }} />
-          </button>
+            <ChevronDownIcon className={`ml-[5px] shrink-0 transition-all duration-200 ${connectDropOpen ? 'text-[#cbfc06] rotate-180' : 'text-white'}`} style={{ width: '10.24px', height: '10.24px' }} />
+          </div>
+          
+          {connectDropOpen && (
+            <div className="absolute top-full right-0 z-[32] bg-white shadow-xl animate-dropdown-fade border-t-2 border-[#006763] min-w-[180px]">
+              <div className="px-6 py-3 flex flex-col gap-3">
+                <a
+                  href="mailto:hello@career141.com"
+                  className="[font-family:'Quicksand',Helvetica] font-normal text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] transition-colors duration-200 cursor-pointer whitespace-nowrap flex items-center gap-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                  Email
+                </a>
+                <a
+                  href="tel:+94753595495"
+                  className="[font-family:'Quicksand',Helvetica] font-normal text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] transition-colors duration-200 cursor-pointer whitespace-nowrap flex items-center gap-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  Call
+                </a>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="lg:hidden flex items-center justify-center px-5 ml-auto">
@@ -133,86 +244,114 @@ export function Navbar({ variant = 'overlay' }: NavbarProps) {
       </header>
 
       {execDropOpen && (
-        <div
-          className="hidden lg:block fixed left-0 right-0 z-[32] bg-white shadow-2xl animate-dropdown-fade border-t-2 border-[#006763]"
-          style={{ top: '93px' }}
-          onMouseEnter={handleExecEnter}
-          onMouseLeave={handleExecLeave}
-        >
-          <div className="max-w-[1200px] mx-auto px-12 py-10">
-            <div className="grid grid-cols-3 gap-x-16 gap-y-1">
-              {EXECUTIVE_SEARCH_CATEGORIES.map((col, colIdx) => (
-                <div key={colIdx} className="flex flex-col gap-y-4">
-                  {col.map((item, itemIdx) => (
-                    <a
-                      key={itemIdx}
-                      href="https://career141.com/executive-search/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="[font-family:'Quicksand',Helvetica] font-normal text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] transition-colors duration-200 cursor-pointer"
-                    >
-                      {item}
-                    </a>
-                  ))}
-                </div>
-              ))}
+          <div
+            className="hidden lg:block fixed left-0 right-0 z-[32] bg-white shadow-2xl animate-dropdown-fade border-t-2 border-[#006763]"
+            style={{ top: '93px' }}
+            onMouseEnter={handleExecEnter}
+            onMouseLeave={handleExecLeave}
+          >
+            <div className="max-w-[1200px] mx-auto px-12 py-10">
+              <div className="grid grid-cols-3 gap-x-16 gap-y-1">
+                {EXECUTIVE_SEARCH_CATEGORIES.map((col, colIdx) => (
+                  <div key={colIdx} className="flex flex-col gap-y-4">
+                    {col.map((item, itemIdx) => (
+                      <Link
+                        key={itemIdx}
+                        href={item.href || '/executive-search'}
+                        className="[font-family:'Quicksand',Helvetica] font-normal text-[#2f2f2f] text-[14px] leading-[1.5] hover:text-[#006763] transition-colors duration-200 cursor-pointer"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
       {menuOpen && (
         <div className="fixed inset-0 z-40 bg-[#000313]/95 flex flex-col pt-[56px] lg:hidden overflow-y-auto">
           <div className="flex flex-col divide-y divide-[#ffffff20]">
-            {NAV_ITEMS.map((item, index) => (
-              <div key={index} className="flex items-center justify-between px-6 py-4">
-                {item.href ? (
-                  item.href.startsWith('/') ? (
-                    <Link
-                      href={item.href}
-                      onClick={() => setMenuOpen(false)}
-                      className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]"
-                    >
-                      {item.label}
-                    </Link>
-                  ) : (
-                    <a
-                      href={item.href}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      onClick={() => setMenuOpen(false)}
-                      className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]"
-                    >
-                      {item.label}
-                    </a>
-                  )
-                ) : (
-                  <span className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]">
-                    {item.label}
-                  </span>
-                )}
-                {item.hasDropdown && <ChevronDownIcon className="text-white" style={{ width: '14px', height: '14px' }} />}
-              </div>
-            ))}
+            {NAV_ITEMS.map((item, index) => {
+              const isLocal = item.href?.startsWith('/') && !item.href?.startsWith('//')
+              const isOpen = mobileDropdown === item.label
+              const hasMobileDropdown = Boolean(item.hasDropdown)
 
-            <div className="px-6 py-4 bg-[#001a1a]">
-              <p className="[font-family:'Quicksand',Helvetica] text-[#cbfc06] text-[11px] font-semibold tracking-[1px] mb-3 uppercase">
-                Executive Search Areas
-              </p>
-              <div className="flex flex-col gap-2">
-                {EXECUTIVE_SEARCH_CATEGORIES.flat().map((item, i) => (
-                  <a
-                    key={i}
-                    href="https://career141.com/executive-search/"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    className="[font-family:'Quicksand',Helvetica] text-white/80 text-[13px] leading-[1.5] hover:text-[#cbfc06]"
-                  >
-                    {item}
-                  </a>
-                ))}
-              </div>
-            </div>
+              const mobileSubmenu = item.label === 'EXECUTIVE SEARCH'
+                ? EXECUTIVE_SEARCH_CATEGORIES.flat()
+                : item.label === 'OUR CULTURE'
+                ? CULTURE_DROPDOWN_ITEMS
+                : item.label === 'RESOURCES'
+                ? RESOURCES_DROPDOWN_ITEMS
+                : []
+              
+              return (
+                <div key={index} className="px-6 py-4">
+                  <div className="flex items-center justify-between gap-4">
+                    {item.href && !hasMobileDropdown ? (
+                      isLocal ? (
+                        <Link
+                          href={item.href}
+                          onClick={() => setMenuOpen(false)}
+                          className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]"
+                        >
+                          {item.label}
+                        </Link>
+                      ) : (
+                        <a
+                          href={item.href}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                          onClick={() => setMenuOpen(false)}
+                          className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]"
+                        >
+                          {item.label}
+                        </a>
+                      )
+                    ) : item.href && hasMobileDropdown ? (
+                      <Link
+                        href={item.href}
+                        onClick={() => setMenuOpen(false)}
+                        className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]"
+                      >
+                        {item.label}
+                      </Link>
+                    ) : (
+                      <span className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] leading-[21px]">
+                        {item.label}
+                      </span>
+                    )}
+
+                    {item.hasDropdown && (
+                      <button
+                        type="button"
+                        aria-label={`Toggle ${item.label} submenu`}
+                        onClick={() => setMobileDropdown(isOpen ? null : item.label)}
+                        className="flex items-center justify-center w-8 h-8 -mr-1 text-white"
+                      >
+                        <ChevronDownIcon className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} style={{ width: '14px', height: '14px' }} />
+                      </button>
+                    )}
+                  </div>
+
+                  {hasMobileDropdown && isOpen && mobileSubmenu.length > 0 && (
+                    <div className="mt-3 ml-3 border-l border-[#ffffff20] pl-4 flex flex-col gap-2">
+                      {mobileSubmenu.map((subItem, subIndex) => (
+                        <Link
+                          key={subIndex}
+                          href={subItem.href}
+                          onClick={() => setMenuOpen(false)}
+                          className="[font-family:'Quicksand',Helvetica] text-white/80 text-[13px] leading-[1.5] hover:text-[#cbfc06]"
+                        >
+                          {subItem.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
 
             <div className="px-6 py-5 flex items-center gap-5">
               {SOCIAL_LINKS.map((social, index) => {
@@ -230,9 +369,13 @@ export function Navbar({ variant = 'overlay' }: NavbarProps) {
                   </a>
                 )
               })}
-              <span className="[font-family:'Quicksand',Helvetica] font-medium text-white text-[14px] tracking-[0.5px] ml-auto">
+              <Link
+                href="/contact-us"
+                onClick={() => setMenuOpen(false)}
+                className="[font-family:'Quicksand',Helvetica] font-medium text-[#cbfc06] text-[14px] tracking-[0.5px] ml-auto uppercase"
+              >
                 LET&apos;S CONNECT
-              </span>
+              </Link>
             </div>
           </div>
         </div>

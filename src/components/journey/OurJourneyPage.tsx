@@ -1,12 +1,15 @@
 import { Navbar } from '@/components/common'
 import { CompanyFooter } from '@/components/common'
 import { QuoteHighlightSection } from './sections/QuoteHighlightSection'
+import { FoundersViewSection } from './sections/FoundersViewSection'
 import { HeroSection } from './sections/HeroSection'
+import { FoundersTextElement } from './sections/FoundersTextElement'
 import { VisionMissionSection } from './sections/VisionMissionSection'
 import { WhoWeAreSection } from './sections/WhoWeAreSection'
 import { OurMilestoneSection } from './sections/OurMilestoneSection'
 import { OurPledgeSection } from './sections/OurPledgeSection'
 import { CoreValuesSection } from './sections/CoreValuesSection'
+import { MeetingSchedulerSubsection } from '../home'
 
 export function OurJourneyPage() {
   return (
@@ -15,13 +18,22 @@ export function OurJourneyPage() {
       <div className="w-full h-[60px] md:h-[89px]" />
 
       <QuoteHighlightSection />
-      <HeroSection />
+      
+      <div className="relative z-[999] w-full mt-20 md:mt-0">
+        <FoundersViewSection />
+      </div>
+
+      <div className="relative z-[0] w-full">
+        <HeroSection />
+      </div>
+
+      <FoundersTextElement />
       <VisionMissionSection />
       <WhoWeAreSection />
       <OurMilestoneSection />
       <OurPledgeSection />
       <CoreValuesSection />
-
+      <MeetingSchedulerSubsection />
       <CompanyFooter />
 
       <a

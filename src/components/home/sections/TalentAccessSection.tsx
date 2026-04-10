@@ -24,6 +24,7 @@ export function TalentAccessSection() {
           position: 'absolute',
           inset: 0,
           backgroundImage: `url(${desktopBg})`,
+          backgroundColor: 'white',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           zIndex: 0,

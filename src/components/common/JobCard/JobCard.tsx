@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { ArrowRightIcon } from 'lucide-react';
 import styles from './JobCard.module.css';
 
@@ -12,16 +13,30 @@ export interface Job {
   type: string;
   workType: string;
   date: string;
+  slug?: string;
 }
 
 interface JobCardProps {
   job: Job;
   index?: number;
+  applyHref?: string;
 }
 
-export const JobCard: React.FC<JobCardProps> = ({ job, index }) => {
-  return (
-    <div className={styles.AElementorElement} data-testid={index !== undefined ? `card-job-${index}` : undefined}>
+function formatSalaryLine(job: Job): string {
+  const { currency, salaryMin, salaryMax } = job
+  const min = salaryMin?.trim() ?? ''
+  const max = salaryMax?.trim() ?? ''
+  if (!min && !max) return `${currency} -`
+  if (min && max) return `${currency} ${min} - ${max}`
+  if (min) return `${currency} ${min}`
+  return `${currency} ${max}`
+}
+
+export const JobCard: React.FC<JobCardProps> = ({ job, index, applyHref }) => {
+  const resolvedApplyHref = applyHref ?? (job.slug ? `/premium-jobs/${job.slug}` : undefined)
+
+  const cardInner = (
+    <div className={styles.CardInner}>
       <div className={styles.JobCardPostSvgFill}>
         <div className={styles.JobCardPostSvg}>
           <svg width="359" height="396" viewBox="0 0 359 396" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,9 +61,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, index }) => {
             <span className={styles.Title}>{job.title}</span>
           </div>
           <div className={styles.DetailRow}>
-            <span className={styles.DetailText}>
-              {job.currency} {job.salaryMin || ''} {job.salaryMin && job.salaryMax ? '-' : ''} {job.salaryMax || ''}
-            </span>
+            <span className={styles.DetailText}>{formatSalaryLine(job)}</span>
           </div>
           <div className={styles.DetailRow}>
             <span className={styles.DetailText}>{job.location}</span>
@@ -72,6 +85,18 @@ export const JobCard: React.FC<JobCardProps> = ({ job, index }) => {
           </div>
         </div>
       </div>
+    </div>
+  );
+
+  return (
+    <div className={styles.AElementorElement} data-testid={index !== undefined ? `card-job-${index}` : undefined}>
+      {resolvedApplyHref ? (
+        <Link href={resolvedApplyHref} className={styles.FullCardLink} aria-label={`Apply for ${job.title}`}>
+          {cardInner}
+        </Link>
+      ) : (
+        cardInner
+      )}
     </div>
   );
 };

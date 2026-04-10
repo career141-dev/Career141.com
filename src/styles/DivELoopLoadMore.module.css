@@ -1,0 +1,52 @@
+@import "https://fonts.googleapis.com/css?family=Inter:0,400&display=swap";
+
+.DivELoopLoadMore_199_9835 {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  display: flex;
+}
+
+.AElementorButtonLink_199_9836 {
+  background: #11593f;
+  border-radius: 30px;
+  align-items: flex-start;
+  padding: 12px 24px;
+  display: flex;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.AElementorButtonLink_199_9836:hover {
+  background: #0d4632;
+  transform: translateY(-2px);
+}
+
+.AElementorButtonLink_199_9836:active {
+  transform: translateY(0);
+}
+
+.SpanElementorButtonContentWrapper_199_9837 {
+  justify-content: center;
+  align-items: flex-start;
+  display: flex;
+}
+
+.SpanElementorButtonText_199_9838 {
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+}
+
+.LoadMore_199_9839 {
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 0 10px #0000004d;
+  font-family: Inter;
+  font-size: 14.2px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 15px;
+  display: inline-block;
+}

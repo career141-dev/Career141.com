@@ -16,16 +16,16 @@ function XTwitterIcon({ size = 18, style }: { size?: number; style?: CSSProperti
 
 const mainLinks = [
   { label: 'Home', href: '/' },
-  { label: 'Executive Talent', href: 'https://career141.com/executive-search/' },
-  { label: 'Premium Jobs', href: 'https://career141.com/premium-jobs/' },
-  { label: 'Our Culture', href: 'https://career141.com/our-culture/' },
+  { label: 'Executive Talent', href: '/executive-search' },
+  { label: 'Premium Jobs', href: '/premium-jobs' },
+  { label: 'Our Culture', href: '/our-culture' },
   { label: 'Our Journey', href: '/our-journey' },
   { label: 'Contact Us', href: '/contact-us' },
 ]
 
 const serviceLinks = [
-  { label: 'Jobs & Vacancies', href: 'https://career141.com/premium-jobs/' },
-  { label: 'Join Us', href: 'https://career141.com/our-culture/' },
+  { label: 'Jobs & Vacancies', href: '/premium-jobs' },
+  { label: 'Join Us', href: '/our-culture' },
 ]
 
 const contactInfo = [
@@ -43,25 +43,24 @@ const directions = [
 ]
 
 const socialLinks = [
-  { href: 'https://web.facebook.com/career141/', icon: FacebookIcon, label: 'Facebook', color: '#1877f2' },
-  { href: 'https://www.instagram.com/life_at_career141/', icon: InstagramIcon, label: 'Instagram', color: '#e1306c' },
-  { href: 'https://lk.linkedin.com/company/career-consultants-pvt-ltd', icon: LinkedinIcon, label: 'LinkedIn', color: '#0a66c2' },
-  { href: 'https://twitter.com/career141', icon: XTwitterIcon, label: 'X', color: '#1da1f2' },
-  { href: 'https://www.youtube.com/@career141_', icon: YoutubeIcon, label: 'YouTube', color: '#ff0000' },
+  { href: 'https://web.facebook.com/career141/', icon: FacebookIcon, label: 'Facebook' },
+  { href: 'https://www.instagram.com/life_at_career141/', icon: InstagramIcon, label: 'Instagram' },
+  { href: 'https://lk.linkedin.com/company/career-consultants-pvt-ltd', icon: LinkedinIcon, label: 'LinkedIn' },
+  { href: 'https://twitter.com/career141', icon: XTwitterIcon, label: 'X' },
+  { href: 'https://www.youtube.com/@career141_', icon: YoutubeIcon, label: 'YouTube' },
 ]
 
 function FooterLink({ href, label, dark = false }: { href: string; label: string; dark?: boolean }) {
   const isExternal = href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:')
   const isInternal = href.startsWith('/')
 
+  const className = `text-[14.1px] font-['Inter',sans-serif] font-normal leading-[1.4] transition-colors ${
+    dark ? 'text-white/60 hover:text-[#6abf4b]' : 'text-[#161618] hover:text-[#37a65e]'
+  }`
+
   if (isInternal) {
     return (
-      <Link
-        href={href}
-        className={`text-[13px] font-['Inter',Helvetica] leading-[1.4] transition-colors ${
-          dark ? 'text-white/60 hover:text-[#6abf4b]' : 'text-[#444] hover:text-[#37a65e]'
-        }`}
-      >
+      <Link href={href} className={className}>
         {label}
       </Link>
     )
@@ -72,9 +71,7 @@ function FooterLink({ href, label, dark = false }: { href: string; label: string
       href={href}
       target={isExternal ? '_blank' : undefined}
       rel={isExternal ? 'noopener noreferrer' : undefined}
-      className={`text-[13px] font-['Inter',Helvetica] leading-[1.4] transition-colors ${
-        dark ? 'text-white/60 hover:text-[#6abf4b]' : 'text-[#444] hover:text-[#37a65e]'
-      }`}
+      className={className}
     >
       {label}
     </a>
@@ -82,44 +79,43 @@ function FooterLink({ href, label, dark = false }: { href: string; label: string
 }
 
 export function CompanyFooter() {
-  const [hoveredSocial, setHoveredSocial] = useState<number | null>(null)
-
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
   return (
     <>
-      <footer className="md:hidden flex flex-col w-full bg-[#0d0d0d]">
+      {/* Mobile Footer */}
+      <footer className="md:hidden flex flex-col w-full bg-white border-t border-[#ededed]">
         <div className="px-5 pt-10 pb-6 flex flex-col gap-8">
           <div>
             <div
               className="w-[160px] h-[62px] bg-contain bg-no-repeat bg-left"
-              style={{ backgroundImage: `url(${withBasePath('/figmaAssets/career141-logo-with-20-year-anniversary-mark.png')})` }}
+              style={{ backgroundImage: `url(${withBasePath('/figmaAssets/artboard-3-2048x790-png.png')})` }}
             />
-            <p className="font-['Quicksand',Helvetica] text-white/40 text-[12px] leading-[1.7] mt-4">
-              Executive Search remains our primary focus. In a world where CVs and resumes are available everywhere on the web, we add value and insight to the identification of singularly viable candidates.
+            <p className="font-['Quicksand',sans-serif] text-[#444444] text-[12.8px] leading-[20.48px] mt-4">
+              Executive Search remains our primary focus. In a world where CVs and resumes are available everywhere on the web, we add value and insight.
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-6">
             <div className="flex flex-col gap-4">
               {mainLinks.map((link) => (
-                <FooterLink key={link.label} href={link.href} label={link.label} dark />
+                <FooterLink key={link.label} href={link.href} label={link.label} />
               ))}
             </div>
 
             <div className="flex flex-col gap-4">
               {serviceLinks.map((link) => (
-                <FooterLink key={link.label} href={link.href} label={link.label} dark />
+                <FooterLink key={link.label} href={link.href} label={link.label} />
               ))}
               <div className="flex flex-col gap-3 mt-2">
-                <span className="font-['Quicksand',Helvetica] font-bold text-white text-[13px]">Get Directions</span>
+                <span className="font-['Quicksand',sans-serif] font-bold text-[#161618] text-[14.1px]">Get Directions</span>
                 {directions.map((direction) => (
                   <a
                     key={direction.label}
                     href={direction.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-[#6abf4b] text-[12px] font-['Inter',Helvetica] hover:text-white transition-colors"
+                    className="flex items-center gap-2 text-[#11593f] text-[13.3px] font-['Inter',sans-serif] font-medium hover:text-[#37a65e] transition-colors underline"
                   >
                     <MapPinIcon className="w-3 h-3" />
                     {direction.label}
@@ -129,7 +125,7 @@ export function CompanyFooter() {
             </div>
           </div>
 
-          <div className="w-full h-px bg-white/10" />
+          <div className="w-full h-px bg-[#ededed]" />
 
           <div className="flex items-center justify-center gap-3">
             {socialLinks.map((social) => {
@@ -141,20 +137,21 @@ export function CompanyFooter() {
                   rel="noopener noreferrer"
                   target="_blank"
                   aria-label={social.label}
-                  className="flex w-9 h-9 items-center justify-center rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-200"
+                  className="flex w-9 h-9 items-center justify-center rounded-lg bg-[#f4f4f4] hover:bg-[#ededed] transition-all duration-200"
                 >
-                  <Icon size={16} className="text-white" />
+                  <Icon size={16} className="text-[#0c422e]" />
                 </a>
               )
             })}
           </div>
 
-          <p className="font-['Quicksand',Helvetica] font-bold text-white/30 text-[10px] text-center">
-            Copyright {new Date().getFullYear()} Career141. A Positive Impact Company
+          <p className="font-['Quicksand',sans-serif] font-bold text-[#161618]/30 text-[11.2px] text-center">
+            © 2024 Career141. A Positive Impact Company
           </p>
         </div>
       </footer>
 
+      {/* Desktop Footer */}
       <footer className="hidden md:flex flex-col w-full bg-white">
         <div className="w-full px-[80px] lg:px-[121px] pt-16 pb-10">
           <div className="flex flex-col lg:flex-row items-start justify-between gap-10 w-full mb-10">
@@ -165,14 +162,14 @@ export function CompanyFooter() {
                   style={{ backgroundImage: `url(${withBasePath('/figmaAssets/artboard-3-2048x790-png.png')})` }}
                 />
               </Link>
-              <p className="font-['Quicksand',Helvetica] text-[#444444] text-[13px] leading-[1.7]">
+              <p className="font-['Quicksand',sans-serif] font-normal text-[#444444] text-[12.8px] leading-[20.48px]">
                 Executive Search remains our primary focus. In a world where CVs and resumes are available everywhere on the web, we add value and insight to the identification of singularly viable candidates that meet your requirements.
               </p>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 flex-1">
               <div className="flex flex-col items-start gap-4">
-                <h3 className="font-['Quicksand',Helvetica] font-bold text-[#161618] text-[18px] leading-none w-full">Main</h3>
+                <h3 className="font-['Quicksand',sans-serif] font-bold text-[#161618] text-[20.8px] leading-none w-full">Main</h3>
                 <nav className="flex flex-col items-start gap-2 w-full">
                   {mainLinks.map((link) => (
                     <FooterLink key={link.label} href={link.href} label={link.label} />
@@ -181,7 +178,7 @@ export function CompanyFooter() {
               </div>
 
               <div className="flex flex-col items-start gap-4">
-                <h3 className="font-['Quicksand',Helvetica] font-bold text-[#161618] text-[18px] leading-none w-full">Services</h3>
+                <h3 className="font-['Quicksand',sans-serif] font-bold text-[#161618] text-[20.8px] leading-none w-full">Services</h3>
                 <nav className="flex flex-col items-start gap-2 w-full">
                   {serviceLinks.map((link) => (
                     <FooterLink key={link.label} href={link.href} label={link.label} />
@@ -190,15 +187,13 @@ export function CompanyFooter() {
               </div>
 
               <div className="flex flex-col items-start gap-4">
-                <h3 className="font-['Quicksand',Helvetica] font-bold text-[#161618] text-[18px] leading-none w-full">Get In Touch</h3>
+                <h3 className="font-['Quicksand',sans-serif] font-bold text-[#161618] text-[20.8px] leading-none w-full">Get In Touch</h3>
                 <div className="flex flex-col items-start gap-4 w-full">
                   {contactInfo.map((item) => (
                     <a
                       key={item.label}
                       href={item.href}
-                      target={item.href.startsWith('mailto') ? '_blank' : undefined}
-                      rel={item.href.startsWith('mailto') ? 'noopener noreferrer' : undefined}
-                      className="font-['Inter',Helvetica] font-medium text-[#444] text-[13px] leading-[1.4] hover:text-[#37a65e] transition-colors"
+                      className="font-['Inter',sans-serif] font-medium text-[#161618] text-[13.2px] leading-[1.4] hover:text-[#37a65e] transition-colors"
                     >
                       {item.label}
                     </a>
@@ -207,7 +202,7 @@ export function CompanyFooter() {
               </div>
 
               <div className="flex flex-col items-start gap-4">
-                <h3 className="font-['Quicksand',Helvetica] font-bold text-[#161618] text-[18px] leading-none w-full">Get Directions</h3>
+                <h3 className="font-['Quicksand',sans-serif] font-bold text-[#161618] text-[20.8px] leading-none w-full">Get Directions</h3>
                 <div className="flex flex-col items-start gap-5 w-full">
                   {directions.map((direction) => (
                     <a
@@ -215,7 +210,7 @@ export function CompanyFooter() {
                       href={direction.href}
                       rel="noopener noreferrer"
                       target="_blank"
-                      className="flex items-center gap-3 font-['Inter',Helvetica] font-medium text-[#11593f] text-[13px] leading-[1.4] hover:text-[#37a65e] transition-all"
+                      className="flex items-center gap-3 font-['Inter',sans-serif] font-medium text-[#11593f] text-[13.3px] leading-[1.4] hover:text-[#37a65e] transition-all underline"
                     >
                       <MapPinIcon className="w-4 h-4" />
                       <span>{direction.label}</span>
@@ -229,12 +224,12 @@ export function CompanyFooter() {
           <div className="w-full h-px bg-[#ededed] mb-6" />
 
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
-            <span className="font-['Quicksand',Helvetica] font-bold text-[#555] text-[11px]">
-              Copyright {new Date().getFullYear()} Career141. A Positive Impact Company
+            <span className="font-['Quicksand',sans-serif] font-bold text-[#161618] text-[11.2px]">
+              © 2024 Career141. A Positive Impact Company
             </span>
 
             <div className="flex items-center gap-4">
-              {socialLinks.map((social, index) => {
+              {socialLinks.map((social) => {
                 const Icon = social.icon
                 return (
                   <a
@@ -243,25 +238,22 @@ export function CompanyFooter() {
                     rel="noopener noreferrer"
                     target="_blank"
                     aria-label={social.label}
-                    onMouseEnter={() => setHoveredSocial(index)}
-                    onMouseLeave={() => setHoveredSocial(null)}
                     className="flex w-9 h-9 items-center justify-center rounded-lg bg-[#f4f4f4] hover:scale-110 transition-all duration-200"
-                    style={{ backgroundColor: hoveredSocial === index ? social.color : undefined }}
                   >
-                    <Icon size={18} style={{ color: hoveredSocial === index ? 'white' : '#444' }} />
+                    <Icon size={25} className="text-[#0c422e]" />
                   </a>
                 )
               })}
             </div>
 
             <div className="flex items-center gap-4">
-              <span className="font-['Quicksand',Helvetica] font-bold text-[#555] text-[11px]">Terms and Conditions</span>
+              <span className="font-['Quicksand',sans-serif] font-bold text-[#161618] text-[11.2px]">Terms and Conditions</span>
               <span className="text-[#ddd]">|</span>
               <a
                 href="https://career141.com/privacy-policy/"
                 rel="noopener noreferrer"
                 target="_blank"
-                className="font-['Quicksand',Helvetica] font-bold text-[#555] text-[11px] hover:text-[#37a65e] transition-colors"
+                className="font-['Quicksand',sans-serif] font-bold text-[#161618] text-[11.2px] hover:text-[#37a65e] transition-colors"
               >
                 Privacy Policy
               </a>
@@ -270,14 +262,16 @@ export function CompanyFooter() {
         </div>
       </footer>
 
-      <button
-        type="button"
-        onClick={scrollToTop}
-        className="fixed right-5 bottom-[80px] md:right-10 md:bottom-10 w-10 h-10 md:w-12 md:h-12 bg-[#6abf4b] hover:bg-[#37a65e] text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-200 z-40"
-        aria-label="Scroll to top"
+      {/* WhatsApp Button */}
+      <a
+        href="https://api.whatsapp.com/send/?phone=94753595495&text&type=phone_number&app_absent=0"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed right-5 bottom-[80px] md:right-10 md:bottom-10 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-200 z-40"
+        aria-label="Chat on WhatsApp"
       >
-        <ArrowUpIcon className="w-4 h-4 md:w-5 md:h-5" />
-      </button>
+        <img src="/whatsapp.png" alt="WhatsApp" className="w-full h-full object-contain rounded-full" />
+      </a>
     </>
   )
 }

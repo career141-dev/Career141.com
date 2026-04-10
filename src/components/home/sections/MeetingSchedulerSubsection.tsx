@@ -1,7 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import clsx from 'clsx'
+import { Turnstile } from '@marsidev/react-turnstile'
 import { withBasePath } from '@/lib/assetPath'
+import { getTurnstileSiteKey } from '@/lib/turnstile'
+
+const imgDivElementorElement = withBasePath("/figmaAssets/testimonial/032702031c80235a48f8edff72693cef0a9031ec.png");
+const imgDivElementorElement1 = withBasePath("/figmaAssets/testimonial/f5fc7d0a8ab3374cd43c8bfed2b6b9ba03f8d49d.png");
+const imgDivRcAnchorLogoImg = withBasePath("/figmaAssets/testimonial/4736508c795667dcea21f8d864233031223b7832.png");
 
 interface FormData {
   firstName: string
@@ -16,61 +23,84 @@ interface FormErrors {
   firstName?: string
   lastName?: string
   email?: string
+  phone?: string
+  subject?: string
+  message?: string
 }
 
-const contactLocations = [
-  {
-    country: 'Sri Lanka',
-    phones: ['+94 75 359 5495', '+94 75 577 8899'],
-  },
-  {
-    country: 'Dubai',
-    phones: ['+94 11 723 2425'],
-  },
-  {
-    country: 'Singapore',
-    phones: ['+94 11 488 4774'],
-  },
-]
+function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
 
-function InputField({
-  label,
-  required,
-  type = 'text',
-  value,
+function InputField({ 
+  label, 
+  placeholder, 
+  isRequired = false, 
+  type = "text", 
+  value, 
   onChange,
   error,
-  placeholder,
-  testId,
-}: {
+  onBlur 
+}: { 
   label: string
-  required?: boolean
+  placeholder: string
+  isRequired?: boolean
   type?: string
   value: string
   onChange: (v: string) => void
   error?: string
-  placeholder?: string
-  testId?: string
+  onBlur?: () => void
 }) {
+  const [focused, setFocused] = useState(false)
+  
   return (
-    <div className="flex flex-col gap-1.5 w-full">
-      <label className="[font-family:'Quicksand',Helvetica] font-normal text-white text-[13px] leading-[19px]">
-        {label} {required && <span className="text-[#CBFC06]">*</span>}
+    <div className="flex flex-col gap-1 w-full">
+      <label className="font-['Quicksand',sans-serif] font-normal text-white text-[16px]">
+        {label} {isRequired && <span className="text-red-400">*</span>}
       </label>
-      <input
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        data-testid={testId}
-        className="w-full h-[42px] px-3 bg-white/10 border border-white/40 rounded-[4px] text-white text-[13px] [font-family:'Inter',Helvetica] placeholder:text-white/40 focus:outline-none focus:border-white/80 transition-colors"
-      />
-      {error && <span className="text-[#CBFC06] text-[11px]">{error}</span>}
+      <div 
+        className="relative w-full border-b pb-2 pt-2 transition-all"
+        style={{ 
+          borderColor: error ? '#ef4444' : (focused ? '#CBFC06' : 'rgba(255,255,255,0.3)'),
+        }}
+      >
+        <input 
+            type={type}
+            placeholder={focused ? '' : placeholder}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            onBlur={() => {
+              setFocused(false)
+              onBlur?.()
+            }}
+            onFocus={() => setFocused(true)}
+            className="bg-transparent border-none outline-none text-white w-full placeholder:text-white/30 font-['Inter',sans-serif] font-normal text-[15.1px]"
+        />
+      </div>
+      {error && (
+        <span className="text-red-400 text-xs font-['Inter',sans-serif] mt-1">{error}</span>
+      )}
     </div>
-  )
+  );
+}
+
+function ContactMethod({ country, phones }: { country: string; phones: string[] }) {
+    return (
+        <div className="flex flex-col gap-2">
+            <div className="font-['Inter',sans-serif] font-semibold text-white text-[12px] uppercase opacity-80">{country}</div>
+            <div className="flex flex-wrap gap-x-8 gap-y-2">
+                {phones.map((phone, i) => (
+                    <div key={i} className="font-['Quicksand',sans-serif] font-semibold text-white text-[17.6px]">{phone}</div>
+                ))}
+            </div>
+        </div>
+    );
 }
 
 export function MeetingSchedulerSubsection() {
+  const turnstileSiteKey = getTurnstileSiteKey()
+
   const [form, setForm] = useState<FormData>({
     firstName: '',
     lastName: '',
@@ -80,175 +110,296 @@ export function MeetingSchedulerSubsection() {
     message: '',
   })
   const [errors, setErrors] = useState<FormErrors>({})
+  const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [submitting, setSubmitting] = useState(false)
-  const [success, setSuccess] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
 
-  function update(field: keyof FormData) {
-    return (v: string) => {
-      setForm((f) => ({ ...f, [field]: v }))
-      if (errors[field as keyof FormErrors]) {
-        setErrors((e) => ({ ...e, [field]: undefined }))
-      }
+  const update = (field: keyof FormData) => (v: string) => {
+    let finalValue = v
+    if (field === 'phone') {
+      // Only allow digits, spaces, and basic phone symbols (+ - ( ) .)
+      finalValue = v.replace(/[^\d+()\-\s.]/g, '')
+    }
+    setForm(f => ({ ...f, [field]: finalValue }))
+    if (touched[field]) {
+      validateField(field, finalValue)
     }
   }
 
-  function validate(): boolean {
-    const newErrors: FormErrors = {}
-    if (!form.firstName.trim()) newErrors.firstName = 'First name is required'
-    if (!form.lastName.trim()) newErrors.lastName = 'Last name is required'
-    if (!form.email.trim()) {
-      newErrors.email = 'Email is required'
-    } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-      newErrors.email = 'Please enter a valid email'
+  const handleBlur = (field: keyof FormData) => () => {
+    setTouched(t => ({ ...t, [field]: true }))
+    validateField(field, form[field])
+  }
+
+  const validateField = (field: keyof FormData, value: string) => {
+    let error: string | undefined
+
+    switch (field) {
+      case 'firstName':
+        if (!value.trim()) error = 'First name is required'
+        else if (value.trim().length < 2) error = 'First name must be at least 2 characters'
+        break
+      case 'lastName':
+        if (!value.trim()) error = 'Last name is required'
+        else if (value.trim().length < 2) error = 'Last name must be at least 2 characters'
+        break
+      case 'email':
+        if (!value.trim()) error = 'Email is required'
+        else if (!validateEmail(value)) error = 'Please enter a valid email address'
+        break
+      case 'phone':
+        if (!value.trim()) error = 'Phone number is required'
+        else if (value.trim().length < 5) error = 'Please enter a valid phone number'
+        break
+      case 'subject':
+        if (!value.trim()) error = 'Subject is required'
+        else if (value.trim().length < 3) error = 'Subject must be at least 3 characters'
+        break
+      case 'message':
+        if (!value.trim()) error = 'Message is required'
+        else if (value.trim().length < 10) error = 'Message must be at least 10 characters'
+        break
     }
+
+    setErrors(e => ({ ...e, [field]: error }))
+  }
+
+  const validateAll = (): boolean => {
+    const newErrors: FormErrors = {}
+
+    if (!form.firstName.trim()) newErrors.firstName = 'First name is required'
+    else if (form.firstName.trim().length < 2) newErrors.firstName = 'First name must be at least 2 characters'
+
+    if (!form.lastName.trim()) newErrors.lastName = 'Last name is required'
+    else if (form.lastName.trim().length < 2) newErrors.lastName = 'Last name must be at least 2 characters'
+
+    if (!form.email.trim()) newErrors.email = 'Email is required'
+    else if (!validateEmail(form.email)) newErrors.email = 'Please enter a valid email address'
+
+    if (!form.phone.trim()) newErrors.phone = 'Phone number is required'
+    else if (form.phone.trim().length < 5) newErrors.phone = 'Please enter a valid phone number'
+
+    if (!form.subject.trim()) newErrors.subject = 'Subject is required'
+    else if (form.subject.trim().length < 3) newErrors.subject = 'Subject must be at least 3 characters'
+
+    if (!form.message.trim()) newErrors.message = 'Message is required'
+    else if (form.message.trim().length < 10) newErrors.message = 'Message must be at least 10 characters'
+
     setErrors(newErrors)
+    setTouched({
+      firstName: true,
+      lastName: true,
+      email: true,
+      phone: true,
+      subject: true,
+      message: true,
+    })
+
     return Object.keys(newErrors).length === 0
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSuccess('')
-    if (!validate()) return
+    
+    if (!validateAll()) {
+      return
+    }
 
+    if (!turnstileToken) {
+      alert('Please complete the CAPTCHA')
+      return
+    }
+    
     setSubmitting(true)
-    setTimeout(() => {
+    
+    try {
+      const payload = {
+        firstName: form.firstName,
+        lastName: form.lastName,
+        email: form.email,
+        phone: form.phone,
+        subject: form.subject,
+        message: `Subject: ${form.subject}\n\n${form.message}`,
+        turnstileToken,
+      }
+      
+      const response = await fetch('/api/meeting', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+
+      if (!response.ok) {
+        let errorData: any = {}
+        try {
+          errorData = await response.json()
+        } catch (e) {}
+        
+        if (response.status === 400) {
+          if (errorData?.details) {
+            const newValidationErrors: FormErrors = { ...errors }
+            errorData.details.forEach((detail: any) => {
+              const field = detail.path[0] as keyof FormErrors
+              if (field) {
+                newValidationErrors[field] = detail.message
+              }
+            })
+            setErrors(newValidationErrors)
+          }
+          return
+        }
+        
+        throw new Error(errorData?.error || 'Failed to send')
+      }
+
+      const successData = await response.json()
+
+      alert('Message sent! We will contact you shortly.')
+      setForm({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
+      })
+      setTouched({})
+      setErrors({})
+    } catch (error: any) {
+      alert(error.message || 'Failed to send message. Please try again.')
+    } finally {
       setSubmitting(false)
-      setForm({ firstName: '', lastName: '', email: '', phone: '', subject: '', message: '' })
-      setSuccess("Message sent successfully. We'll contact you shortly.")
-    }, 1000)
+    }
   }
 
   return (
-    <section
-      className="relative w-full bg-cover bg-center"
-      style={{ backgroundImage: `url(${withBasePath('/figmaAssets/section2-outer-bg.jpg')})` }}
-      data-testid="section-meeting-scheduler"
-    >
-      <div className="absolute inset-0 bg-black/30" />
+    <section className="relative w-full py-[80px] lg:py-[120px] px-4 sm:px-8 md:px-12 lg:px-20 overflow-hidden bg-[#0d1f15]">
+      <div className="absolute inset-0 z-0">
+          <img alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-60" src={imgDivElementorElement} loading="lazy" decoding="async" />
+      </div>
 
-      <div className="relative w-full flex items-center justify-center py-10 lg:py-14 px-4 lg:px-8">
-        <div
-          className="w-full max-w-[1339px] rounded-[20px] overflow-hidden bg-cover bg-center"
-          style={{ backgroundImage: `url(${withBasePath('/figmaAssets/section2-inner-bg.jpg')})` }}
-        >
-          <div className="relative bg-[#0D3B2E]/70 w-full h-full">
-            <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 px-6 py-8 md:px-10 md:py-12 lg:px-14 lg:py-12">
-              <div className="flex flex-col gap-8 lg:gap-10 flex-1 min-w-0">
-                <h2
-                  className="[font-family:'Quicksand',Helvetica] font-bold leading-tight text-[28px] sm:text-[34px] lg:text-[41.6px] text-[#CBFC06]"
-                  data-testid="text-meeting-heading"
-                >
-                  Schedule a talent acquisition meeting
-                </h2>
+      <div className="relative z-10 max-w-7xl mx-auto rounded-[18px] overflow-hidden border border-white/20 shadow-2xl bg-white/10 backdrop-blur-md">
+          <div className="relative w-full min-h-[700px] flex flex-col lg:flex-row">
+              <img alt="" className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-60" src={imgDivElementorElement1} loading="lazy" decoding="async" />
+              
+              <div className="relative z-10 flex-1 p-8 md:p-12 lg:p-16 flex flex-col justify-center gap-12">
+                  <h2 className="font-['Quicksand',sans-serif] font-bold text-[#CBFC06] text-[32px] md:text-[41.6px] leading-tight">
+                    Schedule a talent acquisition meeting
+                  </h2>
+                  
+                  <div className="flex flex-col gap-8">
+                       <div className="font-['Inter',sans-serif] font-normal text-white text-[14.8px] opacity-100">Give us a call</div>
+                       <ContactMethod country="Sri Lanka" phones={["+94 11 488 4774", "+94 11 723 2425"]} />
+                       <ContactMethod country="Dubai" phones={["+971 52 232 5425"]} />
+                       <ContactMethod country="Singapore" phones={["+65 824 456 500"]} />
+                  </div>
+              </div>
 
-                <div className="flex flex-col gap-5">
-                  <p className="[font-family:'Quicksand',Helvetica] font-normal text-white text-[13px] tracking-[0.5px] uppercase">Give us a call</p>
-
-                  <div className="flex flex-col gap-4">
-                    {contactLocations.map((loc) => (
-                      <div key={loc.country} className="flex flex-col gap-1.5">
-                        <span className="[font-family:'Quicksand',Helvetica] font-semibold text-white text-[12px] uppercase tracking-[0.5px]">
-                          {loc.country}
-                        </span>
-                        <div className="flex flex-wrap gap-3">
-                          {loc.phones.map((phone) => (
-                            <a
-                              key={phone}
-                              href={`tel:${phone.replace(/\s/g, '')}`}
-                              className="[font-family:'Inter',Helvetica] font-medium text-white text-[13px] hover:text-[#CBFC06] transition-colors border-b border-white/30 hover:border-[#CBFC06]/60 pb-0.5"
-                              data-testid={`link-phone-${phone.replace(/\s/g, '')}`}
-                            >
-                              {phone}
-                            </a>
-                          ))}
-                        </div>
+              <div className="relative z-10 flex-1 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+                  <form onSubmit={handleSubmit} className="flex flex-col gap-8 w-full">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                          <InputField 
+                            label="First Name" 
+                            placeholder="First name with initials" 
+                            isRequired 
+                            value={form.firstName} 
+                            onChange={update('firstName')}
+                            onBlur={handleBlur('firstName')}
+                            error={errors.firstName} 
+                          />
+                          <InputField 
+                            label="Last Name" 
+                            placeholder="Last Name" 
+                            isRequired 
+                            value={form.lastName} 
+                            onChange={update('lastName')}
+                            onBlur={handleBlur('lastName')}
+                            error={errors.lastName} 
+                          />
                       </div>
-                    ))}
-                  </div>
-                </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                          <InputField 
+                            label="Email" 
+                            placeholder="example@email.com" 
+                            isRequired 
+                            type="email" 
+                            value={form.email} 
+                            onChange={update('email')}
+                            onBlur={handleBlur('email')}
+                            error={errors.email} 
+                          />
+                          <InputField 
+                            label="Your Phone" 
+                            placeholder="+94 1234 12345" 
+                            type="tel" 
+                            value={form.phone} 
+                            onChange={update('phone')}
+                            onBlur={handleBlur('phone')}
+                            error={errors.phone} 
+                          />
+                      </div>
+
+                      <InputField 
+                        label="Subject" 
+                        placeholder="I want help with recruitment" 
+                        value={form.subject} 
+                        onChange={update('subject')}
+                        onBlur={handleBlur('subject')}
+                        error={errors.subject} 
+                      />
+                      
+                      <div className="flex flex-col gap-1 w-full">
+                        <label className="font-['Quicksand',sans-serif] font-normal text-white text-[16px]">Message</label>
+                        <div 
+                          className="relative w-full border-b pb-2 mt-2 transition-all"
+                          style={{ 
+                            borderColor: errors.message ? '#ef4444' : 'rgba(255,255,255,0.3)',
+                            boxShadow: errors.message ? '0 0 0 2px rgba(239,68,68,0.2)' : 'none'
+                          }}
+                        >
+                           <textarea 
+                             placeholder="Tell us how we can help you today"
+                             rows={3}
+                             value={form.message}
+                             onChange={(e) => update('message')(e.target.value)}
+                             onBlur={handleBlur('message')}
+                             className="bg-transparent border-none outline-none text-white w-full placeholder:text-white/50 font-['Inter',sans-serif] font-normal text-[14.8px] resize-none"
+                           />
+                        </div>
+                        {errors.message && (
+                          <span className="text-red-400 text-xs font-['Inter',sans-serif]">{errors.message}</span>
+                        )}
+                      </div>
+
+                      <div style={{ marginBottom: '16px' }}>
+                        {turnstileSiteKey ? (
+                          <Turnstile
+                            siteKey={turnstileSiteKey}
+                            onSuccess={(token) => setTurnstileToken(token)}
+                            onError={() => {
+                              console.error('Turnstile error: Failed to load widget')
+                              setTurnstileToken(null)
+                            }}
+                            onExpire={() => setTurnstileToken(null)}
+                          />
+                        ) : (
+                          <p className="text-white/80 text-sm">
+                            Captcha is not configured. Please set NEXT_PUBLIC_TURNSTILE_SITE_KEY.
+                          </p>
+                        )}
+                      </div>
+
+                      <button 
+                        type="submit"
+                        disabled={!turnstileToken || submitting}
+                        className="bg-white text-black font-['Quicksand',sans-serif] font-bold py-3 rounded-full hover:bg-gray-100 transition-colors text-[16px] w-full disabled:opacity-50"
+                      >
+                        {submitting ? 'Sending...' : 'Submit'}
+                      </button>
+                  </form>
               </div>
-
-              <div className="flex flex-col flex-1 min-w-0 lg:max-w-[607px]">
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full" noValidate>
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <InputField
-                      label="First Name"
-                      required
-                      value={form.firstName}
-                      onChange={update('firstName')}
-                      error={errors.firstName}
-                      placeholder="Enter first name"
-                      testId="input-first-name"
-                    />
-                    <InputField
-                      label="Last Name"
-                      required
-                      value={form.lastName}
-                      onChange={update('lastName')}
-                      error={errors.lastName}
-                      placeholder="Enter last name"
-                      testId="input-last-name"
-                    />
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <InputField
-                      label="Email"
-                      required
-                      type="email"
-                      value={form.email}
-                      onChange={update('email')}
-                      error={errors.email}
-                      placeholder="Enter email address"
-                      testId="input-email"
-                    />
-                    <InputField
-                      label="Your Phone"
-                      type="tel"
-                      value={form.phone}
-                      onChange={update('phone')}
-                      placeholder="Enter phone number"
-                      testId="input-phone"
-                    />
-                  </div>
-
-                  <InputField
-                    label="Subject"
-                    value={form.subject}
-                    onChange={update('subject')}
-                    placeholder="Enter subject"
-                    testId="input-subject"
-                  />
-
-                  <div className="flex flex-col gap-1.5 w-full">
-                    <label className="[font-family:'Quicksand',Helvetica] font-normal text-white text-[13px] leading-[19px]">Message</label>
-                    <textarea
-                      value={form.message}
-                      onChange={(e) => update('message')(e.target.value)}
-                      placeholder="Enter your message..."
-                      rows={4}
-                      data-testid="input-message"
-                      className="w-full px-3 py-2.5 bg-white/10 border border-white/40 rounded-[4px] text-white text-[13px] [font-family:'Inter',Helvetica] placeholder:text-white/40 focus:outline-none focus:border-white/80 transition-colors resize-none"
-                    />
-                  </div>
-
-                  {success && (
-                    <div className="rounded-[6px] border border-[#CBFC06]/50 bg-[#CBFC06]/15 px-3 py-2 text-[#CBFC06] text-[12px]">{success}</div>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    data-testid="button-submit"
-                    className="w-full h-[41px] bg-white hover:bg-white/90 text-black [font-family:'Quicksand',Helvetica] font-semibold text-[14px] tracking-[0.5px] rounded-[100px] transition-all duration-200 disabled:opacity-60 mt-1"
-                  >
-                    {submitting ? 'Sending...' : 'Submit'}
-                  </button>
-                </form>
-              </div>
-            </div>
           </div>
-        </div>
       </div>
     </section>
   )

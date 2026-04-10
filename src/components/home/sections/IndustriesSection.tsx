@@ -3,20 +3,20 @@
 import { type JSX, useEffect, useRef, useState } from 'react'
 
 const INDUSTRIES = [
-  { label: 'APPAREL', bg: 'https://career141.com/wp-content/uploads/2024/04/Apparel-scaled.webp' },
-  { label: 'FMCG', bg: 'https://career141.com/wp-content/uploads/2024/04/FMCG-scaled.webp' },
-  { label: 'IT', bg: 'https://career141.com/wp-content/uploads/2024/04/it-scaled.webp' },
-  { label: 'RETAIL MARKET', bg: 'https://career141.com/wp-content/uploads/2024/04/retail-scaled.webp' },
-  { label: 'E-COMMERCE', bg: 'https://career141.com/wp-content/uploads/2024/04/ecommerce-scaled.webp' },
-  { label: 'HEALTHCARE', bg: 'https://career141.com/wp-content/uploads/2024/04/healthcare-scaled.webp' },
-  { label: 'PHARMACEUTICAL', bg: 'https://career141.com/wp-content/uploads/2024/04/pharma-scaled.webp' },
-  { label: 'POWER & ENERGY', bg: 'https://career141.com/wp-content/uploads/2024/04/power-and-energy-scaled.webp' },
-  { label: 'HOSPITALITY', bg: 'https://career141.com/wp-content/uploads/2024/04/Hospitality-scaled.webp' },
-  { label: 'EDUCATION', bg: 'https://career141.com/wp-content/uploads/2024/04/education-scaled.webp' },
-  { label: 'TESTING AND CERTIFICATION', bg: 'https://career141.com/wp-content/uploads/2024/04/Testing-and-cert-scaled.webp' },
-  { label: 'AUTOMOTIVE', bg: 'https://career141.com/wp-content/uploads/2024/04/automotive-scaled.webp' },
-  { label: 'CONSTRUCTION', bg: 'https://career141.com/wp-content/uploads/2024/04/construction.png' },
-  { label: 'SHIPPING & FREIGHT', bg: 'https://career141.com/wp-content/uploads/2024/04/shipping-scaled.webp' },
+  { label: 'APPAREL', bg: '/images/industries/apparel.webp' },
+  { label: 'FMCG', bg: '/images/industries/fmcg.webp' },
+  { label: 'IT', bg: '/images/industries/it.webp' },
+  { label: 'RETAIL MARKET', bg: '/images/industries/retail.webp' },
+  { label: 'E-COMMERCE', bg: '/images/industries/ecommerce.webp' },
+  { label: 'HEALTHCARE', bg: '/images/industries/healthcare.webp' },
+  { label: 'PHARMACEUTICAL', bg: '/images/industries/pharma.webp' },
+  { label: 'POWER & ENERGY', bg: '/images/industries/power-energy.webp' },
+  { label: 'HOSPITALITY', bg: '/images/industries/hospitality.webp' },
+  { label: 'EDUCATION', bg: '/images/industries/education.webp' },
+  { label: 'TESTING AND CERTIFICATION', bg: '/images/industries/testing-cert.webp' },
+  { label: 'AUTOMOTIVE', bg: '/images/industries/automotive.webp' },
+  { label: 'CONSTRUCTION', bg: '/images/industries/construction.webp' },
+  { label: 'SHIPPING & FREIGHT', bg: '/images/industries/shipping.webp' },
 ]
 
 function PillButton({ label, idx, onClick, fontSize }: { label: string; idx: number; onClick: () => void; fontSize: string }) {
@@ -28,7 +28,7 @@ function PillButton({ label, idx, onClick, fontSize }: { label: string; idx: num
       style={{
         position: 'relative',
         width: 204,
-        height: 90.7,
+        height: 91,
         background: 'transparent',
         border: 'none',
         cursor: 'pointer',
@@ -48,7 +48,7 @@ function PillButton({ label, idx, onClick, fontSize }: { label: string; idx: num
       onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1) translateY(0)')}
       aria-label={label}
     >
-      <div style={{ position: 'relative', width: 204, height: 63.2 }}>
+      <div style={{ position: 'relative', width: 204, height: 64 }}>
         <svg
           width="204"
           height="64"
@@ -102,6 +102,68 @@ function PillButton({ label, idx, onClick, fontSize }: { label: string; idx: num
   )
 }
 
+function MobilePillButton({ label, idx, onClick, fontSize }: { label: string; idx: number; onClick: () => void; fontSize: string }) {
+  const gradId = `mobile-ig-${idx}`
+
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        background: 'transparent',
+        border: 'none',
+        cursor: 'pointer',
+        padding: 0,
+        transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'visible',
+      }}
+      aria-label={label}
+    >
+      <svg
+        width="142.5"
+        height="44.15"
+        viewBox="0 0 142.5 44.15"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ display: 'block', flexShrink: 0 }}
+      >
+        <defs>
+          <linearGradient id={gradId} x1="71.25" y1="0" x2="71.25" y2="44.15" gradientUnits="userSpaceOnUse">
+            <stop offset="0.465" stopColor="#01C5C4" />
+            <stop offset="1" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M119.868 0H21.5147C9.63246 0 0 9.63246 0 21.5147C0 33.3969 9.63246 43.0294 21.5147 43.0294H119.868C131.75 43.0294 141.382 33.3969 141.382 21.5147C141.382 9.63246 131.75 0 119.868 0Z"
+          stroke={`url(#${gradId})`}
+          strokeWidth="1.12"
+        />
+      </svg>
+      <span
+        style={{
+          position: 'absolute',
+          fontFamily: "'Quicksand', Helvetica, sans-serif",
+          fontWeight: 500,
+          fontSize: fontSize || '11px',
+          color: '#FFFFFF',
+          textTransform: 'uppercase',
+          letterSpacing: '0.8px',
+          textAlign: 'center',
+          pointerEvents: 'none',
+        }}
+      >
+        {label}
+      </span>
+    </button>
+  )
+}
+
 export function IndustriesSection(): JSX.Element {
   const [active, setActive] = useState(0)
   const [prev, setPrev] = useState<number | null>(null)
@@ -124,7 +186,7 @@ export function IndustriesSection(): JSX.Element {
   const rows = [INDUSTRIES.slice(0, 5), INDUSTRIES.slice(5, 10), INDUSTRIES.slice(10, 14)]
 
   return (
-    <section style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
+    <section style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden', backgroundColor: 'white' }}>
       {prev !== null && (
         <div
           key={`prev-${prev}`}
@@ -164,8 +226,8 @@ export function IndustriesSection(): JSX.Element {
 
       <div className="hidden lg:block" style={{ position: 'relative', zIndex: 10, paddingTop: '8.6vh' }}>
         <div style={{ textAlign: 'center', lineHeight: 1.2 }}>
-          <span style={{ fontFamily: "'Quicksand', Helvetica, sans-serif", fontSize: 45, fontWeight: 700, color: '#BFEF00', letterSpacing: '0.3px' }}>INDUSTRIES</span>
-          <span style={{ fontFamily: "'Quicksand', Helvetica, sans-serif", fontSize: 45, fontWeight: 400, color: '#FFFFFF' }}> we work on</span>
+          <span style={{ fontFamily: "'Quicksand', sans-serif", fontSize: 45, fontWeight: 700, color: '#BFEF00', letterSpacing: '0.3px' }}>Industries</span>
+          <span style={{ fontFamily: "'Quicksand', sans-serif", fontSize: 45, fontWeight: 400, color: '#FFFFFF' }}> we work on</span>
         </div>
 
         <div style={{ height: 'clamp(80px, 16.4vh, 160px)' }} />
@@ -188,7 +250,7 @@ export function IndustriesSection(): JSX.Element {
       </div>
 
       <div className="ind-scroll-container lg:hidden" style={{ position: 'relative', zIndex: 10, width: '100%', height: '100%' }}>
-        <div style={{ padding: '26px 45px 40px' }}>
+        <div style={{ padding: '26px 20px 40px' }}>
           <div style={{ lineHeight: 1.3, textAlign: 'center' }}>
             <span style={{ fontFamily: "'Quicksand', Helvetica, sans-serif", fontSize: 24, fontWeight: 700, color: '#BFEF00', letterSpacing: '0.3px' }}>INDUSTRIES</span>
             <span style={{ fontFamily: "'Quicksand', Helvetica, sans-serif", fontSize: 24, fontWeight: 400, color: '#FFFFFF' }}> we work on</span>
@@ -196,10 +258,10 @@ export function IndustriesSection(): JSX.Element {
 
           <div style={{ height: 60 }} />
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 14, rowGap: 15 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 10, rowGap: 20 }}>
             {INDUSTRIES.map((industry, idx) => (
-              <div key={idx} style={{ aspectRatio: '143 / 83' }}>
-                <PillButton label={industry.label} idx={idx} onClick={() => handleClick(idx)} fontSize="clamp(10px, 3.2vw, 13px)" />
+              <div key={idx} style={{ width: '100%', aspectRatio: '142.5 / 44.15' }}>
+                <MobilePillButton label={industry.label} idx={idx} onClick={() => handleClick(idx)} fontSize="clamp(9px, 2.8vw, 11px)" />
               </div>
             ))}
           </div>

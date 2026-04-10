@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useState } from 'react';
-import styles from '@/styles/BrowseAllJobs.module.css';
-import { ChevronDownIcon, SearchIcon } from 'lucide-react'
-import { JobCard, type Job } from '@/components/common/JobCard';
+import React, { useState, useMemo, useEffect } from 'react'
+import styles from '@/styles/BrowseAllJobs.module.css'
+import { JobCard, type Job } from '@/components/common/JobCard'
+import DivELoopLoadMore from '@/components/DivELoopLoadMore'
 
 interface SidebarItem {
   label: string;
@@ -13,19 +13,24 @@ interface SidebarItem {
 
 interface BrowseAllJobsSectionProps {
   jobCards: Job[];
+  // These will now be used as 'initial' or overridden by dynamic calculations
   sidebarIndustries: SidebarItem[];
   sidebarLocations: SidebarItem[];
   sidebarCurrencies: SidebarItem[];
 }
-
-
 
 const SidebarFilterLink = ({ item }: { item: SidebarItem }) => (
   <div className={styles.DivWpcTermItemContentWrapper_11_2227}>
     <div className={styles.Label_11_2228}>
       <div className={styles.SpanWpcFilterLabelWrapper_11_2229}>
         <div className={styles.A_11_2230}>
-          <a href={item.href} className={styles.Hospitality_11_2231} target="_blank" rel="noopener noreferrer">
+          <a 
+            href={item.href} 
+            className={styles.FilterTermLink}
+            onClick={(e) => {
+              if (item.href === '#') e.preventDefault();
+            }}
+          >
             {item.label}
           </a>
         </div>
@@ -37,23 +42,157 @@ const SidebarFilterLink = ({ item }: { item: SidebarItem }) => (
       </div>
     </div>
   </div>
-);
+)
 
 export function BrowseAllJobsSection({
   jobCards,
-  sidebarIndustries,
-  sidebarLocations,
-  sidebarCurrencies,
 }: BrowseAllJobsSectionProps) {
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  // Restore visibleCount from sessionStorage, default to 12
+  const [visibleCount, setVisibleCount] = useState(() => {
+    if (typeof window === 'undefined') return 12
+    const saved = sessionStorage.getItem('jobsVisibleCount')
+    return saved ? parseInt(saved, 10) : 12
+  })
+  
+  const [searchQuery, setSearchQuery] = useState('')
+  const [scrollPosition, setScrollPosition] = useState(0)
+  const [salaryMin, setSalaryMin] = useState(0)
+  const [salaryMax, setSalaryMax] = useState(1200000)
+  const SALARY_MAX = 1200000
+
+  // Persist visibleCount to sessionStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('jobsVisibleCount', visibleCount.toString())
+    }
+  }, [visibleCount])
+
+  // Restore scroll position on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = sessionStorage.getItem('jobsScrollPosition')
+      if (saved) {
+        const position = parseInt(saved, 10)
+        // Use requestAnimationFrame to ensure DOM is fully rendered
+        requestAnimationFrame(() => {
+          window.scrollTo({
+            top: position,
+            behavior: 'instant' as ScrollBehavior
+          })
+        })
+      }
+    }
+  }, [])
+
+  // 1. Filter jobs based on search and salary
+  const filteredJobs = useMemo(() => {
+    return jobCards.filter(job => {
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase()
+        if (!job.title.toLowerCase().includes(q) &&
+            !job.industry.toLowerCase().includes(q) &&
+            !job.location.toLowerCase().includes(q)) {
+          return false
+        }
+      }
+      const salary = Number(job.salaryMin) || 0
+      if (salary < salaryMin || salary > salaryMax) {
+        return false
+      }
+      return true
+    })
+  }, [jobCards, searchQuery, salaryMin, salaryMax])
+
+  // 2. Calculate Dynamic Sidebar Stats
+  const dynamicStats = useMemo(() => {
+    const industries: Record<string, number> = {}
+    const locations: Record<string, number> = {}
+    const currencies: Record<string, number> = {}
+
+    jobCards.forEach(job => {
+      industries[job.industry] = (industries[job.industry] || 0) + 1
+      const loc = job.location
+      let country = loc
+      if (loc.includes(', ')) {
+        const parts = loc.split(', ')
+        country = parts[parts.length - 1].trim()
+      }
+      locations[country] = (locations[country] || 0) + 1
+      currencies[job.currency] = (currencies[job.currency] || 0) + 1
+    })
+
+    const toSidebar = (obj: Record<string, number>) => 
+      Object.entries(obj)
+        .sort((a, b) => b[1] - a[1])
+        .map(([label, count]) => ({ label, count: `(${count})`, href: '#' }))
+
+    return {
+      industries: toSidebar(industries),
+      locations: toSidebar(locations),
+      currencies: toSidebar(currencies)
+    }
+  }, [jobCards])
+
+  const visibleJobs = filteredJobs.slice(0, visibleCount)
+  const hasMore = visibleCount < filteredJobs.length
+
+  const handleLoadMore = (e: React.MouseEvent) => {
+    e.preventDefault()
+    // Capture current scroll position BEFORE updating state
+    const currentScrollY = window.scrollY
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('jobsScrollPosition', currentScrollY.toString())
+    }
+    
+    setVisibleCount(prev => prev + 12)
+    
+    // Restore scroll position in the next frame to prevent jumping
+    requestAnimationFrame(() => {
+      window.scrollTo({
+        top: currentScrollY,
+        behavior: 'instant' as ScrollBehavior
+      })
+    })
+  }
+
+  // Save scroll position when navigating away from browse page
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('jobsScrollPosition', window.scrollY.toString())
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    
+    // Also save when clicking links (job cards navigate away)
+    const handleLinkClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (target.closest('a') || target.closest('button[role="link"]')) {
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('jobsScrollPosition', window.scrollY.toString())
+        }
+      }
+    }
+
+    document.addEventListener('click', handleLinkClick)
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+      document.removeEventListener('click', handleLinkClick)
+    }
+  }, [])
 
   return (
-    <section className="flex flex-col items-start w-full bg-white overflow-hidden">
+    <section className="flex flex-col items-start w-full bg-white">
       <div className={styles.DivElementorElement_11_2202}>
         <div className={styles.DivElementorElement_11_2203}>
           <div className={styles.DivElementorWidgetContainer_11_2204}>
             <div className={styles.H2ElementorHeadingTitle_11_2205}>
               <span className={styles.BrowseAllJobs_11_2206}>Browse all jobs</span>
+              <div className="mt-2 text-[#666] text-sm md:text-base font-medium">
+                Showing {Math.min(visibleCount, filteredJobs.length)} of {filteredJobs.length} jobs
+              </div>
             </div>
           </div>
         </div>
@@ -61,9 +200,9 @@ export function BrowseAllJobsSection({
         {/* Desktop Layout */}
         <div className={styles.DivElementorElement_11_2207}>
           <div className={styles.DivEConInner_11_2208}>
-            {/* Sidebar */}
-            <div className={styles.DivElementorWidgetContainer_11_2209}>
-              <div className={styles.DivWpcFiltersWidgetWrapper_11_2210}>
+            {/* Sidebar — WP Job Manager style */}
+            <div className={`${styles.DivElementorWidgetContainer_11_2209} ${styles.FilterSidebarSurface}`}>
+              <div className={`${styles.DivWpcFiltersWidgetWrapper_11_2210} ${styles.FilterSidebarInner}`}>
                 {/* Search */}
                 <div className={styles.DivWpcFiltersSection_11_2211}>
                   <div className={styles.DivWidgetTitle_11_2212}>
@@ -74,27 +213,21 @@ export function BrowseAllJobsSection({
                       <input
                         type="text"
                         placeholder="Search jobs"
+                        value={searchQuery}
+                        onChange={(e) => {
+                          setSearchQuery(e.target.value)
+                          setVisibleCount(12) // Reset pagination on search
+                          // Clear saved scroll position when searching
+                          if (typeof window !== 'undefined') {
+                            sessionStorage.removeItem('jobsScrollPosition')
+                          }
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') e.preventDefault();
+                        }}
                         className="w-full bg-transparent border-none outline-none text-[15.3px] font-inherit"
                         style={{ border: 'none', padding: 0 }}
                       />
-                    </div>
-                    <div className={styles.SpanWpcSearchIcon_11_2218}>
-                      <div className={styles.Before_11_2219}>
-                        <div className={styles.ImageFill_11_2220}>
-                          <div className={styles.Image_11_2221}>
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <g clipPath="url(#clip0_11_2221)">
-                                <path d="M13.8086 12.1051L11.0824 9.37891C10.9594 9.25586 10.7926 9.1875 10.6176 9.1875H10.1719C10.9266 8.22227 11.375 7.0082 11.375 5.6875C11.375 2.5457 8.8293 0 5.6875 0C2.5457 0 0 2.5457 0 5.6875C0 8.8293 2.5457 11.375 5.6875 11.375C7.0082 11.375 8.22227 10.9266 9.1875 10.1719V10.6176C9.1875 10.7926 9.25586 10.9594 9.37891 11.0824L12.1051 13.8086C12.3621 14.0656 12.7777 14.0656 13.032 13.8086L13.8059 13.0348C14.0629 12.7777 14.0629 12.3621 13.8086 12.1051ZM5.6875 9.1875C3.7543 9.1875 2.1875 7.62344 2.1875 5.6875C2.1875 3.7543 3.75156 2.1875 5.6875 2.1875C7.6207 2.1875 9.1875 3.75156 9.1875 5.6875C9.1875 7.6207 7.62344 9.1875 5.6875 9.1875Z" fill="#AAAAAA" />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_11_2221">
-                                  <rect width="14" height="14" fill="white" />
-                                </clipPath>
-                              </defs>
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -104,11 +237,11 @@ export function BrowseAllJobsSection({
                   <div className={styles.DivWidgetTitle_11_2224}>
                     <span className={styles.Industry_11_2225}>Industry</span>
                   </div>
-                  <div className={styles.UlWpcFiltersUlList_11_2226} style={{ overflowY: 'auto', height: 'auto', maxHeight: '550px' }}>
-                    <div className="flex flex-col gap-2">
-                        {sidebarIndustries.map((item, idx) => (
-                        <SidebarFilterLink key={idx} item={item} />
-                        ))}
+                  <div className={styles.UlWpcFiltersUlList_11_2226}>
+                    <div className={styles.FilterTermsList}>
+                      {dynamicStats.industries.map((item, idx) => (
+                        <SidebarFilterLink key={`ind-${item.label}-${idx}`} item={item} />
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -118,48 +251,80 @@ export function BrowseAllJobsSection({
                   <div className={styles.DivWidgetTitle_11_2313}>
                     <span className={styles.Location_11_2314}>Location</span>
                   </div>
-                  <div className={styles.UlWpcFiltersUlList_11_2315} style={{ overflowY: 'auto', height: 'auto', maxHeight: '550px' }}>
-                    <div className="flex flex-col gap-2">
-                        {sidebarLocations.map((item, idx) => (
-                        <SidebarFilterLink key={idx} item={item} />
-                        ))}
+                  <div className={styles.UlWpcFiltersUlList_11_2315}>
+                    <div className={styles.FilterTermsList}>
+                      {dynamicStats.locations.map((item, idx) => (
+                        <SidebarFilterLink key={`loc-${item.label}-${idx}`} item={item} />
+                      ))}
                     </div>
                   </div>
                 </div>
 
                 {/* Currency */}
-                <div className={styles.DivWpcFiltersSection_11_2404}>
+                <div className={styles.DivWpcFiltersSection_11_2404} style={{ position: 'relative' }}>
                   <div className={styles.DivWidgetTitle_11_2405}>
                     <span className={styles.Currency_11_2406}>Currency</span>
                   </div>
                   <div className={styles.UlWpcFiltersUlList_11_2407}>
-                    <div className="flex flex-col gap-2">
-                        {sidebarCurrencies.map((item, idx) => (
-                        <SidebarFilterLink key={idx} item={item} />
-                        ))}
+                    <div className={styles.FilterTermsList}>
+                      {dynamicStats.currencies.map((item, idx) => (
+                        <SidebarFilterLink key={`cur-${item.label}-${idx}`} item={item} />
+                      ))}
                     </div>
                   </div>
                 </div>
 
-                {/* Salary */}
-                <div className={styles.DivWpcFiltersSection_11_2424}>
-                  <div className={styles.DivWidgetTitle_11_2425}>
+                {/* Salary Section */}
+                <div className={styles.DivWpcFiltersSection_11_2404} style={{ position: 'relative' }}>
+                  <div className={styles.DivWidgetTitle_11_2405}>
                     <span className={styles.Salary_11_2426}>Salary</span>
                   </div>
-                  <div className={styles.FormWpcFilterRangeForm_2555_11_2427}>
-                    <div className={styles.DivWpcFiltersRangeWrapper_11_2428}>
-                      <div className={styles.DivWpcFiltersRangeColumnMargin_11_2429}>
-                        <div className={styles.DivWpcFiltersRangeColumn_11_2430}>
-                          <div className={styles.InputWpcFiltersRangeMin_11_2431}>
-                            <input type="text" placeholder="0" className="w-full bg-transparent border-none outline-none" style={{ textAlign: 'center' }} />
-                          </div>
-                        </div>
-                      </div>
-                      <div className={styles.DivWpcFiltersRangeColumn_11_2438}>
-                        <div className={styles.InputWpcFiltersRangeMax_11_2439}>
-                           <input type="text" placeholder="1200000" className="w-full bg-transparent border-none outline-none" style={{ textAlign: 'center' }} />
-                        </div>
-                      </div>
+                  <div className="w-full px-1">
+                    <div className="flex justify-between mb-3">
+                      <span className="text-xs text-[#252525] font-medium">
+                        {salaryMin.toLocaleString()}
+                      </span>
+                      <span className="text-xs text-[#252525] font-medium">
+                        {salaryMax.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="relative h-6 flex items-center">
+                      <div className="absolute w-full h-1 bg-[#c5c5c5] rounded-full" />
+                      <div
+                        className="absolute h-1 bg-[#0570e2] rounded-full"
+                        style={{
+                          left: `${(salaryMin / SALARY_MAX) * 100}%`,
+                          right: `${100 - (salaryMax / SALARY_MAX) * 100}%`,
+                        }}
+                      />
+                      <input
+                        type="range"
+                        min={0}
+                        max={SALARY_MAX}
+                        step={10000}
+                        value={salaryMin}
+                        onChange={(e) => {
+                          const val = Math.min(Number(e.target.value), salaryMax - 10000)
+                          setSalaryMin(val)
+                          setVisibleCount(12)
+                        }}
+                        className="absolute w-full h-6 appearance-none bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[#0570e2] [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-[#0570e2] [&::-moz-range-thumb]:shadow-md [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:bg-transparent"
+                        style={{ zIndex: salaryMin > SALARY_MAX / 2 ? 2 : 1 }}
+                      />
+                      <input
+                        type="range"
+                        min={0}
+                        max={SALARY_MAX}
+                        step={10000}
+                        value={salaryMax}
+                        onChange={(e) => {
+                          const val = Math.max(Number(e.target.value), salaryMin + 10000)
+                          setSalaryMax(val)
+                          setVisibleCount(12)
+                        }}
+                        className="absolute w-full h-6 appearance-none bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[#0570e2] [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-[#0570e2] [&::-moz-range-thumb]:shadow-md [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:bg-transparent"
+                        style={{ zIndex: salaryMax <= SALARY_MAX / 2 ? 2 : 1 }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -167,18 +332,32 @@ export function BrowseAllJobsSection({
             </div>
 
             {/* Main Content (Job Cards) */}
-            <div className={styles.DivElementorWidgetContainer_11_2450} style={{ width: 'auto', flex: 1 }}>
-              <div className={styles.DivElementorLoopContainer_11_2451} style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(3, 260px)',
-                gap: '30px',
-                width: '100%',
-                justifyContent: 'start'
-              }}>
-                {jobCards.map((job, index) => (
-                  <JobCard key={index} job={job} />
+            <div className={styles.DivElementorWidgetContainer_11_2450}>
+              <div className={styles.DivElementorLoopContainer_11_2451}>
+                {visibleJobs.map((job) => (
+                  <JobCard key={job.slug} job={job} applyHref={`/premium-jobs/${job.slug}`} />
                 ))}
               </div>
+              
+              {/* Load More Button */}
+              {hasMore && (
+                <div className="flex flex-col items-center justify-center w-full mt-12 mb-8">
+                  <DivELoopLoadMore onClick={handleLoadMore} />
+                </div>
+              )}
+
+              {!hasMore && filteredJobs.length > 0 && (
+                <div className="flex justify-center mt-12 text-[#999] font-medium italic">
+                  You&apos;ve reached the end of the listings.
+                </div>
+              )}
+
+              {filteredJobs.length === 0 && (
+                <div className="flex flex-col items-center justify-center py-20 text-center">
+                  <div className="text-2xl font-bold text-[#161618] mb-2">No jobs found</div>
+                  <div className="text-[#666]">Try adjusting your search criteria.</div>
+                </div>
+              )}
             </div>
           </div>
         </div>

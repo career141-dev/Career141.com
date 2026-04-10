@@ -7,8 +7,9 @@ export function CoreValuesSection() {
       style={{
         minHeight: 'min(716px, 70vh)',
         backgroundImage: `url(${withBasePath('/figmaAssets/corevalues-bg.jpg')})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: 'contain',
+        backgroundPosition: 'left center',
+        backgroundRepeat: 'no-repeat',
       }}
       data-testid="section-core-values"
     >
@@ -24,17 +25,15 @@ export function CoreValuesSection() {
             }}
           />
 
-          <div className="relative z-10 pl-6 md:pl-[7%] pr-6 md:pr-[5%]">
-            <div className="relative inline-block">
+            <div className="relative z-10 pl-6 md:pl-[35%] pr-6 md:pr-[5%] pt-10 md:pt-0">
+            <div className="relative w-48 h-48 md:w-60 md:h-60 ml-20">
               <img
-                src={withBasePath('/figmaAssets/corevalues-title-bg.png')}
+                src={withBasePath('/images/Vector-97.svg')}
                 alt=""
-                className="absolute inset-0 w-full h-full object-contain"
-                style={{ opacity: 0.3 }}
-                aria-hidden="true"
+                className="w-full h-full"
               />
-              <h2
-                className="relative font-['Quicksand',Helvetica,sans-serif] font-bold text-[#11593f]"
+                <h2
+                className="absolute inset-0 flex items-center justify-center font-['Quicksand',Helvetica,sans-serif] font-bold text-[#11593f] text-center -translate-x-10 md:-translate-x-40"
                 style={{
                   fontSize: 'clamp(28px, 2.5vw, 38.4px)',
                   lineHeight: '1.1',
@@ -43,24 +42,15 @@ export function CoreValuesSection() {
               >
                 Core Values
               </h2>
-              <div
-                className="absolute -right-3 -bottom-1"
-                style={{
-                  width: 24,
-                  height: 24,
-                  border: '2px solid #cbfc06',
-                  backgroundColor: 'transparent',
-                }}
-              />
             </div>
           </div>
         </div>
 
-        <div className="relative flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8">
+        <div className="relative flex-1 flex items-center justify-center pt-10 md:pt-24 pb-4 md:pb-6 px-4 md:px-6 lg:px-8 -mt-5 md:-mt-20">
           <img
             src={withBasePath('/figmaAssets/corevalues-diagram.svg')}
             alt="Core Values: Quality and Commitment, Integrity and Ethics, Confidentiality and Trust, Agility and Innovation"
-            className="w-full h-auto max-w-[794px]"
+            className="w-full h-auto max-w-[900px]"
             data-testid="img-core-values-diagram"
           />
         </div>
