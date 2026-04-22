@@ -88,7 +88,7 @@ const whatsappChannels: WhatsAppChannel[] = [
   },
 ]
 
-const WHATSAPP_AUTO_MS = 20_000
+const WHATSAPP_AUTO_MS = 3000
 
 function industryAllowsWrap(industry: string) {
   return industry === 'Mechanical & Automation' || industry === 'Digital Marketing'
@@ -153,13 +153,13 @@ export function PremiumJobsSection() {
     scrollCardIntoView(index, 'smooth')
     window.setTimeout(() => {
       skipScrollIndexSync.current = false
-    }, 500)
+    }, 1000)
   }, [scrollCardIntoView])
 
   const goPrev = useCallback(() => {
     setActiveIndex((i) => {
       const ni = (i - 1 + channelCount) % channelCount
-      queueMicrotask(() => runProgrammaticScroll(ni))
+      runProgrammaticScroll(ni)
       return ni
     })
   }, [channelCount, runProgrammaticScroll])
@@ -167,7 +167,7 @@ export function PremiumJobsSection() {
   const goNext = useCallback(() => {
     setActiveIndex((i) => {
       const ni = (i + 1) % channelCount
-      queueMicrotask(() => runProgrammaticScroll(ni))
+      runProgrammaticScroll(ni)
       return ni
     })
   }, [channelCount, runProgrammaticScroll])
@@ -175,14 +175,10 @@ export function PremiumJobsSection() {
   useEffect(() => {
     if (pauseAuto) return
     const id = window.setInterval(() => {
-      setActiveIndex((i) => {
-        const ni = (i + 1) % channelCount
-        queueMicrotask(() => runProgrammaticScroll(ni))
-        return ni
-      })
+      goNext()
     }, WHATSAPP_AUTO_MS)
     return () => window.clearInterval(id)
-  }, [pauseAuto, channelCount, runProgrammaticScroll])
+  }, [pauseAuto, goNext])
 
   const onScrollStrip = useCallback(() => {
     if (skipScrollIndexSync.current) return
