@@ -88,7 +88,7 @@ const whatsappChannels: WhatsAppChannel[] = [
   },
 ]
 
-const WHATSAPP_AUTO_MS = 3000
+const WHATSAPP_AUTO_MS = 2000
 
 function industryAllowsWrap(industry: string) {
   return industry === 'Mechanical & Automation' || industry === 'Digital Marketing'
@@ -141,20 +141,27 @@ export function PremiumJobsSection() {
   const scrollRaf = useRef<number | null>(null)
   const skipScrollIndexSync = useRef(false)
   const [, setActiveIndex] = useState(0)
-  const [pauseAuto, setPauseAuto] = useState(false)
 
-  const scrollCardIntoView = useCallback((index: number, behavior: ScrollBehavior = 'smooth') => {
-    const el = cardRefs.current[index]
-    el?.scrollIntoView({ behavior, inline: 'center', block: 'nearest' })
-  }, [])
 
   const runProgrammaticScroll = useCallback((index: number) => {
+    const root = scrollRef.current
+    const el = cardRefs.current[index]
+    if (!root || !el) return
+
     skipScrollIndexSync.current = true
-    scrollCardIntoView(index, 'smooth')
+    
+    // Calculate position to center the card
+    const targetScrollLeft = el.offsetLeft - (root.clientWidth / 2) + (el.offsetWidth / 2)
+    
+    root.scrollTo({
+      left: targetScrollLeft,
+      behavior: 'smooth'
+    })
+
     window.setTimeout(() => {
       skipScrollIndexSync.current = false
     }, 1000)
-  }, [scrollCardIntoView])
+  }, [])
 
   const goPrev = useCallback(() => {
     setActiveIndex((i) => {
@@ -173,12 +180,11 @@ export function PremiumJobsSection() {
   }, [channelCount, runProgrammaticScroll])
 
   useEffect(() => {
-    if (pauseAuto) return
     const id = window.setInterval(() => {
       goNext()
     }, WHATSAPP_AUTO_MS)
     return () => window.clearInterval(id)
-  }, [pauseAuto, goNext])
+  }, [goNext])
 
   const onScrollStrip = useCallback(() => {
     if (skipScrollIndexSync.current) return
@@ -270,17 +276,13 @@ export function PremiumJobsSection() {
           </h2>
         </div>
 
-        <div
-          className="flex flex-col w-full relative px-4 md:px-10 pb-2"
-          onMouseEnter={() => setPauseAuto(true)}
-          onMouseLeave={() => setPauseAuto(false)}
-        >
+        <div className="flex flex-col w-full relative px-4 md:px-10 pb-2">
           {/* Viewport: show at most 4 cards at once on md+; mobile uses full width (~1 card). */}
           <div className="w-full max-w-full md:max-w-[calc(4*312px+3*1.25rem)] mx-auto">
             <div
               ref={scrollRef}
               onScroll={onScrollStrip}
-              className="flex w-full gap-5 py-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden touch-pan-x cursor-grab active:cursor-grabbing"
+              className="flex w-full gap-5 py-4 overflow-x-auto scroll-smooth snap-x scrollbar-hide [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden touch-pan-x cursor-grab active:cursor-grabbing"
               style={{ WebkitOverflowScrolling: 'touch' }}
             >
             {whatsappChannels.map((channel, index) => (
