@@ -402,9 +402,6 @@ export function PremiumJobsSection() {
 
       <BrowseAllJobsSection 
         jobCards={premiumJobCards}
-        sidebarIndustries={[]} // Handled dynamically inside component now
-        sidebarLocations={[]} 
-        sidebarCurrencies={[]} 
       />
     </div>
   )

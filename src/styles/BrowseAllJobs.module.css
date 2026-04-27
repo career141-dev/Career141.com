@@ -6327,3 +6327,14 @@
 .FilterSidebarInner {
   padding-top: 0;
 }
+
+.ActiveFilterLabel {
+  border-color: #0570e2 !important;
+  background-color: #f0f7ff !important;
+  box-shadow: 0 0 0 1px #0570e2;
+}
+
+.ActiveFilterText {
+  color: #0570e2 !important;
+  font-weight: 600 !important;
+}
