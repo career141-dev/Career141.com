@@ -1,17 +1,34 @@
 'use client'
 
-import { useActionState, useEffect } from 'react'
+import { useState, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import { loginAction } from '@/lib/admin-actions'
-import type { LoginResult } from '@/lib/admin-actions'
 
 export function LoginForm() {
   const router = useRouter()
-  const [state, action] = useActionState(loginAction, { success: false } as LoginResult)
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    if (state?.success) router.push('/admin/jobs')
-  }, [state, router])
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+
+    const formData = new FormData(e.currentTarget)
+
+    try {
+      const res = await fetch('/api/admin/login', { method: 'POST', body: formData })
+      const data = await res.json()
+      if (data.success) {
+        router.push('/admin/jobs')
+      } else {
+        setError(data.error || 'Login failed')
+      }
+    } catch {
+      setError('Network error. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif', background: '#f5f7fa', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
@@ -30,8 +47,8 @@ export function LoginForm() {
       <div className="login-box">
         <h1>Admin Login</h1>
         <p>Career141 Premium Jobs Management</p>
-        {state?.error && <div className="error">{state.error}</div>}
-        <form action={action}>
+        {error && <div className="error">{error}</div>}
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input type="email" id="email" name="email" required autoFocus />
@@ -40,7 +57,7 @@ export function LoginForm() {
             <label htmlFor="password">Password</label>
             <input type="password" id="password" name="password" required />
           </div>
-          <button type="submit">Sign in</button>
+          <button type="submit" disabled={loading}>{loading ? 'Signing in...' : 'Sign in'}</button>
         </form>
       </div>
     </div>

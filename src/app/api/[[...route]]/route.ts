@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAllPremiumJobs, getPremiumJobBySlug, getJobDetailsBySlug } from '@/lib/jobs'
 import { z } from 'zod'
+import { createServerClient } from '@/lib/supabase'
+import { SignJWT } from 'jose'
 
 export const runtime = 'edge'
 
@@ -79,6 +81,40 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const clientIP = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
 
   if (!checkRateLimit(clientIP)) return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+
+  if (path === 'admin/login') {
+    const formData = await request.formData()
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
+
+    if (!email || !password) {
+      return NextResponse.json({ error: 'Please enter email and password' }, { status: 400 })
+    }
+
+    const supabase = createServerClient()
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
+
+    if (error) {
+      return NextResponse.json({ error: error.message || 'Invalid credentials' }, { status: 401 })
+    }
+
+    const secret = new TextEncoder().encode(process.env.SESSION_SECRET || 'default-secret-change-me-in-production')
+    const token = await new SignJWT({ admin: true })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setExpirationTime('24h')
+      .sign(secret)
+
+    const response = NextResponse.json({ success: true })
+    response.cookies.set('admin_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60,
+      path: '/admin',
+    })
+
+    return response
+  }
 
   // Simplified handler for all form posts to save space
   if (path === 'apply' || path === 'contact' || path === 'meeting') {
