@@ -1,4 +1,3 @@
-export const runtime = 'edge'
 import Link from 'next/link'
 import { PremiumJobApplyPage } from '@/components/premium-jobs/PremiumJobApplyPage'
 import {
@@ -6,6 +5,13 @@ import {
   getPremiumJobBySlug,
   getJobDetailsBySlug,
 } from '@/lib/jobs'
+
+export async function generateStaticParams() {
+  const jobs = await getAllPremiumJobs()
+  return jobs.map((job) => ({
+    slug: job.slug,
+  }))
+}
 
 
 export default async function PremiumJobApplyRoutePage({
