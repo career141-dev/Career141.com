@@ -4,10 +4,10 @@ import { verifySession } from '@/lib/admin-auth'
 import { logoutAction, getJobs, getIndustries, getJob } from '@/lib/admin-actions'
 
 // Import the consolidated components
-import { LoginForm } from '@/components/admin/login-form'
-import { EditJobForm } from '@/components/admin/edit-job-form'
-import NewJobPageClient from '@/components/admin/new-job-page-client'
-import JobsPageClient from '@/components/admin/jobs-page-client'
+import { LoginForm } from '../../../components/admin/login-form'
+import { EditJobForm } from '../../../components/admin/edit-job-form'
+import NewJobPageClient from '../../../components/admin/new-job-page-client'
+import JobsPageClient from '../../../components/admin/jobs-page-client'
 
 export const runtime = 'edge'
 
