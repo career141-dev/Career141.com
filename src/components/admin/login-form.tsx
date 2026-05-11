@@ -1,10 +1,8 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
-import { useRouter } from 'next/navigation'
 
 export function LoginForm() {
-  const router = useRouter()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -19,7 +17,7 @@ export function LoginForm() {
       const res = await fetch('/api/admin/login', { method: 'POST', body: formData })
       const data = await res.json()
       if (data.success) {
-        router.push('/admin/jobs')
+        window.location.href = '/admin/jobs'
       } else {
         setError(data.error || 'Login failed')
       }

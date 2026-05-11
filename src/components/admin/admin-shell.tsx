@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 const style = `
 .layout { display: flex; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; color: #333; }
 .sidebar { width: 240px; background: #0F221B; color: white; padding: 24px 0; flex-shrink: 0; }
@@ -35,7 +33,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <style>{style}</style>
       <nav className="sidebar">
         <h1>Career141 Admin</h1>
-        <Link href="/admin/jobs">Premium Jobs</Link>
+        <a href="/admin/jobs">Premium Jobs</a>
         <form action="/api/admin/logout" method="POST">
           <button type="submit" style={{ display: 'block', width: '100%', textAlign: 'left', padding: '10px 20px', background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: 14, marginTop: 16, fontFamily: 'inherit' }}>
             Logout

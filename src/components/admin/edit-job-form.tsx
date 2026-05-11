@@ -1,14 +1,12 @@
 'use client'
 
 import { useState, FormEvent, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 
 function slugify(text: string) {
   return text.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')
 }
 
 export function EditJobForm({ id, job: initialJob, industries: initialIndustries }: { id?: string; job?: Record<string, string | null>; industries?: string[] }) {
-  const router = useRouter()
   const [state, setState] = useState<{ success?: boolean; errors?: Record<string, string>; job?: Record<string, string> }>({})
   const [jobData, setJobData] = useState<Record<string, any> | null>(initialJob || null)
   const [industries, setIndustries] = useState<string[]>(initialIndustries || [])
@@ -49,7 +47,7 @@ export function EditJobForm({ id, job: initialJob, industries: initialIndustries
       const res = await fetch(url, { method: 'POST', body: formData })
       const data = await res.json()
       if (data.success) {
-        router.push('/admin/jobs')
+        window.location.href = '/admin/jobs'
       } else {
         setState(data)
       }
