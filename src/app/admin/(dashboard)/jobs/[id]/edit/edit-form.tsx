@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { updateJobAction } from '@/lib/admin-actions'
+import { updateJobAction, createJobAction } from '@/lib/admin-actions'
 import type { FormState } from '@/lib/admin-actions'
 
 function slugify(text: string) {
@@ -11,9 +11,9 @@ function slugify(text: string) {
 
 export function EditJobForm({ id, job, industries }: { id?: string; job?: Record<string, string | null>; industries: string[] }) {
   const router = useRouter()
-  // If id is present, it's an update; otherwise it's a create
-  const updateJobWithId = updateJobAction.bind(null, id || 'new')
-  const [state, action] = useActionState(updateJobWithId, {} as FormState)
+  // Use createJobAction if no id, otherwise use updateJobAction
+  const currentAction = id ? updateJobAction.bind(null, id) : createJobAction
+  const [state, action] = useActionState(currentAction, {} as FormState)
 
   useEffect(() => {
     if (state?.success) router.push('/admin/jobs')
@@ -21,6 +21,10 @@ export function EditJobForm({ id, job, industries }: { id?: string; job?: Record
 
   const errs = state?.errors || {}
   const vals = (state?.job || job || {}) as Record<string, any>
+  
+  // Default to today's date for new jobs
+  const today = new Date().toISOString().split('T')[0]
+  const defaultDate = vals.posted_date || (id ? '' : today)
 
   return (
     <>
@@ -100,7 +104,7 @@ export function EditJobForm({ id, job, industries }: { id?: string; job?: Record
             </div>
             <div className="form-group">
               <label htmlFor="posted_date">Posted Date</label>
-              <input type="date" id="posted_date" name="posted_date" defaultValue={vals.posted_date || ''} />
+              <input type="date" id="posted_date" name="posted_date" defaultValue={defaultDate} />
             </div>
           </div>
 
