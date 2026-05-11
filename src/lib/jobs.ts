@@ -1,14 +1,7 @@
 import { createServerClient } from './supabase'
 import { parseMarkdownToNodes } from './parseJobDetails'
-import {
-  premiumJobCards,
-  getPremiumJobBySlug as getStaticJobBySlug,
-  type PremiumJob,
-} from '@/components/premium-jobs/premiumJobsData'
-import {
-  jobDetailsBySlug,
-  type JobDetailContent,
-} from '@/components/premium-jobs/jobDetailsData'
+import type { PremiumJob } from '@/components/premium-jobs/premiumJobsData'
+import type { JobDetailContent } from '@/components/premium-jobs/jobDetailsData'
 
 type DbJobRow = {
   id: string
@@ -64,10 +57,10 @@ export async function getAllPremiumJobs(): Promise<PremiumJob[]> {
       return (data as DbJobRow[]).map(dbRowToPremiumJob)
     }
   } catch {
-    console.warn('Supabase fetch failed, falling back to static data')
+    console.warn('Supabase fetch failed')
   }
 
-  return premiumJobCards
+  return []
 }
 
 export async function getPremiumJobBySlug(
@@ -87,12 +80,10 @@ export async function getPremiumJobBySlug(
       return dbRowToPremiumJob(data as DbJobRow)
     }
   } catch {
-    console.warn(
-      `Supabase fetch for slug "${slug}" failed, falling back to static data`
-    )
+    console.warn(`Supabase fetch for slug "${slug}" failed`)
   }
 
-  return getStaticJobBySlug(slug) ?? null
+  return null
 }
 
 export async function getJobDetailsBySlug(
@@ -119,10 +110,8 @@ export async function getJobDetailsBySlug(
       }
     }
   } catch {
-    console.warn(
-      `Supabase details fetch for slug "${slug}" failed, falling back to static data`
-    )
+    console.warn(`Supabase details fetch for slug "${slug}" failed`)
   }
 
-  return jobDetailsBySlug[slug] ?? null
+  return null
 }
