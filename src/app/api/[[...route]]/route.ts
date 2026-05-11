@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAllPremiumJobs, getPremiumJobBySlug, getJobDetailsBySlug } from '@/lib/jobs'
-import { z } from 'zod'
 import { createServerClient } from '@/lib/supabase'
 import { SignJWT } from 'jose'
 
 export const runtime = 'edge'
-
-const brevoApiKey = process.env.BREVO_API_KEY
 
 const rateLimit = new Map<string, { count: number; resetTime: number }>()
 function checkRateLimit(ip: string): boolean {
