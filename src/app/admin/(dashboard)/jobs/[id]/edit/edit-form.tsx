@@ -11,8 +11,8 @@ function slugify(text: string) {
 
 export function EditJobForm({ id, job, industries }: { id: string; job: Record<string, string>; industries: string[] }) {
   const router = useRouter()
-  const boundAction = (prev: FormState, formData: FormData) => updateJobAction(id, prev, formData)
-  const [state, action] = useActionState(boundAction, {} as FormState)
+  const updateJobWithId = updateJobAction.bind(null, id)
+  const [state, action] = useActionState(updateJobWithId, {} as FormState)
 
   useEffect(() => {
     if (state?.success) router.push('/admin/jobs')

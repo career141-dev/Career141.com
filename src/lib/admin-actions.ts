@@ -112,10 +112,15 @@ export async function getJob(id: string): Promise<JobRow | null> {
   return data as JobRow | null
 }
 
-export type FormState = { success?: boolean; errors?: Record<string, string>; job?: Record<string, string> }
+export type FormState = { 
+  success?: boolean; 
+  errors?: Record<string, string>; 
+  job?: Record<string, string> 
+}
 
 export async function createJobAction(prev: FormState, formData: FormData): Promise<FormState> {
   const raw = Object.fromEntries(formData) as Record<string, string>
+  // ... rest of implementation stays same
   const { title, industry, currency, salary_min, salary_max, location, job_type, work_type, posted_date, roles, pre_requisites } = raw
 
   const errors: FormErrors = {}
@@ -177,7 +182,7 @@ export async function createJobAction(prev: FormState, formData: FormData): Prom
   }
 }
 
-export async function updateJobAction(id: string, prev: unknown, formData: FormData) {
+export async function updateJobAction(id: string, prev: FormState, formData: FormData): Promise<FormState> {
   const raw = Object.fromEntries(formData) as Record<string, string>
   const { title, industry, currency, salary_min, salary_max, location, job_type, work_type, posted_date, roles, pre_requisites } = raw
 
