@@ -5,38 +5,40 @@ import styles from '@/styles/BrowseAllJobs.module.css'
 import { JobCard, type Job } from '@/components/common/JobCard'
 import DivELoopLoadMore from '@/components/DivELoopLoadMore'
 
-interface SidebarItem {
-  label: string;
-  count: string;
-  href: string;
-}
-
 interface BrowseAllJobsSectionProps {
   jobCards: Job[];
-  // These will now be used as 'initial' or overridden by dynamic calculations
-  sidebarIndustries: SidebarItem[];
-  sidebarLocations: SidebarItem[];
-  sidebarCurrencies: SidebarItem[];
 }
 
-const SidebarFilterLink = ({ item }: { item: SidebarItem }) => (
+const SidebarFilterLink = ({ 
+  label, 
+  count, 
+  isActive, 
+  onClick 
+}: { 
+  label: string; 
+  count: string; 
+  isActive: boolean; 
+  onClick: () => void; 
+}) => (
   <div className={styles.DivWpcTermItemContentWrapper_11_2227}>
-    <div className={styles.Label_11_2228}>
+    <div className={`${styles.Label_11_2228} ${isActive ? styles.ActiveFilterLabel : ''}`}>
       <div className={styles.SpanWpcFilterLabelWrapper_11_2229}>
         <div className={styles.A_11_2230}>
-          <a 
-            href={item.href} 
-            className={styles.FilterTermLink}
+          <button 
+            type="button"
+            className={`${styles.FilterTermLink} ${isActive ? styles.ActiveFilterText : ''}`}
             onClick={(e) => {
-              if (item.href === '#') e.preventDefault();
+              e.preventDefault();
+              onClick();
             }}
+            style={{ background: 'none', border: 'none', padding: 0, textAlign: 'left', cursor: 'pointer', outline: 'none' }}
           >
-            {item.label}
-          </a>
+            {label}
+          </button>
         </div>
         <div className={styles.SpanWpcTermCountMargin_11_2232}>
           <div className={styles.SpanWpcTermCount_11_2233}>
-            <span className={styles.generated_23_11_2234}>{item.count}</span>
+            <span className={styles.generated_23_11_2234}>{count}</span>
           </div>
         </div>
       </div>
@@ -55,7 +57,9 @@ export function BrowseAllJobsSection({
   })
   
   const [searchQuery, setSearchQuery] = useState('')
-  const [scrollPosition, setScrollPosition] = useState(0)
+  const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null)
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null)
+  const [selectedCurrency, setSelectedCurrency] = useState<string | null>(null)
   const [salaryMin, setSalaryMin] = useState(0)
   const [salaryMax, setSalaryMax] = useState(1200000)
   const SALARY_MAX = 1200000
@@ -95,13 +99,34 @@ export function BrowseAllJobsSection({
           return false
         }
       }
+
+      if (selectedIndustry && job.industry !== selectedIndustry) {
+        return false
+      }
+
+      if (selectedLocation) {
+        const loc = job.location
+        let country = loc
+        if (loc.includes(', ')) {
+          const parts = loc.split(', ')
+          country = parts[parts.length - 1].trim()
+        }
+        if (country !== selectedLocation) {
+          return false
+        }
+      }
+
+      if (selectedCurrency && job.currency !== selectedCurrency) {
+        return false
+      }
+
       const salary = Number(job.salaryMin) || 0
       if (salary < salaryMin || salary > salaryMax) {
         return false
       }
       return true
     })
-  }, [jobCards, searchQuery, salaryMin, salaryMax])
+  }, [jobCards, searchQuery, salaryMin, salaryMax, selectedIndustry, selectedLocation, selectedCurrency])
 
   // 2. Calculate Dynamic Sidebar Stats
   const dynamicStats = useMemo(() => {
@@ -124,7 +149,7 @@ export function BrowseAllJobsSection({
     const toSidebar = (obj: Record<string, number>) => 
       Object.entries(obj)
         .sort((a, b) => b[1] - a[1])
-        .map(([label, count]) => ({ label, count: `(${count})`, href: '#' }))
+        .map(([label, count]) => ({ label, count: `(${count})` }))
 
     return {
       industries: toSidebar(industries),
@@ -240,7 +265,16 @@ export function BrowseAllJobsSection({
                   <div className={styles.UlWpcFiltersUlList_11_2226}>
                     <div className={styles.FilterTermsList}>
                       {dynamicStats.industries.map((item, idx) => (
-                        <SidebarFilterLink key={`ind-${item.label}-${idx}`} item={item} />
+                        <SidebarFilterLink 
+                          key={`ind-${item.label}-${idx}`} 
+                          label={item.label}
+                          count={item.count}
+                          isActive={selectedIndustry === item.label}
+                          onClick={() => {
+                            setSelectedIndustry(prev => prev === item.label ? null : item.label)
+                            setVisibleCount(12)
+                          }}
+                        />
                       ))}
                     </div>
                   </div>
@@ -254,7 +288,16 @@ export function BrowseAllJobsSection({
                   <div className={styles.UlWpcFiltersUlList_11_2315}>
                     <div className={styles.FilterTermsList}>
                       {dynamicStats.locations.map((item, idx) => (
-                        <SidebarFilterLink key={`loc-${item.label}-${idx}`} item={item} />
+                        <SidebarFilterLink 
+                          key={`loc-${item.label}-${idx}`} 
+                          label={item.label}
+                          count={item.count}
+                          isActive={selectedLocation === item.label}
+                          onClick={() => {
+                            setSelectedLocation(prev => prev === item.label ? null : item.label)
+                            setVisibleCount(12)
+                          }}
+                        />
                       ))}
                     </div>
                   </div>
@@ -268,7 +311,16 @@ export function BrowseAllJobsSection({
                   <div className={styles.UlWpcFiltersUlList_11_2407}>
                     <div className={styles.FilterTermsList}>
                       {dynamicStats.currencies.map((item, idx) => (
-                        <SidebarFilterLink key={`cur-${item.label}-${idx}`} item={item} />
+                        <SidebarFilterLink 
+                          key={`cur-${item.label}-${idx}`} 
+                          label={item.label}
+                          count={item.count}
+                          isActive={selectedCurrency === item.label}
+                          onClick={() => {
+                            setSelectedCurrency(prev => prev === item.label ? null : item.label)
+                            setVisibleCount(12)
+                          }}
+                        />
                       ))}
                     </div>
                   </div>
