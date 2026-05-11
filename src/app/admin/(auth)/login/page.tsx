@@ -1,3 +1,4 @@
+export const runtime = 'edge'
 import { verifySession } from '@/lib/admin-auth'
 import { redirect } from 'next/navigation'
 import { LoginForm } from './login-form'

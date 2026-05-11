@@ -1,3 +1,4 @@
+export const runtime = 'edge'
 import { getJobs, getIndustries } from '@/lib/admin-actions'
 import Link from 'next/link'
 import { DeleteButton } from './delete-button'

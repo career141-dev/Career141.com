@@ -1,3 +1,4 @@
+export const runtime = 'edge'
 import { deleteJobAction } from '@/lib/admin-actions'
 import { redirect } from 'next/navigation'
 

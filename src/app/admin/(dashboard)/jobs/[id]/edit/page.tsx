@@ -1,3 +1,4 @@
+export const runtime = 'edge'
 import { getJob, getIndustries } from '@/lib/admin-actions'
 import { redirect } from 'next/navigation'
 import { EditJobForm } from './edit-form'
