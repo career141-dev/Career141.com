@@ -400,12 +400,7 @@ export function PremiumJobsSection({ jobs }: { jobs: PremiumJob[] }) {
         </div>
       </section>
 
-      <BrowseAllJobsSection 
-        jobCards={jobs}
-        sidebarIndustries={[]} // Handled dynamically inside component now
-        sidebarLocations={[]} 
-        sidebarCurrencies={[]} 
-      />
+      <BrowseAllJobsSection jobCards={jobs} />
     </div>
   )
 }
