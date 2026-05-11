@@ -55,6 +55,23 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   return NextResponse.json({ error: 'Not Found' }, { status: 404 })
 }
 
+import { deleteJobAction } from '@/lib/admin-actions'
+
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ route?: string[] }> }) {
+  const resolvedParams = await params
+  const route = resolvedParams.route || []
+  const path = route.join('/')
+
+  if (route[0] === 'jobs' && route[1]) {
+    try {
+      await deleteJobAction(route[1])
+      return NextResponse.json({ success: true })
+    } catch { return NextResponse.json({ error: 'Failed to delete job' }, { status: 500 }) }
+  }
+
+  return NextResponse.json({ error: 'Not Found' }, { status: 404 })
+}
+
 export async function POST(request: NextRequest, { params }: { params: Promise<{ route?: string[] }> }) {
   const resolvedParams = await params
   const route = resolvedParams.route || []

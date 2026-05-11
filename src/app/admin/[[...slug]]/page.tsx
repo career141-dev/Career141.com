@@ -7,6 +7,7 @@ import { LoginForm } from '@/app/admin/(auth)/login/login-form'
 import { EditJobForm } from '@/app/admin/(dashboard)/jobs/[id]/edit/edit-form'
 import NewJobPageClient from '@/app/admin/(dashboard)/jobs/new/page-client'
 import JobsPageClient from '@/app/admin/(dashboard)/jobs/page-client'
+import AdminLayout from '@/app/admin/(dashboard)/layout'
 
 export const runtime = 'edge'
 
@@ -16,7 +17,7 @@ export default async function AdminCatchAllPage({ params }: { params: Promise<{ 
   const path = slug.join('/')
   const session = await verifySession()
 
-  // 1. Handle Login Page
+  // 1. Handle Login Page (Separate Layout)
   if (path === 'login') {
     if (session) redirect('/admin/jobs')
     return <LoginForm />
@@ -28,15 +29,17 @@ export default async function AdminCatchAllPage({ params }: { params: Promise<{ 
   // 3. Admin Root -> Redirect to Jobs
   if (slug.length === 0) redirect('/admin/jobs')
 
+  // Helper to wrap dashboard routes in the AdminLayout
+  const wrap = (children: React.ReactNode) => <AdminLayout>{children}</AdminLayout>
+
   // 4. Jobs List: /admin/jobs
   if (path === 'jobs') {
-    // We will move the logic from the old JobsPage here or into a component
-    return <JobsPageClient />
+    return wrap(<JobsPageClient />)
   }
 
   // 5. New Job: /admin/jobs/new
   if (path === 'jobs/new') {
-    return <NewJobPageClient />
+    return wrap(<NewJobPageClient />)
   }
 
   // 6. Edit Job: /admin/jobs/[id]/edit
@@ -44,7 +47,7 @@ export default async function AdminCatchAllPage({ params }: { params: Promise<{ 
     const id = slug[1]
     const [job, industries] = await Promise.all([getJob(id), getIndustries()])
     if (!job) redirect('/admin/jobs')
-    return <EditJobForm id={id} job={job as any} industries={industries} />
+    return wrap(<EditJobForm id={id} job={job as any} industries={industries} />)
   }
 
   return notFound()
