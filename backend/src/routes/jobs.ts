@@ -82,13 +82,35 @@ router.get('/new', async (_req: Request, res: Response) => {
   })
 })
 
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
+async function generateUniqueSlug(title: string, excludeId?: string | string[]): Promise<string> {
+  let slug = slugify(title) || 'untitled'
+
+  let query = supabase.from('premium_jobs').select('id').eq('slug', slug)
+  if (excludeId) query = query.neq('id', excludeId)
+  const { data } = await query
+
+  if (!data || data.length === 0) return slug
+
+  const now = new Date()
+  const ts = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`
+  return `${slugify(title)}-${ts}`
+}
+
 // Admin: Create job
 router.post('/new', async (req: Request, res: Response) => {
-  const { title, slug, industry, currency, salary_min, salary_max, location, job_type, work_type, posted_date, roles, pre_requisites } = req.body || {}
+  const { title, industry, currency, salary_min, salary_max, location, job_type, work_type, posted_date, roles, pre_requisites } = req.body || {}
 
   const errors: Record<string, string> = {}
   if (!title) errors.title = 'Title is required'
-  if (!slug) errors.slug = 'Slug is required'
   if (!industry) errors.industry = 'Industry is required'
   if (!location) errors.location = 'Location is required'
   if (!posted_date) errors.posted_date = 'Posted date is required'
@@ -101,6 +123,8 @@ router.post('/new', async (req: Request, res: Response) => {
       errors,
     })
   }
+
+  const slug = await generateUniqueSlug(title)
 
   const { error } = await supabase.from('premium_jobs').insert({
     title,
@@ -154,10 +178,24 @@ router.get('/:id/edit', async (req: Request, res: Response) => {
 // Admin: Update job
 router.post('/:id/edit', async (req: Request, res: Response) => {
   const { id } = req.params
-  const { title, slug, industry, currency, salary_min, salary_max, location, job_type, work_type, posted_date, roles, pre_requisites } = req.body || {}
+  const { title, slug: rawSlug, industry, currency, salary_min, salary_max, location, job_type, work_type, posted_date, roles, pre_requisites } = req.body || {}
 
   const errors: Record<string, string> = {}
   if (!title) errors.title = 'Title is required'
+
+  // Auto-generate slug if empty, ensure uniqueness
+  let slug = rawSlug || ''
+  if (!slug) {
+    slug = await generateUniqueSlug(title, id)
+  } else {
+    slug = slugify(slug)
+    // Check uniqueness if slug changed
+    const existing = await supabase.from('premium_jobs').select('id').eq('slug', slug).neq('id', id)
+    if (existing.data && existing.data.length > 0) {
+      slug = await generateUniqueSlug(title, id)
+    }
+  }
+
   if (!slug) errors.slug = 'Slug is required'
 
   if (Object.keys(errors).length > 0) {

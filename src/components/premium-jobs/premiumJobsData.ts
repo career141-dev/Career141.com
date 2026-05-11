@@ -330,6 +330,29 @@ export const premiumJobCards: PremiumJob[] = [
   { slug: 'business-analyst-hospitality-sep2', industry: 'Hospitality', title: 'Business Analyst', currency: 'LKR', salaryMin: '', salaryMax: '', location: 'Sri Lanka', type: 'Hospitality', workType: 'On-Site', date: 'September 2, 2025' },
 ]
 
+export function slugify(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
+export function generateUniqueSlug(title: string, existingSlugs: Set<string>): string {
+  let slug = slugify(title)
+  if (!existingSlugs.has(slug)) return slug
+  const now = new Date()
+  const ts = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`
+  slug = `${slug}-${ts}`
+  while (existingSlugs.has(slug)) {
+    slug = `${slug}-${ts}`
+  }
+  return slug
+}
+
+export const premiumJobSlugs = new Set(premiumJobCards.map((j) => j.slug))
+
 export function getPremiumJobBySlug(slug: string): PremiumJob | undefined {
   return premiumJobCards.find((job) => job.slug === slug)
 }

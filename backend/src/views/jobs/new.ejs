@@ -10,15 +10,32 @@
     <div class="form-row">
       <div class="form-group">
         <label for="title">Title *</label>
-        <input type="text" id="title" name="title" value="<%= locals.job && job.title || '' %>" required>
+        <input type="text" id="title" name="title" value="<%= locals.job && job.title || '' %>" required oninput="autoSlug(this.value)">
         <% if (typeof errors !== 'undefined' && errors.title) { %><div class="error"><%= errors.title %></div><% } %>
       </div>
       <div class="form-group">
-        <label for="slug">Slug *</label>
-        <input type="text" id="slug" name="slug" value="<%= locals.job && job.slug || '' %>" required placeholder="e.g. senior-software-engineer">
+        <label for="slug">Slug</label>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <input type="text" id="slug" name="slug" value="<%= locals.job && job.slug || '' %>" readonly style="background: #f4f4f4; cursor: default;">
+          <button type="button" id="editSlugBtn" onclick="document.getElementById('slug').readOnly=!document.getElementById('slug').readOnly; document.getElementById('slug').style.background=document.getElementById('slug').readOnly?'#f4f4f4':'#fff'; this.textContent=document.getElementById('slug').readOnly?'Edit':'Lock'" style="padding: 4px 8px; font-size: 12px; white-space: nowrap;">Edit</button>
+        </div>
+        <div style="font-size: 12px; color: #999; margin-top: 4px;">Auto-generated from title. Click Edit to override.</div>
         <% if (typeof errors !== 'undefined' && errors.slug) { %><div class="error"><%= errors.slug %></div><% } %>
       </div>
     </div>
+    <script>
+    function autoSlug(title) {
+      var slug = title.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '')
+      var slugField = document.getElementById('slug')
+      if (slugField.readOnly) {
+        slugField.value = slug
+      }
+    }
+    </script>
 
     <div class="form-row">
       <div class="form-group">
@@ -84,7 +101,7 @@
       </div>
       <div class="form-group">
         <label for="posted_date">Posted Date *</label>
-        <input type="date" id="posted_date" name="posted_date" value="<%= locals.job && job.posted_date || '' %>" required>
+        <input type="date" id="posted_date" name="posted_date" value="<%= locals.job && job.posted_date || new Date().toISOString().split('T')[0] %>" required>
         <% if (typeof errors !== 'undefined' && errors.posted_date) { %><div class="error"><%= errors.posted_date %></div><% } %>
       </div>
     </div>
