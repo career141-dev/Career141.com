@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { getJobs, getIndustries } from '@/lib/admin-actions'
 import { DeleteButton } from './delete-button'
 
 export default function JobsPageClient() {
@@ -12,9 +11,13 @@ export default function JobsPageClient() {
 
   useEffect(() => {
     async function loadData() {
-      const [jobsData, industriesData] = await Promise.all([getJobs({}), getIndustries()])
-      setJobs(jobsData.jobs)
-      setIndustries(industriesData)
+      const [jobsRes, industriesRes] = await Promise.all([
+        fetch('/api/admin/jobs'),
+        fetch('/api/admin/industries'),
+      ])
+      const [jobsData, industriesData] = await Promise.all([jobsRes.json(), industriesRes.json()])
+      setJobs(jobsData.jobs || [])
+      setIndustries(industriesData.industries || [])
       setLoading(false)
     }
     loadData()

@@ -1,9 +1,7 @@
 'use client'
 
-import { useActionState, useEffect } from 'react'
+import { useState, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import { updateJobAction, createJobAction } from '@/lib/admin-actions'
-import type { FormState } from '@/lib/admin-actions'
 
 function slugify(text: string) {
   return text.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')
@@ -11,13 +9,29 @@ function slugify(text: string) {
 
 export function EditJobForm({ id, job, industries }: { id?: string; job?: Record<string, string | null>; industries: string[] }) {
   const router = useRouter()
-  // Use createJobAction if no id, otherwise use updateJobAction
-  const currentAction = id ? updateJobAction.bind(null, id) : createJobAction
-  const [state, action] = useActionState(currentAction, {} as FormState)
+  const [state, setState] = useState<{ success?: boolean; errors?: Record<string, string>; job?: Record<string, string> }>({})
+  const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    if (state?.success) router.push('/admin/jobs')
-  }, [state, router])
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setLoading(true)
+    setState({})
+    const formData = new FormData(e.currentTarget)
+    try {
+      const url = id ? `/api/admin/jobs/${id}` : '/api/admin/jobs'
+      const res = await fetch(url, { method: 'POST', body: formData })
+      const data = await res.json()
+      if (data.success) {
+        router.push('/admin/jobs')
+      } else {
+        setState(data)
+      }
+    } catch {
+      setState({ errors: { general: 'Network error. Please try again.' } })
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const errs = state?.errors || {}
   const vals = (state?.job || job || {}) as Record<string, any>
@@ -30,7 +44,7 @@ export function EditJobForm({ id, job, industries }: { id?: string; job?: Record
     <>
       {errs.general && <div className="alert alert-error">{errs.general}</div>}
       <div className="card">
-        <form action={action}>
+        <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="title">Title *</label>
@@ -121,7 +135,7 @@ export function EditJobForm({ id, job, industries }: { id?: string; job?: Record
           </div>
 
           <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
-            <button type="submit" className="btn btn-primary">Save Changes</button>
+            <button type="submit" className="btn btn-primary" disabled={loading}>{loading ? 'Saving...' : 'Save Changes'}</button>
             <a href="/admin/jobs" className="btn btn-outline">Cancel</a>
           </div>
         </form>

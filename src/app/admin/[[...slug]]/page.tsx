@@ -1,7 +1,7 @@
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 import { verifySession } from '@/lib/admin-auth'
-import { logoutAction, getJobs, getIndustries, getJob } from '@/lib/admin-actions'
+import { getIndustries, getJob } from '@/lib/admin-actions'
 
 // Import the consolidated components
 import { LoginForm } from '../../../components/admin/login-form'
@@ -67,7 +67,7 @@ export default async function AdminCatchAllPage({ params }: { params: Promise<{ 
       <nav className="sidebar">
         <h1>Career141 Admin</h1>
         <Link href="/admin/jobs">Premium Jobs</Link>
-        <form action={logoutAction}>
+        <form action="/api/admin/logout" method="POST">
           <button type="submit" style={{ display: 'block', width: '100%', textAlign: 'left', padding: '10px 20px', background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: 14, marginTop: 16, fontFamily: 'inherit' }}>
             Logout
           </button>
@@ -78,7 +78,7 @@ export default async function AdminCatchAllPage({ params }: { params: Promise<{ 
           <h2>Dashboard</h2>
           <div className="user-info">
             Admin
-            <form action={logoutAction} style={{ display: 'inline' }}>
+            <form action="/api/admin/logout" method="POST" style={{ display: 'inline' }}>
               <button type="submit" style={{ background: 'none', border: 'none', color: '#d63637', cursor: 'pointer', marginLeft: 8, fontSize: 14, fontFamily: 'inherit' }}>Logout</button>
             </form>
           </div>

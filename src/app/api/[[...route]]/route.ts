@@ -3,6 +3,8 @@ import { getAllPremiumJobs, getPremiumJobBySlug, getJobDetailsBySlug } from '@/l
 import { z } from 'zod'
 import { createServerClient } from '@/lib/supabase'
 import { SignJWT } from 'jose'
+import { revalidatePath } from 'next/cache'
+import { createJobAction, updateJobAction, deleteJobAction, getJobs, getIndustries, getJob } from '@/lib/admin-actions'
 
 export const runtime = 'edge'
 
@@ -22,14 +24,37 @@ function checkRateLimit(ip: string): boolean {
   return true
 }
 
-function sanitize(input: string): string {
-  return input.replace(/[<>]/g, '').replace(/javascript:/gi, '').replace(/on\w+=/gi, '').trim()
-}
-
 export async function GET(request: NextRequest, { params }: { params: Promise<{ route?: string[] }> }) {
   const resolvedParams = await params
   const route = resolvedParams.route || []
   const path = route.join('/')
+
+  if (path === 'admin/jobs') {
+    try {
+      const { searchParams } = new URL(request.url)
+      const industry = searchParams.get('industry') || undefined
+      const search = searchParams.get('search') || undefined
+      const page = parseInt(searchParams.get('page') || '1')
+      const result = await getJobs({ page, search, industry })
+      return NextResponse.json(result)
+    } catch { return NextResponse.json({ error: 'Failed to fetch jobs' }, { status: 500 }) }
+  }
+
+  if (path === 'admin/industries') {
+    try {
+      const industries = await getIndustries()
+      return NextResponse.json({ industries })
+    } catch { return NextResponse.json({ error: 'Failed to fetch industries' }, { status: 500 }) }
+  }
+
+  if (route[0] === 'admin' && route[1] === 'jobs' && route[2]) {
+    try {
+      const id = route[2]
+      const job = await getJob(id)
+      if (!job) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+      return NextResponse.json({ job })
+    } catch { return NextResponse.json({ error: 'Failed to fetch job' }, { status: 500 }) }
+  }
 
   if (path === 'jobs') {
     try {
@@ -57,12 +82,18 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   return NextResponse.json({ error: 'Not Found' }, { status: 404 })
 }
 
-import { deleteJobAction } from '@/lib/admin-actions'
-
 export async function DELETE(request: NextRequest, { params }: { params: Promise<{ route?: string[] }> }) {
   const resolvedParams = await params
   const route = resolvedParams.route || []
   const path = route.join('/')
+
+  if (route[0] === 'admin' && route[1] === 'jobs' && route[2]) {
+    try {
+      await deleteJobAction(route[2])
+      revalidatePath('/admin/jobs')
+      return NextResponse.json({ success: true })
+    } catch { return NextResponse.json({ error: 'Failed to delete job' }, { status: 500 }) }
+  }
 
   if (route[0] === 'jobs' && route[1]) {
     try {
@@ -116,10 +147,36 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     return response
   }
 
-  // Simplified handler for all form posts to save space
+  if (path === 'admin/logout') {
+    const response = NextResponse.redirect(new URL('/admin/login', request.url))
+    response.cookies.set('admin_token', '', { maxAge: 0, path: '/admin' })
+    return response
+  }
+
+  if (path === 'admin/jobs') {
+    try {
+      const formData = await request.formData()
+      const result = await createJobAction({} as any, formData)
+      revalidatePath('/admin/jobs')
+      return NextResponse.json(result)
+    } catch (e: any) {
+      return NextResponse.json({ errors: { general: e.message } }, { status: 500 })
+    }
+  }
+
+  if (route[0] === 'admin' && route[1] === 'jobs' && route[2]) {
+    try {
+      const id = route[2]
+      const formData = await request.formData()
+      const result = await updateJobAction(id, {} as any, formData)
+      revalidatePath('/admin/jobs')
+      return NextResponse.json(result)
+    } catch (e: any) {
+      return NextResponse.json({ errors: { general: e.message } }, { status: 500 })
+    }
+  }
+
   if (path === 'apply' || path === 'contact' || path === 'meeting') {
-    // For now, return success to let the build pass. 
-    // We will refine the full email logic once we confirm the size is fixed.
     return NextResponse.json({ message: 'Submission received' })
   }
 

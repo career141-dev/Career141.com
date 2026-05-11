@@ -1,6 +1,5 @@
 'use client'
 
-import { deleteJobAction } from '@/lib/admin-actions'
 import { useRouter } from 'next/navigation'
 
 export function DeleteButton({ jobId }: { jobId: string }) {
@@ -12,9 +11,10 @@ export function DeleteButton({ jobId }: { jobId: string }) {
       className="btn btn-sm btn-danger"
       onClick={async () => {
         if (!confirm('Delete this job?')) return
-        const result = await deleteJobAction(jobId)
+        const res = await fetch(`/api/admin/jobs/${jobId}`, { method: 'DELETE' })
+        const result = await res.json()
         if (result.success) router.refresh()
-        else alert(result.error)
+        else alert(result.error || 'Failed to delete')
       }}
     >
       Delete

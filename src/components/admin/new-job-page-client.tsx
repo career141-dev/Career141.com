@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getIndustries } from '@/lib/admin-actions'
 import { EditJobForm } from './edit-job-form'
 
 export default function NewJobPageClient() {
@@ -10,8 +9,9 @@ export default function NewJobPageClient() {
 
   useEffect(() => {
     async function loadData() {
-      const data = await getIndustries()
-      setIndustries(data)
+      const res = await fetch('/api/admin/industries')
+      const data = await res.json()
+      setIndustries(data.industries || [])
       setLoading(false)
     }
     loadData()
