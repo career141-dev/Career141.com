@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { getJobs, getIndustries } from '@/lib/admin-actions'
+import { DeleteButton } from './delete-button'
 
 export default function JobsPageClient() {
   const [jobs, setJobs] = useState<any[]>([])
@@ -47,6 +48,7 @@ export default function JobsPageClient() {
               <td>{new Date(job.posted_date).toLocaleDateString()}</td>
               <td>
                 <Link href={`/admin/jobs/${job.id}/edit`} className="btn btn-sm btn-outline" style={{ marginRight: 8 }}>Edit</Link>
+                <DeleteButton jobId={job.id} />
               </td>
             </tr>
           ))}
