@@ -9,8 +9,8 @@ import { CompanyFooter } from '@/components/common'
 import { JobCard } from '@/components/common/JobCard'
 import { withBasePath } from '@/lib/assetPath'
 import { getTurnstileSiteKey } from '@/lib/turnstile'
-import { getPremiumJobBySlug, premiumJobCards, type PremiumJob } from './premiumJobsData'
-import { jobDetailsBySlug, type JobDetailNode } from './jobDetailsData'
+import type { PremiumJob } from './premiumJobsData'
+import type { JobDetailContent, JobDetailNode } from './jobDetailsData'
 
 function HeroSection({ job }: { job: PremiumJob }) {
   const heroBackgroundSrc = withBasePath('/figmaAssets/premium-jobs-detail-hero-source.png')
@@ -473,8 +473,8 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
   )
 }
 
-function RelatedJobs({ currentSlug }: { currentSlug: string }) {
-  const jobs = premiumJobCards.filter((job) => job.slug !== currentSlug).slice(0, 4)
+function RelatedJobs({ currentSlug, allJobs }: { currentSlug: string; allJobs: PremiumJob[] }) {
+  const jobs = allJobs.filter((job) => job.slug !== currentSlug).slice(0, 4)
 
   return (
     <section className="w-full bg-white">
@@ -497,9 +497,11 @@ function RelatedJobs({ currentSlug }: { currentSlug: string }) {
   )
 }
 
-function JobRolesContentBySlug({ slug }: { slug: string }) {
-  const details = jobDetailsBySlug[slug]
-
+function JobRolesContent({
+  details,
+}: {
+  details: JobDetailContent | null
+}) {
   if (details?.roles?.length) {
     return <StructuredJobDetailContent nodes={details.roles} />
   }
@@ -507,9 +509,11 @@ function JobRolesContentBySlug({ slug }: { slug: string }) {
   return <DefaultRolesContent />
 }
 
-function JobPreRequisitesContentBySlug({ slug }: { slug: string }) {
-  const details = jobDetailsBySlug[slug]
-
+function JobPreRequisitesContent({
+  details,
+}: {
+  details: JobDetailContent | null
+}) {
   if (details?.preRequisites?.length) {
     return <StructuredJobDetailContent nodes={details.preRequisites} />
   }
@@ -517,9 +521,15 @@ function JobPreRequisitesContentBySlug({ slug }: { slug: string }) {
   return <DefaultPreRequisitesContent />
 }
 
-export function PremiumJobApplyPage({ slug }: { slug: string }) {
-  const job = getPremiumJobBySlug(slug)
-
+export function PremiumJobApplyPage({
+  job,
+  details,
+  allJobs,
+}: {
+  job: PremiumJob
+  details: JobDetailContent | null
+  allJobs: PremiumJob[]
+}) {
   if (!job) {
     return (
       <main className="min-h-screen bg-white">
@@ -588,10 +598,10 @@ export function PremiumJobApplyPage({ slug }: { slug: string }) {
 
             <div className="flex flex-col gap-5 flex-1 min-w-0">
               <SectionHeader title="Roles &amp; Responsibilities" />
-              <JobRolesContentBySlug slug={job.slug} />
+              <JobRolesContent details={details} />
 
               <SectionHeader title="Pre Requisites" />
-              <JobPreRequisitesContentBySlug slug={job.slug} />
+              <JobPreRequisitesContent details={details} />
 
               <SectionHeader title="Apply now" />
               <div className="pt-[24px] pb-[48px]">
@@ -602,7 +612,7 @@ export function PremiumJobApplyPage({ slug }: { slug: string }) {
         </div>
       </section>
 
-      <RelatedJobs currentSlug={job.slug} />
+      <RelatedJobs currentSlug={job.slug} allJobs={allJobs} />
       <CompanyFooter />
     </main>
   )

@@ -184,7 +184,7 @@ export function BrowseAllJobsSection({
   }, [])
 
   return (
-    <section className="flex flex-col items-start w-full bg-white">
+    <section className="flex flex-col items-center w-full bg-white">
       <div className={styles.DivElementorElement_11_2202}>
         <div className={styles.DivElementorElement_11_2203}>
           <div className={styles.DivElementorWidgetContainer_11_2204}>

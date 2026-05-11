@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Inter:wght@300;400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
 @import 'tailwindcss';
 @import 'react-phone-input-2/lib/style.css';
-@config '../../tailwind.config.ts';
 
 @layer components {
   .all-\[unset\] {
@@ -119,6 +118,20 @@
   --destructive-foreground: 210 40% 98%;
   --ring: 215 20.2% 65.1%;
   --radius: 0.5rem;
+
+  --career-141-com-white: #ffffff;
+  --career-141-com-woodsmoke: #161618;
+  --career-141-com-hibiscus: #cc3366;
+  --career-141-com-electric-lime: #cbfc06;
+  --career-141-com-alto: #e0e0e0;
+  --color-white-solid: #ffffff;
+  --color-black-solid: #000000;
+  --color-grey-9: #161618;
+  --color-yellow-51: #cbfc06;
+  --color-spring-green-39: #369271;
+  --color-rose-50: #cc3366;
+  --font-family-Font-2: 'Quicksand', sans-serif;
+  --font-family-Font-5: 'Font Awesome 5 Free', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -130,7 +143,7 @@
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: #161618;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -234,11 +247,12 @@ body {
   }
 
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
 
   html, body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     font-family: 'Inter', Helvetica, sans-serif;
     font-feature-settings: 'rlig' 1, 'calt' 1;
     margin: 0;

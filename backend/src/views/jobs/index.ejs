@@ -1,0 +1,83 @@
+<% layout = '../layouts/admin' %>
+<% title = 'Premium Jobs' %>
+
+<% if (typeof error !== 'undefined' && error) { %>
+  <div class="alert alert-error"><%= error %></div>
+<% } %>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+  <div style="font-size: 14px; color: #666;"><%= locals.total || 0 %> total jobs</div>
+  <a href="/admin/jobs/new" class="btn btn-primary">+ New Job</a>
+</div>
+
+<form class="search-bar" method="get">
+  <input type="text" name="search" placeholder="Search by title, location, or slug..." value="<%= typeof search !== 'undefined' ? search : '' %>">
+  <select name="industry">
+    <option value="">All Industries</option>
+    <% if (typeof industries !== 'undefined') { %>
+      <% industries.forEach(function(ind) { %>
+        <option value="<%= ind %>" <%= typeof industry !== 'undefined' && industry === ind ? 'selected' : '' %>><%= ind %></option>
+      <% }) %>
+    <% } %>
+  </select>
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Industry</th>
+        <th>Location</th>
+        <th>Salary</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% var jobList = locals.jobs || [] %>
+      <% if (jobList.length === 0) { %>
+        <tr><td colspan="6" style="text-align: center; padding: 40px; color: #999;">No jobs found</td></tr>
+      <% } else { %>
+        <% jobList.forEach(function(job) { %>
+          <tr>
+            <td><strong><%= job.title %></strong><br><span style="font-size: 11px; color: #999;"><%= job.slug %></span></td>
+            <td><span class="badge badge-industry"><%= job.industry %></span></td>
+            <td><%= job.location %></td>
+            <td><%= job.currency %> <%= job.salary_min || '-' %> - <%= job.salary_max || '-' %></td>
+            <td style="white-space: nowrap;"><%= job.posted_date %></td>
+            <td style="white-space: nowrap;">
+              <a href="/admin/jobs/<%= job.id %>/edit" class="btn btn-sm btn-outline">Edit</a>
+              <form method="post" action="/admin/jobs/<%= job.id %>/delete" style="display: inline;" onsubmit="return confirm('Delete this job?')">
+                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+
+  <% var totalPages = Math.ceil((locals.total || 0) / (locals.limit || 20)) %>
+  <% var currentPage = locals.page || 1 %>
+  <% if (totalPages > 1) { %>
+    <div class="pagination">
+      <% if (currentPage > 1) { %>
+        <a href="?page=<%= currentPage - 1 %>&search=<%= typeof search !== 'undefined' ? search : '' %>&industry=<%= typeof industry !== 'undefined' ? industry : '' %>">Previous</a>
+      <% } %>
+      <% for (var i = 1; i <= totalPages; i++) { %>
+        <% if (i === currentPage) { %>
+          <span class="current"><%= i %></span>
+        <% } else if (i <= 3 || i > totalPages - 3 || Math.abs(i - currentPage) <= 2) { %>
+          <a href="?page=<%= i %>&search=<%= typeof search !== 'undefined' ? search : '' %>&industry=<%= typeof industry !== 'undefined' ? industry : '' %>"><%= i %></a>
+        <% } else if (i === 4 || i === totalPages - 3) { %>
+          <span>...</span>
+        <% } %>
+      <% } %>
+      <% if (currentPage < totalPages) { %>
+        <a href="?page=<%= currentPage + 1 %>&search=<%= typeof search !== 'undefined' ? search : '' %>&industry=<%= typeof industry !== 'undefined' ? industry : '' %>">Next</a>
+      <% } %>
+    </div>
+  <% } %>
+</div>

@@ -1,40 +1,7 @@
 @import "https://fonts.googleapis.com/css?family=Quicksand:0,700;0,400;0,600&display=swap";
 @import "https://fonts.googleapis.com/css?family=Inter:0,400&display=swap";
 
-:root {
-  --career-141-com-white: #ffffff;
-  --career-141-com-woodsmoke: #161618;
-  --career-141-com-hibiscus: #cc3366;
-  --career-141-com-electric-lime: #cbfc06;
-  --career-141-com-alto: #e0e0e0;
-  --color-white-solid: #ffffff;
-  --color-black-solid: #000000;
-  --color-grey-9: #161618;
-  --color-yellow-51: #cbfc06;
-  --color-spring-green-39: #369271;
-  --color-rose-50: #cc3366;
-  --font-family-Font-2: 'Quicksand', sans-serif;
-  --font-family-Font-5: 'Font Awesome 5 Free', sans-serif;
-}
-.Frame_1_10_1348 {
-  background: #fff;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  display: flex;
-}
-.DivElementorElement_11_2202 {
-  flex-direction: column;
-  flex: 1 0 0;
-  align-items: center;
-  gap: 60px;
-  width: 100%;
-  max-width: 1521px;
-  margin: 0 auto;
-  padding: 29.61px 20px 91.24px;
-  display: flex;
-}
+
 
 @media (max-width: 768px) {
   .DivElementorElement_11_2202 {
@@ -45,9 +12,10 @@
 .DivElementorElement_11_2203 {
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
   display: flex;
+  margin: 20px 0;
 }
 .DivElementorWidgetContainer_11_2204 {
   flex-direction: column;

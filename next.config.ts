@@ -17,9 +17,6 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_BASE_PATH: basePath,
   },
   reactCompiler: true,
-  turbopack: {
-    root: __dirname,
-  },
 };
 
 export default nextConfig;

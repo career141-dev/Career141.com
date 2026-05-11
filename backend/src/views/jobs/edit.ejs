@@ -1,0 +1,112 @@
+<% layout = '../layouts/admin' %>
+<% title = 'Edit Premium Job' %>
+
+<% if (typeof errors !== 'undefined' && errors.general) { %>
+  <div class="alert alert-error"><%= errors.general %></div>
+<% } %>
+
+<div class="card">
+  <form method="post">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="title">Title *</label>
+        <input type="text" id="title" name="title" value="<%= locals.job && job.title || '' %>" required>
+        <% if (typeof errors !== 'undefined' && errors.title) { %><div class="error"><%= errors.title %></div><% } %>
+      </div>
+      <div class="form-group">
+        <label for="slug">Slug *</label>
+        <input type="text" id="slug" name="slug" value="<%= locals.job && job.slug || '' %>" required>
+        <% if (typeof errors !== 'undefined' && errors.slug) { %><div class="error"><%= errors.slug %></div><% } %>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="industry">Industry *</label>
+        <select id="industry" name="industry" required>
+          <option value="">Select industry</option>
+          <% if (typeof industries !== 'undefined') { %>
+            <% industries.forEach(function(ind) { %>
+              <option value="<%= ind %>" <%= locals.job && job.industry === ind ? 'selected' : '' %>><%= ind %></option>
+            <% }) %>
+          <% } %>
+          <option value="Other" <%= locals.job && job.industry === 'Other' ? 'selected' : '' %>>Other</option>
+        </select>
+        <% if (typeof errors !== 'undefined' && errors.industry) { %><div class="error"><%= errors.industry %></div><% } %>
+      </div>
+      <div class="form-group">
+        <label for="currency">Currency</label>
+        <select id="currency" name="currency">
+          <option value="LKR" <%= !locals.job || job.currency === 'LKR' ? 'selected' : '' %>>LKR</option>
+          <option value="USD" <%= locals.job && job.currency === 'USD' ? 'selected' : '' %>>USD</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="salary_min">Salary Min</label>
+        <input type="number" id="salary_min" name="salary_min" value="<%= locals.job && job.salary_min !== null && job.salary_min !== undefined ? job.salary_min : '' %>">
+      </div>
+      <div class="form-group">
+        <label for="salary_max">Salary Max</label>
+        <input type="number" id="salary_max" name="salary_max" value="<%= locals.job && job.salary_max !== null && job.salary_max !== undefined ? job.salary_max : '' %>">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" value="<%= locals.job && job.location || '' %>" required>
+        <% if (typeof errors !== 'undefined' && errors.location) { %><div class="error"><%= errors.location %></div><% } %>
+      </div>
+      <div class="form-group">
+        <label for="job_type">Job Type</label>
+        <select id="job_type" name="job_type">
+          <option value="">Same as industry</option>
+          <% if (typeof industries !== 'undefined') { %>
+            <% industries.forEach(function(ind) { %>
+              <option value="<%= ind %>" <%= locals.job && job.job_type === ind ? 'selected' : '' %>><%= ind %></option>
+            <% }) %>
+          <% } %>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="work_type">Work Type</label>
+        <select id="work_type" name="work_type">
+          <option value="On-Site" <%= !locals.job || job.work_type === 'On-Site' ? 'selected' : '' %>>On-Site</option>
+          <option value="Hybrid" <%= locals.job && job.work_type === 'Hybrid' ? 'selected' : '' %>>Hybrid</option>
+          <option value="Remote" <%= locals.job && job.work_type === 'Remote' ? 'selected' : '' %>>Remote</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="posted_date">Posted Date</label>
+        <input type="date" id="posted_date" name="posted_date" value="<%= locals.job && job.posted_date || '' %>">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="roles">Roles & Responsibilities (Markdown)</label>
+      <textarea id="roles" name="roles" style="min-height: 200px;"><%= locals.job && job.roles || '' %></textarea>
+      <div style="font-size: 12px; color: #999; margin-top: 4px;">
+        Use ### for headings, - for bullet points, plain text for paragraphs
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="pre_requisites">Pre Requisites (Markdown)</label>
+      <textarea id="pre_requisites" name="pre_requisites" style="min-height: 150px;"><%= locals.job && job.pre_requisites || '' %></textarea>
+      <div style="font-size: 12px; color: #999; margin-top: 4px;">
+        Use ### for headings, - for bullet points, plain text for paragraphs
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 8px; margin-top: 16px;">
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+      <a href="/admin/jobs" class="btn btn-outline">Cancel</a>
+    </div>
+  </form>
+</div>

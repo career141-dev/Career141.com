@@ -1,12 +1,13 @@
+import type { PremiumJob } from './premiumJobsData'
 import { JobListingsSection, PremiumJobsSection } from './sections'
 import { CompanyFooter } from '@/components/common'
 
-export function PremiumJobsPage() {
+export function PremiumJobsPage({ jobs }: { jobs: PremiumJob[] }) {
   return (
     <main className="flex flex-col items-start relative bg-career-14-1comwhite w-full min-h-screen">
       <div className="flex flex-col w-full">
         <JobListingsSection />
-        <PremiumJobsSection />
+        <PremiumJobsSection jobs={jobs} />
         <CompanyFooter />
       </div>
     </main>

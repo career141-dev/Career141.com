@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { withBasePath } from '@/lib/assetPath'
 import { BrowseAllJobsSection } from './BrowseAllJobsSection'
-import { premiumJobCards } from '../premiumJobsData'
+import type { PremiumJob } from '../premiumJobsData'
 
 type WhatsAppChannel = {
   industry: string
@@ -127,14 +127,14 @@ const FilterTag = ({ label, href, active }: { label: string; href: string; activ
     }}
   >
     <div className={`px-5 py-2.5 rounded-[3px] inline-flex items-center cursor-pointer ${active ? 'bg-career-14-1comeden' : 'bg-[#f2f2f2]'}`}>
-      <span className={`[font-family:'Inter',Helvetica] font-normal text-[13.5px] md:text-[14.5px] text-center leading-[15px] whitespace-nowrap [text-shadow:0px_0px_10px_#0000004c] ${active ? 'text-career141comelectric-lime' : 'text-career-14-1comblack'}`}>
+      <span className={`[font-family:'Inter',Helvetica] font-normal text-[13.5px] md:text-[14.5px] text-center leading-[15px] whitespace-nowrap [text-shadow:0px_0px_10px_#0000004c] ${active ? 'text-career141comelectric-lime' : 'text-career-14-1comwoodsmoke'}`}>
         {label}
       </span>
     </div>
   </a>
 )
 
-export function PremiumJobsSection() {
+export function PremiumJobsSection({ jobs }: { jobs: PremiumJob[] }) {
   const channelCount = whatsappChannels.length
   const scrollRef = useRef<HTMLDivElement>(null)
   const cardRefs = useRef<(HTMLAnchorElement | null)[]>([])
@@ -267,9 +267,9 @@ export function PremiumJobsSection() {
         </div>
       </section>
 
-      <section className="flex flex-col items-start gap-5 pt-[14.4px] pb-8 md:pb-[60.02px] px-4 md:px-[91.24px] relative self-stretch w-full">
+      <section className="flex flex-col items-start gap-5 pt-[14.4px] pb-8 md:pb-[60.02px] px-4 md:px-[91.24px] relative self-stretch w-full bg-white">
         <div className="flex flex-col items-center w-full">
-          <h2 className="[font-family:'Quicksand',Helvetica] font-bold text-career-14-1comwoodsmoke text-[22px] md:text-[35.2px] text-center tracking-[0] leading-[1.2] whitespace-nowrap">
+          <h2 className="[font-family:'Quicksand',Helvetica] font-bold text-career-14-1comblack text-[22px] md:text-[35.2px] text-center tracking-[0] leading-[1.2] whitespace-nowrap">
             Join our WhatsApp channels
           </h2>
         </div>
@@ -359,7 +359,7 @@ export function PremiumJobsSection() {
         </div>
       </section>
 
-      <section className="flex flex-col items-start justify-center px-4 md:px-[190.4px] py-0 self-stretch w-full">
+      <section className="flex flex-col items-start justify-center px-4 md:px-[190.4px] py-0 self-stretch w-full bg-white">
         <div className="flex flex-col items-start gap-4 md:gap-5 w-full">
           <div className="flex flex-col items-center w-full pt-4 md:pt-0">
             <h2 className="[font-family:'Quicksand',Helvetica] font-bold text-career-14-1comwoodsmoke text-[22px] md:text-[35.2px] text-center tracking-[0] leading-[1.2]">
@@ -403,7 +403,7 @@ export function PremiumJobsSection() {
       </section>
 
       <BrowseAllJobsSection 
-        jobCards={premiumJobCards}
+        jobCards={jobs}
         sidebarIndustries={[]} // Handled dynamically inside component now
         sidebarLocations={[]} 
         sidebarCurrencies={[]} 
