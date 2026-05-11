@@ -18,7 +18,7 @@ export default async function AdminCatchAllPage({ params }: { params: Promise<{ 
   const session = await verifySession()
 
   // 1. Handle Login Page (Separate Layout)
-  if (path === 'login') {
+  if (path === 'login' || slug[0] === 'login') {
     if (session) redirect('/admin/jobs')
     return <LoginForm />
   }
