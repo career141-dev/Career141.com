@@ -142,14 +142,18 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   if (!checkRateLimit(clientIP)) return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
 
   if (path === 'admin/login') {
-    const formData = await request.formData()
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
-    if (!email || !password) return NextResponse.json({ error: 'Please enter email and password' }, { status: 400 })
+    try {
+      const formData = await request.formData()
+      const email = formData.get('email') as string
+      const password = formData.get('password') as string
+      if (!email || !password) return NextResponse.json({ error: 'Please enter email and password' }, { status: 400 })
 
-    const supabase = createServerClient()
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) return NextResponse.json({ error: error.message || 'Invalid credentials' }, { status: 401 })
+      const supabase = createServerClient()
+      const { error } = await supabase.auth.signInWithPassword({ email, password })
+      if (error) return NextResponse.json({ error: error.message || 'Invalid credentials' }, { status: 401 })
+    } catch (e: any) {
+      return NextResponse.json({ error: `Connection error: ${e.message || 'Unknown error'}. Please check your Supabase configuration.` }, { status: 500 })
+    }
 
     const secret = new TextEncoder().encode(process.env.SESSION_SECRET || 'default-secret-change-me-in-production')
     const token = await new SignJWT({ admin: true }).setProtectedHeader({ alg: 'HS256' }).setExpirationTime('24h').sign(secret)
