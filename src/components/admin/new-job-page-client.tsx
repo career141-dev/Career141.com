@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { getIndustries } from '@/lib/admin-actions'
-import { EditJobForm } from '../[id]/edit/edit-form'
+import { EditJobForm } from './edit-job-form'
 
 export default function NewJobPageClient() {
   const [industries, setIndustries] = useState<string[]>([])
