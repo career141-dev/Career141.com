@@ -1,16 +1,43 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState, FormEvent, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 function slugify(text: string) {
   return text.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')
 }
 
-export function EditJobForm({ id, job, industries }: { id?: string; job?: Record<string, string | null>; industries: string[] }) {
+export function EditJobForm({ id, job: initialJob, industries: initialIndustries }: { id?: string; job?: Record<string, string | null>; industries?: string[] }) {
   const router = useRouter()
   const [state, setState] = useState<{ success?: boolean; errors?: Record<string, string>; job?: Record<string, string> }>({})
+  const [jobData, setJobData] = useState<Record<string, any> | null>(initialJob || null)
+  const [industries, setIndustries] = useState<string[]>(initialIndustries || [])
   const [loading, setLoading] = useState(false)
+  const [pageLoading, setPageLoading] = useState(!initialIndustries || (!!id && !initialJob))
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const [industriesRes, jobRes] = await Promise.all([
+          initialIndustries ? Promise.resolve(null) : fetch('/api/admin/industries'),
+          (id && !initialJob) ? fetch(`/api/admin/jobs/${id}`) : Promise.resolve(null),
+        ])
+        if (industriesRes) {
+          const data = await industriesRes.json()
+          setIndustries(data.industries || [])
+        }
+        if (jobRes) {
+          const data = await jobRes.json()
+          setJobData(data.job || null)
+        }
+      } catch {
+        setState({ errors: { general: 'Failed to load form data' } })
+      } finally {
+        setPageLoading(false)
+      }
+    }
+    loadData()
+  }, [id, initialJob, initialIndustries])
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -33,10 +60,11 @@ export function EditJobForm({ id, job, industries }: { id?: string; job?: Record
     }
   }
 
+  if (pageLoading) return <div>Loading...</div>
+
   const errs = state?.errors || {}
-  const vals = (state?.job || job || {}) as Record<string, any>
+  const vals = (state?.job || jobData || {}) as Record<string, any>
   
-  // Default to today's date for new jobs
   const today = new Date().toISOString().split('T')[0]
   const defaultDate = vals.posted_date || (id ? '' : today)
 

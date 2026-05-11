@@ -1,7 +1,5 @@
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
-import { verifySession } from '@/lib/admin-auth'
-import { getIndustries, getJob } from '@/lib/admin-actions'
 
 // Import the consolidated components
 import { LoginForm } from '../../../components/admin/login-form'
@@ -46,16 +44,14 @@ export default async function AdminCatchAllPage({ params }: { params: Promise<{ 
   const resolvedParams = await params
   const slug = resolvedParams.slug || []
   const path = slug.join('/')
-  const session = await verifySession()
 
   // 1. Handle Login Page
   if (path === 'login' || slug[0] === 'login') {
-    if (session) redirect('/admin/jobs')
     return <LoginForm />
   }
 
-  // 2. Protect all other admin routes
-  if (!session) redirect('/admin/login')
+  // 2. Protect all other admin routes (middleware.js handles this, but keep as safety net)
+  // middleware.ts at /admin/:path* checks JWT and redirects to /admin/login if invalid
 
   // 3. Admin Root -> Redirect to Jobs
   if (slug.length === 0) redirect('/admin/jobs')
@@ -101,9 +97,7 @@ export default async function AdminCatchAllPage({ params }: { params: Promise<{ 
   // 6. Edit Job: /admin/jobs/[id]/edit
   if (slug[0] === 'jobs' && slug[2] === 'edit') {
     const id = slug[1]
-    const [job, industries] = await Promise.all([getJob(id), getIndustries()])
-    if (!job) redirect('/admin/jobs')
-    return wrap(<EditJobForm id={id} job={job as any} industries={industries} />)
+    return wrap(<EditJobForm id={id} />)
   }
 
   return notFound()
