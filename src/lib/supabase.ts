@@ -34,7 +34,7 @@ export function createServerClient() {
         update: () => ({ eq: () => ({}) }),
         delete: () => ({ eq: () => ({}) }),
       }),
-      auth: { signInWithPassword: () => ({}) }
+      auth: { signInWithPassword: () => ({ error: { message: 'Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your Cloudflare Pages environment variables.' } }) }
     } as any
   }
 
