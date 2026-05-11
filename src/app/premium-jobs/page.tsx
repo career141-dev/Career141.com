@@ -1,3 +1,4 @@
+export const runtime = 'edge'
 import { PremiumJobsPage } from '@/components/premium-jobs'
 import { getAllPremiumJobs } from '@/lib/jobs'
 

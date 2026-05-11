@@ -1,3 +1,4 @@
+export const runtime = 'edge'
 import Link from 'next/link'
 import { PremiumJobApplyPage } from '@/components/premium-jobs/PremiumJobApplyPage'
 import {
