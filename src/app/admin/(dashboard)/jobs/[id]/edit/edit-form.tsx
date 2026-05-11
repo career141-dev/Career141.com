@@ -20,7 +20,7 @@ export function EditJobForm({ id, job, industries }: { id?: string; job?: Record
   }, [state, router])
 
   const errs = state?.errors || {}
-  const vals = state?.job || job
+  const vals = (state?.job || job || {}) as Record<string, any>
 
   return (
     <>
