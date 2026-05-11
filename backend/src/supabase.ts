@@ -6,3 +6,9 @@ export const supabase = createClient(
   config.supabaseServiceRoleKey,
   { auth: { persistSession: false } }
 )
+
+export const supabaseAuth = createClient(
+  config.supabaseUrl,
+  config.supabaseAnonKey,
+  { auth: { persistSession: false } }
+)

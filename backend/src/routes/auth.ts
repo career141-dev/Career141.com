@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express'
-import { login } from '../auth'
+import { loginWithSupabase } from '../auth'
 
 const router = Router()
 
@@ -10,19 +10,21 @@ router.get('/login', (_req: Request, res: Response) => {
   res.render('login', { layout: false, error: null })
 })
 
-router.post('/login', (req: Request, res: Response) => {
-  const { username, password } = req.body || {}
+router.post('/login', async (req: Request, res: Response) => {
+  const { email, password } = req.body || {}
 
-  if (!username || !password) {
-    return res.render('login', { layout: false, error: 'Please enter username and password' })
+  if (!email || !password) {
+    return res.render('login', { layout: false, error: 'Please enter email and password' })
   }
 
-  if (login(username, password)) {
+  const { success, error } = await loginWithSupabase(email, password)
+
+  if (success) {
     req.session.adminLoggedIn = true
     return res.redirect('/admin')
   }
 
-  res.render('login', { layout: false, error: 'Invalid credentials' })
+  res.render('login', { layout: false, error: error || 'Invalid credentials' })
 })
 
 router.all('/logout', (req: Request, res: Response) => {

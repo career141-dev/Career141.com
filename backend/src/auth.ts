@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { config } from './config'
+import { supabaseAuth } from './supabase'
 
 declare module 'express-session' {
   interface SessionData {
@@ -7,8 +7,9 @@ declare module 'express-session' {
   }
 }
 
-export function login(username: string, password: string): boolean {
-  return username === config.adminUsername && password === config.adminPassword
+export async function loginWithSupabase(email: string, password: string) {
+  const { error } = await supabaseAuth.auth.signInWithPassword({ email, password })
+  return { success: !error, error: error?.message || null }
 }
 
 export function requireAuth(req: Request, res: Response, next: NextFunction) {
