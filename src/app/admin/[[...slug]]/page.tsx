@@ -3,10 +3,10 @@ import { verifySession } from '@/lib/admin-auth'
 import { getJobs, getIndustries, getJob } from '@/lib/admin-actions'
 
 // Import the existing form components
-import { LoginForm } from '../(auth)/login/login-form'
-import { EditJobForm } from '../(dashboard)/jobs/[id]/edit/edit-form'
-import NewJobPageClient from '../(dashboard)/jobs/new/page-client' // I will create this
-import JobsPageClient from '../(dashboard)/jobs/page-client' // I will create this
+import { LoginForm } from '@/app/admin/(auth)/login/login-form'
+import { EditJobForm } from '@/app/admin/(dashboard)/jobs/[id]/edit/edit-form'
+import NewJobPageClient from '@/app/admin/(dashboard)/jobs/new/page-client'
+import JobsPageClient from '@/app/admin/(dashboard)/jobs/page-client'
 
 export const runtime = 'edge'
 

@@ -9,9 +9,10 @@ function slugify(text: string) {
   return text.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')
 }
 
-export function EditJobForm({ id, job, industries }: { id: string; job: Record<string, string>; industries: string[] }) {
+export function EditJobForm({ id, job, industries }: { id?: string; job?: Record<string, string | null>; industries: string[] }) {
   const router = useRouter()
-  const updateJobWithId = updateJobAction.bind(null, id)
+  // If id is present, it's an update; otherwise it's a create
+  const updateJobWithId = updateJobAction.bind(null, id || 'new')
   const [state, action] = useActionState(updateJobWithId, {} as FormState)
 
   useEffect(() => {

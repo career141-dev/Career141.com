@@ -12,7 +12,7 @@ export default function JobsPageClient() {
   useEffect(() => {
     async function loadData() {
       const [jobsData, industriesData] = await Promise.all([getJobs({}), getIndustries()])
-      setJobs(jobsData)
+      setJobs(jobsData.jobs)
       setIndustries(industriesData)
       setLoading(false)
     }
