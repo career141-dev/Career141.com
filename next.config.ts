@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   basePath,
-  trailingSlash: true,
+  trailingSlash: false,
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,
   },
