@@ -76,7 +76,7 @@ export type JobRow = {
 export async function getIndustries(): Promise<string[]> {
   const { data } = await supabase.from('premium_jobs').select('industry').order('industry')
   if (!data) return []
-  return [...new Set(data.map((r) => r.industry as string))].sort()
+  return [...new Set((data as any[]).map((r: any) => r.industry as string))].sort()
 }
 
 export async function getJobs(params: {
