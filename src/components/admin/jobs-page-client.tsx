@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { DeleteButton } from './delete-button'
 
 export default function JobsPageClient() {
@@ -9,12 +9,16 @@ export default function JobsPageClient() {
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState('')
   const limit = 20
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined)
 
   useEffect(() => {
     async function loadData() {
+      const params = new URLSearchParams({ page: String(page) })
+      if (search) params.set('search', search)
       const [jobsRes, industriesRes] = await Promise.all([
-        fetch(`/api/admin/jobs?page=${page}`),
+        fetch(`/api/admin/jobs?${params}`),
         fetch('/api/admin/industries'),
       ])
       const [jobsData, industriesData] = await Promise.all([jobsRes.json(), industriesRes.json()])
@@ -24,7 +28,15 @@ export default function JobsPageClient() {
       setLoading(false)
     }
     loadData()
-  }, [page])
+  }, [page, search])
+
+  function handleSearch(value: string) {
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    debounceRef.current = setTimeout(() => {
+      setSearch(value)
+      setPage(1)
+    }, 300)
+  }
 
   const totalPages = Math.ceil(total / limit)
 
@@ -35,6 +47,16 @@ export default function JobsPageClient() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
         <h3>Premium Jobs ({total})</h3>
         <a href="/admin/jobs/new" className="btn btn-primary">Add New Job</a>
+      </div>
+
+      <div style={{ marginBottom: 16 }}>
+        <input
+          type="text"
+          placeholder="Search by title, location, or slug..."
+          defaultValue={search}
+          onChange={(e) => handleSearch(e.target.value)}
+          style={{ width: '100%', maxWidth: 360, padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14 }}
+        />
       </div>
       
       <table>

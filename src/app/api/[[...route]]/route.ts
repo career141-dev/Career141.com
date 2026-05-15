@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getAllPremiumJobs, getPremiumJobBySlug, getJobDetailsBySlug } from '@/lib/jobs'
+import { getPremiumJobBySlug, getJobDetailsBySlug } from '@/lib/jobs'
 import { createServerClient } from '@/lib/supabase'
 import { SignJWT } from 'jose'
 
@@ -84,16 +84,15 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
   if (path === 'jobs') {
     try {
+      const supabase = createServerClient()
       const { searchParams } = new URL(request.url)
       const industry = searchParams.get('industry')
       const search = searchParams.get('search')
-      let jobs = await getAllPremiumJobs()
-      if (industry) jobs = jobs.filter((j) => j.industry.toLowerCase() === industry.toLowerCase())
-      if (search) {
-        const q = search.toLowerCase()
-        jobs = jobs.filter((j) => j.title.toLowerCase().includes(q) || j.location.toLowerCase().includes(q) || j.industry.toLowerCase().includes(q))
-      }
-      return NextResponse.json({ jobs })
+      let query = supabase.from('premium_jobs').select('*')
+      if (industry) query = query.ilike('industry', industry)
+      if (search) query = query.or(`title.ilike.%${search}%,location.ilike.%${search}%,industry.ilike.%${search}%`)
+      const { data } = await query.order('posted_date', { ascending: false })
+      return NextResponse.json({ jobs: (data as any[]) || [] })
     } catch { return NextResponse.json({ error: 'Failed to fetch jobs' }, { status: 500 }) }
   }
 
