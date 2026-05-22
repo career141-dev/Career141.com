@@ -34,6 +34,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <nav className="sidebar">
         <h1>Career141 Admin</h1>
         <a href="/admin/jobs">Premium Jobs</a>
+        <a href="/" target="_blank" rel="noopener noreferrer">View Site</a>
         <form action="/api/admin/logout" method="POST">
           <button type="submit" style={{ display: 'block', width: '100%', textAlign: 'left', padding: '10px 20px', background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: 14, marginTop: 16, fontFamily: 'inherit' }}>
             Logout

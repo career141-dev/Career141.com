@@ -17,6 +17,7 @@ type DbJobRow = {
   posted_date: string
   roles: string | null
   pre_requisites: string | null
+  additional_benefits: string | null
 }
 
 function dbRowToPremiumJob(row: DbJobRow): PremiumJob {
@@ -93,19 +94,22 @@ export async function getJobDetailsBySlug(
     const supabase = createServerClient()
     const { data, error } = await supabase
       .from('premium_jobs')
-      .select('roles, pre_requisites')
+      .select('roles, pre_requisites, additional_benefits')
       .eq('slug', slug)
       .single()
 
     if (error) throw error
 
-    if (data && (data.roles || data.pre_requisites)) {
+    if (data && (data.roles || data.pre_requisites || data.additional_benefits)) {
       return {
         roles: data.roles
           ? parseMarkdownToNodes(data.roles)
           : [],
         preRequisites: data.pre_requisites
           ? parseMarkdownToNodes(data.pre_requisites)
+          : [],
+        additionalBenefits: data.additional_benefits
+          ? parseMarkdownToNodes(data.additional_benefits)
           : [],
       }
     }

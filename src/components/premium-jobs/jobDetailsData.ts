@@ -6,6 +6,7 @@ export type JobDetailNode =
 export type JobDetailContent = {
   roles: JobDetailNode[]
   preRequisites: JobDetailNode[]
+  additionalBenefits?: JobDetailNode[]
 }
 
 // Add new job details here by slug to keep PremiumJobApplyPage.tsx small.

@@ -69,6 +69,7 @@ export type JobRow = {
   posted_date: string
   roles: string | null
   pre_requisites: string | null
+  additional_benefits: string | null
   created_at: string
   updated_at: string
 }
@@ -121,7 +122,7 @@ export type FormState = {
 export async function createJobAction(prev: FormState, formData: FormData): Promise<FormState> {
   const raw = Object.fromEntries(formData) as Record<string, string>
   // ... rest of implementation stays same
-  const { title, industry, currency, salary_min, salary_max, location, job_type, work_type, posted_date, roles, pre_requisites } = raw
+  const { title, industry, currency, salary_min, salary_max, location, job_type, work_type, posted_date, roles, pre_requisites, additional_benefits } = raw
 
   const errors: FormErrors = {}
   if (!title) errors.title = 'Title is required'
@@ -144,6 +145,7 @@ export async function createJobAction(prev: FormState, formData: FormData): Prom
     posted_date,
     roles: roles || null,
     pre_requisites: pre_requisites || null,
+    additional_benefits: additional_benefits || null,
   }
 
   let slug = raw.slug || ''
@@ -184,7 +186,7 @@ export async function createJobAction(prev: FormState, formData: FormData): Prom
 
 export async function updateJobAction(id: string, prev: FormState, formData: FormData): Promise<FormState> {
   const raw = Object.fromEntries(formData) as Record<string, string>
-  const { title, industry, currency, salary_min, salary_max, location, job_type, work_type, posted_date, roles, pre_requisites } = raw
+  const { title, industry, currency, salary_min, salary_max, location, job_type, work_type, posted_date, roles, pre_requisites, additional_benefits } = raw
 
   const errors: FormErrors = {}
   if (!title) errors.title = 'Title is required'
@@ -204,6 +206,7 @@ export async function updateJobAction(id: string, prev: FormState, formData: For
     posted_date,
     roles: roles || null,
     pre_requisites: pre_requisites || null,
+    additional_benefits: additional_benefits || null,
     updated_at: new Date().toISOString(),
   }
 

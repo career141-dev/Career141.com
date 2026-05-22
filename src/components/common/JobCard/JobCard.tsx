@@ -14,6 +14,7 @@ export interface Job {
   workType: string;
   date: string;
   slug?: string;
+  additionalBenefits?: string;
 }
 
 interface JobCardProps {

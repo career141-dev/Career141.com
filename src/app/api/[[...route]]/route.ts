@@ -173,7 +173,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       const supabase = createServerClient()
       const formData = await request.formData()
       const raw = Object.fromEntries(formData) as Record<string, string>
-      const { title, industry, currency, salary_min, salary_max, location, job_type, work_type, posted_date, roles, pre_requisites } = raw
+      const { title, industry, currency, salary_min, salary_max, location, job_type, work_type, posted_date, roles, pre_requisites, additional_benefits } = raw
 
       const errors: Record<string, string> = {}
       if (!title) errors.title = 'Title is required'
@@ -189,6 +189,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         location, job_type: job_type || industry,
         work_type: work_type || 'On-Site', posted_date,
         roles: roles || null, pre_requisites: pre_requisites || null,
+        additional_benefits: additional_benefits || null,
       }
 
       let slug = raw.slug || ''
@@ -222,7 +223,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       const id = route[2]
       const formData = await request.formData()
       const raw = Object.fromEntries(formData) as Record<string, string>
-      const { title, industry, currency, salary_min, salary_max, location, job_type, work_type, posted_date, roles, pre_requisites } = raw
+      const { title, industry, currency, salary_min, salary_max, location, job_type, work_type, posted_date, roles, pre_requisites, additional_benefits } = raw
 
       const errors: Record<string, string> = {}
       if (!title) errors.title = 'Title is required'
@@ -235,6 +236,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         location, job_type: job_type || industry,
         work_type: work_type || 'On-Site', posted_date,
         roles: roles || null, pre_requisites: pre_requisites || null,
+        additional_benefits: additional_benefits || null,
         updated_at: new Date().toISOString(),
       }
 

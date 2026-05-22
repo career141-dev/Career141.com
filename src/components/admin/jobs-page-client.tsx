@@ -72,7 +72,13 @@ export default function JobsPageClient() {
         <tbody>
           {jobs.map((job) => (
             <tr key={job.id}>
-              <td><strong>{job.title}</strong></td>
+              <td>
+                <strong>{job.title}</strong>
+                <br />
+                <a href={`/premium-jobs/${job.slug}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: '#0570e2', textDecoration: 'none' }}>
+                  View post ↗
+                </a>
+              </td>
               <td><span className="badge badge-industry">{job.industry}</span></td>
               <td>{job.location}</td>
               <td>{new Date(job.posted_date).toLocaleDateString()}</td>

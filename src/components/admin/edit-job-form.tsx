@@ -2,6 +2,63 @@
 
 import { useState, FormEvent, useEffect } from 'react'
 
+function MarkdownToolbar({ targetId }: { targetId: string }) {
+  function insertMarkdown(syntax: 'heading' | 'bold' | 'bullet') {
+    const el = document.getElementById(targetId) as HTMLTextAreaElement | null
+    if (!el) return
+    const start = el.selectionStart
+    const end = el.selectionEnd
+    const before = el.value.substring(0, start)
+    const selected = el.value.substring(start, end)
+    const after = el.value.substring(end)
+
+    let insertion = ''
+    let cursorPos = start
+
+    switch (syntax) {
+      case 'heading':
+        insertion = '### '
+        cursorPos = start + insertion.length
+        break
+      case 'bold':
+        if (selected) {
+          insertion = `**${selected}**`
+          cursorPos = start + insertion.length
+        } else {
+          insertion = '****'
+          cursorPos = start + 2
+        }
+        break
+      case 'bullet':
+        insertion = '- '
+        cursorPos = start + insertion.length
+        break
+    }
+
+    el.value = before + insertion + after
+    el.focus()
+    el.selectionStart = el.selectionEnd = cursorPos
+    el.dispatchEvent(new Event('input', { bubbles: true }))
+  }
+
+  const btnStyle: React.CSSProperties = {
+    background: '#f0f0f0', border: '1px solid #ddd', borderRadius: 4,
+    padding: '4px 10px', cursor: 'pointer', fontSize: 13, fontWeight: 600,
+    fontFamily: 'monospace', lineHeight: 1, marginRight: 4,
+  }
+
+  return (
+    <div style={{ display: 'flex', gap: 2, marginBottom: 4 }}>
+      <button type="button" style={btnStyle} onClick={() => insertMarkdown('heading')} title="Heading">H</button>
+      <button type="button" style={btnStyle} onClick={() => insertMarkdown('bold')} title="Bold"><b>B</b></button>
+      <button type="button" style={btnStyle} onClick={() => insertMarkdown('bullet')} title="Bullet list">•</button>
+      <span style={{ fontSize: 12, color: '#999', marginLeft: 8, alignSelf: 'center' }}>
+        ### heading, **bold**, - bullet
+      </span>
+    </div>
+  )
+}
+
 function slugify(text: string) {
   return text.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')
 }
@@ -103,6 +160,8 @@ export function EditJobForm({ id, job: initialJob, industries: initialIndustries
               <select id="currency" name="currency" defaultValue={vals.currency || 'LKR'}>
                 <option value="LKR">LKR</option>
                 <option value="USD">USD</option>
+                <option value="BDT">BDT</option>
+                <option value="SAR">SAR</option>
               </select>
             </div>
           </div>
@@ -148,16 +207,22 @@ export function EditJobForm({ id, job: initialJob, industries: initialIndustries
             </div>
           </div>
 
+          <MarkdownToolbar targetId="roles" />
           <div className="form-group">
             <label htmlFor="roles">Roles & Responsibilities (Markdown)</label>
             <textarea id="roles" name="roles" style={{ minHeight: 200 }} defaultValue={vals.roles || ''} />
-            <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>Use ### for headings, - for bullet points, plain text for paragraphs</div>
           </div>
 
+          <MarkdownToolbar targetId="pre_requisites" />
           <div className="form-group">
             <label htmlFor="pre_requisites">Pre Requisites (Markdown)</label>
             <textarea id="pre_requisites" name="pre_requisites" style={{ minHeight: 150 }} defaultValue={vals.pre_requisites || ''} />
-            <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>Use ### for headings, - for bullet points, plain text for paragraphs</div>
+          </div>
+
+          <MarkdownToolbar targetId="additional_benefits" />
+          <div className="form-group">
+            <label htmlFor="additional_benefits">Additional Benefits (Markdown)</label>
+            <textarea id="additional_benefits" name="additional_benefits" style={{ minHeight: 150 }} defaultValue={vals.additional_benefits || ''} />
           </div>
 
           <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
