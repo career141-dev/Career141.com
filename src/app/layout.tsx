@@ -52,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${quicksand.variable} ${openSans.variable} ${poppins.variable} ${inter.variable} font-sans antialiased`}>
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K2299D48"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
         <div style={{ overflowX: 'clip', position: 'relative' }}>
           {children}
         </div>
