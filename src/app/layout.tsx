@@ -61,6 +61,14 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 fbq('init', '1600324478299871');
 fbq('track', 'PageView');`}
         </Script>
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=AW-17100601968" strategy="afterInteractive" />
+        <Script id="google-ads" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-17100601968');`}
+        </Script>
       </head>
       <body className={`${quicksand.variable} ${openSans.variable} ${poppins.variable} ${inter.variable} font-sans antialiased`}>
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K2299D48"
