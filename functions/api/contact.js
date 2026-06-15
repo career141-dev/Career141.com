@@ -143,7 +143,7 @@ async function sendEmailViaBrevo(env, data) {
         sender: { email: senderEmail, name: senderName },
         to: [
           {
-            email: env.CONTACT_RECIPIENT_EMAIL || "sanjeev@career141.com",
+            email: env.CONTACT_RECIPIENT_EMAIL || "hello@career141.com",
             name: "Career141 Contact",
           },
         ],
