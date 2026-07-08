@@ -308,6 +308,7 @@ function FormInput({
   min,
   error,
   register,
+  registerOptions,
 }: {
   label: string
   name: string
@@ -317,6 +318,7 @@ function FormInput({
   error?: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register?: any
+  registerOptions?: any
 }) {
   return (
     <div className="flex flex-col gap-[15px] py-[15px] w-full">
@@ -325,7 +327,7 @@ function FormInput({
       </div>
       <div className={`relative w-full h-[42.2px] bg-[rgba(255,255,255,0.08)] focus-within:ring-1 focus-within:ring-[#2563eb] focus-within:ring-offset-0 ${error ? 'ring-1 ring-red-500' : ''}`}>
         <input
-          {...(register ? register(name) : {})}
+          {...(register ? register(name, registerOptions) : {})}
           type={type}
           min={min}
           className="w-full h-full bg-transparent px-[14px] py-[10.3px] outline-none text-[#111]"
@@ -402,7 +404,20 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
 
       const res = await fetch('/api/apply', { method: 'POST', body: formData })
       const json = await res.json()
-      if (!res.ok) throw new Error(json.error || 'Submission failed')
+      if (!res.ok) {
+        if (json.details && Array.isArray(json.details)) {
+          json.details.forEach((det: any) => {
+            const fieldName = det.path[0]
+            if (fieldName === 'file') {
+              setError('root', { message: det.message })
+            } else if (fieldName) {
+              setError(fieldName as any, { message: det.message })
+            }
+          })
+          throw new Error('Validation failed. Please correct the errors above.')
+        }
+        throw new Error(json.error || 'Submission failed')
+      }
       setIsSuccess(true)
       reset()
       setFile(null)
@@ -442,25 +457,82 @@ function ApplyForm({ jobTitle }: { jobTitle: string }) {
 
       <div className="flex flex-col md:flex-row w-full gap-0">
         <div className="w-full md:flex-1 px-0 md:px-[10px]">
-          <FormInput label="First Name" name="firstName" required error={errors.firstName?.message} register={register} />
+          <FormInput
+            label="First Name"
+            name="firstName"
+            required
+            error={errors.firstName?.message}
+            register={register}
+            registerOptions={{
+              required: 'First name is required',
+              minLength: { value: 2, message: 'First name must be at least 2 characters' },
+            }}
+          />
         </div>
         <div className="w-full md:flex-1 px-0 md:px-[10px]">
-          <FormInput label="Last Name" name="lastName" required error={errors.lastName?.message} register={register} />
+          <FormInput
+            label="Last Name"
+            name="lastName"
+            required
+            error={errors.lastName?.message}
+            register={register}
+            registerOptions={{
+              required: 'Last name is required',
+              minLength: { value: 2, message: 'Last name must be at least 2 characters' },
+            }}
+          />
         </div>
       </div>
 
       <div className="flex flex-col md:flex-row w-full gap-0">
         <div className="w-full md:flex-1 px-0 md:px-[10px]">
-          <FormInput label="Email" name="email" type="email" required error={errors.email?.message} register={register} />
+          <FormInput
+            label="Email"
+            name="email"
+            type="email"
+            required
+            error={errors.email?.message}
+            register={register}
+            registerOptions={{
+              required: 'Email is required',
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: 'Please enter a valid email address',
+              },
+            }}
+          />
         </div>
         <div className="w-full md:flex-1 px-0 md:px-[10px]">
-          <FormInput label="Phone" name="phone" type="text" required error={errors.phone?.message} register={register} />
+          <FormInput
+            label="Phone"
+            name="phone"
+            type="text"
+            required
+            error={errors.phone?.message}
+            register={register}
+            registerOptions={{
+              required: 'Phone number is required',
+              minLength: { value: 5, message: 'Phone number must be at least 5 characters' },
+            }}
+          />
         </div>
       </div>
 
       <div className="flex flex-col md:flex-row w-full gap-0">
         <div className="w-full md:flex-1 px-0 md:px-[10px]">
-          <FormInput label="Age" name="age" type="number" min={18} required error={errors.age?.message} register={register} />
+          <FormInput
+            label="Age"
+            name="age"
+            type="number"
+            min={18}
+            required
+            error={errors.age?.message}
+            register={register}
+            registerOptions={{
+              required: 'Age is required',
+              min: { value: 18, message: 'Age must be 18 or above' },
+            }}
+          />
         </div>
         <div className="w-full md:flex-1 px-0 md:px-[10px]">
           <FormInput label="Current Designation" name="designation" register={register} />
