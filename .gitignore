@@ -43,3 +43,5 @@ next-env.d.ts
 # backend
 backend/node_modules
 backend/dist
+
+.vscode

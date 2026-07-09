@@ -22,6 +22,182 @@ function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')
 }
 
+function sanitizeInput(input: FormDataEntryValue | string | null | undefined): string {
+  return String(input || '')
+    .replace(/[<>]/g, '')
+    .replace(/javascript:/gi, '')
+    .replace(/on\w+=/gi, '')
+    .trim()
+}
+
+function isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer)
+  let binary = ''
+  const chunkSize = 0x8000
+
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    const chunk = bytes.subarray(i, i + chunkSize)
+    binary += String.fromCharCode(...chunk)
+  }
+
+  return btoa(binary)
+}
+
+async function verifyTurnstile(token: string): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY
+  if (!secret) {
+    console.warn('TURNSTILE_SECRET_KEY is missing. Bypassing verification for development.')
+    return true
+  }
+
+  const body = new URLSearchParams()
+  body.append('secret', secret)
+  body.append('response', token)
+
+  try {
+    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      body,
+    })
+
+    if (!response.ok) return false
+    const result = await response.json()
+    if (!result.success) {
+      console.error('Turnstile verification failed:', result['error-codes'] || result)
+    }
+    return Boolean(result.success)
+  } catch (error) {
+    console.error('Turnstile verification error:', error)
+    return false
+  }
+}
+
+async function sendApplicationEmail(fields: Record<string, string>, fileName: string, fileBase64: string): Promise<boolean> {
+  const brevoApiKey = process.env.BREVO_API_KEY
+  if (!brevoApiKey) {
+    console.error('BREVO_API_KEY is missing in environment')
+    return false
+  }
+
+  const senderEmail = process.env.BREVO_SENDER_EMAIL || 'noreply@career141.com'
+  const senderName = process.env.BREVO_SENDER_NAME || 'Career141'
+  const recipientEmail = process.env.JOBS_RECIPIENT_EMAIL || 'jobs@career141.com'
+
+  const htmlContent = `
+    <h2>New Job Application</h2>
+    <p><strong>Job:</strong> ${sanitizeInput(fields.jobTitle)}</p>
+    <p><strong>Name:</strong> ${sanitizeInput(fields.firstName)} ${sanitizeInput(fields.lastName)}</p>
+    <p><strong>Email:</strong> ${sanitizeInput(fields.email)}</p>
+    <p><strong>Phone:</strong> ${sanitizeInput(fields.phone)}</p>
+    <p><strong>Age:</strong> ${sanitizeInput(fields.age)}</p>
+    <p><strong>Current Designation:</strong> ${sanitizeInput(fields.designation || 'N/A')}</p>
+    <p><strong>Attachment:</strong> ${sanitizeInput(fileName)}</p>
+  `
+
+  const textContent = `
+    New Job Application
+
+    Job: ${sanitizeInput(fields.jobTitle)}
+    Name: ${sanitizeInput(fields.firstName)} ${sanitizeInput(fields.lastName)}
+    Email: ${sanitizeInput(fields.email)}
+    Phone: ${sanitizeInput(fields.phone)}
+    Age: ${sanitizeInput(fields.age)}
+    Current Designation: ${sanitizeInput(fields.designation || 'N/A')}
+    Attachment: ${sanitizeInput(fileName)}
+  `
+
+  try {
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'api-key': brevoApiKey,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        sender: { email: senderEmail, name: senderName },
+        to: [{ email: recipientEmail, name: 'Career141 Applications' }],
+        subject: `Job Application: ${sanitizeInput(fields.jobTitle)} - ${sanitizeInput(fields.firstName)} ${sanitizeInput(fields.lastName)}`,
+        htmlContent,
+        textContent,
+        attachment: [{ name: fileName, content: fileBase64 }],
+      }),
+    })
+
+    if (!response.ok) {
+      const errText = await response.text()
+      console.error('Brevo API Error:', response.status, errText)
+      return false
+    }
+
+    return true
+  } catch (error) {
+    console.error('Error sending email via Brevo:', error)
+    return false
+  }
+}
+
+async function handleApplySubmission(request: NextRequest) {
+  const formData = await request.formData()
+
+  const firstName = sanitizeInput(formData.get('firstName'))
+  const lastName = sanitizeInput(formData.get('lastName'))
+  const email = sanitizeInput(formData.get('email'))
+  const phone = sanitizeInput(formData.get('phone'))
+  const age = sanitizeInput(formData.get('age'))
+  const designation = sanitizeInput(formData.get('designation'))
+  const jobTitle = sanitizeInput(formData.get('jobTitle'))
+  const turnstileToken = sanitizeInput(formData.get('turnstileToken'))
+  const file = formData.get('file')
+
+  const errors: { path: string[]; message: string }[] = []
+  if (firstName.length < 2) errors.push({ path: ['firstName'], message: 'First name must be at least 2 characters' })
+  if (lastName.length < 2) errors.push({ path: ['lastName'], message: 'Last name must be at least 2 characters' })
+  if (!email || !isValidEmail(email)) errors.push({ path: ['email'], message: 'Valid email is required' })
+  if (!phone || phone.length < 5) errors.push({ path: ['phone'], message: 'Valid phone number is required' })
+  if (!age || Number(age) < 18) errors.push({ path: ['age'], message: 'Age must be 18 or above' })
+  if (!jobTitle) errors.push({ path: ['jobTitle'], message: 'Job title is required' })
+  if (!turnstileToken) errors.push({ path: ['turnstileToken'], message: 'Captcha is required' })
+
+  if (!(file instanceof File)) {
+    errors.push({ path: ['file'], message: 'CV/resume file is required' })
+  } else {
+    const allowedTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ]
+    if (!allowedTypes.includes(file.type)) errors.push({ path: ['file'], message: 'Only PDF, DOC, and DOCX files are allowed' })
+    if (file.size > 5 * 1024 * 1024) errors.push({ path: ['file'], message: 'File size must be under 5MB' })
+  }
+
+  if (errors.length > 0) {
+    return NextResponse.json({ error: 'Validation failed', details: errors }, { status: 400 })
+  }
+
+  const verified = await verifyTurnstile(turnstileToken)
+  if (!verified) {
+    return NextResponse.json({ error: 'Captcha verification failed' }, { status: 400 })
+  }
+
+  const upload = file as File
+  const fileBase64 = arrayBufferToBase64(await upload.arrayBuffer())
+  const success = await sendApplicationEmail(
+    { firstName, lastName, email, phone, age, designation, jobTitle },
+    upload.name,
+    fileBase64
+  )
+
+  if (!success) {
+    return NextResponse.json({ error: 'Failed to send application. Please try again later.' }, { status: 500 })
+  }
+
+  return NextResponse.json({ message: 'Application sent successfully' })
+}
+
 async function generateUniqueSlug(title: string, supabase: ReturnType<typeof createServerClient>, excludeId?: string, startFrom = 0): Promise<string> {
   if (startFrom === 0) {
     const slug = slugify(title) || 'untitled'
@@ -268,7 +444,11 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     }
   }
 
-  if (path === 'apply' || path === 'contact' || path === 'meeting') {
+  if (path === 'apply') {
+    return handleApplySubmission(request)
+  }
+
+  if (path === 'contact' || path === 'meeting') {
     return NextResponse.json({ message: 'Submission received' })
   }
 

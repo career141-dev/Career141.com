@@ -1,7 +1,9 @@
 import { createServerClient } from './supabase'
 import { parseMarkdownToNodes } from './parseJobDetails'
 import type { PremiumJob } from '@/components/premium-jobs/premiumJobsData'
+import { premiumJobCards } from '@/components/premium-jobs/premiumJobsData'
 import type { JobDetailContent } from '@/components/premium-jobs/jobDetailsData'
+import { jobDetailsBySlug } from '@/components/premium-jobs/jobDetailsData'
 
 type DbJobRow = {
   id: string
@@ -61,7 +63,7 @@ export async function getAllPremiumJobs(): Promise<PremiumJob[]> {
     console.warn('Supabase fetch failed')
   }
 
-  return []
+  return premiumJobCards
 }
 
 export async function getPremiumJobBySlug(
@@ -84,7 +86,7 @@ export async function getPremiumJobBySlug(
     console.warn(`Supabase fetch for slug "${slug}" failed`)
   }
 
-  return null
+  return premiumJobCards.find((job) => job.slug === slug) ?? null
 }
 
 export async function getJobDetailsBySlug(
@@ -117,5 +119,5 @@ export async function getJobDetailsBySlug(
     console.warn(`Supabase details fetch for slug "${slug}" failed`)
   }
 
-  return null
+  return jobDetailsBySlug[slug] ?? null
 }
