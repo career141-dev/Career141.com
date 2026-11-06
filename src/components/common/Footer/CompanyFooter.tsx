@@ -250,9 +250,7 @@ export function CompanyFooter() {
               <span className="font-['Quicksand',sans-serif] font-bold text-[#161618] text-[11.2px]">Terms and Conditions</span>
               <span className="text-[#ddd]">|</span>
               <a
-                href="https://career141.com/privacy-policy/"
-                rel="noopener noreferrer"
-                target="_blank"
+                href={withBasePath('/privacy-policy')}
                 className="font-['Quicksand',sans-serif] font-bold text-[#161618] text-[11.2px] hover:text-[#37a65e] transition-colors"
               >
                 Privacy Policy
