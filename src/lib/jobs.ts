@@ -4,6 +4,7 @@ import type { PremiumJob } from '@/components/premium-jobs/premiumJobsData'
 import { premiumJobCards } from '@/components/premium-jobs/premiumJobsData'
 import type { JobDetailContent } from '@/components/premium-jobs/jobDetailsData'
 import { jobDetailsBySlug } from '@/components/premium-jobs/jobDetailsData'
+import { getTaJobs, getTaJobBySlug, getTaJobDetailsBySlug } from './taJobs'
 
 type DbJobRow = {
   id: string
@@ -46,7 +47,13 @@ function formatDate(dateStr: string): string {
   })
 }
 
+// Jobs switched on in the TA System come first, then the ones added here.
 export async function getAllPremiumJobs(): Promise<PremiumJob[]> {
+  const [ta, own] = await Promise.all([getTaJobs(), getOwnPremiumJobs()])
+  return [...ta, ...own]
+}
+
+async function getOwnPremiumJobs(): Promise<PremiumJob[]> {
   try {
     const supabase = createServerClient()
     const { data, error } = await supabase
@@ -69,6 +76,8 @@ export async function getAllPremiumJobs(): Promise<PremiumJob[]> {
 export async function getPremiumJobBySlug(
   slug: string
 ): Promise<PremiumJob | null> {
+  const ta = await getTaJobBySlug(slug)
+  if (ta) return ta
   try {
     const supabase = createServerClient()
     const { data, error } = await supabase
@@ -92,6 +101,8 @@ export async function getPremiumJobBySlug(
 export async function getJobDetailsBySlug(
   slug: string
 ): Promise<JobDetailContent | null> {
+  const ta = await getTaJobDetailsBySlug(slug)
+  if (ta) return ta
   try {
     const supabase = createServerClient()
     const { data, error } = await supabase
